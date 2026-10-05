@@ -1,0 +1,16 @@
+{
+  "tatqa": {
+    "n": 200,
+    "train": 120,
+    "dev": 80
+  },
+  "sharc": {
+    "n": 200,
+    "train": 120,
+    "dev": 80
+  },
+  "retail": {
+    "series": 50,
+    "days": 4500
+  }
+}

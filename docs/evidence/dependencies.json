@@ -1,0 +1,27 @@
+{
+  "profile": "package-risk",
+  "status": "UNKNOWN",
+  "dataGaps": [
+    "Endor service and CLI unavailable"
+  ],
+  "packages": [
+    {
+      "coordinate": "pkg:pypi/torch@2.14.1",
+      "version": "2.14.1",
+      "risk": "UNKNOWN",
+      "versionSource": "https://pypi.org/project/torch/2.14.1/"
+    },
+    {
+      "coordinate": "pkg:pypi/transformers@5.18.0",
+      "version": "5.18.0",
+      "risk": "UNKNOWN",
+      "versionSource": "https://pypi.org/project/transformers/5.18.0/"
+    },
+    {
+      "coordinate": "pkg:pypi/numpy@2.5.3",
+      "version": "2.5.3",
+      "risk": "UNKNOWN",
+      "versionSource": "https://pypi.org/project/numpy/2.5.3/"
+    }
+  ]
+}

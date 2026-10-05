@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "newsvendor-router"
+version = "0.1.0"
+description = "Evidence, parameter-state and action-value learning for an iterative Newsvendor decision router"
+requires-python = ">=3.12,<3.13"
+dependencies = ["torch==2.14.1", "transformers==5.18.0", "numpy==2.5.3"]
+
+[project.scripts]
+newsvendor = "newsvendor.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "ruff==0.16.10"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/newsvendor"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]

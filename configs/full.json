@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "groups": 20,
+  "variants": 5,
+  "epochs": 20,
+  "folds": 3,
+  "budget": 2,
+  "bootstrap": 2000,
+  "encoder": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "dim": 384,
+    "maxLength": 256,
+    "pooling": "masked-mean",
+    "trainable": false
+  },
+  "output": "results/full"
+}

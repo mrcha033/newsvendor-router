@@ -1,0 +1,46 @@
+{
+  "episodes": 600,
+  "smokeEpisodes": 30,
+  "split": {
+    "counts": {
+      "test": 120,
+      "dev": 60,
+      "cal": 60,
+      "train": 360
+    },
+    "families": 120,
+    "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+  },
+  "falseHandoffs": 0,
+  "provenance": {
+    "configHash": "9a928eed6a4f0dccc227276ca6e3b0d1475ca8a10c44844f3373ce0e8c2c02ba",
+    "sourceHash": "79408bbe274479bc33651c3f8d7bb189e76afba745bc81df952133752522ffcc",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "41827bbc8fb3e55f0c5146bfba8a5ef615983ea7e0a4820d56eec3e240c0e420",
+      "src/newsvendor/cli.py": "3e73020118003f5722e62fb235216ae959e08eab0c24ccf1f74ee36bc647bc99",
+      "src/newsvendor/construction.py": "af17706058cafeb0c79f4552de1084323952d12fa04ab1ed0a975e12d41bea7d",
+      "src/newsvendor/corpus.py": "c8040ea3439a316d111a0aff87f44c4aadfcabe2838416c16f25a77dde0db690",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/encoder.py": "a9969d91db7845779d28c835031c3f9ac1c28f3552da8294fd2a16638b874c37",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/policy.py": "bb623145f4a8b677620515ad4fe03c6c3672d2f001346c209f1cd456811ce17f",
+      "src/newsvendor/providers.py": "f7ece364d8cbf4dbf904519ed50f43fbc583aa953ea1ef4e9c0259fab896f9eb",
+      "src/newsvendor/report.py": "e2c147d3fb0d86278e3d556e7780d0f157fc68aa6c5dacf5672568fba7aec6ed",
+      "src/newsvendor/train.py": "128acc8ff06623ce301bf441adedd603007e4576b67d9b07d6c89fe0cf02b4aa",
+      "src/newsvendor/typed.py": "387166ea3219f2288587a74ecc0715d438ad69f0bd7c377d078a70e9c6c5985c"
+    },
+    "lockHash": "fc1756d3513f2c82cfe084ad076f5369dcba97cebe2d80fc6479637e05ce5ea6",
+    "python": "3.12.12",
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "macOS-26.7.1-arm64-arm-64bit",
+    "commit": "HEAD",
+    "timestamp": "2026-10-05T12:24:28.755799+00:00"
+  }
+}

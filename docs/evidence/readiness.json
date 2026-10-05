@@ -1,0 +1,39 @@
+{
+  "python": "3.12.12",
+  "torch": "2.14.1",
+  "encoderCached": true,
+  "pilotModel": true,
+  "datasets": {
+    "tatqa": {
+      "n": 200,
+      "train": 120,
+      "dev": 80
+    },
+    "sharc": {
+      "n": 200,
+      "train": 120,
+      "dev": 80
+    },
+    "retail": {
+      "series": 50,
+      "days": 4500
+    }
+  },
+  "providers": {
+    "JEV": {
+      "urlSet": false,
+      "modelSet": false,
+      "keySet": false
+    },
+    "SGLANG": {
+      "urlSet": false,
+      "modelSet": false,
+      "keySet": false
+    },
+    "AGENT": {
+      "urlSet": false,
+      "modelSet": false,
+      "keySet": false
+    }
+  }
+}

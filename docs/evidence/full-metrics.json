@@ -1,0 +1,1357 @@
+{
+  "scope": "controlled synthetic execution and learning check",
+  "config": {
+    "seed": 42,
+    "groups": 20,
+    "variants": 5,
+    "epochs": 20,
+    "folds": 3,
+    "budget": 2,
+    "bootstrap": 2000,
+    "encoder": {
+      "model": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "dim": 384,
+      "maxLength": 256,
+      "pooling": "masked-mean",
+      "trainable": false
+    },
+    "output": "results/full"
+  },
+  "provenance": {
+    "configHash": "9a928eed6a4f0dccc227276ca6e3b0d1475ca8a10c44844f3373ce0e8c2c02ba",
+    "sourceHash": "79408bbe274479bc33651c3f8d7bb189e76afba745bc81df952133752522ffcc",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "41827bbc8fb3e55f0c5146bfba8a5ef615983ea7e0a4820d56eec3e240c0e420",
+      "src/newsvendor/cli.py": "3e73020118003f5722e62fb235216ae959e08eab0c24ccf1f74ee36bc647bc99",
+      "src/newsvendor/construction.py": "af17706058cafeb0c79f4552de1084323952d12fa04ab1ed0a975e12d41bea7d",
+      "src/newsvendor/corpus.py": "c8040ea3439a316d111a0aff87f44c4aadfcabe2838416c16f25a77dde0db690",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/encoder.py": "a9969d91db7845779d28c835031c3f9ac1c28f3552da8294fd2a16638b874c37",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/policy.py": "bb623145f4a8b677620515ad4fe03c6c3672d2f001346c209f1cd456811ce17f",
+      "src/newsvendor/providers.py": "f7ece364d8cbf4dbf904519ed50f43fbc583aa953ea1ef4e9c0259fab896f9eb",
+      "src/newsvendor/report.py": "e2c147d3fb0d86278e3d556e7780d0f157fc68aa6c5dacf5672568fba7aec6ed",
+      "src/newsvendor/train.py": "128acc8ff06623ce301bf441adedd603007e4576b67d9b07d6c89fe0cf02b4aa",
+      "src/newsvendor/typed.py": "387166ea3219f2288587a74ecc0715d438ad69f0bd7c377d078a70e9c6c5985c"
+    },
+    "lockHash": "fc1756d3513f2c82cfe084ad076f5369dcba97cebe2d80fc6479637e05ce5ea6",
+    "python": "3.12.12",
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "macOS-26.7.1-arm64-arm-64bit",
+    "commit": "HEAD",
+    "timestamp": "2026-10-05T12:21:38.661832+00:00",
+    "split": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "encoderHash": "52d6c955d671aca8d7f76bd78d76d1d2209c012476609b27ec0ff42ff0b68093",
+    "wallSeconds": 21.678907833003905,
+    "inferenceMs": {
+      "median": 1.4034170017112046,
+      "p95": 9.745439605467254
+    }
+  },
+  "summary": {
+    "checklist/rules": {
+      "n": 120,
+      "total": 75.91765873015873,
+      "regretAmongOrders": 69.82390873015873,
+      "requests": 0.3333333333333333,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "ask_all/rules": {
+      "n": 120,
+      "total": 38.45684523809524,
+      "regretAmongOrders": 15.071428571428571,
+      "requests": 1.0416666666666667,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "uncertainty/rules": {
+      "n": 120,
+      "total": 38.45684523809524,
+      "regretAmongOrders": 15.071428571428571,
+      "requests": 1.0416666666666667,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "one_step/rules": {
+      "n": 120,
+      "total": 35.33184523809524,
+      "regretAmongOrders": 15.071428571428571,
+      "requests": 0.9166666666666666,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "reference/rules": {
+      "n": 120,
+      "total": 34.08184523809524,
+      "regretAmongOrders": 15.071428571428571,
+      "requests": 0.875,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/rules": {
+      "n": 120,
+      "total": 64.29861111111111,
+      "regretAmongOrders": 55.91319444444444,
+      "requests": 0.4583333333333333,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "checklist/learned": {
+      "n": 120,
+      "total": 87.70188492063492,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 0.3,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "ask_all/learned": {
+      "n": 120,
+      "total": 107.49355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 1.175,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "uncertainty/learned": {
+      "n": 120,
+      "total": 107.49355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 1.175,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "one_step/learned": {
+      "n": 120,
+      "total": 87.72941468253968,
+      "regretAmongOrders": 80.59399801587301,
+      "requests": 0.3,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "reference/learned": {
+      "n": 120,
+      "total": 87.72941468253968,
+      "regretAmongOrders": 80.59399801587301,
+      "requests": 0.3,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/learned": {
+      "n": 120,
+      "total": 89.99355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 0.425,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "oracle/full-information-bound": {
+      "n": 120,
+      "total": 0,
+      "regretAmongOrders": 0,
+      "requests": 0,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/learned/no-evidence": {
+      "n": 120,
+      "total": 67.90625,
+      "regretAmongOrders": 59.916666666666664,
+      "requests": 0.4666666666666667,
+      "holdRate": 0,
+      "coverage": 0,
+      "falseHandoff": 1
+    },
+    "learned/learned/no-type": {
+      "n": 120,
+      "total": 110.24032738095238,
+      "regretAmongOrders": 101.83407738095238,
+      "requests": 0.4666666666666667,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/learned/no-impact": {
+      "n": 120,
+      "total": 89.99355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 0.425,
+      "holdRate": 0,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/learned/no-update": {
+      "n": 120,
+      "total": 185.8268849206349,
+      "regretAmongOrders": 98.6547619047619,
+      "requests": 0.425,
+      "holdRate": 0.16666666666666666,
+      "coverage": 1,
+      "falseHandoff": 0
+    },
+    "learned/learned/noise-0.1": {
+      "n": 120,
+      "total": 89.99355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 0.425,
+      "holdRate": 0,
+      "coverage": 0.9583333333333334,
+      "falseHandoff": 0.041666666666666664
+    },
+    "learned/learned/noise-0.2": {
+      "n": 120,
+      "total": 89.99355158730158,
+      "regretAmongOrders": 82.21230158730158,
+      "requests": 0.425,
+      "holdRate": 0,
+      "coverage": 0.9416666666666667,
+      "falseHandoff": 0.058333333333333334
+    }
+  },
+  "comparisons": [
+    {
+      "a": "learned/learned",
+      "b": "reference/learned",
+      "families": 24,
+      "difference": 2.264136904761902,
+      "ci95": [
+        -6.351190476190483,
+        11.506696428571429
+      ],
+      "unit": "original source bundle",
+      "metric": "scripted total loss; negative favors a"
+    },
+    {
+      "a": "learned/learned",
+      "b": "one_step/learned",
+      "families": 24,
+      "difference": 2.264136904761902,
+      "ci95": [
+        -6.351190476190483,
+        11.506696428571429
+      ],
+      "unit": "original source bundle",
+      "metric": "scripted total loss; negative favors a"
+    },
+    {
+      "a": "learned/rules",
+      "b": "reference/rules",
+      "families": 24,
+      "difference": 30.216765873015873,
+      "ci95": [
+        13.54573412698413,
+        48.68962053571427
+      ],
+      "unit": "original source bundle",
+      "metric": "scripted total loss; negative favors a"
+    },
+    {
+      "a": "learned/rules",
+      "b": "one_step/rules",
+      "families": 24,
+      "difference": 28.966765873015873,
+      "ci95": [
+        11.606119791666668,
+        47.80166170634919
+      ],
+      "unit": "original source bundle",
+      "metric": "scripted total loss; negative favors a"
+    }
+  ],
+  "byScenario": {
+    "checklist/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 51.09375,
+        "regretAmongOrders": 36.09375,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 226.60714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 124.21875,
+        "regretAmongOrders": 124.21875,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "ask_all/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 38.75,
+        "regretAmongOrders": 0,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 22.5,
+        "regretAmongOrders": 0,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 116.67857142857143,
+        "regretAmongOrders": 90.42857142857143,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 31.25,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "uncertainty/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 38.75,
+        "regretAmongOrders": 0,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 22.5,
+        "regretAmongOrders": 0,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 116.67857142857143,
+        "regretAmongOrders": 90.42857142857143,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 31.25,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "one_step/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 23.75,
+        "regretAmongOrders": 0,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 18.75,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 116.67857142857143,
+        "regretAmongOrders": 90.42857142857143,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 31.25,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "reference/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 23.75,
+        "regretAmongOrders": 0,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 11.25,
+        "regretAmongOrders": 0,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 116.67857142857143,
+        "regretAmongOrders": 90.42857142857143,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 31.25,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/rules": {
+      "conflicting": {
+        "n": 20,
+        "total": 51.09375,
+        "regretAmongOrders": 36.09375,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 156.89285714285714,
+        "regretAmongOrders": 143.14285714285714,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 124.21875,
+        "regretAmongOrders": 124.21875,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "checklist/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 226.60714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "ask_all/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 139.375,
+        "regretAmongOrders": 100.625,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 54.52380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 252.85714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 173.3928571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "uncertainty/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 139.375,
+        "regretAmongOrders": 100.625,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 54.52380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 252.85714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 1.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 173.3928571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 1.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "one_step/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 226.60714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.30803571428572,
+        "regretAmongOrders": 121.80803571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "reference/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 226.60714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.30803571428572,
+        "regretAmongOrders": 121.80803571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "oracle/full-information-bound": {
+      "conflicting": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 0,
+        "regretAmongOrders": 0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned/no-evidence": {
+      "conflicting": {
+        "n": 20,
+        "total": 15.0,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.0,
+        "regretAmongOrders": 32.0,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 36.5625,
+        "regretAmongOrders": 15.0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 0.75,
+        "regretAmongOrders": 0,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 216.25,
+        "regretAmongOrders": 216.25,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 106.875,
+        "regretAmongOrders": 96.25,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 0,
+        "falseHandoff": 1
+      }
+    },
+    "learned/learned/no-type": {
+      "conflicting": {
+        "n": 20,
+        "total": 136.78571428571428,
+        "regretAmongOrders": 136.78571428571428,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 36.60714285714285,
+        "regretAmongOrders": 32.85714285714285,
+        "requests": 0.25,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 83.98660714285714,
+        "regretAmongOrders": 83.23660714285714,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned/no-impact": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned/no-update": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 596.5625,
+        "regretAmongOrders": null,
+        "requests": 1,
+        "holdRate": 1,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned/noise-0.1": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 0.75,
+        "falseHandoff": 0.25
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    },
+    "learned/learned/noise-0.2": {
+      "conflicting": {
+        "n": 20,
+        "total": 100.625,
+        "regretAmongOrders": 100.625,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_contract": {
+        "n": 20,
+        "total": 32.02380952380953,
+        "regretAmongOrders": 32.02380952380953,
+        "requests": 0,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "missing_demand": {
+        "n": 20,
+        "total": 21.5625,
+        "regretAmongOrders": 0,
+        "requests": 1,
+        "holdRate": 0,
+        "coverage": 0.65,
+        "falseHandoff": 0.35
+      },
+      "sufficient": {
+        "n": 20,
+        "total": 3.25,
+        "regretAmongOrders": 2.5,
+        "requests": 0.05,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unavailable": {
+        "n": 20,
+        "total": 240.35714285714286,
+        "regretAmongOrders": 226.60714285714286,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      },
+      "unset_preference": {
+        "n": 20,
+        "total": 142.1428571428571,
+        "regretAmongOrders": 131.5178571428571,
+        "requests": 0.75,
+        "holdRate": 0,
+        "coverage": 1,
+        "falseHandoff": 0
+      }
+    }
+  }
+}

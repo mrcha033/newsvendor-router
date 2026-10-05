@@ -1,0 +1,5 @@
+{
+  "tatqa": {"repo":"NExTplusplus/TAT-QA","revision":"870accc41953dcde885aabeb963d94aabdc0fbc3","files":["dataset_raw/tatqa_dataset_train.json","dataset_raw/tatqa_dataset_dev.json"],"limit":200,"license":"CC-BY-4.0","source":"https://github.com/NExTplusplus/TAT-QA"},
+  "sharc": {"url":"https://sharc-data.github.io/data/sharc1-official.zip","limit":200,"license":"CC-BY-SA-3.0","source":"https://sharc-data.github.io/data.html"},
+  "retail": {"repo":"Dingdong-Inc/FreshRetailNet-50K","revision":"08c1fab7f9257bc73679d415d65d644165d351d4","series":50,"maxRows":10000,"license":"CC-BY-4.0","source":"https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K"}
+}
