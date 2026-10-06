@@ -9,6 +9,7 @@ from .corpus import SLOTS, outcome, possible
 from .io import digest, read, require, write
 
 EXTRA = 32
+POLICY_EXTRA = 64
 DEMAND = "Demand distribution estimated from complete uncensored historical observations"
 CONSTRAINT = (
     "Declared single-period model assumptions, unlimited returns and bounded order quantities"

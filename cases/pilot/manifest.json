@@ -1,0 +1,13 @@
+{
+  "schema": "raw-newsvendor-v2",
+  "origin": "handwritten-constructed-fixtures",
+  "humanReviewed": 0,
+  "episodes": 14,
+  "families": 13,
+  "inputHash": "ef1999a2c4cf5e2d00a43ef166401b34c0f6035a774a7fe8a78b7dc6d3c9e359",
+  "annotationHash": "ed87f49029888e68e6969c28b68949df74a6339398ff91195e6bd60a49266eca",
+  "scope": "Protocol smoke and case review only. Not train/dev/cal/test data or evidence of real-work effectiveness.",
+  "responseSemantics": "Private events are alternative standalone tool results; no response probabilities are asserted. Preference alternatives have no preselected hidden gold.",
+  "templates": 1,
+  "grouping": "13 fixture bundle IDs; shared boilerplate stays in one template lineage. These are not independent real-world sources."
+}

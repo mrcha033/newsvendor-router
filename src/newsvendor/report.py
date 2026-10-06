@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .evaluation import VERSION
 from .io import jsonl, require, write
 
 
@@ -32,6 +33,20 @@ def summarize(rows):
         "holdRate": mean(r["result"] == "hold" for r in rows),
         "coverage": mean(r["coverage"] for r in rows),
         "falseHandoff": mean(r["falseHandoff"] for r in rows),
+        "falseHandoffAmongOrders": mean(
+            r["falseHandoff"] for r in rows if r["result"] == "handoff"
+        ),
+        "authorizationErrorHandoff": mean(r["authorizationErrorHandoff"] for r in rows)
+        if all("authorizationErrorHandoff" in r for r in rows)
+        else None,
+        "coverageErrorHandoff": mean(r["coverageErrorHandoff"] for r in rows)
+        if all("coverageErrorHandoff" in r for r in rows)
+        else None,
+        "unresolvedConflictHandoff": mean(
+            "unresolved-conflict" in r["handoffReasons"] for r in rows
+        )
+        if all("handoffReasons" in r for r in rows)
+        else None,
     }
 
 
@@ -57,27 +72,47 @@ def paired(rows, a, b, repetitions=2000, seed=42):
 
 
 def save(rows, directory, config, provenance):
+    require(
+        all(r.get("evaluationVersion") == VERSION for r in rows),
+        "Legacy trajectories require rescore before creating a current report",
+    )
     groups = {}
     for row in rows:
         groups.setdefault(label(row), []).append(row)
     summary = {k: summarize(r) for k, r in groups.items()}
     comparisons = []
     for construction in sorted({r["construction"] for r in rows if r["method"] == "learned"}):
-        for method in ("reference", "one_step"):
-            comparisons.append(
-                paired(
-                    rows,
-                    "learned/" + construction,
-                    method + "/" + construction,
-                    config["bootstrap"],
-                    config["seed"],
+        for noise in sorted({r["noise"] for r in rows}):
+            suffix = "/noise-" + str(noise) if noise else ""
+            a = "learned/" + construction + suffix
+            for method in ("planner", "reference", "one_step"):
+                b = method + "/" + construction + suffix
+                if a in groups and b in groups:
+                    comparisons.append(paired(rows, a, b, config["bootstrap"], config["seed"]))
+        if construction != "rules":
+            for method in ("planner", "reference", "one_step"):
+                if method + "/rules" not in groups:
+                    continue
+                comparisons.append(
+                    paired(
+                        rows,
+                        "learned/" + construction,
+                        method + "/rules",
+                        config["bootstrap"],
+                        config["seed"],
+                    )
                 )
-            )
     jsonl(directory + "/trajectories.jsonl", rows)
     write(
         directory + "/metrics.json",
         {
             "scope": "controlled synthetic execution and learning check",
+            "informationRegimes": {
+                "reference": "Semantic expert state and exact generated response model; control upper bound.",
+                "planner": "Own constructed state and exact generated response model; control diagnostic.",
+                "learned": "Own constructed state; action values trained on own-state control rollouts.",
+                "oracle": "Hidden complete parameters without acquisition costs; evaluation bound.",
+            },
             "config": config,
             "provenance": provenance,
             "summary": summary,
@@ -116,7 +151,7 @@ def save(rows, directory, config, provenance):
             f"[{c['ci95'][0]:.3f}, {c['ci95'][1]:.3f}], {c['families']} bundles."
             for c in comparisons
         )
-        + "\n\nAblations and response-error stress tests here are inference diagnostics. "
-        "Retrained ablation studies require separate runs.\n"
+        + "\n\nAblations here are inference diagnostics; retrained ablations require separate runs. "
+        "Response-error comparisons use the same deterministic answer errors for every policy.\n"
     )
     return summary

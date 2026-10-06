@@ -1,5 +1,10 @@
 {
   "seed": 42,
+  "dataSeed": 42,
+  "workload": "diverse",
+  "language": "prose",
+  "constructionTransitions": true,
+  "policyContext": true,
   "groups": 20,
   "variants": 5,
   "epochs": 20,
@@ -14,5 +19,5 @@
     "pooling": "masked-mean",
     "trainable": false
   },
-  "output": "results/full"
+  "output": "results/revised/full"
 }

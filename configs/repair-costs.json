@@ -1,16 +1,18 @@
 {
   "seed": 42,
   "dataSeed": 42,
-  "workload": "diverse",
-  "language": "prose",
-  "constructionTransitions": true,
-  "policyContext": true,
-  "groups": 10,
-  "variants": 1,
-  "epochs": 8,
+  "groups": 20,
+  "variants": 5,
+  "epochs": 20,
   "folds": 3,
   "budget": 2,
-  "bootstrap": 1000,
+  "bootstrap": 2000,
+  "constructionTransitions": true,
+  "policyContext": true,
+  "economics": {
+    "requestMultipliers": [0.25, 1, 4, 10],
+    "holdMultipliers": [0.5, 1, 2]
+  },
   "encoder": {
     "model": "sentence-transformers/all-MiniLM-L6-v2",
     "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
@@ -19,5 +21,5 @@
     "pooling": "masked-mean",
     "trainable": false
   },
-  "output": "results/revised/pilot"
+  "output": "results/repair/costs"
 }

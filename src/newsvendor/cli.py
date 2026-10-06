@@ -65,7 +65,7 @@ def smoke(config):
 
 def evaluate(config, episodes, model, cache, directory, started):
     test = [e for e in episodes if e["split"] == "test"]
-    rows, timing = [], []
+    rows, timing, policy_timing = [], [], {}
     for e in test:
         for construction in ("rules", "learned"):
             for method in (
@@ -74,24 +74,50 @@ def evaluate(config, episodes, model, cache, directory, started):
                 "uncertainty",
                 "one_step",
                 "reference",
+                "planner",
                 "learned",
             ):
                 stamp = time.perf_counter()
                 rows.append(trajectory(e, method, model, cache, construction=construction))
-                timing.append((time.perf_counter() - stamp) * 1000)
+                elapsed = (time.perf_counter() - stamp) * 1000
+                rows[-1]["elapsedMs"] = elapsed
+                timing.append(elapsed)
+                policy_timing.setdefault(method + "/" + construction, []).append(elapsed)
         rows.append(trajectory(e, "oracle"))
         for ablation in ("evidence", "type", "impact", "update"):
             rows.append(trajectory(e, "learned", model, cache, ablation=ablation))
         for noise in (0.1, 0.2):
-            rows.append(trajectory(e, "learned", model, cache, noise=noise))
+            for construction in ("rules", "learned"):
+                for method in (
+                    "checklist",
+                    "ask_all",
+                    "uncertainty",
+                    "one_step",
+                    "reference",
+                    "planner",
+                    "learned",
+                ):
+                    rows.append(
+                        trajectory(e, method, model, cache, construction=construction, noise=noise)
+                    )
     prov = {
         **provenance(config),
         "split": corpus.audit(episodes),
+        "inputHash": digest([e["input"] for e in episodes]),
+        "labelHash": digest([e["gold"] for e in episodes]),
         "encoderHash": cache.id,
         "wallSeconds": time.perf_counter() - started,
         "inferenceMs": {
             "median": float(np.median(timing)),
             "p95": float(np.quantile(timing, 0.95)),
+        },
+        "inferenceByPolicyMs": {
+            name: {
+                "n": len(times),
+                "median": float(np.median(times)),
+                "p95": float(np.quantile(times, 0.95)),
+            }
+            for name, times in policy_timing.items()
         },
     }
     summary = save(rows, directory, config, prov)
@@ -109,7 +135,7 @@ def evaluate(config, episodes, model, cache, directory, started):
 def experiment(config, checkpoint=None):
     started = time.perf_counter()
     seed(config["seed"])
-    episodes = corpus.save(config)
+    episodes = corpus.save(config, directory=config["output"] + "/data")
     cache = embed(episodes, config["encoder"])
     if checkpoint:
         model, saved = load(checkpoint, cache)
@@ -119,6 +145,9 @@ def experiment(config, checkpoint=None):
         )
     else:
         model = fit(config, episodes, cache, config["output"])
+    from .diagnostics import inspect
+
+    write(config["output"] + "/diagnostics.json", inspect(episodes, model, cache))
     evaluate(config, episodes, model, cache, config["output"], started)
 
 
@@ -130,7 +159,7 @@ def doctor():
         "python": platform.python_version(),
         "torch": importlib.metadata.version("torch"),
         "encoderCached": Path(".cache/torch-embeddings.json").exists(),
-        "pilotModel": Path("results/pilot/model.pt").exists(),
+        "pilotModel": Path(read("configs/pilot.json")["output"] + "/model.pt").exists(),
         "datasets": read("data/processed/check.json")
         if Path("data/processed/check.json").exists()
         else None,
@@ -161,6 +190,11 @@ def main():
             "doctor",
             "external",
             "benchmark",
+            "raw-benchmark",
+            "diagnose",
+            "audit-workload",
+            "check-workload",
+            "rescore",
         ),
     )
     parser.add_argument("--config", default=None)
@@ -170,6 +204,11 @@ def main():
     parser.add_argument("--limit", type=int, default=20)
     parser.add_argument("--max-calls", type=int, default=0)
     parser.add_argument("--suite", choices=("public", "business"), default="public")
+    parser.add_argument("--split", choices=("dev", "test"), default="dev")
+    parser.add_argument("--inputs", default="cases/pilot/inputs.jsonl")
+    parser.add_argument("--annotations", default="cases/pilot/annotations.jsonl")
+    parser.add_argument("--design", default="configs/workload-v2.json")
+    parser.add_argument("--trajectories")
     args = parser.parse_args()
     config = read(
         args.config
@@ -200,6 +239,101 @@ def main():
             experiment(current)
     elif args.command == "doctor":
         doctor()
+    elif args.command == "rescore":
+        from .evaluation import VERSION, rescore
+        from .io import jsonl, lines
+        from .report import label, summarize
+
+        require(
+            args.trajectories and args.config,
+            "Rescore requires --trajectories and the original --config",
+        )
+        require(
+            config.get("workload", "legacy") == "legacy",
+            "Legacy rescore needs the original corpus configuration",
+        )
+        episodes = corpus.generate(config)
+        metadata = Path(args.trajectories).parent / "metrics.json"
+        require(
+            metadata.exists(),
+            "Rescore needs the original adjacent metrics.json for corpus provenance",
+        )
+        original = read(metadata)
+
+        def corpus_config(cfg):
+            return {
+                "dataSeed": cfg.get("dataSeed", cfg["seed"]),
+                **{k: cfg[k] for k in ("groups", "variants", "budget")},
+                "workload": cfg.get("workload", "legacy"),
+                "language": cfg.get("language", "equations"),
+                "economics": cfg.get("economics", {}),
+            }
+
+        require(
+            corpus_config(config) == corpus_config(original["config"]),
+            "Rescore corpus differs from recorded original configuration",
+        )
+        original_hash = original.get("provenance", {}).get("inputHash")
+        require(
+            not original_hash or original_hash == digest([e["input"] for e in episodes]),
+            "Rescore inputs differ from original input hash",
+        )
+        rows = rescore(lines(args.trajectories), episodes)
+        jsonl(config["output"] + "/rescored.jsonl", rows)
+        groups = {label(r) for r in rows}
+        summary = {k: summarize([r for r in rows if label(r) == k]) for k in sorted(groups)}
+        write(
+            config["output"] + "/rescore.json",
+            {
+                "evaluationVersion": VERSION,
+                "sourceFile": args.trajectories,
+                "sourceHash": digest(Path(args.trajectories).read_bytes()),
+                "inputHash": digest([e["input"] for e in episodes]),
+                "originalCorpusVerifiedBy": "inputHash"
+                if original_hash
+                else "original configuration; historical inputHash unavailable",
+                "originalMetadataHash": digest(metadata.read_bytes()),
+                "provenance": provenance(config),
+                "summary": summary,
+                "scope": "Recorded coverage and economic losses retained; observed authorization rechecked.",
+            },
+        )
+        print(
+            {
+                "directory": config["output"],
+                "rows": len(rows),
+                "summary": summary.get("learned/learned"),
+            },
+            flush=True,
+        )
+    elif args.command in ("audit-workload", "check-workload"):
+        from .io import lines
+        from .workload import check, controlled
+
+        if args.command == "audit-workload":
+            report = controlled(config)
+        else:
+            report = check(lines(args.inputs), lines(args.annotations), read(args.design))
+        report["provenance"] = provenance(config)
+        path = config["output"] + "/" + args.command + ".json"
+        write(path, report)
+        print({"report": path, "scope": report["scope"]}, flush=True)
+    elif args.command == "diagnose":
+        from .diagnostics import inspect
+
+        require(args.checkpoint, "Diagnose requires --checkpoint")
+        episodes = corpus.generate(config)
+        cache = embed(episodes, config["encoder"])
+        model, saved = load(args.checkpoint, cache)
+        require(
+            {k: v for k, v in config.items() if k != "output"}
+            == {k: v for k, v in saved.items() if k != "output"},
+            "Diagnosis configuration differs from training checkpoint",
+        )
+        report = inspect(episodes, model, cache, args.split)
+        report["provenance"] = provenance(config)
+        write(config["output"] + "/diagnostics.json", report)
+        print(report, flush=True)
     elif args.command == "external":
         from .providers import envfile, external
 
@@ -213,6 +347,17 @@ def main():
         envfile()
         require(args.provider, "Benchmark requires --provider")
         run(config, args.provider, args.max_calls)
+
+    elif args.command == "raw-benchmark":
+        from .providers import envfile
+        from .raw import run
+
+        envfile()
+        require(args.provider, "Raw comparison requires --provider")
+        print(
+            run(config, args.provider, args.max_calls, args.inputs, args.annotations, args.limit),
+            flush=True,
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,28 @@
+{
+  "seeds": [42, 43, 44, 45, 46],
+  "output": "results/repair/study",
+  "arms": [
+    {
+      "name": "initial",
+      "config": "configs/repair.json",
+      "overrides": {"constructionTransitions": false, "policyContext": false}
+    },
+    {
+      "name": "responses",
+      "config": "configs/repair.json",
+      "overrides": {"policyContext": false}
+    },
+    {"name": "context", "config": "configs/repair.json"},
+    {
+      "name": "costs-no-context",
+      "config": "configs/repair-costs.json",
+      "overrides": {"policyContext": false}
+    },
+    {"name": "costs-context", "config": "configs/repair-costs.json"}
+  ],
+  "comparisons": [
+    ["responses", "initial"],
+    ["context", "responses"],
+    ["costs-context", "costs-no-context"]
+  ]
+}

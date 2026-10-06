@@ -107,6 +107,7 @@ def decode(input, answers, threshold=0.5, temperatures=None):
             continue
         record["values"][slot], record["links"][slot] = chosen["value"], chosen["doc"]["id"]
         record["expressions"][slot] = chosen["id"]
+        record["state"][slot] = "verified"
     return finish(input, record, demand(input, record))
 
 

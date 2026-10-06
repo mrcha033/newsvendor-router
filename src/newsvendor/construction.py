@@ -5,6 +5,8 @@ import numpy as np
 
 from .corpus import KINDS, SLOTS, STATUSES, outcome
 from .encoder import CONSTRAINT, DEMAND, EXTRA
+from .io import digest
+from .numbers import atoms as prose_atoms
 from .optimizer import empirical, minimax
 
 
@@ -30,6 +32,8 @@ def atoms(doc):
                 "unit": unit,
             }
         )
+    spans = {tuple(a["span"]) for a in result}
+    result.extend(a for a in prose_atoms(doc) if tuple(a["span"]) not in spans)
     return result
 
 
@@ -82,7 +86,11 @@ def validate(expr, slot, input):
         errors.append("value")
     if slot == "b" and (doc["role"] != "manager" or "Selected" not in doc["text"]):
         errors.append("unselected-preference")
-    if slot == "v" and "handling fee" in doc["text"] and expr["op"] != "subtract":
+    if (
+        slot == "v"
+        and any("handling fee" in a["label"] for a in atoms(doc))
+        and expr["op"] != "subtract"
+    ):
         errors.append("omitted-fee")
     if (
         slot == "v"
@@ -117,6 +125,26 @@ def demand(input, record):
         Fs = input["task"]["allowed"]["F"]
         record["state"]["F"] = "unconfirmed"
         record["errors"].append("censored-demand")
+        # A forecast is an estimate, not replacement observations of lost sales.
+        forecasts = [
+            d
+            for d in input["docs"]
+            if d["title"] == "Demand forecast"
+            and d.get("complete", True)
+            and d["sku"] == input["task"]["sku"]
+            and d["period"] == input["task"]["period"]
+        ]
+        if forecasts:
+            pairs = re.findall(
+                r"^\s*(\d+(?:\.\d+)?)\s*\|\s*(\d+(?:\.\d+)?)\s*$",
+                forecasts[-1]["text"],
+                re.MULTILINE,
+            )
+            F = [[float(d), float(p)] for d, p in pairs]
+            if F and abs(sum(p for _, p in F) - 1) < 1e-8:
+                Fs = [F]
+                record["state"]["F"] = "verified"
+                record["errors"].remove("censored-demand")
     record["types"]["F"] = "estimate"
     return Fs
 
@@ -198,26 +226,35 @@ def features(cache, input, slot, doc=None, expr=None):
     return np.concatenate((first, second, x))
 
 
-def training_rows(episodes, cache):
+def training_rows(episodes, cache, transitions=True):
+    # Imported here because the public transition traversal also uses construction.
+    from .policy import states
+
     rows = {k: [] for k in ("evidence", "type", "state", "relation")}
     inputs = []
     for episode in episodes:
-        inputs.append(episode["input"])
-        for action in ("v", "b"):
-            if episode["input"]["task"]["partial"].get(action, 0):
-                inputs.append(outcome(episode["input"], action, "partial"))
-    for input in inputs:
+        if transitions:
+            snapshots = states(episode["input"], reference)
+        else:
+            snapshots = [episode["input"]]
+            for action in ("v", "b"):
+                if episode["input"]["task"]["partial"].get(action, 0):
+                    snapshots.append(outcome(episode["input"], action, "partial"))
+        inputs.extend((episode, snapshot) for snapshot in snapshots)
+    for episode, input in inputs:
+        source = {"id": episode["id"], "family": episode["family"], "stateHash": digest(input)}
         ref = reference(input)
         ref["types"]["C"], ref["state"]["C"] = "assumption", "verified"
         for slot in (*SLOTS, "F", "C"):
             x = features(cache, input, slot)
-            rows["type"].append({"x": x, "y": KINDS.index(ref["types"][slot])})
-            rows["state"].append({"x": x, "y": STATUSES.index(ref["state"][slot])})
+            rows["type"].append({**source, "x": x, "y": KINDS.index(ref["types"][slot])})
+            rows["state"].append({**source, "x": x, "y": STATUSES.index(ref["state"][slot])})
             if slot in ("F", "C"):
                 continue
             for doc in input["docs"]:
                 rows["evidence"].append(
                     {
+                        **source,
                         "x": features(cache, input, slot, doc),
                         "y": int(doc["id"] == ref["links"].get(slot)),
                     }
@@ -229,6 +266,7 @@ def training_rows(episodes, cache):
             if target is not None:
                 rows["relation"].append(
                     {
+                        **source,
                         "xs": [features(cache, input, slot, c["doc"], c) for c in cs],
                         "y": target,
                         "values": [c["value"] for c in cs],
@@ -252,6 +290,11 @@ def construct(input, model=None, cache=None, ablation=None):
         record["types"][slot] = "fact" if ablation == "type" else KINDS[int(kind.argmax())]
         record["state"][slot] = STATUSES[int(state.argmax())]
         record["probabilities"][slot] = {"type": kind.tolist(), "state": state.tolist()}
+        # A known contradiction must survive low confidence or rejected evidence.
+        if ref["state"][slot] == "conflict":
+            record["state"][slot] = "conflict"
+            record["errors"].append("conflict-" + slot)
+            continue
         cs = candidates(input, slot)
         docs = {c["doc"]["id"]: c["doc"] for c in cs}
         scores = [
@@ -269,7 +312,9 @@ def construct(input, model=None, cache=None, ablation=None):
         scores.sort(key=lambda item: (-item[0], item[1]["id"]))
         if not scores or ablation != "evidence" and scores[0][0] < model.get("threshold", 0.5):
             record["state"][slot] = (
-                ref["state"][slot] if ref["state"][slot] == "unavailable" else "unconfirmed"
+                ref["state"][slot]
+                if ref["state"][slot] in ("candidate", "unavailable")
+                else "unconfirmed"
             )
             continue
         choices = [c for c in cs if c["doc"]["id"] == scores[0][1]["id"]]
@@ -279,15 +324,11 @@ def construct(input, model=None, cache=None, ablation=None):
             .ravel()
         )
         selected = choices[int(logits.argmax())]
-        # The validator rejects simultaneous applicable contradictions independently of head confidence.
-        if ref["state"][slot] == "conflict":
-            record["state"][slot] = "conflict"
-            record["errors"].append("conflict-" + slot)
-            continue
         if slot == "b" and record["types"][slot] != "preference":
             record["state"][slot] = "unconfirmed"
             record["errors"].append("preference-type")
             continue
         record["values"][slot], record["links"][slot] = selected["value"], selected["doc"]["id"]
         record["expressions"][slot] = selected["id"]
+        record["state"][slot] = "verified"
     return finish(input, record, demand(input, record))

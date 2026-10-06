@@ -5,13 +5,12 @@ import torch
 
 from . import corpus
 from .cli import provenance
-from .encoder import EXTRA, embed
-from .heads import Head, train
+from .encoder import embed
 from .io import digest, jsonl, require, write
 from .policy import trajectory
 from .providers import settings
 from .report import save
-from .train import HEADS, seed, targets
+from .train import HEADS, policy_model, targets
 from .typed import TypedBuilder
 
 
@@ -27,26 +26,21 @@ def run(config, provider, budget):
     partitions = {
         k: [e for e in episodes if e["split"] == k] for k in ("train", "dev", "cal", "test")
     }
-    # This backbone is fixed before the study and never fitted on these families; no in-sample construction fit occurs.
-    values, repairs = targets(partitions["train"], None, cache, constructor=builder)
-    valid, repairdev = targets(partitions["dev"], None, cache, constructor=builder)
-    seed(config["seed"] + 104)
-    model, losses = {}, {}
-    for name, rows, dev, mode in (
-        ("value", values, valid, "value"),
-        ("repair", repairs, repairdev, "repair"),
-    ):
-        require(rows and dev, "Missing external-construction training or development targets")
-        model[name] = Head(cache.config["dim"] * 2 + EXTRA, *HEADS[name])
-        losses[name] = train(
-            model[name],
-            rows,
-            config["epochs"] * (2 if name == "value" else 1),
-            config["seed"] + 104,
-            mode,
-            valid=dev,
-        )
     calibration = builder.calibrate(partitions["cal"])
+    # This backbone is fixed before the study and never fitted on these families; no in-sample construction fit occurs.
+    context = config.get("policyContext", True)
+    values, repairs = targets(
+        partitions["train"], None, cache, constructor=builder, context=context
+    )
+    valid, repairdev = targets(partitions["dev"], None, cache, constructor=builder, context=context)
+    require(values and valid, "Missing external-construction training or development targets")
+    model, losses = policy_model(config, cache, values, repairs, valid, repairdev)
+    rulevalues, rulerepairs = targets(partitions["train"], None, cache, context=context)
+    rulevalid, rulerepairdev = targets(partitions["dev"], None, cache, context=context)
+    rulemodel, rulelosses = policy_model(
+        config, cache, rulevalues, rulerepairs, rulevalid, rulerepairdev
+    )
+    model.update({"rule_" + name: rulemodel[name] for name in ("value", "repair")})
     rows = []
     for episode in partitions["test"]:
         for construction in ("rules", "typed"):
@@ -56,6 +50,7 @@ def run(config, provider, budget):
                 "uncertainty",
                 "one_step",
                 "reference",
+                "planner",
                 "learned",
             ):
                 rows.append(
@@ -72,7 +67,8 @@ def run(config, provider, budget):
     Path(directory).mkdir(parents=True, exist_ok=True)
     torch.save(
         {
-            "weights": {k: v.state_dict() for k, v in model.items()},
+            "weights": {k: v.state_dict() for k, v in model.items() if k in HEADS},
+            "policyContext": context,
             "config": config,
             "calibration": calibration,
             "provider": builder.identity,
@@ -81,6 +77,7 @@ def run(config, provider, budget):
         directory + "/policy.pt",
     )
     records = list(builder.snapshots.values())
+    jsonl(directory + "/predictions.jsonl", records)
     jsonl(
         directory + "/calls.jsonl",
         [{"cacheKey": r["requestHash"], **r["trace"]} for r in records],
@@ -91,6 +88,7 @@ def run(config, provider, budget):
             "scope": "Fixed external constructor with shared learned value/recovery heads",
             "config": config,
             "losses": losses,
+            "rulePolicyLosses": rulelosses,
             "calibration": calibration,
             "fitFamilies": sorted({e["family"] for e in partitions["train"]}),
             "developmentFamilies": sorted({e["family"] for e in partitions["dev"]}),
@@ -112,6 +110,8 @@ def run(config, provider, budget):
             "wallSeconds": time.perf_counter() - started,
             "newCalls": builder.calls,
             "split": corpus.audit(episodes),
+            "inputHash": digest([e["input"] for e in episodes]),
+            "labelHash": digest([e["gold"] for e in episodes]),
         },
     )
     print(

@@ -5,7 +5,8 @@ import numpy as np
 
 from .construction import construct, reference
 from .corpus import SLOTS, STATUSES, outcome, possible
-from .encoder import ACTIONS, EXTRA
+from .encoder import ACTIONS, POLICY_EXTRA
+from .evaluation import VERSION, score
 from .io import digest
 from .optimizer import optimal, regret
 
@@ -44,34 +45,52 @@ def continuation(input, action, solve):
     return rho * ((1 - partial) * worst + partial * incomplete) + (1 - rho) * absent
 
 
-def planner(input, builder=reference, memo=None):
-    """Finite budgeted minimax rollout over declared public answer sets and response probabilities."""
+def planner(input, builder=reference, memo=None, *, scoring="reference"):
+    """Closed-world rollout; legacy reference scoring is a semantic expert, not a raw-input baseline.
+
+    Constructed scoring uses only the supplied constructor's uncertainty set. Both modes still
+    know the generator's answer sets and response model, so neither is a deployment benchmark.
+    """
+    if scoring not in ("reference", "constructed"):
+        raise ValueError(f"Unknown planner scoring {scoring}")
     memo = {} if memo is None else memo
-    key = digest(input)
+    key = digest({"input": input, "scoring": scoring})
     if key in memo:
         return memo[key]
-    state, ref, values = builder(input), reference(input), {}
+    state, values = builder(input), {}
+    evaluated = reference(input) if scoring == "reference" else state
     for action in actions(input, state):
         if action == "hold":
             values[action] = input["task"]["hold"]
         elif action == "handoff":
             values[action] = (
-                max(regret(state["q"], theta, input["task"]["bounds"]) for theta in ref["omega"])
-                if ref["omega"]
+                max(
+                    regret(state["q"], theta, input["task"]["bounds"])
+                    for theta in evaluated["omega"]
+                )
+                if evaluated["omega"]
                 else input["task"]["hold"]
             )
         else:
             values[action] = input["task"]["costs"][action] + continuation(
-                input, action, lambda next: planner(next, builder, memo)["value"]
+                input,
+                action,
+                lambda next: planner(next, builder, memo, scoring=scoring)["value"],
             )
     action = min(values, key=lambda a: (values[a], input["task"]["costs"].get(a, 0), a))
-    result = {"state": state, "values": values, "action": action, "value": values[action]}
+    result = {
+        "state": state,
+        "values": values,
+        "action": action,
+        "value": values[action],
+        "scoring": scoring,
+    }
     memo[key] = result
     return result
 
 
-def features(input, state, action, cache, ablation=None):
-    x = np.zeros(EXTRA, dtype=np.float32)
+def features(input, state, action, cache, ablation=None, context=True):
+    x = np.zeros(POLICY_EXTRA, dtype=np.float32)
     scale = input["task"]["hold"]
     x[:8] = [
         min(2, (state["gamma"] if state["gamma"] is not None else scale) / scale),
@@ -90,8 +109,41 @@ def features(input, state, action, cache, ablation=None):
     x[16:18] = ["censored-demand" in state["errors"], input["task"]["deadline"] / 3]
     x[18:23] = [action == a for a in ACTIONS]
     x[23] = input["task"]["partial"].get(action, 0)
+    if context:
+        task = input["task"]
+        requests = ("v", "b", "demand")
+        x[32:35] = [task["costs"][a] / scale for a in requests]
+        x[35:38] = [task["rho"].get(a, 1) for a in requests]
+        x[38:41] = [task["partial"].get(a, 0) for a in requests]
+        x[41:44] = [
+            (task["tolerance"] or 0) / scale,
+            task["tolerance"] is None,
+            task["decision"] == "minimax",
+        ]
+        unit = max([1, *(abs(v) for v in state["values"].values())])
+        x[44:48] = [state["values"].get(slot, 0) / unit for slot in SLOTS]
+        for i, slot in enumerate(SLOTS):
+            values = [theta[slot] for theta in state["omega"]]
+            if not values:
+                values = task["allowed"].get(slot, [state["values"].get(slot, 0)])
+            x[48 + 2 * i : 50 + 2 * i] = [min(values) / unit, max(values) / unit]
+        distributions = [theta["F"] for theta in state["omega"]] or task["allowed"]["F"]
+        high, q = max(1, task["bounds"][1]), state["q"] or 0
+        means = [sum(d * p for d, p in F) / high for F in distributions]
+        tails = [sum(p for d, p in F if d > q) for F in distributions]
+        x[56:64] = [
+            min(means),
+            max(means),
+            min(tails),
+            max(tails),
+            unit * high / scale,
+            (task["deadline"] - len(input["history"])) / 3,
+            task["bounds"][0] / high,
+            state["state"].get("F") == "verified",
+        ]
     if ablation == "impact":
         x[[0, 1, 6]] = 0
+        x[44:61] = 0
     if ablation == "type":
         x[11] = 0
     return np.concatenate((cache.pool(input), cache.vector(ACTIONS[action]), x))
@@ -105,6 +157,8 @@ def choose(input, state, method, model=None, cache=None, ablation=None, construc
     )
     if method == "reference":
         return planner(input, builder)["action"]
+    if method == "planner":
+        return planner(input, builder, scoring="constructed")["action"]
     if method == "checklist" and "handoff" in allowed:
         return "handoff"
     if method in ("checklist", "ask_all"):
@@ -132,18 +186,31 @@ def choose(input, state, method, model=None, cache=None, ablation=None, construc
             for a in allowed
         }
     elif method == "learned":
+        context = model.get("policyContext", True)
         if not state["omega"]:
-            scores = model["repair"].scores([features(input, state, "hold", cache)])[0]
+            scores = model["repair"].scores(
+                [features(input, state, "hold", cache, context=context)]
+            )[0]
             return max(allowed, key=lambda a: scores[list(ACTIONS).index(a)])
         scores = (
             model["value"]
-            .scores([features(input, state, a, cache, ablation) for a in allowed])
+            .scores([features(input, state, a, cache, ablation, context) for a in allowed])
             .ravel()
         )
         values = dict(zip(allowed, scores, strict=True))
     else:
         raise ValueError(f"Unknown policy {method}")
     return min(values, key=lambda a: (values[a], input["task"]["costs"].get(a, 0), a))
+
+
+def policy_heads(model, construction):
+    if model is not None and construction == "rules":
+        return {
+            "value": model["rule_value"],
+            "repair": model["rule_repair"],
+            "policyContext": model.get("policyContext", True),
+        }
+    return model
 
 
 def states(input, builder=reference):
@@ -171,12 +238,13 @@ def response(episode, input, action, noise):
     # Hidden truth is accessed only by the environment after the policy selected an action.
     chance = int(digest(episode["id"] + ":" + action)[:8], 16) / 2**32
     quality = int(digest(episode["id"] + ":quality:" + action)[:8], 16) / 2**32
+    error = int(digest(episode["id"] + ":noise:" + action)[:8], 16) / 2**32
     if chance >= input["task"]["rho"].get(action, 1):
         return None
     if quality < input["task"]["partial"].get(action, 0):
         return "partial"
     answer = episode["gold"]["theta"]["F" if action == "demand" else action]
-    if quality < noise:
+    if error < noise:
         answer = next((v for v in possible(input, action) if v != answer), answer)
     return answer
 
@@ -209,6 +277,11 @@ def trajectory(
             "requests": 0,
             "coverage": True,
             "falseHandoff": False,
+            "evaluationVersion": VERSION,
+            "authorized": None,
+            "authorizationErrorHandoff": False,
+            "coverageErrorHandoff": False,
+            "handoffReasons": [],
             "events": [{"action": "oracle-bound", "q": q}],
         }
     input = copy.deepcopy(episode["input"])
@@ -227,7 +300,7 @@ def trajectory(
             view,
             state,
             method,
-            model if method == "learned" else builder,
+            policy_heads(model, construction) if method == "learned" else builder,
             cache,
             ablation,
             override,
@@ -239,6 +312,9 @@ def trajectory(
             "gamma": state["gamma"],
             "values": state["values"],
             "links": state["links"],
+            "state": state["state"],
+            "valid": state["valid"],
+            "omegaSize": len(state["omega"]),
             "errors": state["errors"],
         }
         events.append(event)
@@ -250,7 +326,7 @@ def trajectory(
         answer = response(episode, input, action, noise)
         event["answer"] = answer
         input = outcome(input, action, answer)
-    coverage = episode["gold"]["theta"] in state["omega"]
+    evaluated = score(episode, input, state, result)
     loss = (
         regret(state["q"], episode["gold"]["theta"], input["task"]["bounds"])
         if result == "handoff"
@@ -273,7 +349,6 @@ def trajectory(
         "total": total,
         "requestCost": cost,
         "requests": requests,
-        "coverage": coverage,
-        "falseHandoff": result == "handoff" and not coverage,
+        **evaluated,
         "events": events,
     }

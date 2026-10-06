@@ -1,17 +1,21 @@
 # 검증 기록
 
-2026-10-05, macOS arm64, Python 3.12.12에서 실행했다.
+2026-10-06, Linux x86_64, Python 3.12.14 / CPU PyTorch에서 수정 내용을 검증했다. 측정 원본은 Git에서 제외한 `results/`에 보존한다.
 
-- 정적 검사·format 검사 통과, pytest **27개 통과**.
-- 서로 다른 원본 업무 묶음 30개에서 수치·순차 요청 smoke 통과.
-- full: 120개 원본 묶음/600개 episode, train/dev/cal/test = 360/60/60/120.
-- 공개 pretrained encoder를 실제 내려받아 6개 PyTorch head를 학습했다. 3-fold 표적 생성의 적합/평가 source 겹침은 0이다.
-- test 120개에 2,280개 trajectory를 실행했다. checkpoint를 불러온 재평가의 요약은 동일했다.
-- TAT-QA 200건, ShARC 200건, FreshRetail 50개 시계열/4,500 daily row 준비 및 분리/hash/시간 검사 통과.
-- 외부 API 형식, 호출 상한/cache, 공통 후보 decoder, 학습·정책 교차 연결을 로컬 서버와 명시된 test fixture로 검사했다. 실제 Jev/SGLang/agent 결과는 없다.
+- pytest **71개 통과**, Ruff 정적/format 검사와 diff 검사 통과.
+- 기존 수치 회귀와 수정 workload의 서로 다른 30개 source 순차 smoke 통과.
+- 기본 full은 600건/120개 참모수 조합이다. Train/dev/cal/test = 360/60/60/120이며 Test의 Train 참모수 중복은 0이다. 최적 수량이 경계에 있는 사례와 scenario 이름을 포함한 SKU도 0건이다.
+- 고정 MiniLM encoder와 8개 PyTorch head를 실제 학습했다. 3-fold의 적합/표적 source 겹침 및 train/dev/cal/test 묶음 겹침은 0이다.
+- Test 120건에서 5,640개 경로를 평가했다. 학습형의 false handoff는 0건, hold 비율은 24.17%다. Checkpoint를 다시 불러오는 재평가는 동일 요약을 확인한다.
+- 일반 문장 네 문서의 span/단위/계산 식, 원문 typed·agent의 공유 후보/자기 상태/호출 cache·상한, 계약 충돌·미선택 선호·검열 판매·마감·지원 밖 solver 조건을 protocol fixture로 검사했다.
+- Raw 사례 14건/13묶음/공통 template 하나의 수치 fixture 6개 및 응답 11개를 검사했다. 실제 조직 자료와 사람 검토는 0이다.
 
 ## 결과 해석
 
-현재 full 통제 실행의 학습형 구성+정책 total loss는 89.994, 같은 구성의 reference planner는 87.729다. 학습형의 우위를 입증한 결과가 아니다. Pilot은 작은 학습 자료로 인해 false handoff가 발생했다. 자동 주석을 사람이 검토한 수는 0이며, 실제 업무 자료에 대한 효과는 별도로 검증해야 한다.
+수정 full의 학습형 구성+정책 loss는 **178.223**, 같은 구성의 own-state planner는 **175.934**다. 차이는 2.289, 24개 source 묶음의 paired bootstrap 95% CI는 [-0.821, 7.013]이다. 학습형의 우위는 확인되지 않았다. 이 숫자는 새 경제·문장·응답 조건의 통제 실행이며 이전 조건의 loss와 직접 비교하지 않는다.
 
-원시 trajectory와 checkpoint는 로컬 results에 보존하고 요약·학습 기록을 이 폴더에 저장했다. [full 보고서](evidence/full-report.md), [측정값](evidence/full-metrics.json), [학습 기록](evidence/full-training.json)을 함께 확인한다. 실행 명령은 README에 있다. GitHub Actions는 이후 push한 commit에서 검사한다.
+기존 main의 원시 기록을 기록된 응답으로 재채점하면 계약 충돌 20건의 미승인 전달을 모두 오류로 잡는다. 이전 coverage-only false handoff 0건은 승인 안전성의 결과가 아니다. 경제 손실 89.99355와 과거 coverage를 보존하며 승인 오류만 추가했다. 이전 문법의 수정 회귀 실행은 같은 충돌 20건의 승인 오류 0건, loss 39.33185다. 원본 corpus hash는 이전 저장본과 동일함을 확인했다.
+
+현재 revision의 원시 학습/측정/재평가는 `results/revised/`, 이전 수정 회귀는 `results/repair/`, 사례 검사는 `results/workload-review/`에 보존한다. `docs/evidence/`의 27-test 당시 자료는 역사적 실행이며 새 승인 채점과 새 workload 결과로 읽지 않는다.
+
+실제 Jev/SGLang/agent endpoint/model 설정이 없어 외부 모델 측정은 실행하지 않았다. 원문 typed/checklist와 agent 실행 경로는 구현됐지만 학습형 router의 raw 학습/평가 연결, 실제 조직 자료와 비교 결과는 후속 실험이 필요하다. Protocol fixture 결과를 실제 모델 성능으로 세지 않는다. 계획과 readiness는 기존 `protocol.md`와 `configs/workload-v2.json`에 유지한다.

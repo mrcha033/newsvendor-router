@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .construction import reference
 from .corpus import generate, outcome
+from .evaluation import score
 from .io import digest, jsonl, lines, require, write
 from .optimizer import regret
 from .policy import actions, response
@@ -302,7 +303,7 @@ def business(provider, limit, config, directory):
             if action == "handoff"
             else None
         )
-        coverage = episode["gold"]["theta"] in state["omega"]
+        evaluated = score(episode, input, state, action)
         rows.append(
             {
                 "id": episode["id"],
@@ -317,8 +318,7 @@ def business(provider, limit, config, directory):
                 "regret": loss,
                 "total": cost + (loss if loss is not None else input["task"]["hold"]),
                 "requests": count,
-                "coverage": coverage,
-                "falseHandoff": action == "handoff" and not coverage,
+                **evaluated,
                 "events": events,
                 "traces": traces,
             }

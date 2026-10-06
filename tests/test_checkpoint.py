@@ -6,9 +6,9 @@ import torch
 
 from newsvendor.construction import training_rows
 from newsvendor.corpus import SLOTS, generate
-from newsvendor.encoder import ACTIONS, CONSTRAINT, DEMAND, EXTRA, Embeddings, texts
+from newsvendor.encoder import ACTIONS, CONSTRAINT, DEMAND, Embeddings, texts
 from newsvendor.heads import Head
-from newsvendor.train import HEADS, checkpoint, load
+from newsvendor.train import HEADS, checkpoint, head_dim, load
 
 
 def test_checkpoint_encoder_guard_and_label_free_features(tmp_path):
@@ -27,7 +27,7 @@ def test_checkpoint_encoder_guard_and_label_free_features(tmp_path):
         assert np.array_equal(
             np.array([r["x"] for r in rows[name]]), np.array([r["x"] for r in other[name]])
         )
-    model = {k: Head(8 + EXTRA, *shape) for k, shape in HEADS.items()}
+    model = {k: Head(head_dim(k, cache), *shape) for k, shape in HEADS.items()}
     model.update(temperatures={k: {"temperature": 1.0} for k in HEADS}, threshold=0.5)
     path = str(tmp_path / "model.pt")
     checkpoint(path, model, config, cache, [episode])
@@ -40,3 +40,8 @@ def test_checkpoint_encoder_guard_and_label_free_features(tmp_path):
             assert torch.equal(original, recovered)
     with pytest.raises(ValueError, match="encoder differs"):
         load(path, Embeddings({"dim": 4, "revision": "different"}, cache.values))
+    payload = torch.load(path, weights_only=True)
+    payload["schema"] = 2
+    torch.save(payload, path)
+    with pytest.raises(ValueError, match="retrain"):
+        load(path, cache)

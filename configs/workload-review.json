@@ -1,0 +1,8 @@
+{
+  "seed": 42,
+  "dataSeed": 42,
+  "groups": 20,
+  "variants": 5,
+  "budget": 2,
+  "output": "results/workload-review"
+}

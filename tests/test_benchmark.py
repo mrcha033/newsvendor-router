@@ -45,7 +45,7 @@ def test_shared_training_and_policy_cross_with_fixed_provider(monkeypatch, tmp_p
     monkeypatch.setattr(benchmark, "provenance", lambda *_: {"testFixture": True})
     benchmark.run(config, "sglang", 0)
     metrics = read("results/benchmarks/sglang/42/metrics.json")
-    assert len(metrics["summary"]) == 12
+    assert len(metrics["summary"]) == 14
     assert metrics["summary"]["learned/typed"]["n"] == 12
     training = read("results/benchmarks/sglang/42/training.json")
     assert training["newCalls"] == 0
