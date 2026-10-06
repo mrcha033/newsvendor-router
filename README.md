@@ -86,11 +86,45 @@ uv run newsvendor score-suite --predictions predictions.jsonl --split test
 
 공통 입력은 `newsvendor.suite.public_input(row)`로 얻습니다. 영어 request, 원문 documents, tables, 관측 history·sales, 도구 목록만 반환합니다. 정답·의도·근거 주석·미래 대화·정답 규칙 ID는 제외합니다. OR-ShARC의 올바른 문서는 입력에 미리 넣지 않고 공통 조회 도구로 찾습니다. ABCD에는 현재 정답 workflow를 선택해서 주는 대신 전체 정책을 제공합니다.
 
-예측 JSONL은 `{"id":"<case id>","prediction":{"action":"answer","answer":12,"scale":"million"}}` 형식입니다. 행동은 `answer/ask/speak/call_tool/abstain`이며 근거는 `evidence:[{"document":"contract","start":0,"end":10}]`, 도구는 `tool`과 순서 있는 `arguments`, 조회 문서는 `retrieved`로 기록합니다. 정답 파일은 채점 프로세스만 읽습니다. 외부 provider와 새 suite의 학습 연결은 아직 구현하지 않았습니다.
+예측 JSONL은 `{"id":"<case id>","prediction":{"action":"answer","answer":12,"scale":"million"}}` 형식입니다. 행동은 `answer/ask/speak/call_tool/abstain`이며 근거는 `evidence:[{"document":"contract","start":0,"end":10}]`, 도구는 `tool`과 순서 있는 `arguments`, 조회 문서는 `retrieved`로 기록합니다. 학습은 Train/Dev 원래 주석만 읽고, Test 정답은 독립 채점기만 읽습니다. `native_inputs.py`가 주석 없는 원문 fragment·계산 후보를 만들고, `native_model.py`가 기존 PyTorch head를 원래 과제의 근거·상태·행동·계산·판매 예측에 적합합니다.
 
 가공 입력·정답·조회 collection·manifest는 `data/processed/complementary/`에, 원시 응답은 `data/raw/complementary/`에 저장합니다. 같은 계약·규칙 page/tree·대화·매장·상품을 연결하고, 동일 입력과 수치 정규화 문서 및 유사 template를 묶어 60/20/20%로 분할합니다. 이 실행은 Train/Dev/Test 1,074/362/366건, 378개 출처 묶음입니다. TAT-QA는 전체 보고서 식별자가 없어 context 수준 분할이고, OR-ShARC의 주석 없는 조회 collection은 모든 방법에 공통으로 공개됩니다.
 
-각 구성 요소의 점수와 묶음별 평균을 따로 보존합니다. 누락 예측은 분류 분모에 남고, 불완전한 판매 예측은 비교 가능 결과로 인정하지 않습니다. 기록된 질문·발화의 문구 유사도는 참고 지표입니다. 인과적 행동 가치·발주 손실·잠재수요는 이 공개 자료의 정답이 아니며, end-to-end 발주 평가 준비 상태는 계속 미완료입니다. 준비 snapshot은 [manifest](cases/complementary/manifest.json)에 기록합니다.
+각 구성 요소의 점수와 묶음별 평균을 따로 보존합니다. 누락 예측은 분류 분모에 남고, 불완전한 판매 예측은 비교 가능 결과로 인정하지 않습니다. 기록된 질문·발화의 문구 유사도는 참고 지표입니다. 인과적 행동 가치·발주 손실·잠재수요는 이 공개 자료의 정답이 아니므로 해당 학습 표적은 만들지 않습니다. 준비 snapshot은 [manifest](cases/complementary/manifest.json)에 기록합니다.
+
+CPU에서 5개 seed의 9개 head 학습과 Test 366건 평가를 실행했습니다. [가중치와 원시 결과](models/native/)를 커밋에 포함합니다. 초기 Test를 개발 중 확인했으므로 확증 실험이 아닌 탐색적 adapter 결과입니다.
+
+| 원래 과제 지표 | 5개 seed 평균 |
+|---|---:|
+| CUAD 상태와 근거 결합 점수 | 0.527 |
+| ContractNLI 상태 정확도 / 상태와 근거 결합 점수 | 0.578 / 0.227 |
+| OR-ShARC 의사결정 정확도 | 0.558 |
+| ABCD 도구 선택 정확도 / 관측 인자까지 정확 | 0.246 / 0.000 |
+| TAT-QA 답과 scale 모두 정확 | 0.017 |
+| FreshRetail 비품절 관측 판매 MAE | 0.509 |
+
+ABCD는 발화 여부와 조건부 도구 선택을 분리했습니다. CPU 인자 추출은 제한된 공개 문법만 처리합니다. TAT-QA 계산 후보에 Train 정답 144건 중 50건만 포함되어 후보 생성과 선택 양쪽의 제약이 남습니다. 이 결과로 모델 우위를 주장하지 않습니다. GPU 실행은 같은 Qwen 7B를 사용해 typed·agent와 학습형 선택 후 인자/질문을 표현하는 조건을 측정하며, 선택된 도구·상태·근거·계산 값은 언어 helper가 바꾸지 못합니다.
+
+## 연결된 주문 사례와 남은 GPU 실행
+
+[τ²-bench retail](https://github.com/sierra-research/tau2-bench/tree/5bfa7e37b36656b37dc6d022156be6563c1007f3/data/tau2/domains/retail)의 영어 주문 운영 사례 114건, 고객 500명·주문 1,000건·상품 종류 50개의 연결 DB와 원래 정책/도구를 확보했습니다. 모두 모의 업무 자료이며 실제 발주·고객 로그가 아닙니다. 공식 Train/Test에는 고객 22명이 겹쳐 고객 묶음 53개로 다시 분할했습니다: Train/Dev/Test 61/28/25건. 공통 상품 catalog는 모든 방법에 공개됩니다.
+
+사용자 목표는 응답 환경만 읽고 비교 모델은 실제 생성된 첫 발화·이후 관측·정책·조회 도구만 받습니다. 각 방법은 새 격리 DB에서 시작합니다. 최종 DB 일치, 미승인/다른 고객 변경, 거래 원장 차이, 상호작용·추론 비용을 따로 채점합니다. 조회 과제는 DB 무변경만으로 성공 처리하지 않고 실제 목표 응답과 필수 이관도 확인합니다. 원장 차이는 모의 USD 차이이며 경제적 행동 가치나 실제 발주 손실이 아닙니다. 원래 evaluator처럼 실패한 참고 조회 뒤에도 재생을 계속하며 경고를 보존합니다. 참고 변경 자체가 실패하는 `orders-105`는 제거하지 않고 주석 모호성을 표시합니다.
+
+```sh
+# CPU 환경: 준비된 정확한 snapshot 복원과 재학습
+uv run newsvendor restore-eval
+uv run newsvendor train-native
+uv run newsvendor check-orders
+
+# CUDA 머신, Python 3.12: Git에 포함된 데이터와 가중치로 남은 비교 실행
+uv run --no-project scripts/run_gpu.py --stage all
+# 개별 실행: --stage components 또는 --stage orders
+```
+
+프로젝트의 `uv sync`는 Linux에서 CPU PyTorch를 설치하므로 GPU 실행에는 위의 별도 script 환경을 사용합니다. 24GB 이상 GPU를 권장합니다. Qwen2.5-7B-Instruct revision `a09a35458c702b33eeacc393d103063234e8bc28`을 고정하고 typed·agent와 학습형 출력 helper에 동일 가중치를 사용합니다. CUDA가 없으면 모델을 내려받기 전에 중단합니다. 토큰·도구·턴 상한과 원시 응답/cache를 보존하고 입력을 조용히 자르지 않습니다. `--max-calls N`으로 새 생성 수를 제한하고 같은 명령으로 cache에서 이어갈 수 있습니다.
+
+구성 요소 비교는 학습 seed를 사례 안에서 먼저 평균한 뒤 출처 묶음별 paired bootstrap을 수행합니다. 주문 비교는 seed 42의 ABCD head를 재학습 없이 전이한 진단입니다. Typed·agent 및 주문 대화의 실제 GPU 결과는 아직 실행하지 않았습니다. 결과는 `results/native/{seed}/gpu`, `results/native/{typed,agent}`와 `results/orders/`에 저장합니다. 별도 원시 다운로드 없이 실행할 수 있도록 [평가 snapshot](cases/evaluation.json)을 포함하며 각 원천의 라이선스를 유지합니다.
 
 ## 실험 범위
 

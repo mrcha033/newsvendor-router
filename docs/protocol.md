@@ -18,6 +18,8 @@
 
 ## 학습과 calibration
 
+Native adapter는 통제 planner를 사용하지 않는다. Train/Dev의 원래 상태·근거·도구·답/scale·미래 관측 판매를 표적으로 9개 head를 적합한다. ABCD는 발화 여부와 조건부 도구 선택을 분리한다. 경제적 행동 가치와 사실/선호 type에는 주석이 없어 해당 head를 학습했다고 주장하지 않는다. 후보 생성은 공개 source만 사용하며 정답이 후보에 없는 Train 사례는 해당 후보 선택 학습만 건너뛰고 coverage를 기록한다. Test 사례는 모두 채점 분모에 유지한다. 초기 Test를 adapter 개발 중 확인했으므로 현재 결과는 탐색적 측정이고 새 blind Test의 확증 결과가 아니다.
+
 고정 pretrained encoder 표현 위에 evidence/type/state/relation/value/recovery head와 rules용 value/recovery head를 학습한다. Construction은 32차원, 정책은 64차원 특성을 추가한다. CE+Brier, 후보 CE와 후보별 Huber 수치 손실, hold 비용으로 정규화한 value MSE, 허용 행동 mask를 적용한 recovery CE를 사용한다. 수치는 근거 span에서 calculator가 계산한다.
 
 Construction은 train 원본 묶음의 공개 도달 상태와 응답을 학습하고 dev 손실로 선택한다. Train 묶음 단위 3-fold cross-fit에서 해당 묶음을 학습하지 않은 구성 모델의 실제 예측 상태로 정책 표적을 만든다. 각 구성의 자기 `Ω`로 후속 손실을 계산하며 reference의 의미 상태로 바꾸지 않는다. 응답 뒤에도 같은 구성·검증·갱신을 적용한다. 통제 표적의 미래 응답 집합과 동역학은 여전히 생성기를 안다. Fold 적합/표적 묶음과 hash를 보존한다.
@@ -37,6 +39,12 @@ Construction은 train 원본 묶음의 공개 도달 상태와 응답을 학습�
 외부 모델의 endpoint·실제 model을 지정해야 실행한다. 새 호출은 `--max-calls` 안에서만 허용하며 기본값 0은 cache 전용이다. 원시 답변·확률·반환 model·usage·지연·request/hash를 보존한다. API confidence를 정답확률로 해석하지 않는다. Protocol fixture와 로컬 서버 검사는 실제 모델 측정이 아니다. 실제 외부 모델 결과는 아직 없다.
 
 ## 수치와 채점
+
+`scripts/run_gpu.py`는 정확한 가공 snapshot과 CPU 학습 가중치를 사용해 같은 pinned Qwen 7B의 typed·agent·학습형 언어 helper를 실행한다. Native typed는 고정 조회 계획→구조화 추출, agent는 최대 2회 adaptive 조회→구조화 답변이다. 동일 초기 fragment·원문 접근·계산 후보·토큰 상한을 제공한다. 학습형 helper는 선택된 도구/상태/근거/계산 값을 바꾸지 않고 인자·발화만 표현한다. 구성 요소별 지표에서 seed를 사례 안에서 평균한 뒤 source 묶음별 paired bootstrap을 수행한다. 관측 판매 예측은 공통 seed-42 forecaster를 사용하는 보조 진단으로 언어 routing 승패에 합치지 않는다.
+
+연결된 모의 주문 환경은 pinned τ²-bench retail 114건과 원래 500명/1,000주문/50상품 DB를 사용한다. 고객 identity와 연결 주문의 53개 묶음을 Train/Dev/Test 61/28/25로 분할한다. 공식 분할의 고객 중복 22명을 기록하고 전체 catalog/정책의 공통 공개는 유지한다. 비교 모델은 사용자 시나리오·참고 행동·미래 응답을 보지 않는다. 공통 고정 사용자 simulator만 private scenario를 읽고, 생성된 첫 발화는 같은 cache key로 모든 방법에 동일하게 제공한다.
+
+각 주문 rollout은 새 DB에서 시작해 원래 도구로 상태를 변경한다. 같은 공개 validator가 고객 identity와 정확한 변경 제안에 대한 확인을 검사하고 위반 시도를 별도로 기록한다. 최종 DB와 원래 참고 행동을 재생한 DB를 비교하며 실패한 참고 조회는 원천 evaluator와 같이 기록하고 계속한다. 참고 변경이 전부 실패한 과제는 제거하지 않고 taskSuccess를 미판정으로 둔다. 조회만 하는 과제에서 DB가 그대로라는 이유로 성공 처리하지 않고 관측 대화의 사용자 목표 충족도 사후 판정한다. 필수 human transfer 도구 호출도 검사한다. 사후 NL/goal judge의 원시 판정·유효 coverage와 정책 위반, 결제 원장 L1 차이, 턴·토큰·실제 새 추론/cache를 보존한다. 원장 차이는 모의 USD 값이며 실제 경제적 행동 가치가 아니다. 현재 주문 학습형은 seed 42의 ABCD state/relation head 전이 진단이고 retail value policy를 학습한 결과가 아니다.
 
 Optimizer는 support knot와 선형 regret 교차점으로 정확한 유한 minimax를 계산하고 정수 발주는 grid를 열거한다. 기존 프로포절 예제의 `q=450/7`, `Γ=900/7`, 두 요청 값 30, 한 번의 v 요청 값 85와 b 요청 값 `160/3`을 회귀 검사한다. 수정 workload의 별도 30묶음 순차 실행과 raw 사례의 수치/응답/마감 검사를 수행한다.
 

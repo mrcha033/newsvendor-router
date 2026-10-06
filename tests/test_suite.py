@@ -37,6 +37,22 @@ def test_public_inputs_exclude_annotations_and_future_dialogue():
     original_input = public_input(row)
     row["target"] = {"action": "abstain", "spans": []}
     assert public_input(row) == original_input
+    from newsvendor.native_benchmark import public_view
+    from newsvendor.native_inputs import prepare
+
+    config = {"fragments": 12, "candidates": 48}
+    view = prepare(row, [], config)
+    altered = copy.deepcopy(row)
+    altered.update(
+        id="PRIVATE_CASE_ID",
+        family="PRIVATE_FAMILY",
+        component="retail",
+        split="test",
+        target={"answer": "PRIVATE_LABEL"},
+    )
+    assert prepare(altered, [], config) == view
+    assert view["indexedCharacters"] == view["sourceCharacters"]
+    assert "PRIVATE_" not in json.dumps(public_view(view))
     row["input"]["tools"] = [{"id": "query", "future": "private response"}]
     with pytest.raises(ValueError):
         public_input(row)

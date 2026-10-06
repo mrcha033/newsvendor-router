@@ -192,6 +192,11 @@ def main():
             "check-suite",
             "score-suite",
             "retrieve-suite",
+            "train-native",
+            "prepare-orders",
+            "check-orders",
+            "pack-eval",
+            "restore-eval",
         ),
     )
     parser.add_argument("--config", default=None)
@@ -212,7 +217,11 @@ def main():
     config = read(
         args.config
         or (
-            "configs/complementary.json"
+            "configs/native.json"
+            if args.command == "train-native"
+            else "configs/orders.json"
+            if args.command in ("prepare-orders", "check-orders")
+            else "configs/complementary.json"
             if args.command.endswith("-suite")
             else "configs/pilot.json"
             if args.command in ("experiment", "evaluate", "benchmark")
@@ -221,7 +230,22 @@ def main():
     )
     if args.seed is not None:
         config["seed"] = args.seed
-    if args.command.endswith("-suite"):
+    if args.command == "train-native":
+        from .native_model import run
+
+        run(config)
+    elif args.command in ("prepare-orders", "check-orders"):
+        from . import orders
+
+        print(
+            orders.prepare(config) if args.command == "prepare-orders" else orders.check(config),
+            flush=True,
+        )
+    elif args.command in ("pack-eval", "restore-eval"):
+        from . import snapshot
+
+        print(snapshot.pack() if args.command == "pack-eval" else snapshot.restore(), flush=True)
+    elif args.command.endswith("-suite"):
         from . import suite
         from .io import lines
 

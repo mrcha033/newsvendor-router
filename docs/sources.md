@@ -11,7 +11,7 @@ TAT-QA는 완전한 표·문단 context를 source group으로 사용한다. raw 
 
 FreshRetail rows API에는 revision 고정 기능이 없다. Hub SHA를 수집 전후 확인하고 원시 API 응답 각각의 hash를 기록하므로 **실제 수집 snapshot**을 식별할 수 있다. API 응답이 해당 parquet commit과 동일하다고 완전히 보장하지 않는다. 처음 60일 이상 관측된 50개 store/product를 선택하고 각 시계열을 시간 순서로 60/20/20 분할한다. 수집 표본은 90일 × 50 = 4,500개 daily row다. `sale_amount`는 정규화 판매이며 stockout row를 실제 잠재수요로 사용하지 않는다.
 
-원시 자료·가공 자료·encoder weights는 Git에 재배포하지 않는다. 수집 명령과 license·URL·SHA·표본 수는 manifest로 보존한다. 원본 proposal의 Newsvendor 참고자료는 Lariviere & Porteus의 논문이다. 교과서로 표기하지 않는다.
+대용량 원시 다운로드와 encoder weights는 Git에 재배포하지 않는다. 재현에 필요한 가공 입력·원래 주석·공개 조회 collection은 `cases/evaluation.tar.xz`에 분리 파일로 보존한다. `cases/evaluation.json`에 파일별 SHA-256, 원천 URL/revision/라이선스를 기록한다. CUAD·ContractNLI·TAT-QA·FreshRetail 부분은 CC BY 4.0, OR-ShARC 부분은 CC BY-SA 3.0, ABCD·τ² retail 부분은 MIT를 그대로 적용한다. 가공 내용은 원래 문서를 공통 schema에 담고 출처 묶음으로 재분할한 것이다. 원본 proposal의 Newsvendor 참고자료는 Lariviere & Porteus의 논문이다. 교과서로 표기하지 않는다.
 
 상보적 영어 suite는 위의 축소 public 진단과 별도로 `prepare-suite`로 준비한다. `configs/complementary.json`에 Git commit과 파일 SHA-256을 고정하고 [준비 manifest](../cases/complementary/manifest.json)에 실제 수집 hash·분할·개수를 기록한다.
 
@@ -25,6 +25,12 @@ FreshRetail rows API에는 revision 고정 기능이 없다. Hub SHA를 수집 �
 TAT-QA의 60개 context/240개 질문과 FreshRetail의 50개 시계열도 같은 suite에 포함한다. FreshRetail은 450만 행의 여러 위치에서 60개 응답을 수집해 매장 범위를 넓히고 과거 60일/후속 7일을 분리한다. 같은 매장 또는 상품은 연결해 분할한다. 이 suite의 판매 평가는 관측 판매 예측이며, 비검열·검열 행 오차를 각각 보고한다. 질문 비용이나 실제 발주 결과, 잠재수요 정답은 없다.
 
 Suite의 원천에 기존 사람 주석이 있어도 새 업무 사례를 검토한 사람 수는 0이다. 영어 공개 계약과 역할극·crowd 대화의 성과를 실제 조직의 전체 의사결정 성과로 확장하지 않는다. 서로 다른 원천을 연결한 합성 발주 사례는 이번 suite에 포함하지 않았다.
+
+[τ²-bench retail](https://github.com/sierra-research/tau2-bench)은 revision `5bfa7e37b36656b37dc6d022156be6563c1007f3`, MIT를 사용한다. `configs/orders.json`에 DB·정책·과제·공식 분할·원래 도구/모델 코드의 SHA-256을 고정한다. 데이터는 연결된 모의 고객·주문·상품이다. 실무에서 수집한 고객 기록이나 공급자 발주 자료로 표기하지 않는다. 참고 행동은 최종 DB 채점만 읽고 사용자 시나리오는 공통 사용자 simulator만 읽는다. 공식 Train/Test의 고객 중복 22명 때문에 53개 고객 묶음으로 재분할하며 공식 분할도 manifest에 보존한다.
+
+`src/newsvendor/retail/`은 위 revision의 Pydantic 자료 모델과 도구를 MIT notice와 함께 적용한다. 프레임워크 DB를 BaseModel로, toolkit 생성자를 로컬 DB로 교체하고 데코레이터·미사용 실행 예제를 제거했다. 이미 길이를 검사하는 zip에 strict를 추가했다. 나머지 도구 함수의 AST가 원천과 같은지 검사했다. 원래 환경 채점도 참고 도구 오류를 기록하고 계속하므로 동일하게 처리한다. 실패한 참고 변경만 있고 성공한 변경이 없는 과제는 주석 모호성을 표시한다.
+
+GPU 비교 모델은 [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), revision `a09a35458c702b33eeacc393d103063234e8bc28`, Apache 2.0이다. 동일 고정 가중치를 typed·agent·학습형 언어 helper 및 공통 사용자 simulator에 사용한다. 사용자 simulator와 사후 NL assertion judge는 비교 방법의 입력에 숨겨진 목표·정답을 전달하지 않는다. Judge는 모델 기반 참고 판정이며 사람 검토를 대체한 확증 결과로 취급하지 않는다. MiniLM은 모든 토큰을 256-token chunk로 나누어 고정 encoder를 통과시킨 뒤 토큰 수로 가중 평균한다.
 
 외부 API의 [TypeSafe choice](https://docs.typesafe.ai/primitives/choice)와 [SGLang decision models](https://docs.sglang.io/docs/supported-models/decision_models) 명세를 확인해 `/v1/systemone` 호출을 구성했다. vendor confidence나 내부 학습 방식에 관한 설명을 검증된 학술 결과로 취급하지 않는다.
 

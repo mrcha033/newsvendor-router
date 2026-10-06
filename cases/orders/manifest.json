@@ -1,0 +1,199 @@
+{
+  "config": {
+    "repository": "sierra-research/tau2-bench",
+    "revision": "5bfa7e37b36656b37dc6d022156be6563c1007f3",
+    "license": "MIT",
+    "raw": "data/raw/orders",
+    "dataset": "data/processed/orders",
+    "output": "results/orders",
+    "seed": 42,
+    "maxTurns": 40,
+    "maxToolCalls": 20,
+    "files": {
+      "LICENSE": "e67c5aa0074dfcaefd3c3a1aedb94cb539234aecd15d5a972574e3200e6252fe",
+      "data/tau2/domains/retail/db.json": "413a65160adbdb5fde0ffc0015c49b6d70250b10c18128de169b597af7766765",
+      "data/tau2/domains/retail/policy.md": "2c9652afbce57d6e087768d37cda64d31c53d50b3e3225cfdb791bac66466467",
+      "data/tau2/domains/retail/split_tasks.json": "ed0580ec52575b63fbf76568af42490da6ee7783ecb4aa81af46961291358f20",
+      "data/tau2/domains/retail/tasks.json": "8e03ebce7901bd6218e7a7dc3105faa9324091a68058f7fe61c65262868812e8",
+      "src/tau2/domains/retail/tools.py": "34f4fe9702d36f0dd4697700fbcd63d0cf5386e6eb8e7499aaa336243bad8750",
+      "src/tau2/domains/retail/data_model.py": "f5ad09590953855cc49d2ab2ad5c0594be408cae74d1500fb278e5a6bf2c50d6"
+    },
+    "scope": "Coherent simulated English retail episodes, not real organizational procurement",
+    "userModel": "Same pinned Qwen model; private scenario visible only to user simulator",
+    "currencyMetric": "Payment ledger L1 deviation from reference in simulated USD; not decision cost"
+  },
+  "tasks": 114,
+  "families": 53,
+  "splits": {
+    "dev": 28,
+    "train": 61,
+    "test": 25
+  },
+  "officialSplits": {
+    "train": 74,
+    "test": 40,
+    "base": 114
+  },
+  "officialTrainTestCustomerOverlap": 22,
+  "inputHash": "24ec2e2265737575823232b77f91b0b0e0509e2da9a5d4b3813ed306303d9cf3",
+  "labelHash": "00ed76569f9f3115029e6e6d6fa364b4db0820f8bad58a707612d4fbf876a48f",
+  "dbHash": "f08162ba14d2d3ce9ebe4ebc0fa3cd4bdc2876eaaf9d3411802cdba96ea1f41a",
+  "scope": "Coherent simulated English retail episodes, not real organizational procurement",
+  "privateGoalProvider": "User simulator and scorer only",
+  "nlAssertions": 40,
+  "publicCatalogSharedAcrossSplits": true,
+  "adapter": "Original upstream mutation logic, BaseModel DB, local toolkit wrapper; no upstream framework execution",
+  "upstreamFailures": [],
+  "referenceWarnings": [
+    {
+      "id": "orders-2",
+      "errors": [
+        {
+          "tool": "get_product_details",
+          "error": "Product not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-3",
+      "errors": [
+        {
+          "tool": "get_product_details",
+          "error": "Product not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-4",
+      "errors": [
+        {
+          "tool": "get_product_details",
+          "error": "Product not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-35",
+      "errors": [
+        {
+          "tool": "find_user_id_by_email",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-37",
+      "errors": [
+        {
+          "tool": "find_user_id_by_email",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-38",
+      "errors": [
+        {
+          "tool": "find_user_id_by_email",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-39",
+      "errors": [
+        {
+          "tool": "find_user_id_by_name_zip",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-46",
+      "errors": [
+        {
+          "tool": "get_order_details",
+          "error": "Order not found"
+        },
+        {
+          "tool": "get_order_details",
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-47",
+      "errors": [
+        {
+          "tool": "get_order_details",
+          "error": "Order not found"
+        },
+        {
+          "tool": "get_order_details",
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-54",
+      "errors": [
+        {
+          "tool": "find_user_id_by_email",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-55",
+      "errors": [
+        {
+          "tool": "find_user_id_by_email",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-64",
+      "errors": [
+        {
+          "tool": "exchange_delivered_order_items",
+          "error": "Non-delivered order cannot be exchanged"
+        }
+      ]
+    },
+    {
+      "id": "orders-67",
+      "errors": [
+        {
+          "tool": "find_user_id_by_name_zip",
+          "error": "User not found"
+        },
+        {
+          "tool": "find_user_id_by_name_zip",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-68",
+      "errors": [
+        {
+          "tool": "find_user_id_by_name_zip",
+          "error": "User not found"
+        }
+      ]
+    },
+    {
+      "id": "orders-105",
+      "errors": [
+        {
+          "tool": "exchange_delivered_order_items",
+          "error": "Insufficient gift card balance to pay for the price difference"
+        }
+      ]
+    }
+  ],
+  "ambiguousReferenceTasks": [
+    "orders-105"
+  ]
+}

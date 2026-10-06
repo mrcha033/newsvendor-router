@@ -7,7 +7,12 @@ name = "newsvendor-router"
 version = "0.1.0"
 description = "Evidence, parameter-state and action-value learning for an iterative Newsvendor decision router"
 requires-python = ">=3.12,<3.13"
-dependencies = ["torch==2.14.1", "transformers==5.18.0", "numpy==2.5.3"]
+dependencies = [
+    "torch==2.14.1",
+    "transformers==5.18.0",
+    "numpy==2.5.3",
+    "pydantic==2.12.5",
+]
 
 [project.scripts]
 newsvendor = "newsvendor.cli:main"

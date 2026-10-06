@@ -1,0 +1,996 @@
+{
+  "runs": [
+    {
+      "seed": 42,
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.05851258068352274,
+              "familyMean": 0.05648053074233415,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.2692307692307692,
+              "familyMean": 0.24358974358974358,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.23274525775922777,
+              "familyMean": 0.23274525775922775,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.2219725361424808,
+              "familyMean": 0.2219725361424808,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.5694444444444444,
+              "familyMean": 0.5694444444444444,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7888888888888889,
+              "familyMean": 0.788888888888889,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.7888888888888889,
+              "familyMean": 0.788888888888889,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.6156561654746,
+              "familyMean": 0.6156561654746,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5378783876968222,
+              "familyMean": 0.5378783876968221,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.5833333333333334,
+              "familyMean": 0.5833333333333334,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.4166666666666667,
+              "familyMean": 0.4166666666666667,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.07625571611487104,
+              "familyMean": 0.06176024928265645,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.9791666666666666,
+              "familyMean": 0.9791666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredObservedSalesMAE": {
+              "mean": 0.3465190672874451,
+              "familyMean": 0.3197955566768845,
+              "cases": 10,
+              "families": 8
+            },
+            "forecastValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredSalesMAE": {
+              "mean": 0.49555227213908754,
+              "familyMean": 0.47309614644022213,
+              "cases": 12,
+              "families": 10
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.020833333333333332,
+              "familyMean": 0.020833333333333332,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.057468941721461324,
+              "familyMean": 0.057468941721461324,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "predictionHash": "a07eb8b44504f01ab7518314d2fa82f79555673ec464578764b176b3661f8eaa"
+    },
+    {
+      "seed": 43,
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7291666666666666,
+              "familyMean": 0.7291666666666666,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.06212614918784755,
+              "familyMean": 0.059165027618007494,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.23076923076923078,
+              "familyMean": 0.21794871794871795,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.24480464127898655,
+              "familyMean": 0.24480464127898652,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.23403191966223957,
+              "familyMean": 0.23403191966223957,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.5833333333333334,
+              "familyMean": 0.5833333333333334,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7777777777777778,
+              "familyMean": 0.7777777777777778,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.7777777777777778,
+              "familyMean": 0.7777777777777778,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.6018874685632039,
+              "familyMean": 0.6018874685632039,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5241096907854261,
+              "familyMean": 0.5241096907854261,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.5833333333333334,
+              "familyMean": 0.5833333333333334,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.07625571611487104,
+              "familyMean": 0.06176024928265645,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.9791666666666666,
+              "familyMean": 0.9791666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredObservedSalesMAE": {
+              "mean": 0.3707300799588362,
+              "familyMean": 0.35773540306836366,
+              "cases": 10,
+              "families": 8
+            },
+            "forecastValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredSalesMAE": {
+              "mean": 0.4922745112649032,
+              "familyMean": 0.5011902773862793,
+              "cases": 12,
+              "families": 10
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.020833333333333332,
+              "familyMean": 0.020833333333333332,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.05768261693513654,
+              "familyMean": 0.05768261693513654,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "predictionHash": "d17e0a5c1cb4206074d30d098b5b141e15144638ecd99bdea0c7e884d1649044"
+    },
+    {
+      "seed": 44,
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7083333333333334,
+              "familyMean": 0.7083333333333334,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.06179281585451421,
+              "familyMean": 0.05827961095134083,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.23076923076923078,
+              "familyMean": 0.21794871794871795,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.23968543125453218,
+              "familyMean": 0.2396854312545322,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.23338790018143327,
+              "familyMean": 0.23338790018143327,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.6111111111111112,
+              "familyMean": 0.611111111111111,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7444444444444445,
+              "familyMean": 0.7444444444444444,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.7444444444444445,
+              "familyMean": 0.7444444444444444,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.5227099643393557,
+              "familyMean": 0.5227099643393557,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5004877421171335,
+              "familyMean": 0.5004877421171335,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7291666666666666,
+              "familyMean": 0.7291666666666666,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.6041666666666666,
+              "familyMean": 0.6041666666666666,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.040251928236083166,
+              "familyMean": 0.03315143385565921,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.9791666666666666,
+              "familyMean": 0.9791666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredObservedSalesMAE": {
+              "mean": 0.4329526050388813,
+              "familyMean": 0.42529697536180416,
+              "cases": 10,
+              "families": 8
+            },
+            "forecastValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredSalesMAE": {
+              "mean": 0.5195781183644893,
+              "familyMean": 0.4928725598738307,
+              "cases": 12,
+              "families": 10
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.020833333333333332,
+              "familyMean": 0.020833333333333332,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.05768261693513654,
+              "familyMean": 0.05768261693513654,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "predictionHash": "ecdb44e311d649e3ce7289907cac807736ae285bfb3f697a24cfa8575f921169"
+    },
+    {
+      "seed": 45,
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6979166666666666,
+              "familyMean": 0.6979166666666666,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.06179281585451421,
+              "familyMean": 0.05848794428467416,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.2692307692307692,
+              "familyMean": 0.24358974358974358,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.2419739643603059,
+              "familyMean": 0.2419739643603059,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.23120124274355897,
+              "familyMean": 0.23120124274355894,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.5555555555555556,
+              "familyMean": 0.5555555555555555,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.8,
+              "familyMean": 0.8,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.8,
+              "familyMean": 0.8,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.5900014550288657,
+              "familyMean": 0.5900014550288656,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5344458994733101,
+              "familyMean": 0.53444589947331,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.6041666666666666,
+              "familyMean": 0.6041666666666666,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.0729223827815377,
+              "familyMean": 0.056911764434171605,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.9791666666666666,
+              "familyMean": 0.9791666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredObservedSalesMAE": {
+              "mean": 0.4689824615418911,
+              "familyMean": 0.46548472487678133,
+              "cases": 10,
+              "families": 8
+            },
+            "forecastValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredSalesMAE": {
+              "mean": 0.5367965733981321,
+              "familyMean": 0.5466023409139542,
+              "cases": 12,
+              "families": 10
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.039523397167005876,
+              "familyMean": 0.039523397167005876,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.6666666666666666,
+              "familyMean": 0.6666666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "predictionHash": "b6825d45485355fb570d3a3115fa1cd862579dc517526f947fe15bb66aff5cde"
+    },
+    {
+      "seed": 46,
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6666666666666666,
+              "familyMean": 0.6666666666666666,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.04926264014786792,
+              "familyMean": 0.04715438813494154,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.23076923076923078,
+              "familyMean": 0.21794871794871795,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.22350444972634131,
+              "familyMean": 0.2235044497263413,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.2126590623730491,
+              "familyMean": 0.2126590623730491,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.5694444444444444,
+              "familyMean": 0.5694444444444444,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7777777777777778,
+              "familyMean": 0.7777777777777778,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.7777777777777778,
+              "familyMean": 0.7777777777777778,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.5714846160615639,
+              "familyMean": 0.571484616061564,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5381512827282305,
+              "familyMean": 0.5381512827282307,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6875,
+              "familyMean": 0.6875,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.5833333333333334,
+              "familyMean": 0.5833333333333334,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.07625571611487104,
+              "familyMean": 0.06176024928265645,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.9791666666666666,
+              "familyMean": 0.9791666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredObservedSalesMAE": {
+              "mean": 0.475338717798392,
+              "familyMean": 0.4404584423328439,
+              "cases": 10,
+              "families": 8
+            },
+            "forecastValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredSalesMAE": {
+              "mean": 0.4985575051676659,
+              "familyMean": 0.5072561577444985,
+              "cases": 12,
+              "families": 10
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.020833333333333332,
+              "familyMean": 0.020833333333333332,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.05907150582402542,
+              "familyMean": 0.05907150582402543,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.7083333333333334,
+              "familyMean": 0.7083333333333334,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "predictionHash": "aadcd40c377a624633a0c932fba15a2fd879b93a70cbb0f009b777504d69b59e"
+    }
+  ],
+  "datasetHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
+  "scope": "Native components; not economic action-value efficacy"
+}

@@ -128,5 +128,16 @@
       "optimizer": "shared",
       "implemented": false
     }
-  ]
+  ],
+  "nativeComponents": {
+    "implemented": true,
+    "trainedCpu": true,
+    "config": "configs/native.json",
+    "models": "models/native",
+    "evaluationSnapshot": "cases/evaluation.tar.xz",
+    "gpuCommand": "uv run --no-project scripts/run_gpu.py --stage all",
+    "gpuExecuted": false,
+    "scope": "Exploratory native head adapter and coherent simulated order transfer; full economic value policy remains unimplemented",
+    "ordersConfig": "configs/orders.json"
+  }
 }

@@ -1,0 +1,172 @@
+{
+  "sha256": "cab685860816b11346c933c4f710bb4209fff11d9d57e987651600e2fb7e7d28",
+  "bytes": 1454948,
+  "files": {
+    "docs/sources.md": "3df9d7e608de8d3bdbd1f5d7e32e7e47d56933b9a13bdeb125059c88b7c32d28",
+    "src/newsvendor/retail/LICENSE": "e67c5aa0074dfcaefd3c3a1aedb94cb539234aecd15d5a972574e3200e6252fe",
+    "data/processed/complementary/check.json": "dd3e7df3d841b134861bfd057ea719ab5b06d49c789fcfd7f034b64d6328715c",
+    "data/processed/complementary/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e",
+    "data/processed/complementary/inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "data/processed/complementary/labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "data/processed/complementary/manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "data/processed/orders/db.json": "278ec70964683470a8a41c31a56dd108f8875b1c34c54efe049ccc6b0fc483e3",
+    "data/processed/orders/inputs.jsonl": "eb98e6fc7bee46a3038c467b3c4a752aaae77c95db98664675ca87982ccac5c0",
+    "data/processed/orders/labels.jsonl": "a0e8117ac14174923878a4d988bd0c14e866c9a984ba9a141cf0cb731f8b2e80",
+    "data/processed/orders/manifest.json": "05d2bd9f761cd26d4b06be990d783a6a8013dbc7793d45d24d85acf1c4b6e6e3"
+  },
+  "licenses": {
+    "cuad": {
+      "repo": "The-Atticus-Project/cuad",
+      "revision": "67faa0e6023b04fcaae6cc09497ab00e5d63a2a2",
+      "license": "CC-BY-4.0",
+      "origin": "real-commercial-contracts; original expert annotations",
+      "source": "https://www.atticusprojectai.org/cuad/",
+      "groups": 75,
+      "perGroup": 6,
+      "titleTerms": [
+        "distribut",
+        "supply",
+        "manufactur",
+        "purchase"
+      ],
+      "categories": [
+        "Effective Date",
+        "Expiration Date",
+        "Renewal Term",
+        "Notice Period To Terminate Renewal",
+        "Termination For Convenience",
+        "Price Restrictions",
+        "Minimum Commitment",
+        "Volume Restriction",
+        "Liquidated Damages",
+        "Warranty Duration"
+      ],
+      "files": [
+        {
+          "path": "data.zip",
+          "sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a"
+        }
+      ]
+    },
+    "contractnli": {
+      "repo": "stanfordnlp/contract-nli",
+      "revision": "eced6528dd3c1d14d73f9a87df8f7bdbc03126f9",
+      "license": "CC-BY-4.0",
+      "origin": "real-NDAs; original document-level NLI and evidence annotations",
+      "source": "https://stanfordnlp.github.io/contract-nli/",
+      "groups": 60,
+      "perGroup": 6,
+      "files": [
+        {
+          "path": "resources/contract-nli.zip",
+          "sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b"
+        }
+      ]
+    },
+    "orsharc": {
+      "repo": "Yifan-Gao/open_retrieval_conversational_machine_reading",
+      "revision": "309c4ea3a7cc4c7a815d7f46292d91fc9a0de581",
+      "license": "CC-BY-SA-3.0",
+      "origin": "real-English-government-rules; crowd-constructed scenarios and conversations",
+      "source": "https://github.com/Yifan-Gao/open_retrieval_conversational_machine_reading",
+      "groups": 60,
+      "perGroup": 4,
+      "files": [
+        {
+          "path": "data/id2snippet.json",
+          "sha256": "859a6c9fca2b153ff72b834b9fcef520117b09088d4da9a66f6b1db48b8f7124"
+        },
+        {
+          "path": "data/open_retrieval_sharc_train.json",
+          "sha256": "46ac9920a27fa0bedca59b0cb25a791aee2dee85508b6f518384342e4a1bbe51"
+        },
+        {
+          "path": "data/open_retrieval_sharc_dev.json",
+          "sha256": "f58623a43829eb369a4bce1886f5b33790b939f404b27fdeb89fbce7d64061fd"
+        },
+        {
+          "path": "data/open_retrieval_sharc_test.json",
+          "sha256": "a2ecee7f1cb014f28c862fa44df813501fb2f31a3c1ed64279efcf9e21ef4ce3"
+        }
+      ]
+    },
+    "abcd": {
+      "repo": "asappresearch/abcd",
+      "revision": "6b8700ce67c6b37b062dd7a60abc76d7ef832a97",
+      "license": "MIT",
+      "origin": "human-human roleplay under a fictitious retailer's policies; not production customer logs",
+      "source": "https://github.com/asappresearch/abcd",
+      "groups": 80,
+      "perGroup": 6,
+      "files": [
+        {
+          "path": "data/abcd_v1.1.json.gz",
+          "sha256": "2bdf53ac359543dcdc38d55bc6513e78df120363f8f44870716e909f4606de15"
+        },
+        {
+          "path": "data/guidelines.json",
+          "sha256": "9264557941df24fe075138a632a2345172971573124a354ccb2ceee2a12e4c2a"
+        },
+        {
+          "path": "data/ontology.json",
+          "sha256": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c"
+        }
+      ]
+    },
+    "tatqa": {
+      "repo": "NExTplusplus/TAT-QA",
+      "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+      "license": "CC-BY-4.0",
+      "origin": "real-financial-report-contexts; original QA annotations",
+      "source": "https://github.com/NExTplusplus/TAT-QA",
+      "groups": 60,
+      "perGroup": 4,
+      "files": [
+        {
+          "path": "dataset_raw/tatqa_dataset_train.json",
+          "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69"
+        },
+        {
+          "path": "dataset_raw/tatqa_dataset_dev.json",
+          "sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5"
+        }
+      ]
+    },
+    "retail": {
+      "repo": "Dingdong-Inc/FreshRetailNet-50K",
+      "revision": "08c1fab7f9257bc73679d415d65d644165d351d4",
+      "license": "CC-BY-4.0",
+      "origin": "real-normalized-sales-and-stockout-observations; latent demand unobserved",
+      "source": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K",
+      "groups": 50,
+      "perGroup": 1,
+      "batches": 60,
+      "historyDays": 60,
+      "horizonDays": 7
+    }
+  },
+  "orders": {
+    "repository": "sierra-research/tau2-bench",
+    "revision": "5bfa7e37b36656b37dc6d022156be6563c1007f3",
+    "license": "MIT",
+    "raw": "data/raw/orders",
+    "dataset": "data/processed/orders",
+    "output": "results/orders",
+    "seed": 42,
+    "maxTurns": 40,
+    "maxToolCalls": 20,
+    "files": {
+      "LICENSE": "e67c5aa0074dfcaefd3c3a1aedb94cb539234aecd15d5a972574e3200e6252fe",
+      "data/tau2/domains/retail/db.json": "413a65160adbdb5fde0ffc0015c49b6d70250b10c18128de169b597af7766765",
+      "data/tau2/domains/retail/policy.md": "2c9652afbce57d6e087768d37cda64d31c53d50b3e3225cfdb791bac66466467",
+      "data/tau2/domains/retail/split_tasks.json": "ed0580ec52575b63fbf76568af42490da6ee7783ecb4aa81af46961291358f20",
+      "data/tau2/domains/retail/tasks.json": "8e03ebce7901bd6218e7a7dc3105faa9324091a68058f7fe61c65262868812e8",
+      "src/tau2/domains/retail/tools.py": "34f4fe9702d36f0dd4697700fbcd63d0cf5386e6eb8e7499aaa336243bad8750",
+      "src/tau2/domains/retail/data_model.py": "f5ad09590953855cc49d2ab2ad5c0594be408cae74d1500fb278e5a6bf2c50d6"
+    },
+    "scope": "Coherent simulated English retail episodes, not real organizational procurement",
+    "userModel": "Same pinned Qwen model; private scenario visible only to user simulator",
+    "currencyMetric": "Payment ledger L1 deviation from reference in simulated USD; not decision cost"
+  },
+  "scope": "Exact processed inputs, labels and public collections for reproducible evaluation; original annotations stay separate"
+}

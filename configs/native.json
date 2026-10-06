@@ -1,0 +1,24 @@
+{
+  "dataset": "data/processed/complementary",
+  "output": "results/native",
+  "seeds": [42, 43, 44, 45, 46],
+  "epochs": 25,
+  "bootstrap": 2000,
+  "fragments": 12,
+  "candidates": 48,
+  "encoder": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "dim": 384,
+    "maxLength": 256,
+    "pooling": "token-weighted-chunk-mean",
+    "trainable": false
+  },
+  "baseline": {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "maxNewTokens": 512,
+    "maxToolCalls": 2,
+    "contextTokens": 32768
+  }
+}
