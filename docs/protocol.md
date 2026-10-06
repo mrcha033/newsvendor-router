@@ -12,6 +12,10 @@
 
 원문 개발 사례는 14건/13묶음이며 동일 template lineage 하나를 공유한다. 원문과 실제 provenance, 관측 판매, 조회/사실 질문/매니저 선택/에스컬레이션, 비용·처리 시간·시계·마감을 표현한다. 사람 검토 및 실제 조직 자료 수는 0이다. 선호는 매니저 응답에서 형성하며 응답 전 숨겨진 정답을 두지 않는다. MOQ·반품 한도·다기간 사례에는 현 scalar solver의 모수 정답을 부여하지 않는다.
 
+상보적 자료는 `configs/complementary.json`으로 준비한다. 영어 실제 공급·제조·유통·구매 계약의 CUAD 근거, NDA의 ContractNLI 모순/미기재, OR-ShARC 조회/추가 질문, ABCD의 사람 역할극 도구 선택, TAT-QA 계산, FreshRetailNet 판매 관측을 각각 유지한다. 총 1,802건이고 Train/Dev/Test는 1,074/362/366건이다. 구성 요소의 정답을 다른 출처에 이식하거나 하나의 실제 조직 사건으로 표시하지 않는다. 발주 모수·질문 비용·응답 확률·경제적 행동 가치는 주석되지 않았으므로 생성하지 않는다.
+
+원래 official split은 private provenance에 보존하되 공개 leaderboard와 다른 source 단위 split을 사용한다. 계약·대화·규칙 page/tree·매장/상품의 연결 성분, 동일 입력, 수치 정규화 문서, 5-word shingle Jaccard ≥0.85 template를 같은 분할에 둔다. 전체 보고서/조직 식별자를 모르는 자료의 분리를 보장했다고 표현하지 않는다. OR-ShARC의 주석 없는 651개 규칙 collection은 공통 공개 조회 자원이다. 올바른 규칙을 사전 선택해 주지 않는다. ABCD는 source `turn_count`가 비연속일 수 있어 같은 위치의 원문·speaker로 정렬하고 다음 턴부터 제외한다. 관측되지 않은 도구 인자는 인자 정확도 분모에서 제외한다.
+
 ## 학습과 calibration
 
 고정 pretrained encoder 표현 위에 evidence/type/state/relation/value/recovery head와 rules용 value/recovery head를 학습한다. Construction은 32차원, 정책은 64차원 특성을 추가한다. CE+Brier, 후보 CE와 후보별 Huber 수치 손실, hold 비용으로 정규화한 value MSE, 허용 행동 mask를 적용한 recovery CE를 사용한다. 수치는 근거 span에서 calculator가 계산한다.
@@ -40,9 +44,9 @@ Loss·질문 수·보류/자율 처리·승인 오류와 evidence/type/state/exp
 
 ## 후속 실험 순서
 
-1. 사람 검토한 업무 원문과 응답 이력을 확보하고 raw 학습형 adapter를 연결한다. 조회 가능한 사실·미형성 선호·검열 판매·지원 밖 조건을 구분한다.
+1. 영어 상보적 suite의 Dev에서 raw rules/고정 typed/checklist/학습형/agent 입력 adapter를 먼저 연결한다. 모든 방법이 같은 원문·표·대화 prefix·조회 collection·도구를 받고 자기 근거와 상태를 구성한다. Gold rule, intent, 근거 span, 정답 수치 및 미래 턴을 후보 생성에 사용하지 않는다. 자연어 구성 없이 정확한 상태를 받는 planner는 별도 상한이다.
 2. 같은 경제 상태의 표현을 바꾸고, 같은 누락 상태의 발주 영향·질문 비용·지연을 독립 변화시킨다. 실제 ERP 필드는 모든 방법에 제공하고 쉬운 업무도 포함한다.
-3. Source/template/연결된 조직·SKU·기간을 묶어 분할한다. Fixture는 test로 재사용하지 않으며 배포 가중치는 관측 업무 비중으로 정한다.
+3. Suite의 source split을 고정하고 원래 표적별로 구성 오류를 측정한다. CUAD 근거/미기재, NLI 상태+근거, OR-ShARC 규칙 선택/yes-no-ask/질문 참고 F1, ABCD 다음 행동/도구/관측 인자, TAT-QA 답·scale, Retail 비검열/검열 관측 판매 MAE를 따로 보고한다. 구성 요소 간 단일 점수나 발주 loss로 합치지 않는다. 누락 예측과 유효 forecast coverage를 함께 보고한다.
 4. Rules/고정 typed/학습형/agent를 같은 원문·도구·validator·optimizer로 비교한다. 응답 belief는 train에서 추정하고 reference expert는 별도 상한으로 둔다.
-5. Raw 개발 실행 뒤 동일 dataSeed의 5개 학습 seed를 실행한다. 재학습 ablation과 비용·지연 변화는 별도 대조 실험으로 측정한다.
+5. 사람 검토한 실제 업무 원문·응답·권한·시간·비용을 확보해 end-to-end 발주 사례를 만든다. 미형성 선호·검열 수요·지원 밖 조건을 구분한다. Source/template/연결된 조직·SKU·기간을 분리하고 fixture를 test로 쓰지 않는다. 질문 참고 정답을 인과적 가치 정답으로 취급하지 않는다. 그 뒤 동일 dataSeed의 5개 학습 seed와 재학습 ablation 및 비용·지연 대조 실험을 실행한다.
 6. 주 비교는 고정 typed router의 같은 source다. 손실 5% 개선과 paired CI를 확인하고 근거 없는 발주·마감 위반·자율 처리율·질문 시간 및 실제 추론 비용을 함께 보고한다.

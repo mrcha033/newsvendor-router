@@ -1,0 +1,826 @@
+{
+  "schema": "complementary-workload-v1",
+  "language": "en",
+  "config": {
+    "schema": "complementary-workload-v1",
+    "language": "en",
+    "seed": 53,
+    "output": "data/processed/complementary",
+    "splits": {
+      "train": 0.6,
+      "dev": 0.2,
+      "test": 0.2
+    },
+    "templateSimilarity": 0.85,
+    "sources": {
+      "cuad": {
+        "repo": "The-Atticus-Project/cuad",
+        "revision": "67faa0e6023b04fcaae6cc09497ab00e5d63a2a2",
+        "license": "CC-BY-4.0",
+        "origin": "real-commercial-contracts; original expert annotations",
+        "source": "https://www.atticusprojectai.org/cuad/",
+        "groups": 75,
+        "perGroup": 6,
+        "titleTerms": [
+          "distribut",
+          "supply",
+          "manufactur",
+          "purchase"
+        ],
+        "categories": [
+          "Effective Date",
+          "Expiration Date",
+          "Renewal Term",
+          "Notice Period To Terminate Renewal",
+          "Termination For Convenience",
+          "Price Restrictions",
+          "Minimum Commitment",
+          "Volume Restriction",
+          "Liquidated Damages",
+          "Warranty Duration"
+        ],
+        "files": [
+          {
+            "path": "data.zip",
+            "sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a"
+          }
+        ]
+      },
+      "contractnli": {
+        "repo": "stanfordnlp/contract-nli",
+        "revision": "eced6528dd3c1d14d73f9a87df8f7bdbc03126f9",
+        "license": "CC-BY-4.0",
+        "origin": "real-NDAs; original document-level NLI and evidence annotations",
+        "source": "https://stanfordnlp.github.io/contract-nli/",
+        "groups": 60,
+        "perGroup": 6,
+        "files": [
+          {
+            "path": "resources/contract-nli.zip",
+            "sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b"
+          }
+        ]
+      },
+      "orsharc": {
+        "repo": "Yifan-Gao/open_retrieval_conversational_machine_reading",
+        "revision": "309c4ea3a7cc4c7a815d7f46292d91fc9a0de581",
+        "license": "CC-BY-SA-3.0",
+        "origin": "real-English-government-rules; crowd-constructed scenarios and conversations",
+        "source": "https://github.com/Yifan-Gao/open_retrieval_conversational_machine_reading",
+        "groups": 60,
+        "perGroup": 4,
+        "files": [
+          {
+            "path": "data/id2snippet.json",
+            "sha256": "859a6c9fca2b153ff72b834b9fcef520117b09088d4da9a66f6b1db48b8f7124"
+          },
+          {
+            "path": "data/open_retrieval_sharc_train.json",
+            "sha256": "46ac9920a27fa0bedca59b0cb25a791aee2dee85508b6f518384342e4a1bbe51"
+          },
+          {
+            "path": "data/open_retrieval_sharc_dev.json",
+            "sha256": "f58623a43829eb369a4bce1886f5b33790b939f404b27fdeb89fbce7d64061fd"
+          },
+          {
+            "path": "data/open_retrieval_sharc_test.json",
+            "sha256": "a2ecee7f1cb014f28c862fa44df813501fb2f31a3c1ed64279efcf9e21ef4ce3"
+          }
+        ]
+      },
+      "abcd": {
+        "repo": "asappresearch/abcd",
+        "revision": "6b8700ce67c6b37b062dd7a60abc76d7ef832a97",
+        "license": "MIT",
+        "origin": "human-human roleplay under a fictitious retailer's policies; not production customer logs",
+        "source": "https://github.com/asappresearch/abcd",
+        "groups": 80,
+        "perGroup": 6,
+        "files": [
+          {
+            "path": "data/abcd_v1.1.json.gz",
+            "sha256": "2bdf53ac359543dcdc38d55bc6513e78df120363f8f44870716e909f4606de15"
+          },
+          {
+            "path": "data/guidelines.json",
+            "sha256": "9264557941df24fe075138a632a2345172971573124a354ccb2ceee2a12e4c2a"
+          },
+          {
+            "path": "data/ontology.json",
+            "sha256": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c"
+          }
+        ]
+      },
+      "tatqa": {
+        "repo": "NExTplusplus/TAT-QA",
+        "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+        "license": "CC-BY-4.0",
+        "origin": "real-financial-report-contexts; original QA annotations",
+        "source": "https://github.com/NExTplusplus/TAT-QA",
+        "groups": 60,
+        "perGroup": 4,
+        "files": [
+          {
+            "path": "dataset_raw/tatqa_dataset_train.json",
+            "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69"
+          },
+          {
+            "path": "dataset_raw/tatqa_dataset_dev.json",
+            "sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5"
+          }
+        ]
+      },
+      "retail": {
+        "repo": "Dingdong-Inc/FreshRetailNet-50K",
+        "revision": "08c1fab7f9257bc73679d415d65d644165d351d4",
+        "license": "CC-BY-4.0",
+        "origin": "real-normalized-sales-and-stockout-observations; latent demand unobserved",
+        "source": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K",
+        "groups": 50,
+        "perGroup": 1,
+        "batches": 60,
+        "historyDays": 60,
+        "horizonDays": 7
+      }
+    }
+  },
+  "configHash": "faf4c8b61b2b72d3b162e2327711099485a83999416d0eb4349aa04ad0d7eb38",
+  "transformHash": "666e74e1d08436a6b07feea745830d28f0141b0ede23196660aadc19790a019d",
+  "sources": {
+    "cuad": {
+      "repo": "The-Atticus-Project/cuad",
+      "revision": "67faa0e6023b04fcaae6cc09497ab00e5d63a2a2",
+      "license": "CC-BY-4.0",
+      "origin": "real-commercial-contracts; original expert annotations",
+      "source": "https://www.atticusprojectai.org/cuad/",
+      "groups": 75,
+      "perGroup": 6,
+      "titleTerms": [
+        "distribut",
+        "supply",
+        "manufactur",
+        "purchase"
+      ],
+      "categories": [
+        "Effective Date",
+        "Expiration Date",
+        "Renewal Term",
+        "Notice Period To Terminate Renewal",
+        "Termination For Convenience",
+        "Price Restrictions",
+        "Minimum Commitment",
+        "Volume Restriction",
+        "Liquidated Damages",
+        "Warranty Duration"
+      ],
+      "files": [
+        {
+          "path": "data.zip",
+          "sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a"
+        }
+      ],
+      "captured": [
+        {
+          "url": "https://raw.githubusercontent.com/The-Atticus-Project/cuad/67faa0e6023b04fcaae6cc09497ab00e5d63a2a2/data.zip",
+          "sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a",
+          "bytes": 18309308
+        }
+      ],
+      "compiledCandidates": 750
+    },
+    "contractnli": {
+      "repo": "stanfordnlp/contract-nli",
+      "revision": "eced6528dd3c1d14d73f9a87df8f7bdbc03126f9",
+      "license": "CC-BY-4.0",
+      "origin": "real-NDAs; original document-level NLI and evidence annotations",
+      "source": "https://stanfordnlp.github.io/contract-nli/",
+      "groups": 60,
+      "perGroup": 6,
+      "files": [
+        {
+          "path": "resources/contract-nli.zip",
+          "sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b"
+        }
+      ],
+      "captured": [
+        {
+          "url": "https://raw.githubusercontent.com/stanfordnlp/contract-nli/eced6528dd3c1d14d73f9a87df8f7bdbc03126f9/resources/contract-nli.zip",
+          "sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b",
+          "bytes": 65362913
+        }
+      ],
+      "compiledCandidates": 10319
+    },
+    "orsharc": {
+      "repo": "Yifan-Gao/open_retrieval_conversational_machine_reading",
+      "revision": "309c4ea3a7cc4c7a815d7f46292d91fc9a0de581",
+      "license": "CC-BY-SA-3.0",
+      "origin": "real-English-government-rules; crowd-constructed scenarios and conversations",
+      "source": "https://github.com/Yifan-Gao/open_retrieval_conversational_machine_reading",
+      "groups": 60,
+      "perGroup": 4,
+      "files": [
+        {
+          "path": "data/id2snippet.json",
+          "sha256": "859a6c9fca2b153ff72b834b9fcef520117b09088d4da9a66f6b1db48b8f7124"
+        },
+        {
+          "path": "data/open_retrieval_sharc_train.json",
+          "sha256": "46ac9920a27fa0bedca59b0cb25a791aee2dee85508b6f518384342e4a1bbe51"
+        },
+        {
+          "path": "data/open_retrieval_sharc_dev.json",
+          "sha256": "f58623a43829eb369a4bce1886f5b33790b939f404b27fdeb89fbce7d64061fd"
+        },
+        {
+          "path": "data/open_retrieval_sharc_test.json",
+          "sha256": "a2ecee7f1cb014f28c862fa44df813501fb2f31a3c1ed64279efcf9e21ef4ce3"
+        }
+      ],
+      "captured": [
+        {
+          "url": "https://raw.githubusercontent.com/Yifan-Gao/open_retrieval_conversational_machine_reading/309c4ea3a7cc4c7a815d7f46292d91fc9a0de581/data/id2snippet.json",
+          "sha256": "859a6c9fca2b153ff72b834b9fcef520117b09088d4da9a66f6b1db48b8f7124",
+          "bytes": 159242
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Yifan-Gao/open_retrieval_conversational_machine_reading/309c4ea3a7cc4c7a815d7f46292d91fc9a0de581/data/open_retrieval_sharc_train.json",
+          "sha256": "46ac9920a27fa0bedca59b0cb25a791aee2dee85508b6f518384342e4a1bbe51",
+          "bytes": 11352351
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Yifan-Gao/open_retrieval_conversational_machine_reading/309c4ea3a7cc4c7a815d7f46292d91fc9a0de581/data/open_retrieval_sharc_dev.json",
+          "sha256": "f58623a43829eb369a4bce1886f5b33790b939f404b27fdeb89fbce7d64061fd",
+          "bytes": 700342
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Yifan-Gao/open_retrieval_conversational_machine_reading/309c4ea3a7cc4c7a815d7f46292d91fc9a0de581/data/open_retrieval_sharc_test.json",
+          "sha256": "a2ecee7f1cb014f28c862fa44df813501fb2f31a3c1ed64279efcf9e21ef4ce3",
+          "bytes": 1511129
+        }
+      ],
+      "compiledCandidates": 21414
+    },
+    "abcd": {
+      "repo": "asappresearch/abcd",
+      "revision": "6b8700ce67c6b37b062dd7a60abc76d7ef832a97",
+      "license": "MIT",
+      "origin": "human-human roleplay under a fictitious retailer's policies; not production customer logs",
+      "source": "https://github.com/asappresearch/abcd",
+      "groups": 80,
+      "perGroup": 6,
+      "files": [
+        {
+          "path": "data/abcd_v1.1.json.gz",
+          "sha256": "2bdf53ac359543dcdc38d55bc6513e78df120363f8f44870716e909f4606de15"
+        },
+        {
+          "path": "data/guidelines.json",
+          "sha256": "9264557941df24fe075138a632a2345172971573124a354ccb2ceee2a12e4c2a"
+        },
+        {
+          "path": "data/ontology.json",
+          "sha256": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c"
+        }
+      ],
+      "captured": [
+        {
+          "url": "https://raw.githubusercontent.com/asappresearch/abcd/6b8700ce67c6b37b062dd7a60abc76d7ef832a97/data/abcd_v1.1.json.gz",
+          "sha256": "2bdf53ac359543dcdc38d55bc6513e78df120363f8f44870716e909f4606de15",
+          "bytes": 36985084
+        },
+        {
+          "url": "https://raw.githubusercontent.com/asappresearch/abcd/6b8700ce67c6b37b062dd7a60abc76d7ef832a97/data/guidelines.json",
+          "sha256": "9264557941df24fe075138a632a2345172971573124a354ccb2ceee2a12e4c2a",
+          "bytes": 95293
+        },
+        {
+          "url": "https://raw.githubusercontent.com/asappresearch/abcd/6b8700ce67c6b37b062dd7a60abc76d7ef832a97/data/ontology.json",
+          "sha256": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c",
+          "bytes": 5770
+        }
+      ],
+      "compiledCandidates": 895
+    },
+    "tatqa": {
+      "repo": "NExTplusplus/TAT-QA",
+      "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+      "license": "CC-BY-4.0",
+      "origin": "real-financial-report-contexts; original QA annotations",
+      "source": "https://github.com/NExTplusplus/TAT-QA",
+      "groups": 60,
+      "perGroup": 4,
+      "files": [
+        {
+          "path": "dataset_raw/tatqa_dataset_train.json",
+          "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69"
+        },
+        {
+          "path": "dataset_raw/tatqa_dataset_dev.json",
+          "sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5"
+        }
+      ],
+      "captured": [
+        {
+          "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_train.json",
+          "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69",
+          "bytes": 12845647
+        },
+        {
+          "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_dev.json",
+          "sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5",
+          "bytes": 1637431
+        }
+      ],
+      "compiledCandidates": 14883
+    },
+    "retail": {
+      "repo": "Dingdong-Inc/FreshRetailNet-50K",
+      "revision": "08c1fab7f9257bc73679d415d65d644165d351d4",
+      "license": "CC-BY-4.0",
+      "origin": "real-normalized-sales-and-stockout-observations; latent demand unobserved",
+      "source": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K",
+      "groups": 50,
+      "perGroup": 1,
+      "batches": 60,
+      "historyDays": 60,
+      "horizonDays": 7,
+      "captured": [
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=0&length=100",
+          "sha256": "827adaa3e24ae4c7f503b76cb70bcf91b7a582fec709a3a928610afdc7cc26ec",
+          "bytes": 56892,
+          "offset": 0
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=74970&length=100",
+          "sha256": "45e78ac37a305759314b2849481f9d0dbf2199f392f79982f676dbdadebc1474",
+          "bytes": 57694,
+          "offset": 74970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=149940&length=100",
+          "sha256": "4360749820a9e22018ffa168871974b80da72c12af1ef4ecabc93a6f8e0ad307",
+          "bytes": 57830,
+          "offset": 149940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=225000&length=100",
+          "sha256": "de38bcd61ebce86001f62e9d046c6e69cb7f1b8f48824ccf967a1f1fb33f938c",
+          "bytes": 57559,
+          "offset": 225000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=299970&length=100",
+          "sha256": "49ba6e946ef2ec36241b317d223a44645336e728b0dc889006d491a54467ee15",
+          "bytes": 57853,
+          "offset": 299970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=374940&length=100",
+          "sha256": "15be0ad56241ad2a3d047cc02e2b688313a209bc3daebf3d15965a4b3447a185",
+          "bytes": 57859,
+          "offset": 374940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=450000&length=100",
+          "sha256": "87eb375e7f280a7d919e29f1a048f9d1ec01f96e412a233931e970c37c48e72c",
+          "bytes": 57921,
+          "offset": 450000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=524970&length=100",
+          "sha256": "a29dca1c9513f84ed90edd8eb84cce97a11084507384d53c0ae1304d52d511d6",
+          "bytes": 57574,
+          "offset": 524970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=599940&length=100",
+          "sha256": "1946a08abfac60bada0154fc43de9fa20f07547c8c8f4412084b817561a92cc5",
+          "bytes": 57860,
+          "offset": 599940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=675000&length=100",
+          "sha256": "abd13656533fdb2689d49a1db3459e22f0e05ab837cef6f6c7b67355ce8beddb",
+          "bytes": 57816,
+          "offset": 675000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=749970&length=100",
+          "sha256": "978b1f5e7acbfd8d98cd3f8a38fbba7221b59aa14656af9a2c2d56c18eb3cb8e",
+          "bytes": 57725,
+          "offset": 749970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=824940&length=100",
+          "sha256": "9d686bb75d0f12ee1a0320aceb26f4a90d99024b122104a65119d04011197dbf",
+          "bytes": 57626,
+          "offset": 824940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=900000&length=100",
+          "sha256": "01ce502de5e9dd2f8ab56befbaa3b980afc7dc31a2db0d6899db44ab15452243",
+          "bytes": 58012,
+          "offset": 900000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=974970&length=100",
+          "sha256": "3ae971d45a2be8b8e5a96fd1e92bd56adbad2dc56b292403908c7757c8ca8939",
+          "bytes": 57899,
+          "offset": 974970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1049940&length=100",
+          "sha256": "79d34d7c96ef896a511df16cea57abcf39455972d861c50ee991214d76fdc16f",
+          "bytes": 57838,
+          "offset": 1049940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1125000&length=100",
+          "sha256": "c109ed48706f942268c2870bdcc9175151bcc96d3bd7e030597a468782369a3e",
+          "bytes": 57921,
+          "offset": 1125000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1199970&length=100",
+          "sha256": "ede4b1a435d458bc67b99a7d85651380ec5445ec2bc4386d5388751ae9dfca28",
+          "bytes": 57976,
+          "offset": 1199970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1274940&length=100",
+          "sha256": "ce90fa531985819b97397cebde4825d6de48d0b20adebb1bfc2503a14db84ed5",
+          "bytes": 57997,
+          "offset": 1274940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1350000&length=100",
+          "sha256": "941b9f33f9a4cc1df616f838fa52499f92577ee305bc938f9193722edc39bfb1",
+          "bytes": 57837,
+          "offset": 1350000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1424970&length=100",
+          "sha256": "918b1378e68efb67f1a1dcfdf44ea26bab1b3618e4287f05cb134c43b2102339",
+          "bytes": 57803,
+          "offset": 1424970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1499940&length=100",
+          "sha256": "864dc02228b8162c28650bb18df7e74dd0195cb06ccd192dde69ad467aefe168",
+          "bytes": 58088,
+          "offset": 1499940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1575000&length=100",
+          "sha256": "1411bd8c67a846ea318a5d00a0804cd8462a7426a4d76362f1b4c09cc3e6b69b",
+          "bytes": 57782,
+          "offset": 1575000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1649970&length=100",
+          "sha256": "08233e75267c662b4088054b347824fd113ef29d3ed5145cfcaab0cb8e31eb05",
+          "bytes": 57864,
+          "offset": 1649970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1724940&length=100",
+          "sha256": "9e782eacb8434cf58041abadd012ce8b23fd3974da251551ee691e7cc316e5ae",
+          "bytes": 57821,
+          "offset": 1724940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1800000&length=100",
+          "sha256": "06821f7df0f326e993830a13b68d74960a7ce86d3c4ca36dcaf527dda411a7a2",
+          "bytes": 57970,
+          "offset": 1800000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1874970&length=100",
+          "sha256": "a16e2dec1d9176281dd9397a3858abb2b21fa5d0bb3ab983eb7a969654cefbb9",
+          "bytes": 58029,
+          "offset": 1874970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=1949940&length=100",
+          "sha256": "b4115047d27e6de2b795e7e5455242d5dc2073757754eb64567518456afd17b1",
+          "bytes": 58047,
+          "offset": 1949940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2025000&length=100",
+          "sha256": "7cbe64ba2904023127f396eaa357c82f394b0c2e67ccb41100f08f5bc51e4c3e",
+          "bytes": 57635,
+          "offset": 2025000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2099970&length=100",
+          "sha256": "85c84e8bcffad97190a2e03b57f0e16d27924b2ebe66b06282f246bab98c65e3",
+          "bytes": 58041,
+          "offset": 2099970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2174940&length=100",
+          "sha256": "3f934c3ab662b986491896d53e78b46de5078cf62264323fc2fb69fa906eb708",
+          "bytes": 57974,
+          "offset": 2174940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2250000&length=100",
+          "sha256": "9e831968ee1c135979e81bfa5f945313f268e3b62dc505bfdde867a663eff62d",
+          "bytes": 58102,
+          "offset": 2250000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2324970&length=100",
+          "sha256": "d467470628edae682dd6fc32694adadbc3a9822c016aaf70f2505fef633b3323",
+          "bytes": 58107,
+          "offset": 2324970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2399940&length=100",
+          "sha256": "f691de3acfab6535da1146013d3ce8ab28ec87a63284c69a91a4264827e78389",
+          "bytes": 57954,
+          "offset": 2399940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2475000&length=100",
+          "sha256": "68a9552ff6017e10d8ec0c655e20305d72aa85d533cee2e7a6e34c93d69ee5c3",
+          "bytes": 58012,
+          "offset": 2475000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2549970&length=100",
+          "sha256": "8fca1f1c1ee031baf3f3f47cbc246f1632a1f4c66c258561505716b33d176d0a",
+          "bytes": 57868,
+          "offset": 2549970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2624940&length=100",
+          "sha256": "6be8cfb8ba8d205cf87381d9b44e8be735a598cfe5f48db3910695b5850196f6",
+          "bytes": 57882,
+          "offset": 2624940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2700000&length=100",
+          "sha256": "05c628561b37df1cf5ed956527dd375ff2f201beb6eea374a2826dd06cf3a845",
+          "bytes": 58116,
+          "offset": 2700000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2774970&length=100",
+          "sha256": "1853257d534eddea61ace53798b5c9a425e539ce762c422c958a3db04893c674",
+          "bytes": 58054,
+          "offset": 2774970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2849940&length=100",
+          "sha256": "5aa6631769f062b0d582fbc23304b000f8bf7df7a367f181f7a6ffe4cb029894",
+          "bytes": 58317,
+          "offset": 2849940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2925000&length=100",
+          "sha256": "ef3a4b4805d9113d29fd2c03282883c3fcc2b423f0259a0c482bf0a95b22678d",
+          "bytes": 58132,
+          "offset": 2925000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=2999970&length=100",
+          "sha256": "24c9b82d82bf466a3e65dbbffb7d84ab099ee05c4ee9922be3bd3afffc90996c",
+          "bytes": 57814,
+          "offset": 2999970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3074940&length=100",
+          "sha256": "f527c99adebfb096bae9b2bfa9bf9bcce11976173ec96d00c998667db108f951",
+          "bytes": 57793,
+          "offset": 3074940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3150000&length=100",
+          "sha256": "4cebc1e6c5c53264142ad8b906187ea3c7ba6fc5d64c4b192def88234abfa27a",
+          "bytes": 58005,
+          "offset": 3150000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3224970&length=100",
+          "sha256": "6116228492f9387172775c8dffec37701f310d643e493c52145fe6d27a0c3969",
+          "bytes": 58186,
+          "offset": 3224970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3299940&length=100",
+          "sha256": "356003e00dd85856e21c89a75ae095075a5ba32c439c7fe9cf5c82883b186e7a",
+          "bytes": 58173,
+          "offset": 3299940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3375000&length=100",
+          "sha256": "168ee6647882fec10390153c619bbe87f90e41df24f0fb48b74e09f0d990da35",
+          "bytes": 57911,
+          "offset": 3375000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3449970&length=100",
+          "sha256": "dc5f568cad9ccca4267acdfeef3d8e6298b8ba2593367797502c3f53aded8cf2",
+          "bytes": 57961,
+          "offset": 3449970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3524940&length=100",
+          "sha256": "0be531a86b516436ac0e1d1f557a9f41cf7143a8fd75bccd105963d158ed1ed1",
+          "bytes": 58100,
+          "offset": 3524940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3600000&length=100",
+          "sha256": "c11770b20e90d8c625998765c36e5c03cd83283e5e10ddd65f3eb3ecdc139e57",
+          "bytes": 58255,
+          "offset": 3600000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3674970&length=100",
+          "sha256": "fb9aeb1b198b42934391b1d4bc9c7396a89bfaba813326a1e97f31e1fe289a65",
+          "bytes": 58128,
+          "offset": 3674970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3749940&length=100",
+          "sha256": "27bb402508633c73fef1fa9464120a643327bb52e8e1ecfc33b60524383f68e3",
+          "bytes": 57956,
+          "offset": 3749940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3825000&length=100",
+          "sha256": "fce18a012d2d9c0db3f201ed8bda8f8f9443403dc25fd3ec1aedf61d77d97a45",
+          "bytes": 58205,
+          "offset": 3825000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3899970&length=100",
+          "sha256": "5bfdb809c0002c7aa03573742e0a4ec48ffff59b8a44e0b55e5a6b266f254509",
+          "bytes": 57975,
+          "offset": 3899970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=3974940&length=100",
+          "sha256": "14d9b20b21a74359a9ef68957e63f62d2e9291ba4852fed078b83416bad9fbb8",
+          "bytes": 57769,
+          "offset": 3974940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4050000&length=100",
+          "sha256": "de3dc07cfaeedc249a83938e7c96be9ffcad93d136c2d9ebc82d3a8682ea2e48",
+          "bytes": 58210,
+          "offset": 4050000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4124970&length=100",
+          "sha256": "6664cc77d298577b307ced6a33f182fa029f8964ace89694d2f4b40c73718c31",
+          "bytes": 58137,
+          "offset": 4124970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4199940&length=100",
+          "sha256": "f7172a7ee9f0f0e28cf1c1da52183a16a5d63eab65fb28dd3fd49528a61db5b6",
+          "bytes": 58123,
+          "offset": 4199940
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4275000&length=100",
+          "sha256": "508dbb31253325c6bc8c5253cc309ed367accf305e8ff8b9f14c95012a5eec40",
+          "bytes": 58083,
+          "offset": 4275000
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4349970&length=100",
+          "sha256": "fcc9c092b8ab8968ed0bfa2cc957df183d423257a1d82e0e9f158f800ada614d",
+          "bytes": 58028,
+          "offset": 4349970
+        },
+        {
+          "url": "https://datasets-server.huggingface.co/rows?dataset=Dingdong-Inc%2FFreshRetailNet-50K&config=default&split=train&offset=4424940&length=100",
+          "sha256": "b302ab37c4c45991de5fbb1a04f6cdb7cec7005744e5a3065dff79071e9ce696",
+          "bytes": 58253,
+          "offset": 4424940
+        }
+      ],
+      "compiledCandidates": 60
+    }
+  },
+  "inputHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
+  "labelHash": "ec2b3984b6bce4f5d44e491186489fd21e255823020506ff1337f452fa806801",
+  "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+  "grouping": {
+    "nearTemplatePairs": 0,
+    "families": 378,
+    "method": "connected source/page/conversation/store/product, exact inputs, number-normalized documents, and 5-word-shingle Jaccard templates",
+    "templateSimilarity": 0.85
+  },
+  "scope": "native component diagnostics, not an end-to-end order benchmark",
+  "coupledSources": false,
+  "newHumanReviewedCases": 0,
+  "modelRuns": 0,
+  "latentDemandLabels": false,
+  "economicActionValueLabels": false,
+  "limitations": [
+    "Custom source-disjoint splits replace official leaderboard splits.",
+    "TAT-QA identifies contexts, not original reports; report-wide disjointness is unknown.",
+    "ABCD is roleplay with shared policies, not production logs or unseen-policy evaluation.",
+    "ABCD argument scoring is restricted to values observable in the prefix or full policy.",
+    "OR-ShARC supplies crowd scenarios and recorded follow-ups, not procurement logs.",
+    "The unlabeled rule collection is public to all arms, including held-out rule text.",
+    "FreshRetail rows API is not revision-pinned; captured response hashes identify the snapshot.",
+    "Recorded follow-up text is a reference, not a unique or causally optimal action.",
+    "Template checks cannot guarantee organization-level independence or no pretraining exposure.",
+    "No unsupported purchase parameters, question costs, response probabilities or latent F labels."
+  ],
+  "counts": {
+    "abcd": {
+      "cases": 462,
+      "families": 80,
+      "splits": {
+        "dev": 96,
+        "train": 270,
+        "test": 96
+      },
+      "splitFamilies": {
+        "train": 48,
+        "dev": 16,
+        "test": 16
+      }
+    },
+    "contractnli": {
+      "cases": 360,
+      "families": 60,
+      "splits": {
+        "train": 216,
+        "dev": 72,
+        "test": 72
+      },
+      "splitFamilies": {
+        "train": 36,
+        "dev": 12,
+        "test": 12
+      }
+    },
+    "cuad": {
+      "cases": 450,
+      "families": 75,
+      "splits": {
+        "train": 270,
+        "test": 90,
+        "dev": 90
+      },
+      "splitFamilies": {
+        "train": 45,
+        "dev": 15,
+        "test": 15
+      }
+    },
+    "orsharc": {
+      "cases": 240,
+      "families": 60,
+      "splits": {
+        "train": 144,
+        "dev": 48,
+        "test": 48
+      },
+      "splitFamilies": {
+        "train": 36,
+        "dev": 12,
+        "test": 12
+      }
+    },
+    "retail": {
+      "cases": 50,
+      "families": 43,
+      "splits": {
+        "train": 30,
+        "test": 12,
+        "dev": 8
+      },
+      "splitFamilies": {
+        "train": 25,
+        "dev": 8,
+        "test": 10
+      }
+    },
+    "tatqa": {
+      "cases": 240,
+      "families": 60,
+      "splits": {
+        "train": 144,
+        "dev": 48,
+        "test": 48
+      },
+      "splitFamilies": {
+        "train": 36,
+        "dev": 12,
+        "test": 12
+      }
+    }
+  }
+}

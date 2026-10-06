@@ -195,6 +195,10 @@ def main():
             "audit-workload",
             "check-workload",
             "rescore",
+            "prepare-suite",
+            "check-suite",
+            "score-suite",
+            "retrieve-suite",
         ),
     )
     parser.add_argument("--config", default=None)
@@ -209,18 +213,43 @@ def main():
     parser.add_argument("--annotations", default="cases/pilot/annotations.jsonl")
     parser.add_argument("--design", default="configs/workload-v2.json")
     parser.add_argument("--trajectories")
+    parser.add_argument("--predictions")
+    parser.add_argument("--query")
     args = parser.parse_args()
     config = read(
         args.config
         or (
-            "configs/pilot.json"
+            "configs/complementary.json"
+            if args.command.endswith("-suite")
+            else "configs/pilot.json"
             if args.command in ("experiment", "evaluate", "benchmark")
             else "configs/full.json"
         )
     )
     if args.seed is not None:
         config["seed"] = args.seed
-    if args.command == "prepare":
+    if args.command.endswith("-suite"):
+        from . import suite
+        from .io import lines
+
+        if args.command == "prepare-suite":
+            print(suite.prepare(config), flush=True)
+        elif args.command == "check-suite":
+            print(suite.check(config["output"]), flush=True)
+        elif args.command == "retrieve-suite":
+            require(args.query, "Retrieval requires --query")
+            print(
+                suite.retrieve(
+                    lines(Path(config["output"]) / "collection.jsonl"), args.query, args.limit
+                ),
+                flush=True,
+            )
+        else:
+            from .suite_score import score
+
+            require(args.predictions, "Scoring requires --predictions JSONL")
+            print(score(config["output"], lines(args.predictions), args.split), flush=True)
+    elif args.command == "prepare":
         print(corpus.audit(corpus.save(config)))
     elif args.command == "fetch":
         print(data.fetch(read("configs/datasets.json")))

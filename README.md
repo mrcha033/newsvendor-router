@@ -62,6 +62,34 @@ uv run newsvendor raw-benchmark --provider agent --config configs/pilot.json --l
 
 외부 실행은 직접 명령을 내렸을 때만 API를 호출합니다. 모델·endpoint가 없으면 실행 전에 중단합니다. 실제 Jev/SGLang/agent 측정은 아직 없습니다. 로컬 서버와 명시된 protocol fixture 검사는 실제 모델 성능 측정에 포함하지 않습니다.
 
+## 상보적 영어 워크로드
+
+`configs/complementary.json`은 영어 원문을 보존하는 6개 구성 요소를 준비합니다. 실제 계약·재무 문서와 판매 관측을 사용하며, 질의·도구 선택에는 공개된 사람 역할극 및 crowd 대화를 사용합니다. 출처가 다른 자료를 한 기업의 사건으로 결합하거나 없는 발주 정답을 생성하지 않습니다.
+
+| 원천 | 준비 건수 | 역할과 원래 채점 표적 |
+|---|---:|---|
+| CUAD 공급·제조·유통·구매 계약 | 450 / 계약 75개 | 기간·가격 제한·최소 구매·수량·보증 조건의 근거와 미기재 |
+| ContractNLI NDA | 360 / 계약 60개 | 함의·모순·미기재와 근거; 공급 조건 자료는 아님 |
+| OR-ShARC | 240 / 규칙 묶음 60개 | 공통 규칙 651개에서 조회한 뒤 yes/no 또는 추가 질문 |
+| ABCD | 462 / 대화 80개 | 전체 정책과 관측 대화에서 발화/도구 선택; 실제 고객 로그가 아닌 사람 역할극 |
+| TAT-QA | 240 / 문서 context 60개 | 표·문장 계산 및 단위·scale |
+| FreshRetailNet | 50개 시계열 | 과거 60일 → 미래 7일 관측 판매; 품절·비품절 오차를 따로 표시 |
+
+```sh
+uv run newsvendor prepare-suite
+uv run newsvendor check-suite
+uv run newsvendor retrieve-suite --query "electricity supplier help guarantee credit" --limit 5
+uv run newsvendor score-suite --predictions predictions.jsonl --split test
+```
+
+공통 입력은 `newsvendor.suite.public_input(row)`로 얻습니다. 영어 request, 원문 documents, tables, 관측 history·sales, 도구 목록만 반환합니다. 정답·의도·근거 주석·미래 대화·정답 규칙 ID는 제외합니다. OR-ShARC의 올바른 문서는 입력에 미리 넣지 않고 공통 조회 도구로 찾습니다. ABCD에는 현재 정답 workflow를 선택해서 주는 대신 전체 정책을 제공합니다.
+
+예측 JSONL은 `{"id":"<case id>","prediction":{"action":"answer","answer":12,"scale":"million"}}` 형식입니다. 행동은 `answer/ask/speak/call_tool/abstain`이며 근거는 `evidence:[{"document":"contract","start":0,"end":10}]`, 도구는 `tool`과 순서 있는 `arguments`, 조회 문서는 `retrieved`로 기록합니다. 정답 파일은 채점 프로세스만 읽습니다. 외부 provider와 새 suite의 학습 연결은 아직 구현하지 않았습니다.
+
+가공 입력·정답·조회 collection·manifest는 `data/processed/complementary/`에, 원시 응답은 `data/raw/complementary/`에 저장합니다. 같은 계약·규칙 page/tree·대화·매장·상품을 연결하고, 동일 입력과 수치 정규화 문서 및 유사 template를 묶어 60/20/20%로 분할합니다. 이 실행은 Train/Dev/Test 1,074/362/366건, 378개 출처 묶음입니다. TAT-QA는 전체 보고서 식별자가 없어 context 수준 분할이고, OR-ShARC의 주석 없는 조회 collection은 모든 방법에 공통으로 공개됩니다.
+
+각 구성 요소의 점수와 묶음별 평균을 따로 보존합니다. 누락 예측은 분류 분모에 남고, 불완전한 판매 예측은 비교 가능 결과로 인정하지 않습니다. 기록된 질문·발화의 문구 유사도는 참고 지표입니다. 인과적 행동 가치·발주 손실·잠재수요는 이 공개 자료의 정답이 아니며, end-to-end 발주 평가 준비 상태는 계속 미완료입니다. 준비 snapshot은 [manifest](cases/complementary/manifest.json)에 기록합니다.
+
 ## 실험 범위
 
 현재 실행은 제한된 영어 업무 문서와 유한 모수 후보를 사용하는 **통제 실험**입니다. `c,p,v,b`의 숫자 근거와 `F`의 관측 조건을 다루며, 임의의 한국어 문서·다기간 재고·잠재수요 복원을 구현한 결과는 아닙니다. 자동 주석의 사람 검토 수는 0으로 기록합니다.
