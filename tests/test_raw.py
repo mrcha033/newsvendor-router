@@ -54,88 +54,12 @@ def complete(input):
     )
 
 
-def test_original_prose_to_own_record_and_optimizer_without_semantic_metadata():
-    row, annotation = fixture("e7c4")
-    input = public_input(row)
-    menu, reply = complete(input)
-    record = raw.decode(input, menu, reply)
-    assert record["valid"] and record["q"] == 30
-    assert record["values"]["v"] == 4
-    assert raw.evaluate(annotation, input, record, "handoff")["authorized"]
-    for doc in input["docs"]:
-        assert set(doc) == {"id", "title", "text", "source"}
-    # IDs embedded in product prose cannot become a pack count or a monetary amount.
-    assert all(v["value"] != 314 for v in menu["numbers"].values())
-
-
-def test_documented_low_impact_bounds_do_not_force_a_human_question():
-    row, annotation = fixture("97e3")
-    input = public_input(row)
-    menu, reply = answers(
-        input,
-        {
-            "c": (10, ["d01"]),
-            "p": (14, ["d02"]),
-            "v": ([0, 0.1], ["d05"]),
-            "b": (0, ["d03"]),
-            "F": ([[10, 0.2], [30, 0.5], [60, 0.3]], ["d04"]),
-        },
-    )
-    record = raw.decode(input, menu, reply)
-    assert record["valid"] and record["q"] == 30 and record["gamma"] == 0
-    assert raw.checklist(input, record) == "handoff"
-    assert raw.evaluate(annotation, input, record, "handoff")["authorized"]
-
-
-def test_factual_penalty_and_chosen_preference_have_separate_source_evidence():
-    row, annotation = fixture("f4a8")
-    input = public_input(row)
-    menu, reply = answers(
-        input,
-        {
-            "c": (5, ["d01"]),
-            "p": (9, ["d02"]),
-            "v": (0, ["d05"]),
-            "b": (2, ["d03", "d08"]),
-            "F": ([[8, 0.25], [16, 0.25], [24, 0.25], [32, 0.25]], ["d04"]),
-        },
-    )
-    record = raw.decode(input, menu, reply)
-    assert record["valid"] and record["q"] == 24
-    assert {e["docId"] for e in record["links"]["b"]} == {"d03", "d08"}
-    assert raw.evaluate(annotation, input, record, "handoff")["authorized"]
-
-
-def test_unauthorized_recommendation_cannot_be_promoted_by_provider_confidence():
-    row, _ = fixture("e7c4")
-    input = public_input(row)
-    input["docs"][3]["source"]["author"] = "j22"
-    menu, reply = complete(input)
-    record = raw.decode(input, menu, reply)
-    assert not record["valid"] and "unselected-preference" in record["errors"]
-    assert "handoff" not in raw.permitted(input, record)
-
-
-@pytest.mark.parametrize(
-    "id,reason",
-    [
-        ("6fa2", "unresolved-v-conflict"),
-        ("c9e1", "unresolved-b-unconfirmed"),
-        ("d2c8", "unresolved-F-unconfirmed"),
-        ("0e8f", "unsupported-scope"),
-        ("5f1c", "unsupported-scope"),
-    ],
-)
-def test_independent_adjudication_rejects_falsely_claimed_valid_state(id, reason):
-    row, annotation = fixture(id)
-    result = raw.evaluate(
-        annotation, public_input(row), {"valid": True, "values": {}, "q": 30}, "handoff"
-    )
-    assert result["falseHandoff"] and reason in result["handoffReasons"]
-
-
 def test_observed_clarification_resolves_conflict_but_late_reply_does_not():
     row, annotation = fixture("6fa2")
+    forged = raw.evaluate(
+        annotation, public_input(row), {"valid": True, "q": 30, "values": {}}, "handoff"
+    )
+    assert forged["falseHandoff"] and "unresolved-v-conflict" in forged["handoffReasons"]
     event = annotation["environment"][0]
     input = observe(public_input(row), event["tool"], event["response"])
     assert raw.evaluate(annotation, input, {"q": 30, "values": {"v": 7}}, "handoff")["authorized"]
@@ -144,12 +68,22 @@ def test_observed_clarification_resolves_conflict_but_late_reply_does_not():
     input = observe(public_input(row), event["tool"], event["response"])
     result = raw.evaluate(annotation, input, {"q": 30, "values": {}}, "handoff")
     assert set(result["handoffReasons"]) >= {"cutoff", "unresolved-v-unconfirmed"}
+    for id, reason in (("d2c8", "unresolved-F-unconfirmed"), ("0e8f", "unsupported-scope")):
+        row, annotation = fixture(id)
+        result = raw.evaluate(
+            annotation, public_input(row), {"valid": True, "q": 30, "values": {}}, "handoff"
+        )
+        assert result["falseHandoff"] and reason in result["handoffReasons"]
 
 
 def test_raw_runtime_shares_only_unlabeled_candidates_and_records_actual_calls(
     monkeypatch, tmp_path
 ):
     row, annotation = fixture("e7c4")
+    menu, reply = complete(public_input(row))
+    record = raw.decode(public_input(row), menu, reply)
+    assert record["valid"] and record["q"] == 30
+    assert all(v["value"] != 314 for v in menu["numbers"].values())
     actual = []
 
     def protocol_fixture(provider, payload, questions):

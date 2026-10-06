@@ -2,7 +2,7 @@
 
 2026-10-06, Linux x86_64, Python 3.12.14 / CPU PyTorch에서 수정 내용을 검증했다. 측정 원본은 Git에서 제외한 `results/`에 보존한다.
 
-- 기존 회귀와 신규 통합검증 3개 통과. Ruff 정적/format 검사와 diff 검사 통과.
+- 기존 회귀는 현재 실험에 필요한 검증 10개로 정리하고, 새 영어 workload의 통합검증 3개를 유지한다. PyTorch 자체 동작, 이전 구조화 진단 및 반복적인 내부 특성 검사는 제거했다. Ruff 정적/format 검사와 diff 검사 통과.
 - 기존 수치 회귀와 수정 workload의 서로 다른 30개 source 순차 smoke 통과.
 - 기본 full은 600건/120개 참모수 조합이다. Train/dev/cal/test = 360/60/60/120이며 Test의 Train 참모수 중복은 0이다. 최적 수량이 경계에 있는 사례와 scenario 이름을 포함한 SKU도 0건이다.
 - 고정 MiniLM encoder와 8개 PyTorch head를 실제 학습했다. 3-fold의 적합/표적 source 겹침 및 train/dev/cal/test 묶음 겹침은 0이다.

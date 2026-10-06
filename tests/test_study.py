@@ -6,7 +6,11 @@ import pytest
 spec = importlib.util.spec_from_file_location(
     "repair_study", Path(__file__).resolve().parents[1] / "scripts/run_repair_study.py"
 )
+
+
 study = importlib.util.module_from_spec(spec)
+
+
 spec.loader.exec_module(study)
 
 
@@ -18,8 +22,5 @@ def test_bootstrap_does_not_count_initialization_seeds_as_source_families():
     assert result["seedDifferences"] == {42: 10, 43: 14}
     with pytest.raises(ValueError, match="Seed sets differ"):
         study.contrast(first, {42: second[42]})
-
-
-def test_bootstrap_requires_matching_families():
     with pytest.raises(ValueError, match="Source families differ"):
         study.contrast({42: {"a": 10}}, {42: {"b": 5}})
