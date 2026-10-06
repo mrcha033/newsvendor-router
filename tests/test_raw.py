@@ -7,7 +7,7 @@ import pytest
 from newsvendor import raw
 from newsvendor.io import lines, read
 from newsvendor.providers import Provider
-from newsvendor.workload import observe, public_input
+from newsvendor.workload import comparison_contract, observe, public_input
 
 
 def fixture(id):
@@ -79,6 +79,13 @@ def test_observed_clarification_resolves_conflict_but_late_reply_does_not():
 def test_raw_runtime_shares_only_unlabeled_candidates_and_records_actual_calls(
     monkeypatch, tmp_path
 ):
+    design = read("configs/workload-v2.json")
+    assert comparison_contract(design)["primaryArms"] == 3
+    for policy in ("finite-rollout-on-estimated-belief", "one-step-value-of-information"):
+        planned = copy.deepcopy(design)
+        planned["comparisons"][0]["policy"] = policy
+        with pytest.raises(ValueError, match="planners are not primary"):
+            comparison_contract(planned)
     row, annotation = fixture("e7c4")
     menu, reply = complete(public_input(row))
     record = raw.decode(public_input(row), menu, reply)

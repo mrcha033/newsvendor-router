@@ -36,11 +36,13 @@ uv run newsvendor doctor
 | Construction heads | 근거 연결, 사실/추정/선호/가정, 확인 상태, 식 후보를 예측 | `construction.py`, `heads.py` |
 | Validator / calculator | SKU·기간·단위·선택 권한을 검사하고 원문 수치로 계산 | `construction.py` |
 | Newsvendor optimizer | 유한 공동 모수 집합에서 정확한 minimax regret 계산 | `optimizer.py` |
-| 통제 planner | 자기 구성 상태의 rollout 학습 표적; 의미 규칙 전문가도 별도 측정 | `policy.py` |
+| 통제 planner | 통제 환경의 rollout 학습 표적과 수치 진단 | `policy.py` |
 | Value / recovery heads | 행동별 후속 손실과 복구 행동을 학습 | `train.py` |
 | Updater / action selector | 관측 응답을 반영해 상태를 다시 구성하고 허용 행동 선택 | `corpus.py`, `policy.py` |
 
-고정 목록, 모든 누락 요청, 불확실성 우선, 한 단계 영향, 자기 상태 planner, reference expert, 학습형 정책을 **규칙/학습형 모수 구성과 교차**하여 평가합니다. Full-information oracle은 별도 평가용 상한입니다. 정확한 생성기 응답 모형을 아는 통제 planner의 loss 차이를 원문 처리 능력의 우위로 해석하지 않습니다.
+주 비교 대상은 같은 원문부터 처리하는 **고정 typed 파이프라인과 도구 사용 agent**이며, 우리 학습형 router를 이들과 비교합니다. 규칙 기반·모형 기반 planner는 주요 베이스라인에서 제외합니다. 고정 typed 구성에 학습형 정책을 연결하는 조건은 구성 기여를 분리하는 ablation입니다. Validator·calculator·optimizer는 모든 방법이 공유하는 도구입니다.
+
+통제 실행은 고정 목록, 모든 누락 요청, 불확실성 우선, 학습형 정책을 규칙/학습형 구성과 교차하는 진단입니다. Planner·reference expert·one-step·oracle은 기본 평가에서 실행하지 않습니다. 통제 planner는 생성기 응답 모형을 사용하는 학습 표적 및 수치 진단에 사용하며, 주 비교의 승패 기준으로 사용하지 않습니다.
 
 참모수의 `Ω` 포함률과 발주 승인 가능 여부를 따로 채점합니다. 미해결 계약 충돌·검열 수요·마감/수량 위반이 있는 전달은 오류입니다. 과거 결과는 원래 설정과 인접 `metrics.json`을 확인하고 기록된 응답으로 다시 채점합니다: `newsvendor rescore --config <원래설정> --trajectories <원시기록>`.
 
@@ -56,7 +58,7 @@ uv run newsvendor benchmark --provider sglang --config configs/pilot.json --max-
 uv run newsvendor raw-benchmark --provider agent --config configs/pilot.json --limit 14 --max-calls 100
 ```
 
-`benchmark`는 주석된 통제 입력의 공통 후보에서 기존 예측기의 evidence/type/state/expression을 구성하고, 자기 상태의 planner 표적으로 value/recovery를 학습합니다. 일곱 정책을 규칙/기존 예측기 구성과 교차합니다. `raw-benchmark`는 원문·실제 출처·동일 도구부터 typed/checklist와 agent를 실행합니다. 후보는 공통의 주석 없는 calculator가 만들며 적용 범위와 상태는 각 예측기가 판단합니다. Reference 상태·미래 응답·응답 확률은 제공하지 않습니다.
+`benchmark`는 주석된 통제 입력의 공통 후보에서 기존 예측기의 evidence/type/state/expression을 구성하고, 자기 상태의 planner 표적으로 value/recovery를 학습합니다. 네 정책을 규칙/기존 예측기 구성과 교차하는 진단이며, paired 비교는 같은 구성의 정책끼리 수행합니다. `raw-benchmark`는 원문·실제 출처·동일 도구부터 typed/checklist와 agent를 실행합니다. 후보는 공통의 주석 없는 calculator가 만들며 적용 범위와 상태는 각 예측기가 판단합니다. Reference 상태·미래 응답·응답 확률은 제공하지 않습니다.
 
 원시 예측·호출 hash·usage·지연을 cache와 결과에 남깁니다. `--max-calls`는 새 HTTP 호출의 상한이고 기본값 0은 cache만 사용합니다. 예시의 상한은 완료 호출 수나 요금의 보장이 아닙니다.
 

@@ -12,10 +12,11 @@
 - 상보적 영어 workload 1,802건을 실제 수집·변환했다. CUAD 450, ContractNLI 360, OR-ShARC 240, ABCD 462, TAT-QA 240, FreshRetail 50개 시계열이다. Train/Dev/Test는 1,074/362/366건이고 계약/page/tree/대화/매장/상품 연결, 입력·문서 template 검사에서 분할 중복은 0이다. 신규 사람이 검토한 사례와 실제 모델 실행 수는 0이다.
 - 원래 공개 주석에서 CUAD 근거 있음/미기재 184/266건, NLI 함의/모순/미기재 164/34/162건, OR-ShARC 추가 질문 70건, ABCD 도구 선택 143건을 포함한다. 도구 인자 143건 중 입력에서 관측 가능한 126건만 인자 정확도로 채점한다. FreshRetail은 매장 50개/상품 43개이며 후속 350일 중 품절 관측 127일이다. 이를 잠재수요 정답으로 사용하지 않는다.
 - ABCD의 source `turn_count`가 비연속인 실제 대화를 확인해 위치/speaker 기준으로 원문을 정렬했다. 새 테스트는 입력 누출, source 분할, 독립 채점의 통합검증 3개로 유지한다. 숫자 부호·scale, 잘못된 근거, 누락 예측·forecast coverage와 미래 정보 누출도 이 통합검증에서 확인한다. 실제 Test 366건은 정답 파일을 사용한 오프라인 채점기 검증을 통과했으며 모델 실행으로 세지 않는다. 원천의 실제 input·label·수집 hash와 준비 snapshot은 `cases/complementary/manifest.json`에 보존한다.
+- 2026-10-07: 주요 비교 계약에서 규칙·모형 기반 planner를 제거했다. 기존 13개 테스트, 수치 smoke, source 분할 검사가 통과했다. 기존 checkpoint의 Test 120건을 `results/baseline-controls/full/`에 별도로 재평가해 기본 실행에 planner/reference/one-step/oracle이 없고 paired 비교가 같은 구성의 정책 진단임을 확인했다. 원문 학습형 adapter와 새 suite의 실제 모델 비교는 여전히 미완료다.
 
 ## 결과 해석
 
-수정 full의 학습형 구성+정책 loss는 **178.223**, 같은 구성의 own-state planner는 **175.934**다. 차이는 2.289, 24개 source 묶음의 paired bootstrap 95% CI는 [-0.821, 7.013]이다. 학습형의 우위는 확인되지 않았다. 이 숫자는 새 경제·문장·응답 조건의 통제 실행이며 이전 조건의 loss와 직접 비교하지 않는다.
+수정 full의 학습형 구성+정책 loss는 **178.223**, 같은 구성의 own-state planner는 **175.934**다. 차이는 2.289, 24개 source 묶음의 paired bootstrap 95% CI는 [-0.821, 7.013]이다. 이 과거 비교는 통제 rollout 표적의 근사도를 보는 진단이며, 주요 베이스라인과의 모델 우열을 측정하지 않는다. 2026-10-07부터 planner/reference/one-step/oracle은 기본 평가에서 제외하고 규칙 planner를 주요 비교 계약에서 제거했다. 이전 경제·문장·응답 조건의 loss와 직접 비교하지 않는다.
 
 기존 main의 원시 기록을 기록된 응답으로 재채점하면 계약 충돌 20건의 미승인 전달을 모두 오류로 잡는다. 이전 coverage-only false handoff 0건은 승인 안전성의 결과가 아니다. 경제 손실 89.99355와 과거 coverage를 보존하며 승인 오류만 추가했다. 이전 문법의 수정 회귀 실행은 같은 충돌 20건의 승인 오류 0건, loss 39.33185다. 원본 corpus hash는 이전 저장본과 동일함을 확인했다.
 

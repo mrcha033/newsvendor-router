@@ -81,35 +81,26 @@ def save(rows, directory, config, provenance):
         groups.setdefault(label(row), []).append(row)
     summary = {k: summarize(r) for k, r in groups.items()}
     comparisons = []
-    for construction in sorted({r["construction"] for r in rows if r["method"] == "learned"}):
+    for construction in sorted(
+        {r["construction"] for r in rows if r["method"] == "learned"} - {"rules"}
+    ):
         for noise in sorted({r["noise"] for r in rows}):
             suffix = "/noise-" + str(noise) if noise else ""
             a = "learned/" + construction + suffix
-            for method in ("planner", "reference", "one_step"):
+            for method in ("checklist", "ask_all", "uncertainty"):
                 b = method + "/" + construction + suffix
                 if a in groups and b in groups:
                     comparisons.append(paired(rows, a, b, config["bootstrap"], config["seed"]))
-        if construction != "rules":
-            for method in ("planner", "reference", "one_step"):
-                if method + "/rules" not in groups:
-                    continue
-                comparisons.append(
-                    paired(
-                        rows,
-                        "learned/" + construction,
-                        method + "/rules",
-                        config["bootstrap"],
-                        config["seed"],
-                    )
-                )
     jsonl(directory + "/trajectories.jsonl", rows)
     write(
         directory + "/metrics.json",
         {
             "scope": "controlled synthetic execution and learning check",
+            "primaryEvaluationReady": False,
+            "comparisonRole": "Within-constructor policy diagnostics; primary baselines are raw typed and agent pipelines.",
             "informationRegimes": {
                 "reference": "Semantic expert state and exact generated response model; control upper bound.",
-                "planner": "Own constructed state and exact generated response model; control diagnostic.",
+                "planner": "Control rollout teacher and numerical diagnostic; excluded from primary baselines.",
                 "learned": "Own constructed state; action values trained on own-state control rollouts.",
                 "oracle": "Hidden complete parameters without acquisition costs; evaluation bound.",
             },
@@ -145,7 +136,7 @@ def save(rows, directory, config, provenance):
         "They do not establish effectiveness on real organizational work. "
         "Loss includes declared scripted request and hold costs.\n\n"
         + "\n".join(table)
-        + "\n\n## Paired differences\n\n"
+        + "\n\n## Within-constructor policy diagnostics\n\n"
         + "\n\n".join(
             f"{c['a']} vs {c['b']}: {c['difference']:.3f}, 95% source-bundle bootstrap CI "
             f"[{c['ci95'][0]:.3f}, {c['ci95'][1]:.3f}], {c['families']} bundles."

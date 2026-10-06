@@ -48,9 +48,6 @@ def run(config, provider, budget):
                 "checklist",
                 "ask_all",
                 "uncertainty",
-                "one_step",
-                "reference",
-                "planner",
                 "learned",
             ):
                 rows.append(

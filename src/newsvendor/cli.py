@@ -72,9 +72,6 @@ def evaluate(config, episodes, model, cache, directory, started):
                 "checklist",
                 "ask_all",
                 "uncertainty",
-                "one_step",
-                "reference",
-                "planner",
                 "learned",
             ):
                 stamp = time.perf_counter()
@@ -83,7 +80,6 @@ def evaluate(config, episodes, model, cache, directory, started):
                 rows[-1]["elapsedMs"] = elapsed
                 timing.append(elapsed)
                 policy_timing.setdefault(method + "/" + construction, []).append(elapsed)
-        rows.append(trajectory(e, "oracle"))
         for ablation in ("evidence", "type", "impact", "update"):
             rows.append(trajectory(e, "learned", model, cache, ablation=ablation))
         for noise in (0.1, 0.2):
@@ -92,9 +88,6 @@ def evaluate(config, episodes, model, cache, directory, started):
                     "checklist",
                     "ask_all",
                     "uncertainty",
-                    "one_step",
-                    "reference",
-                    "planner",
                     "learned",
                 ):
                     rows.append(

@@ -26,11 +26,13 @@ Construction은 train 원본 묶음의 공개 도달 상태와 응답을 학습�
 
 ## 비교 조건과 실행
 
-통제 비교는 rules/learned 구성 × checklist/ask-all/uncertainty/one-step/own-state planner/reference expert/learned 정책이다. `planner`는 자기 구성 상태, `reference`는 전문가 의미 상태로 채점하지만 둘 다 정확한 생성기 응답 모형을 안다. Full-information oracle은 숨겨진 참모수와 무료 정보를 쓰는 평가용 상한이다. 이 상한과의 loss 차이를 자연어 처리 능력이나 실무 우위로 해석하지 않는다.
+주 비교는 같은 원문부터 처리하는 고정 typed 파이프라인, 학습형 router, 도구 사용 agent다. 규칙 기반·모형 기반 planner를 주요 베이스라인에 포함하지 않는다. 고정 typed 구성+학습형 정책은 구성 기여의 재학습 ablation으로 분리한다. Validator·calculator·optimizer는 공통 도구다.
+
+통제 실행은 rules/learned 구성 × checklist/ask-all/uncertainty/learned 정책의 진단이다. 기본 평가에서 planner/reference/one-step/oracle을 실행하지 않고, paired 비교는 같은 구성의 정책끼리만 수행한다. Planner는 생성기의 정확한 응답 모형을 사용하는 통제 학습 표적과 수치 진단에 남긴다. 과거 planner/reference/oracle 측정은 원시 기록으로 보존하지만 주요 베이스라인이나 실무 우위의 근거로 사용하지 않는다.
 
 `benchmark`는 주석된 통제 입력에서 고정 typed 예측기를 calibration 자료로 먼저 보정하고, 배포할 구성 상태에 공통 value/recovery 학습을 연결한다. `external --suite business`는 reference 상태를 제공하는 구조화 행동 진단이다. 두 경로는 raw primary 비교와 구분한다.
 
-`raw-benchmark`는 원문부터 typed/checklist와 agent의 근거·상태·식·행동을 실행한다. 같은 주석 없는 수치/계산 후보, validator, optimizer, 도구와 시간 조건을 제공한다. 원문의 단위·적용 범위·충돌·권한을 각 예측기가 판단하며 reference 상태, 정답 모수, 미래 응답과 확률은 전달하지 않는다. 공유 solver 계약은 0–100 정수 수량의 단일 SKU/기간·선형 무제한 회수 모델이다. 지원 밖 조건은 전달하지 않는다. 학습형 router의 raw 데이터 학습/평가 연결과 train 추정 belief의 one-step/planner는 아직 구현이 필요하며 `configs/workload-v2.json`의 readiness에 표시한다.
+`raw-benchmark`는 원문부터 typed/checklist와 agent의 근거·상태·식·행동을 실행한다. 같은 주석 없는 수치/계산 후보, validator, optimizer, 도구와 시간 조건을 제공한다. 원문의 단위·적용 범위·충돌·권한을 각 예측기가 판단하며 reference 상태, 정답 모수, 미래 응답과 확률은 전달하지 않는다. 공유 solver 계약은 0–100 정수 수량의 단일 SKU/기간·선형 무제한 회수 모델이다. 지원 밖 조건은 전달하지 않는다. 학습형 router의 raw 데이터 학습/평가 연결은 아직 구현이 필요하며 `configs/workload-v2.json`의 readiness에 표시한다.
 
 외부 모델의 endpoint·실제 model을 지정해야 실행한다. 새 호출은 `--max-calls` 안에서만 허용하며 기본값 0은 cache 전용이다. 원시 답변·확률·반환 model·usage·지연·request/hash를 보존한다. API confidence를 정답확률로 해석하지 않는다. Protocol fixture와 로컬 서버 검사는 실제 모델 측정이 아니다. 실제 외부 모델 결과는 아직 없다.
 
@@ -44,9 +46,9 @@ Loss·질문 수·보류/자율 처리·승인 오류와 evidence/type/state/exp
 
 ## 후속 실험 순서
 
-1. 영어 상보적 suite의 Dev에서 raw rules/고정 typed/checklist/학습형/agent 입력 adapter를 먼저 연결한다. 모든 방법이 같은 원문·표·대화 prefix·조회 collection·도구를 받고 자기 근거와 상태를 구성한다. Gold rule, intent, 근거 span, 정답 수치 및 미래 턴을 후보 생성에 사용하지 않는다. 자연어 구성 없이 정확한 상태를 받는 planner는 별도 상한이다.
+1. 영어 상보적 suite의 Dev에서 고정 typed/학습형/agent 입력 adapter를 먼저 연결한다. 모든 방법이 같은 원문·표·대화 prefix·조회 collection·도구를 받고 자기 근거와 상태를 구성한다. Gold rule, intent, 근거 span, 정답 수치 및 미래 턴을 후보 생성에 사용하지 않는다.
 2. 같은 경제 상태의 표현을 바꾸고, 같은 누락 상태의 발주 영향·질문 비용·지연을 독립 변화시킨다. 실제 ERP 필드는 모든 방법에 제공하고 쉬운 업무도 포함한다.
 3. Suite의 source split을 고정하고 원래 표적별로 구성 오류를 측정한다. CUAD 근거/미기재, NLI 상태+근거, OR-ShARC 규칙 선택/yes-no-ask/질문 참고 F1, ABCD 다음 행동/도구/관측 인자, TAT-QA 답·scale, Retail 비검열/검열 관측 판매 MAE를 따로 보고한다. 구성 요소 간 단일 점수나 발주 loss로 합치지 않는다. 누락 예측과 유효 forecast coverage를 함께 보고한다.
-4. Rules/고정 typed/학습형/agent를 같은 원문·도구·validator·optimizer로 비교한다. 응답 belief는 train에서 추정하고 reference expert는 별도 상한으로 둔다.
+4. 고정 typed/학습형/agent를 같은 원문·도구·validator·optimizer로 비교한다. 학습형 정책의 응답 belief는 train에서 추정한다. 고정 typed 구성+학습형 정책은 별도 ablation으로 분리한다.
 5. 사람 검토한 실제 업무 원문·응답·권한·시간·비용을 확보해 end-to-end 발주 사례를 만든다. 미형성 선호·검열 수요·지원 밖 조건을 구분한다. Source/template/연결된 조직·SKU·기간을 분리하고 fixture를 test로 쓰지 않는다. 질문 참고 정답을 인과적 가치 정답으로 취급하지 않는다. 그 뒤 동일 dataSeed의 5개 학습 seed와 재학습 ablation 및 비용·지연 대조 실험을 실행한다.
 6. 주 비교는 고정 typed router의 같은 source다. 손실 5% 개선과 paired CI를 확인하고 근거 없는 발주·마감 위반·자율 처리율·질문 시간 및 실제 추론 비용을 함께 보고한다.

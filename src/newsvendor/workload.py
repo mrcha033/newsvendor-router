@@ -214,9 +214,15 @@ def comparison_contract(design):
         require(arm["name"] not in names, "Duplicate comparison name")
         names.add(arm["name"])
         require(
-            arm["track"] in {"primary", "upper-bound", "candidate-diagnostic"}, "Comparison track"
+            arm["track"] in {"primary", "upper-bound", "candidate-diagnostic", "ablation"},
+            "Comparison track",
         )
         if arm["track"] == "primary":
+            require(
+                arm["constructor"] != "raw-rules"
+                and arm["policy"] in {"checklist", "learned-value", "agent"},
+                "Rule-based and model-based planners are not primary model baselines",
+            )
             require(
                 arm["publicView"] == "raw" and arm["stateAccess"] == "own",
                 "Primary comparisons must construct their own states from raw evidence",

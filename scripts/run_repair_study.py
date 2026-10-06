@@ -50,7 +50,7 @@ def summarize(schedule):
     arms, reports, hashes = {}, [], {}
     source_hash = None
     for arm in schedule["arms"]:
-        fitted, reference, seeds = {}, {}, []
+        fitted, seeds = {}, []
         for seed in schedule["seeds"]:
             directory = Path(schedule["output"]) / arm["name"] / str(seed)
             if not (directory / "metrics.json").exists():
@@ -65,7 +65,6 @@ def summarize(schedule):
                 metrics["provenance"]["labelHash"],
             )
             fitted[seed] = family_losses(directory / "trajectories.jsonl", "learned/learned")
-            reference[seed] = family_losses(directory / "trajectories.jsonl", "reference/rules")
             seeds.append(seed)
         if seeds:
             require(
@@ -73,9 +72,6 @@ def summarize(schedule):
                 "Initialization seeds changed study data",
             )
             arms[arm["name"]] = fitted
-            reports.append(
-                {"a": arm["name"], "b": "reference/rules", **contrast(fitted, reference)}
-            )
     for a, b in schedule["comparisons"]:
         if a not in arms or b not in arms:
             continue
