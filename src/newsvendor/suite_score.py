@@ -5,6 +5,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from . import demand
 from .io import digest, jsonl, lines, read, require, write
 from .suite import check
 
@@ -156,26 +157,7 @@ def metrics(row, target, prediction):
             answerF1=correct_action * scale * text_f1(answer, target["answer"]),
         )
     elif component == "retail":
-        predicted = [number(v) for v in answer] if isinstance(answer, list) else []
-        valid = bool(
-            correct_action
-            and len(predicted) == len(target["answer"])
-            and all(v is not None and v >= 0 for v in predicted)
-        )
-        result["forecastValid"] = float(valid)
-        for name, complete in (("uncensoredSalesMAE", True), ("censoredObservedSalesMAE", False)):
-            errors = (
-                [
-                    abs(a - b)
-                    for a, b, observed in zip(
-                        predicted, target["answer"], target["complete"], strict=True
-                    )
-                    if observed == complete
-                ]
-                if valid
-                else []
-            )
-            result[name] = sum(errors) / len(errors) if errors else None
+        result.update(demand.metrics(row["input"], target, prediction))
     return result
 
 
@@ -230,7 +212,10 @@ def score(directory, predictions, split="test", output="results/complementary"):
             }
         comparable = all(r["provided"] and r["validAction"] for r in selected)
         if component == "retail":
-            comparable &= all(r["metrics"]["forecastValid"] == 1 for r in selected)
+            comparable &= all(
+                r["metrics"]["distributionValid"] == r["metrics"]["orderValid"] == 1
+                for r in selected
+            )
         summary[component] = {
             "cases": len(selected),
             "provided": sum(r["provided"] for r in selected),
@@ -250,9 +235,9 @@ def score(directory, predictions, split="test", output="results/complementary"):
         "pooledScore": None,
         "notes": [
             "Missing predictions remain in classification denominators.",
-            "Forecast MAE covers valid forecasts only; incomplete coverage is not comparable.",
+            "Demand scores cover valid period distributions; incomplete coverage is not comparable.",
             "Reference wording scores are lexical diagnostics, not action-value labels.",
-            "Censored observed-sales error is not latent-demand error.",
+            "Stockout periods contribute survival NLL and order-loss lower bounds; exact CRPS and order loss use uncensored periods.",
         ],
     }
     jsonl(Path(output) / "measurements.jsonl", measurements)

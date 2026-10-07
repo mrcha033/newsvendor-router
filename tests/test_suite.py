@@ -194,7 +194,7 @@ def test_scoring_rejects_omissions_bad_units_and_future_leakage(tmp_path):
     assert report["tatqa"]["metrics"]["answerExact"]["mean"] == 0
     assert report["contractnli"]["metrics"]["groundedScore"]["mean"] == 0
     assert report["cuad"]["metrics"]["groundedScore"]["mean"] == 0
-    assert report["retail"]["metrics"]["uncensoredSalesMAE"]["mean"] is None
+    assert report["retail"]["metrics"]["uncensoredCRPS"]["mean"] is None
     assert not report["retail"]["comparable"]
     for prediction in (
         {"action": "answer", "answer": 12},
@@ -222,3 +222,101 @@ def test_scoring_rejects_omissions_bad_units_and_future_leakage(tmp_path):
     write(tmp_path / "manifest.json", manifest)
     with pytest.raises(ValueError, match="Future retail observation"):
         check(tmp_path)
+
+
+def test_demand_likelihood_distribution_and_decision():
+    import math
+    from datetime import date, timedelta
+
+    import numpy as np
+    import torch
+
+    from newsvendor import demand
+    from newsvendor.heads import Head
+
+    for family in demand.FAMILIES:
+        logits = torch.zeros(3, 3, requires_grad=True)
+        losses = demand.nll(
+            family, logits, torch.tensor([1.0, 0.0, 0.0]), torch.tensor([True, False, True])
+        )
+        if family == "lognormal":
+            # At the lognormal median: positive mass .5 times survival .5.
+            assert losses.tolist() == pytest.approx([-math.log(0.25), math.log(2), 0])
+        losses.sum().backward()
+        assert torch.isfinite(logits.grad).all()
+
+    heads = {name: Head(28, 32, 3) for name in demand.HEADS}
+    for head in heads.values():
+        for parameter in head.parameters():
+            torch.nn.init.zeros_(parameter)
+    heads["demand_family"].layers[-1].bias.data[1] = 2.0
+    observations = [
+        {
+            "date": (date(2024, 1, 1) + timedelta(days=i)).isoformat(),
+            "sales": 1.0,
+            "stockoutHours": 0,
+        }
+        for i in range(60)
+    ]
+    value = payload(
+        "Predict the next 7-day total demand distribution after 2024-02-29.",
+        observations=observations,
+    )
+    output = demand.predict(value, heads)
+    assert output["distribution"]["family"] == "lognormal"
+    F = output["F"]
+    assert len(F) == 65 and sum(p for _, p in F) == pytest.approx(1)
+    sigma = math.log(2) + 0.05
+    assert sum(d * p for d, p in F) == pytest.approx(0.5 * 7 * math.exp(sigma * sigma / 2))
+    for index, family in enumerate(demand.FAMILIES):
+        heads["demand_family"].layers[-1].bias.data.zero_()
+        heads["demand_family"].layers[-1].bias.data[index] = 2.0
+        prediction = demand.predict(value, heads)
+        assert prediction["distribution"]["family"] == family
+        assert set(prediction["distribution"]["parameters"]) == {
+            "zeroProbability",
+            *demand.PARAMETERS[family],
+        }
+        if family == "weibull":
+            shape = math.log(2) + 0.2
+            mean = 0.5 * 7 * sigma * math.gamma(1 + 1 / shape)
+            assert sum(d * p for d, p in prediction["F"]) == pytest.approx(mean)
+    assert demand.order([[0, 0.6], [100, 0.4]])["q"] == 0
+    assert demand.order([[0, 0.6], [100, 0.4]], underage=3)["q"] == 100
+    assert output["orders"][0]["q"] < output["orders"][-1]["q"]
+
+    target = {
+        "answer": [1.0] * 7,
+        "complete": [True] * 7,
+        "dates": [(date(2024, 3, 1) + timedelta(days=i)).isoformat() for i in range(7)],
+    }
+    exact = demand.metrics(value, target, output)
+    assert exact["distributionValid"] == 1 and exact["uncensoredCRPS"] >= 0
+    assert exact["observationNLL"] == pytest.approx(
+        math.log(7 * sigma * math.sqrt(2 * math.pi) / 0.5)
+    )
+    altered = copy.deepcopy(output)
+    altered["orders"][-1].update(q=0, cost=9 * sum(d * p for d, p in F))
+    actual_order = demand.metrics(value, target, altered)
+    assert actual_order["orderValid"] == 1
+    assert actual_order["uncensoredOrderLoss_u9"] == 63
+    altered["orders"] = []
+    assert demand.metrics(value, target, altered)["orderValid"] == 0
+    target["complete"][0] = False
+    censored = demand.metrics(value, target, output)
+    assert censored["uncensoredCRPS"] is None and censored["uncensoredOrderLoss_u3"] is None
+    assert censored["observationNLL"] == pytest.approx(-math.log(0.25))
+    altered = copy.deepcopy(output)
+    altered["F"][1][1] = -1
+    assert demand.metrics(value, target, altered)["distributionValid"] == 0
+
+    row = {"id": "train", "family": "store-a", "component": "retail", "input": value}
+    samples = demand.samples([row], {"train": target}, rolling=True)
+    assert len(samples) == 27
+    first = samples[0]
+    assert first["cutoff"] < first["dates"][0]
+    changed = copy.deepcopy(row)
+    changed["input"]["observations"][-1]["sales"] = 1e6
+    assert np.array_equal(
+        first["x"], demand.samples([changed], {"train": target}, rolling=True)[0]["x"]
+    )

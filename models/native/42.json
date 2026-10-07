@@ -1,5 +1,5 @@
 {
-  "schema": "native-router-v1",
+  "schema": "native-router-v3",
   "config": {
     "dataset": "data/processed/complementary",
     "output": "results/native",
@@ -14,6 +14,11 @@
     "bootstrap": 2000,
     "fragments": 12,
     "candidates": 48,
+    "demand": {
+      "epochs": 100,
+      "minHistory": 28,
+      "warmupEpochs": 10
+    },
     "encoder": {
       "model": "sentence-transformers/all-MiniLM-L6-v2",
       "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
@@ -64,9 +69,21 @@
       800,
       5
     ],
-    "forecast": [
+    "demand_family": [
       28,
-      7
+      3
+    ],
+    "demand_truncated_normal": [
+      28,
+      3
+    ],
+    "demand_lognormal": [
+      28,
+      3
+    ],
+    "demand_weibull": [
+      28,
+      3
     ]
   },
   "losses": {
@@ -142,15 +159,56 @@
       "selectedEpoch": 23,
       "devLoss": 1.0963079929351807
     },
-    "forecast": {
-      "initial": 1.4010335206985474,
-      "final": 0.48404672741889954,
-      "epochs": 25,
-      "rows": 30,
-      "devRows": 8,
-      "selectedEpoch": 9,
-      "devLoss": 0.223741814494133
+    "demand": {
+      "initial": 1.767348289489746,
+      "final": 0.2873572111129761,
+      "devLoss": 0.27258870005607605,
+      "selectedEpoch": 53,
+      "epochs": 100,
+      "warmupEpochs": 10,
+      "rows": 810,
+      "devRows": 216,
+      "objective": "Uniform family-parameter NLL plus family-probability-weighted detached NLL",
+      "selection": "Dev NLL of the actual argmax family and its parameters"
     }
+  },
+  "demand": {
+    "families": [
+      "truncated_normal",
+      "lognormal",
+      "weibull"
+    ],
+    "familyHead": "demand_family",
+    "parameterHeads": {
+      "truncated_normal": "demand_truncated_normal",
+      "lognormal": "demand_lognormal",
+      "weibull": "demand_weibull"
+    },
+    "parameters": {
+      "truncated_normal": [
+        "location",
+        "scale"
+      ],
+      "lognormal": [
+        "logMean",
+        "logStd"
+      ],
+      "weibull": [
+        "shape",
+        "scale"
+      ]
+    },
+    "quadrature": 64,
+    "loss": "zero mass / positive density NLL; right-censored survival NLL",
+    "trainSamplesHash": "ad042f10788bdc3b6bb4b51eab1922e8e501df962db27fa1b5e94c32aea67c68",
+    "devSamplesHash": "f24d2dec77b932ac9e5cc05c1c50d1c1538ee8bae3285b3103d8799abb127b4d",
+    "trainExact": 105,
+    "devExact": 24,
+    "costRatios": [
+      1,
+      3,
+      9
+    ]
   },
   "candidateCoverageTrain": {
     "abcd": {
@@ -558,25 +616,27 @@
   ],
   "supervisedIdsHash": "44223372c39ea0b5452c7f6d8845ef1b5ab39f8ed5913359a81bf2a8f65495a6",
   "encoderHash": "80aac429816d0172e8e6fa13d071be76e1f537bee8996be0c73ed60295f17c54",
-  "wallSeconds": 3.2667444010003237,
+  "wallSeconds": 4.669279895009822,
   "unsupportedHeads": [
     "economic-action-value",
     "fact-versus-preference-type"
   ],
   "scope": "Native component head adaptation; no fabricated economic action-value targets",
   "evaluationStatus": "Exploratory adapter evaluation; initial test measurements were inspected during development",
-  "datasetHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
-  "labelHash": "ec2b3984b6bce4f5d44e491186489fd21e255823020506ff1337f452fa806801",
+  "datasetHash": "b8e3604390b39aa006c84a8eb94fb98ab05869ba31721716a52583a0de38cff4",
+  "labelHash": "c6e9bbb59334466422eabbb507e62c30b240366e8ddbf8270f1ef75bbf6cb0cf",
   "pipeline": {
-    "native_model.py": "cf9d25462b890c92b138e801995abaa77aa7ecb16199427e0e3df4278fabaf18",
+    "native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
     "native_inputs.py": "14b970bc404acb30122e3f8419d45cde2641b0cf38f18ddcd5245785364c2e09",
     "heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
-    "suite_score.py": "5ba9148f4c098788b10a23cf561382944c374f3a901f13772c59853fe92b85ac"
+    "suite_score.py": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
+    "demand.py": "f9c2537ac167d7c437fa92a2d027f055317fc448db6280911cc34c6e1c2e4219",
+    "optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a"
   },
-  "weightsHash": "e1cbd1d3b3cc8f5610bd17420a8904f0cda1fe54cecbef0ebd196bb20e88d9b5",
+  "weightsHash": "f274014775a5c34ac13f9c98fd5df2d7edc57cb01b634069d8b54cc7654735af",
   "provenance": {
-    "configHash": "ca6e0d754aeda8da8e9fa3d3449450272302dc46d6c157509c5ce64e57eeef6c",
-    "sourceHash": "77de260df128033b5fe6bb163dd80b8d5608ea6b16699ba3391e482d4e53a154",
+    "configHash": "111a5338827e30928c6ab52d9d0c80bbb5a5c2704ba202e962ddc377349b08b1",
+    "sourceHash": "fd3689003a3162cecaa710723316497ceb44658893633dbfb169b302f93dba07",
     "sources": {
       "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
       "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
@@ -584,25 +644,26 @@
       "src/newsvendor/construction.py": "3c03db77195ddfea8345843eb5be736a19c7bc35f585b74a81457f10a4516d9d",
       "src/newsvendor/corpus.py": "ecf27ea83fae2b0af4a061d60e45eb07d5dfbd7cf5403582a2ca9b2e4f51cddf",
       "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "f9c2537ac167d7c437fa92a2d027f055317fc448db6280911cc34c6e1c2e4219",
       "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
       "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
       "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
       "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
       "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
-      "src/newsvendor/native_benchmark.py": "fed11acf676ff87b31f1b34a1426cac2bc3b181cdd6f29d8b1f0adda206da5f0",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
       "src/newsvendor/native_inputs.py": "14b970bc404acb30122e3f8419d45cde2641b0cf38f18ddcd5245785364c2e09",
-      "src/newsvendor/native_model.py": "cf9d25462b890c92b138e801995abaa77aa7ecb16199427e0e3df4278fabaf18",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
       "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
       "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
-      "src/newsvendor/order_benchmark.py": "2bb971d1fc8ae158b253764b724d69554c0be41a57c2a81aa1b0a8e5a3247599",
-      "src/newsvendor/orders.py": "de55368e030eaca07ffdd6c6fb5ca3986a6f50ea3b9cc491548003d353e2d494",
+      "src/newsvendor/order_benchmark.py": "30183ba56f1138b7e3770494e5fc75fbd4b1f0181194662c6f1d4a88c9ca2aa8",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
       "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
       "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
       "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
       "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
-      "src/newsvendor/snapshot.py": "04ed0948e2ec017bfeb261965676594644c1c431432b1ca4cd287029a01a51e6",
-      "src/newsvendor/suite.py": "666e74e1d08436a6b07feea745830d28f0141b0ede23196660aadc19790a019d",
-      "src/newsvendor/suite_score.py": "5ba9148f4c098788b10a23cf561382944c374f3a901f13772c59853fe92b85ac",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/suite.py": "7130c148a2aab4c5505e4e402f60c7c239da338f0fcdbb88705342ac23ec84c8",
+      "src/newsvendor/suite_score.py": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
       "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
       "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
       "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
@@ -615,7 +676,7 @@
       "numpy": "2.5.3"
     },
     "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
-    "commit": "ee33835718682759e9135bd2643521392a978293",
-    "timestamp": "2026-10-06T17:08:48.119975+00:00"
+    "commit": "46518e2e9f7b58a6263a8432534ad0f4fab1bcbd",
+    "timestamp": "2026-10-07T05:09:56.952598+00:00"
   }
 }

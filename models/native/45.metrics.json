@@ -1,9 +1,9 @@
 {
   "split": "test",
-  "inputHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
-  "labelHash": "ec2b3984b6bce4f5d44e491186489fd21e255823020506ff1337f452fa806801",
-  "predictionHash": "b6825d45485355fb570d3a3115fa1cd862579dc517526f947fe15bb66aff5cde",
-  "scorerHash": "5ba9148f4c098788b10a23cf561382944c374f3a901f13772c59853fe92b85ac",
+  "inputHash": "b8e3604390b39aa006c84a8eb94fb98ab05869ba31721716a52583a0de38cff4",
+  "labelHash": "c6e9bbb59334466422eabbb507e62c30b240366e8ddbf8270f1ef75bbf6cb0cf",
+  "predictionHash": "99683cb79f25fd56fc1bdcc30ed938f1fed807e5c777a6c7bf9f8c4b7e895786",
+  "scorerHash": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
   "components": {
     "abcd": {
       "cases": 96,
@@ -145,23 +145,77 @@
           "cases": 12,
           "families": 10
         },
-        "censoredObservedSalesMAE": {
-          "mean": 0.4689824615418911,
-          "familyMean": 0.46548472487678133,
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.0,
+          "familyMean": 0.0,
           "cases": 10,
           "families": 8
         },
-        "forecastValid": {
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.0,
+          "familyMean": 0.0,
+          "cases": 10,
+          "families": 8
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "familyMean": 0.0,
+          "cases": 10,
+          "families": 8
+        },
+        "distributionValid": {
           "mean": 1.0,
           "familyMean": 1.0,
           "cases": 12,
           "families": 10
         },
-        "uncensoredSalesMAE": {
-          "mean": 0.5367965733981321,
-          "familyMean": 0.5466023409139542,
+        "observationNLL": {
+          "mean": 0.7447563963846345,
+          "familyMean": 0.8789019252091379,
           "cases": 12,
           "families": 10
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "familyMean": 1.0,
+          "cases": 12,
+          "families": 10
+        },
+        "uncensoredCRPS": {
+          "mean": 6.228796177844634,
+          "familyMean": 6.228796177844634,
+          "cases": 2,
+          "families": 2
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.5,
+          "familyMean": 0.5,
+          "cases": 2,
+          "families": 2
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 8.480184486412533,
+          "familyMean": 8.480184486412533,
+          "cases": 2,
+          "families": 2
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 15.052461169051105,
+          "familyMean": 15.052461169051105,
+          "cases": 2,
+          "families": 2
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 23.740200756068703,
+          "familyMean": 23.740200756068703,
+          "cases": 2,
+          "families": 2
+        },
+        "uncensoredTotalMAE": {
+          "mean": 11.02717733919844,
+          "familyMean": 11.02717733919844,
+          "cases": 2,
+          "families": 2
         }
       }
     },
@@ -202,8 +256,8 @@
   "pooledScore": null,
   "notes": [
     "Missing predictions remain in classification denominators.",
-    "Forecast MAE covers valid forecasts only; incomplete coverage is not comparable.",
+    "Demand scores cover valid period distributions; incomplete coverage is not comparable.",
     "Reference wording scores are lexical diagnostics, not action-value labels.",
-    "Censored observed-sales error is not latent-demand error."
+    "Stockout periods contribute survival NLL and order-loss lower bounds; exact CRPS and order loss use uncensored periods."
   ]
 }

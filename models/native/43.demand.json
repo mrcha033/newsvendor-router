@@ -1,0 +1,88 @@
+{
+  "periods": 324,
+  "families": 10,
+  "uncensoredPeriods": 28,
+  "censoredPeriods": 296,
+  "familyCounts": {
+    "truncated_normal": 0,
+    "lognormal": 324,
+    "weibull": 0
+  },
+  "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+  "metrics": {
+    "censoredOrderLossLowerBound_u1": {
+      "mean": 0.0005400715364334255,
+      "familyMean": 0.0005920784251270147,
+      "periods": 296,
+      "families": 10
+    },
+    "censoredOrderLossLowerBound_u3": {
+      "mean": 0.0,
+      "familyMean": 0.0,
+      "periods": 296,
+      "families": 10
+    },
+    "censoredOrderLossLowerBound_u9": {
+      "mean": 0.0,
+      "familyMean": 0.0,
+      "periods": 296,
+      "families": 10
+    },
+    "distributionValid": {
+      "mean": 1.0,
+      "familyMean": 1.0,
+      "periods": 324,
+      "families": 10
+    },
+    "observationNLL": {
+      "mean": 0.408184456396153,
+      "familyMean": 0.36540873250758377,
+      "periods": 324,
+      "families": 10
+    },
+    "orderValid": {
+      "mean": 1.0,
+      "familyMean": 1.0,
+      "periods": 324,
+      "families": 10
+    },
+    "uncensoredCRPS": {
+      "mean": 6.733713510576091,
+      "familyMean": 7.573374941452031,
+      "periods": 28,
+      "families": 4
+    },
+    "uncensoredInterval80Coverage": {
+      "mean": 0.21428571428571427,
+      "familyMean": 0.515625,
+      "periods": 28,
+      "families": 4
+    },
+    "uncensoredOrderLoss_u1": {
+      "mean": 9.377993283046274,
+      "familyMean": 10.85447934961613,
+      "periods": 28,
+      "families": 4
+    },
+    "uncensoredOrderLoss_u3": {
+      "mean": 16.4410384783685,
+      "familyMean": 20.01779523933498,
+      "periods": 28,
+      "families": 4
+    },
+    "uncensoredOrderLoss_u9": {
+      "mean": 25.73456282309311,
+      "familyMean": 31.95141907739107,
+      "periods": 28,
+      "families": 4
+    },
+    "uncensoredTotalMAE": {
+      "mean": 12.09680328532467,
+      "familyMean": 14.283687474754242,
+      "periods": 28,
+      "families": 4
+    }
+  },
+  "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+  "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+}

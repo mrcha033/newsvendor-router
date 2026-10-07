@@ -9,6 +9,7 @@ import numpy as np
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+from . import demand
 from .io import digest, jsonl, lines, read, require, write
 from .native_inputs import fragments, prepare, rank
 from .suite import retrieve
@@ -255,14 +256,14 @@ def paired(config):
             "comparisons": report,
             "aggregation": "Average learned seeds within case, then paired source-family bootstrap",
             "scope": "Separate native component metrics; no pooled economic efficacy score",
-            "retail": "Auxiliary forecasting; common seed-42 estimator, not a language-routing comparison",
+            "retail": "Conditional demand distributions; common seed-42 estimator for typed/agent",
         },
     )
 
 
 def run(config, generator):
     from .cli import provenance
-    from .native_model import build, forecast_features, infer, load_portable
+    from .native_model import build, infer, load_portable
 
     directory = Path(config["dataset"])
     rows = lines(directory / "inputs.jsonl")
@@ -310,11 +311,7 @@ def run(config, generator):
             view = prepare(row, collection, config)
             started = time.perf_counter()
             if view["task"] == "retail":
-                x, scale = forecast_features(view)
-                output = {
-                    "action": "answer",
-                    "answer": (np.maximum(model["forecast"].scores([x])[0], 0) * scale).tolist(),
-                }
+                output = demand.predict(view["public"], model)
                 trace = {"records": [], "observations": [], "toolCalls": 1, "sharedForecast": True}
             else:
                 output, trace = predict(

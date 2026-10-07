@@ -1,6 +1,5 @@
 """Fit native evidence/state/action heads on original public-data annotations, without rollout teachers."""
 
-import math
 import re
 import time
 from collections import defaultdict
@@ -10,6 +9,7 @@ import numpy as np
 import torch
 from transformers import AutoModel, AutoTokenizer
 
+from . import demand
 from .heads import Head, train
 from .io import digest, jsonl, lines, read, require, write
 from .native_inputs import prediction, prepare
@@ -20,7 +20,7 @@ from .train import seed
 STATES = ["entailment", "contradiction", "not_mentioned"]
 RULES = ["Yes", "No", "Irrelevant", "ask"]
 SCALES = ["", "percent", "thousand", "million", "billion"]
-SCHEMA = "native-router-v1"
+SCHEMA = "native-router-v3"
 
 
 def embeddings(texts, config, path=".cache/native-embeddings.pt"):
@@ -131,19 +131,6 @@ def state_feature(view, cache):
     return feature(view, {"text": text}, cache)
 
 
-def forecast_features(view):
-    rows = view["public"]["observations"]
-    sales = np.asarray([r["sales"] for r in rows], dtype=np.float32)
-    scale = max(float(sales.mean()), 0.1)
-    normalized = sales / scale
-    x = list(normalized[-14:])
-    x += [float(normalized[-n:].mean()) for n in (7, 14, 30, 60)]
-    x += [float(normalized[-n:].std()) for n in (7, 14, 30, 60)]
-    x += [sum(r["stockoutHours"] > 0 for r in rows[-n:]) / n for n in (7, 14, 30, 60)]
-    x += [float(np.mean([r.get("discount", 1) for r in rows[-7:]])), math.log1p(scale)]
-    return np.asarray(x, dtype=np.float32), scale
-
-
 def build(config):
     check(config["dataset"])
     rows = lines(Path(config["dataset"]) / "inputs.jsonl")
@@ -155,22 +142,30 @@ def build(config):
     )
     texts = set()
     for view in views.values():
+        if view["task"] == "retail":
+            continue
         texts.add(view["context"])
         texts.update(h["text"] for h in view["public"]["history"][-1:])
         texts.add("\n".join(f["text"] for f in view["fragments"]) or view["context"])
         texts.update(c["text"] for c in view["candidates"])
     cache = embeddings(texts, config["encoder"])
     for view in views.values():
+        if view["task"] == "retail":
+            continue
         view["x"] = state_feature(view, cache)
         view["xs"] = [feature(view, c, cache) for c in view["candidates"]]
     return rows, views, cache
 
 
-def targets(rows, views, labels):
+def targets(rows, views, labels, min_history=28):
     result, coverage = defaultdict(list), defaultdict(lambda: {"cases": 0, "representable": 0})
+    result["forecast"] = demand.samples(rows, labels, rolling=True, min_history=min_history)
     for row in rows:
         v, target = views[row["id"]], labels[row["id"]]
-        task, x = v["task"], v["x"]
+        task = v["task"]
+        if task == "retail":
+            continue
+        x = v["x"]
         candidates = v["candidates"]
         if task in {"cuad", "contractnli"}:
             label = (
@@ -185,9 +180,6 @@ def targets(rows, views, labels):
         elif task == "orsharc":
             label = "ask" if target["action"] == "ask" else target["answer"].title()
             result["rule_state"].append({"x": x, "y": RULES.index(label)})
-        elif task == "retail":
-            features, scale = forecast_features(v)
-            result["forecast"].append({"x": features, "y": [n / scale for n in target["answer"]]})
         else:
             if task == "abcd":
                 result["abcd_state"].append({"x": x, "y": int(target["action"] == "call_tool")})
@@ -224,6 +216,8 @@ def targets(rows, views, labels):
 
 def infer(view, model):
     task, candidates = view["task"], view["candidates"]
+    if task == "retail":
+        return demand.predict(view["public"], model)
     x = view["x"]
     if task in {"cuad", "contractnli"}:
         state = int(model[task + "_state"].scores([x])[0].argmax())
@@ -248,12 +242,6 @@ def infer(view, model):
         )
         output["retrieved"] = view["retrieved"]
         return output
-    if task == "retail":
-        features, scale = forecast_features(view)
-        return {
-            "action": "answer",
-            "answer": (np.maximum(model["forecast"].scores([features])[0], 0) * scale).tolist(),
-        }
     if task == "abcd":
         state = int(model["abcd_state"].scores([x])[0].argmax())
         index = (
@@ -275,8 +263,11 @@ def fit(config, rows, views, value):
         for r in lines(Path(config["dataset"]) / "labels.jsonl")
         if r["id"] in ids
     }
-    training, coverage = targets([r for r in rows if r["split"] == "train"], views, labels)
-    development, devcoverage = targets([r for r in rows if r["split"] == "dev"], views, labels)
+    minimum = config["demand"]["minHistory"]
+    training, coverage = targets([r for r in rows if r["split"] == "train"], views, labels, minimum)
+    development, devcoverage = targets(
+        [r for r in rows if r["split"] == "dev"], views, labels, minimum
+    )
     dimensions = {
         "cuad_state": (config["encoder"]["dim"] * 2 + 32, 2),
         "contractnli_state": (config["encoder"]["dim"] * 2 + 32, 3),
@@ -286,21 +277,36 @@ def fit(config, rows, views, value):
         "abcd_state": (config["encoder"]["dim"] * 2 + 32, 2),
         "tatqa_relation": (config["encoder"]["dim"] * 2 + 32, 1),
         "scale": (config["encoder"]["dim"] * 2 + 32, 5),
-        "forecast": (28, 7),
     }
     model, losses = {}, {}
     started = time.perf_counter()
     for name, (dim, output) in dimensions.items():
         require(training.get(name) and development.get(name), "Missing native supervision: " + name)
         head = Head(dim, 32, output)
-        mode = (
-            "choice" if name.endswith("_relation") else "value" if name == "forecast" else "class"
-        )
+        mode = "choice" if name.endswith("_relation") else "class"
         losses[name] = train(
-            head, training[name], config["epochs"], value, mode=mode, valid=development[name]
+            head,
+            training[name],
+            config["epochs"],
+            value,
+            mode=mode,
+            valid=development[name],
         )
         model[name] = head
         print(f"Native seed {value}: {name}, {losses[name]['rows']} training rows", flush=True)
+    demand_heads, losses["demand"] = demand.train(
+        training["forecast"],
+        development["forecast"],
+        config["demand"]["epochs"],
+        value,
+        config["demand"]["warmupEpochs"],
+    )
+    model.update(demand_heads)
+    dimensions.update({name: (28, 3) for name in demand.HEADS})
+    print(
+        f"Native seed {value}: demand family/parameters, {losses['demand']['rows']} training rows",
+        flush=True,
+    )
     directory = Path(config["output"]) / str(value)
     directory.mkdir(parents=True, exist_ok=True)
     training_info = {
@@ -309,6 +315,19 @@ def fit(config, rows, views, value):
         "seed": value,
         "dimensions": dimensions,
         "losses": losses,
+        "demand": {
+            "families": demand.FAMILIES,
+            "familyHead": "demand_family",
+            "parameterHeads": {family: "demand_" + family for family in demand.FAMILIES},
+            "parameters": demand.PARAMETERS,
+            "quadrature": demand.QUADRATURE,
+            "loss": "zero mass / positive density NLL; right-censored survival NLL",
+            "trainSamplesHash": digest(training["forecast"]),
+            "devSamplesHash": digest(development["forecast"]),
+            "trainExact": sum(not r["censored"] for r in training["forecast"]),
+            "devExact": sum(not r["censored"] for r in development["forecast"]),
+            "costRatios": demand.COST_RATIOS,
+        },
         "candidateCoverageTrain": coverage,
         "candidateCoverageDev": devcoverage,
         "fitFamilies": sorted({r["family"] for r in rows if r["split"] == "train"}),
@@ -339,6 +358,12 @@ def run(config):
 
     rows, views, _ = build(config)
     test = [r for r in rows if r["split"] == "test"]
+    test_ids = {row["id"] for row in test}
+    test_labels = {
+        r["id"]: r["target"]
+        for r in lines(Path(config["dataset"]) / "labels.jsonl")
+        if r["id"] in test_ids
+    }
     records = []
     for value in config["seeds"]:
         model = fit(config, rows, views, value)
@@ -358,6 +383,11 @@ def run(config):
         directory = Path(config["output"]) / str(value)
         report = score(config["dataset"], predictions, "test", directory)
         jsonl(directory / "traces.jsonl", traces)
+        period_report, measurements = demand.evaluate(
+            test, test_labels, model, config["demand"]["minHistory"]
+        )
+        write(directory / "demand.json", period_report)
+        jsonl(directory / "demand.measurements.jsonl", measurements)
         write(directory / "provenance.json", provenance(config))
         restored = torch.load(directory / "model.pt", map_location="cpu", weights_only=True)
         loaded = {
@@ -376,6 +406,7 @@ def run(config):
             {
                 "seed": value,
                 "components": report["components"],
+                "demand": period_report,
                 "predictionHash": report["predictionHash"],
             }
         )
@@ -396,6 +427,7 @@ def run(config):
 def load_portable(directory, value=42):
     directory = Path(directory)
     metadata = read(directory / f"{value}.json")
+    require(metadata["schema"] == SCHEMA, "Native schema differs; retrain distribution heads")
     require(
         digest((directory / f"{value}.npz").read_bytes()) == metadata["weightsHash"],
         "Native weights changed",
@@ -423,6 +455,8 @@ def export(config):
             Path(__file__).with_name("native_inputs.py"),
             Path(__file__).with_name("heads.py"),
             Path(__file__).with_name("suite_score.py"),
+            Path(__file__).with_name("demand.py"),
+            Path(__file__).with_name("optimizer.py"),
         )
     }
     for value in config["seeds"]:
@@ -448,6 +482,11 @@ def export(config):
         for stem in ("predictions", "measurements", "traces"):
             jsonl(destination / f"{value}.{stem}.jsonl", lines(source / f"{stem}.jsonl"))
         write(destination / f"{value}.metrics.json", read(source / "metrics.json"))
+        write(destination / f"{value}.demand.json", read(source / "demand.json"))
+        jsonl(
+            destination / f"{value}.demand.measurements.jsonl",
+            lines(source / "demand.measurements.jsonl"),
+        )
         loaded, _ = load_portable(destination, value)
         require(
             all(

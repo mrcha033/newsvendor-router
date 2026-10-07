@@ -23,13 +23,13 @@ GPU runner는 데이터 snapshot을 자동 복원하고 저장된 CPU 학습 가
 
 ## GitHub에 포함된 데이터와 가중치
 
-[`cases/evaluation.tar.xz`](cases/evaluation.tar.xz)에 **상보적 영어 과제 1,802건과 연결된 주문 과제 114건**의 가공 데이터를 담았습니다. 압축파일은 1,454,948 bytes이며 [`cases/evaluation.json`](cases/evaluation.json)에 파일별 SHA-256·원천 revision·라이선스를 기록했습니다.
+[`cases/evaluation.tar.xz`](cases/evaluation.tar.xz)에 **상보적 영어 과제 1,802건과 연결된 주문 과제 114건**의 가공 데이터를 담았습니다. [`cases/evaluation.json`](cases/evaluation.json)에 압축파일 크기와 파일별 SHA-256·원천 revision·라이선스를 기록했습니다.
 
 | 포함 항목 | 저장 위치 또는 복원 위치 | 구성 |
 |---|---|---|
 | 상보적 영어 과제 | `data/processed/complementary/` | 원문 입력·분리된 정답·공통 조회 collection·manifest |
 | 연결된 주문 과제 | `data/processed/orders/` | 원문 입력·분리된 정답·고객/주문/상품 DB·manifest |
-| CPU 학습 가중치 | [`models/native/{42..46}.npz`](models/native/) | 5개 seed의 9개 head, NumPy 가중치 |
+| CPU 학습 가중치 | [`models/native/{42..46}.npz`](models/native/) | 5개 seed의 12개 head, NumPy 가중치 |
 | 학습 설정·CPU 원시 결과 | [`models/native/`](models/native/) | seed별 metadata·예측·trace·측정·지표, 전체 `runs.json` |
 | 통제 Newsvendor 600건 | [`configs/full.json`](configs/full.json), [`corpus.py`](src/newsvendor/corpus.py) | `dataSeed=42`의 생성 코드·설정으로 재생성 |
 | 원문 개발 사례 | [`cases/pilot/`](cases/pilot/) | 입력 14건과 주석·manifest |
@@ -45,7 +45,7 @@ GPU runner는 데이터 snapshot을 자동 복원하고 저장된 CPU 학습 가
 | [OR-ShARC](https://github.com/Yifan-Gao/open_retrieval_conversational_machine_reading) | 240건 / 규칙 묶음 60개 | 651개 공통 규칙에서 조회 후 결정·추가 질문 |
 | [ABCD](https://github.com/asappresearch/abcd) | 462건 / 대화 80개 | 전체 정책·관측 대화에서 다음 발화·도구·인자 |
 | [TAT-QA](https://github.com/NExTplusplus/TAT-QA) | 240건 / context 60개 | 문장·표의 답·계산·단위·scale |
-| [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K) | 시계열 50개 | 과거 60일에서 후속 7일 관측 판매 예측 |
+| [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K) | 시계열 50개 | 후속 7일 총수요 분포 `F`와 발주 손실 |
 
 Train/Dev/Test는 **1,074/362/366건**, 출처 묶음은 378개입니다. 같은 계약·규칙 page/tree·대화·매장·상품의 연결 묶음과 동일 입력·유사 template를 같은 분할에 둡니다. TAT-QA는 context 단위입니다. OR-ShARC의 전체 규칙과 ABCD의 전체 정책을 공통으로 제공하고, 각 모델이 사용할 근거와 다음 행동을 구성합니다.
 
@@ -71,7 +71,7 @@ uv run newsvendor restore-eval
 uv run newsvendor check-suite
 uv run newsvendor check-orders
 
-# seed 42–46의 9개 head 학습 → Test 평가 → 가중치 export
+# seed 42–46의 12개 head 학습 → Test 평가 → 가중치 export
 uv run newsvendor train-native --config configs/native.json
 ```
 
@@ -81,10 +81,10 @@ uv run newsvendor train-native --config configs/native.json
 |---|---|
 | Encoder | `sentence-transformers/all-MiniLM-L6-v2`, revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`; 가중치 고정 |
 | 표현 | 384차원; 전체 텍스트를 256-token 조각으로 인코딩한 뒤 토큰 수로 가중 평균 |
-| 학습 | seed 42, 43, 44, 45, 46; 최대 25 epochs; Dev loss로 checkpoint 선택 |
+| 학습 | seed 42, 43, 44, 45, 46; 일반 head 25 epochs, 수요 head 100 epochs; Dev loss로 checkpoint 선택 |
 | 최적화 | AdamW, 학습률 0.003, weight decay 0.0001, batch 128, gradient clip 5 |
-| 손실 | 분류 CE + 0.1 × Brier, 후보 선택 CE + 0.1 × 기대 Huber, 판매 예측 MSE |
-| Head | 은닉층 32; CUAD/NLI/규칙 상태, 근거, ABCD 발화/도구, TAT-QA 계산/scale, 7일 판매 예측 |
+| 손실 | 분류 CE + 0.1 × Brier, 후보 선택 CE + 0.1 × 기대 Huber, 수요 분포의 비품절 density·품절 survival NLL |
+| Head | 은닉층 32; CUAD/NLI/규칙 상태, 근거, ABCD 발화/도구, TAT-QA 계산/scale, 7일 총수요 분포 |
 | 후보 | 초기 근거 조각 12개, 계산·행동 후보 최대 48개 |
 | 채점 | 각 seed에서 Test 366건, 원래 과제별 지표와 원시 예측 보존 |
 
@@ -97,9 +97,65 @@ uv run newsvendor train-native --config configs/native.json
 | OR-ShARC 의사결정 정확도 | 0.558 |
 | ABCD 도구 선택 / 관측 인자까지 정확 | 0.246 / 0.000 |
 | TAT-QA 답·scale 모두 정확 | 0.017 |
-| FreshRetail 비품절 관측 판매 MAE | 0.509 |
+| FreshRetail 총수요 분포·발주 지표 | 아래 수요 분포 실험 참조 |
 
 TAT-QA Train 144건 중 정답 계산이 후보에 포함된 사례는 50건입니다. 후보 생성 실패와 선택 오류를 분리해 분석합니다. ABCD는 발화 여부와 조건부 도구 선택을 분리했으며 GPU 단계에서 선택 뒤 인자·발화 구성의 효과를 측정합니다. CPU 수치는 adapter 개발 과정에서 얻은 결과입니다.
+
+### 수요 분포와 발주 실험
+
+[`demand.py`](src/newsvendor/demand.py)의 수요 모형은 **분포 종류 head와 종류별 모수 head**로 구성됩니다. 분포의 대상은 **다음 7일 총수요**입니다. 각 head는 `28 → 32 → 3` MLP이며 1,027개 파라미터, 수요 head 4개 합계는 **4,108개**입니다.
+
+| Head | 출력 | 변환 |
+|---|---|---|
+| `demand_family` | 절단 정규·로그정규·Weibull의 종류 점수 3개 | softmax → argmax로 종류 선택 |
+| `demand_truncated_normal` | 0수요 확률·정규 위치·정규 표준편차 | sigmoid·softplus; 정규분포를 0 이상으로 절단 |
+| `demand_lognormal` | 0수요 확률·로그 평균·로그 표준편차 | sigmoid·로그 평균·softplus |
+| `demand_weibull` | 0수요 확률·형상·척도 | sigmoid·softplus·softplus |
+
+`prediction.distribution`에는 선택한 `family`, `familyProbabilities`, 해당 종류의 `parameters`, `normalizationScale`이 모두 포함됩니다. 모수는 `D / normalizationScale`의 분포를 나타내며 `F`는 원래 판매 단위로 환산합니다.
+
+입력은 직전 14일 판매, 7/14/30/60일 평균·표준편차·품절 비율, 최근 할인과 판매 규모입니다. 기간 총판매를 `7 × 과거 일평균 판매`로 정규화해 학습하며 일평균의 하한은 0.1입니다. 비품절 0판매는 0수요 질량, 양의 비품절 판매는 density NLL, 품절 기간은 `−log P(D ≥ 관측 총판매)`로 학습합니다. 채점의 density NLL에는 원래 판매 단위로 돌아가는 Jacobian을 반영합니다.
+
+세 모수 head는 전 학습 동안 같은 관측의 NLL을 동일 가중치로 학습합니다. 처음 10 epochs 이후 종류 head는 각 후보의 관측 NLL을 softmax로 가중한 값을 낮추도록 학습합니다. 이때 모수 head로 가는 해당 경로의 gradient는 끊어, 선택되지 않은 종류도 계속 같은 데이터에서 학습되게 합니다. **종류 선택과 모수 추정은 함께 학습**하고 checkpoint는 실제 argmax 종류와 해당 모수의 Dev NLL로 선택합니다.
+
+선택한 분포를 64개 분위 구간의 조건부 평균으로 이산화합니다. 0수요를 포함한 **65개 `[수요, 확률]` 쌍이 `prediction.F`**이며, 이 과정은 선택한 분포의 평균과 전체 확률을 보존합니다. 기존 Newsvendor solver가 이 `F`를 받아 발주량을 계산합니다. 출력의 `orders`는 잉여 비용 1, 부족 비용 1·3·9를 적용한 세 공개 실험 조건입니다. 비용은 정규화 판매 단위에 적용합니다.
+
+원래 매장·상품 묶음 분할에서 최소 28일의 과거를 조건으로 7일 rolling window를 만듭니다. **Train 810 / Dev 216 / Test 324개 기간**, Test는 출처 묶음 10개입니다. Test 324개 중 비품절 28개에서 CRPS·총수요 MAE·80% 구간 포함률·실측 발주 손실을 계산하고, 품절 296개에서는 survival NLL과 발주 손실 하한을 기록합니다. 겹치는 기간은 출처 묶음별 평균도 함께 보고합니다. 기존 suite의 마지막 7일 Test 12건은 `metrics.json`에, 전체 rolling 평가는 `{seed}.demand.json`에 있습니다.
+
+5개 seed의 rolling Test 평균은 다음과 같습니다. 발주 손실은 **출력에 실제 기록된 발주량**을 사용하며, 누락·잘못된 비용 조건·`F`와 맞지 않는 예상 손실은 `orderValid`로 집계합니다.
+
+| 지표 | 기간 평균 | 출처 묶음 평균 |
+|---|---:|---:|
+| 관측 likelihood NLL | 0.4093 | 0.3682 |
+| 비품절 CRPS | 7.1025 | 7.4979 |
+| 비품절 발주 손실, 부족:잉여 3:1 | 17.4319 | 19.6373 |
+| 비품절 80% 구간 포함률 | 21.4% | 51.6% |
+
+각 seed의 Test 324기간은 모두 로그정규를 선택했습니다. `familyCounts`와 각 기간의 종류 점수·모수를 원시 결과에 보존합니다.
+
+```sh
+# 수요 head를 포함한 CPU 학습·채점·가중치 export
+uv run newsvendor train-native --config configs/native.json
+
+# 저장된 수요 분포 평가와 원시 측정 확인
+python -m json.tool models/native/42.demand.json
+```
+
+```python
+from newsvendor.demand import predict, order
+from newsvendor.io import lines
+from newsvendor.native_model import load_portable
+
+heads, _ = load_portable("models/native", 42)
+row = next(r for r in lines("data/processed/complementary/inputs.jsonl")
+           if r["component"] == "retail" and r["split"] == "test")
+prediction = predict(row["input"], heads)
+F = prediction["F"]
+print(prediction["distribution"])
+print(prediction["period"], len(F), sum(p for _, p in F))
+# 실제 계약 모수의 부족 비용 p-c+b, 잉여 비용 c-v도 전달할 수 있습니다.
+print(order(F, underage=3, overage=1))
+```
 
 ## GPU 비교 실행
 
@@ -109,7 +165,7 @@ TAT-QA Train 144건 중 정답 계산이 후보에 포함된 사례는 50건입�
 uv run --no-project scripts/run_gpu.py --stage components
 ```
 
-같은 Test 366건에서 고정 typed·agent와 5개 seed 학습형을 비교합니다. FreshRetail 판매 예측은 공통 seed-42 forecaster를 사용하는 보조 측정입니다.
+같은 Test 366건에서 고정 typed·agent와 5개 seed 학습형을 비교합니다. FreshRetail에서 typed·agent는 같은 seed-42 수요 분포 head를 공통 도구로 사용하고, 학습형은 각 seed의 head를 사용합니다. 수요 분포와 발주 평가는 CPU에서 완료하며 GPU에서는 원문 처리·조회·도구 선택을 비교합니다.
 
 | 방법 | 처리 순서 |
 |---|---|
@@ -149,6 +205,7 @@ uv run --no-project scripts/run_gpu.py --stage components --max-calls 100
 | 결과 | 위치 | 확인할 내용 |
 |---|---|---|
 | 포함된 CPU 결과 | `models/native/{seed}.metrics.json`, `runs.json` | 5개 seed의 과제별 점수 |
+| 수요 분포·발주 평가 | `models/native/{seed}.demand.json`, `{seed}.demand.measurements.jsonl` | 324기간의 분포·비용별 손실과 재현 가능한 혼합분포 모수 |
 | 재학습 CPU 결과 | `results/native/{seed}/` | `model.pt`, `training.json`, `predictions.jsonl`, `measurements.jsonl`, `metrics.json`, `provenance.json` |
 | 학습형 GPU 결과 | `results/native/{seed}/gpu/` | seed별 예측·trace·원시 측정·지표 |
 | Typed·agent 구성 요소 결과 | `results/native/{typed,agent}/` | 원시 예측·조회·token·지연·지표 |

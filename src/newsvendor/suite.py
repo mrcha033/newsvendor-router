@@ -485,10 +485,10 @@ def retail(contents, config):
             for r in observed
         ]
         input = payload(
-            f"Forecast the next {horizon} daily observed sales after {observed[-1]['dt']} for "
-            f"store {store}, product {product}. Return {horizon} numbers in chronological order "
-            "in globally normalized sales units. Past stockouts censor demand; do not infer "
-            "that observed sales on those days equal latent demand.",
+            f"Predict the next {horizon}-day total demand distribution after {observed[-1]['dt']} "
+            f"for store {store}, product {product}. Return F as [[demand, probability], ...] "
+            "in globally normalized sales units, with nonnegative demand and probabilities "
+            "summing to one. Use sales history and stockout information to estimate demand.",
             observations=observations,
         )
         target = {
@@ -642,6 +642,7 @@ def prepare(config):
     manifest = {
         "schema": SCHEMA,
         "language": "en",
+        "retailTask": "conditional-total-demand-v1",
         "config": config,
         "configHash": digest(config),
         "transformHash": digest(Path(__file__).read_bytes()),

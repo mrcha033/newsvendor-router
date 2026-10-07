@@ -143,23 +143,77 @@
               "cases": 12,
               "families": 10
             },
-            "censoredObservedSalesMAE": {
-              "mean": 0.3465190672874451,
-              "familyMean": 0.3197955566768845,
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
               "cases": 10,
               "families": 8
             },
-            "forecastValid": {
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
               "mean": 1.0,
               "familyMean": 1.0,
               "cases": 12,
               "families": 10
             },
-            "uncensoredSalesMAE": {
-              "mean": 0.49555227213908754,
-              "familyMean": 0.47309614644022213,
+            "observationNLL": {
+              "mean": 0.7224390173567318,
+              "familyMean": 0.8541916958119508,
               "cases": 12,
               "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 6.036423575627596,
+              "familyMean": 6.036423575627596,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 8.22056055032152,
+              "familyMean": 8.22056055032152,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 14.618717961055301,
+              "familyMean": 14.618717961055301,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 23.043338668249827,
+              "familyMean": 23.043338668249827,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 10.675534463580838,
+              "familyMean": 10.675534463580838,
+              "cases": 2,
+              "families": 2
             }
           }
         },
@@ -196,7 +250,95 @@
           }
         }
       },
-      "predictionHash": "a07eb8b44504f01ab7518314d2fa82f79555673ec464578764b176b3661f8eaa"
+      "demand": {
+        "periods": 324,
+        "families": 10,
+        "uncensoredPeriods": 28,
+        "censoredPeriods": 296,
+        "familyCounts": {
+          "truncated_normal": 0,
+          "lognormal": 324,
+          "weibull": 0
+        },
+        "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+        "metrics": {
+          "censoredOrderLossLowerBound_u1": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u3": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u9": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "distributionValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "observationNLL": {
+            "mean": 0.40865732421189677,
+            "familyMean": 0.3666183154831132,
+            "periods": 324,
+            "families": 10
+          },
+          "orderValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "uncensoredCRPS": {
+            "mean": 7.365361908236088,
+            "familyMean": 7.849046382153975,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredInterval80Coverage": {
+            "mean": 0.21428571428571427,
+            "familyMean": 0.515625,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u1": {
+            "mean": 10.202864568157958,
+            "familyMean": 11.17574598250702,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u3": {
+            "mean": 18.233499552559724,
+            "familyMean": 20.752516797311465,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u9": {
+            "mean": 29.115940180051474,
+            "familyMean": 33.39808768107755,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredTotalMAE": {
+            "mean": 13.529116657554349,
+            "familyMean": 14.88701683623643,
+            "periods": 28,
+            "families": 4
+          }
+        },
+        "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+        "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+      },
+      "predictionHash": "fddfebbb92e94fe7361fcff1b73bb8251a79a2a21b3c1a7408c97344b16a8a0b"
     },
     {
       "seed": 43,
@@ -341,23 +483,77 @@
               "cases": 12,
               "families": 10
             },
-            "censoredObservedSalesMAE": {
-              "mean": 0.3707300799588362,
-              "familyMean": 0.35773540306836366,
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
               "cases": 10,
               "families": 8
             },
-            "forecastValid": {
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
               "mean": 1.0,
               "familyMean": 1.0,
               "cases": 12,
               "families": 10
             },
-            "uncensoredSalesMAE": {
-              "mean": 0.4922745112649032,
-              "familyMean": 0.5011902773862793,
+            "observationNLL": {
+              "mean": 0.7895878160440639,
+              "familyMean": 0.9334713352729869,
               "cases": 12,
               "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 6.4374547430899,
+              "familyMean": 6.4374547430899,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 8.702504803311877,
+              "familyMean": 8.702504803311877,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 14.739155110637833,
+              "familyMean": 14.739155110637833,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 22.483604137665658,
+              "familyMean": 22.483604137665658,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 10.860805542838174,
+              "familyMean": 10.860805542838174,
+              "cases": 2,
+              "families": 2
             }
           }
         },
@@ -394,7 +590,95 @@
           }
         }
       },
-      "predictionHash": "d17e0a5c1cb4206074d30d098b5b141e15144638ecd99bdea0c7e884d1649044"
+      "demand": {
+        "periods": 324,
+        "families": 10,
+        "uncensoredPeriods": 28,
+        "censoredPeriods": 296,
+        "familyCounts": {
+          "truncated_normal": 0,
+          "lognormal": 324,
+          "weibull": 0
+        },
+        "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+        "metrics": {
+          "censoredOrderLossLowerBound_u1": {
+            "mean": 0.0005400715364334255,
+            "familyMean": 0.0005920784251270147,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u3": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u9": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "distributionValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "observationNLL": {
+            "mean": 0.408184456396153,
+            "familyMean": 0.36540873250758377,
+            "periods": 324,
+            "families": 10
+          },
+          "orderValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "uncensoredCRPS": {
+            "mean": 6.733713510576091,
+            "familyMean": 7.573374941452031,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredInterval80Coverage": {
+            "mean": 0.21428571428571427,
+            "familyMean": 0.515625,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u1": {
+            "mean": 9.377993283046274,
+            "familyMean": 10.85447934961613,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u3": {
+            "mean": 16.4410384783685,
+            "familyMean": 20.01779523933498,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u9": {
+            "mean": 25.73456282309311,
+            "familyMean": 31.95141907739107,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredTotalMAE": {
+            "mean": 12.09680328532467,
+            "familyMean": 14.283687474754242,
+            "periods": 28,
+            "families": 4
+          }
+        },
+        "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+        "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+      },
+      "predictionHash": "78e2fadf90ffb77530c141e81b6e91fec15da14f23c760c23a27cadbb5c91650"
     },
     {
       "seed": 44,
@@ -539,23 +823,77 @@
               "cases": 12,
               "families": 10
             },
-            "censoredObservedSalesMAE": {
-              "mean": 0.4329526050388813,
-              "familyMean": 0.42529697536180416,
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
               "cases": 10,
               "families": 8
             },
-            "forecastValid": {
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
               "mean": 1.0,
               "familyMean": 1.0,
               "cases": 12,
               "families": 10
             },
-            "uncensoredSalesMAE": {
-              "mean": 0.5195781183644893,
-              "familyMean": 0.4928725598738307,
+            "observationNLL": {
+              "mean": 0.7803673592562476,
+              "familyMean": 0.9238362812890332,
               "cases": 12,
               "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 5.741975469359283,
+              "familyMean": 5.741975469359283,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 7.7604274997165374,
+              "familyMean": 7.7604274997165374,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 13.724275231747018,
+              "familyMean": 13.724275231747018,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 21.594260867397296,
+              "familyMean": 21.594260867397296,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 10.055452394811844,
+              "familyMean": 10.055452394811844,
+              "cases": 2,
+              "families": 2
             }
           }
         },
@@ -592,7 +930,95 @@
           }
         }
       },
-      "predictionHash": "ecdb44e311d649e3ce7289907cac807736ae285bfb3f697a24cfa8575f921169"
+      "demand": {
+        "periods": 324,
+        "families": 10,
+        "uncensoredPeriods": 28,
+        "censoredPeriods": 296,
+        "familyCounts": {
+          "truncated_normal": 0,
+          "lognormal": 324,
+          "weibull": 0
+        },
+        "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+        "metrics": {
+          "censoredOrderLossLowerBound_u1": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u3": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u9": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "distributionValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "observationNLL": {
+            "mean": 0.40626160430760705,
+            "familyMean": 0.3666439748068427,
+            "periods": 324,
+            "families": 10
+          },
+          "orderValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "uncensoredCRPS": {
+            "mean": 7.200005384763066,
+            "familyMean": 7.238260157462795,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredInterval80Coverage": {
+            "mean": 0.21428571428571427,
+            "familyMean": 0.515625,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u1": {
+            "mean": 9.930487236191235,
+            "familyMean": 10.26582198944858,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u3": {
+            "mean": 17.660234047761943,
+            "familyMean": 18.714644394670497,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u9": {
+            "mean": 28.188405216769134,
+            "familyMean": 29.70628794347813,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredTotalMAE": {
+            "mean": 13.16428439865769,
+            "familyMean": 13.406787664564273,
+            "periods": 28,
+            "families": 4
+          }
+        },
+        "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+        "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+      },
+      "predictionHash": "c9c12a6040846717b06537b5912ac98c4de46df4f70af088bd656bd83c91d91f"
     },
     {
       "seed": 45,
@@ -737,23 +1163,77 @@
               "cases": 12,
               "families": 10
             },
-            "censoredObservedSalesMAE": {
-              "mean": 0.4689824615418911,
-              "familyMean": 0.46548472487678133,
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
               "cases": 10,
               "families": 8
             },
-            "forecastValid": {
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
               "mean": 1.0,
               "familyMean": 1.0,
               "cases": 12,
               "families": 10
             },
-            "uncensoredSalesMAE": {
-              "mean": 0.5367965733981321,
-              "familyMean": 0.5466023409139542,
+            "observationNLL": {
+              "mean": 0.7447563963846345,
+              "familyMean": 0.8789019252091379,
               "cases": 12,
               "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 6.228796177844634,
+              "familyMean": 6.228796177844634,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 8.480184486412533,
+              "familyMean": 8.480184486412533,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 15.052461169051105,
+              "familyMean": 15.052461169051105,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 23.740200756068703,
+              "familyMean": 23.740200756068703,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 11.02717733919844,
+              "familyMean": 11.02717733919844,
+              "cases": 2,
+              "families": 2
             }
           }
         },
@@ -790,7 +1270,95 @@
           }
         }
       },
-      "predictionHash": "b6825d45485355fb570d3a3115fa1cd862579dc517526f947fe15bb66aff5cde"
+      "demand": {
+        "periods": 324,
+        "families": 10,
+        "uncensoredPeriods": 28,
+        "censoredPeriods": 296,
+        "familyCounts": {
+          "truncated_normal": 0,
+          "lognormal": 324,
+          "weibull": 0
+        },
+        "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+        "metrics": {
+          "censoredOrderLossLowerBound_u1": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u3": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u9": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "distributionValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "observationNLL": {
+            "mean": 0.40949828899108837,
+            "familyMean": 0.3671351049461191,
+            "periods": 324,
+            "families": 10
+          },
+          "orderValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "uncensoredCRPS": {
+            "mean": 7.300689851407782,
+            "familyMean": 7.817596349168335,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredInterval80Coverage": {
+            "mean": 0.21428571428571427,
+            "familyMean": 0.515625,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u1": {
+            "mean": 10.130834991666577,
+            "familyMean": 11.151947488680598,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u3": {
+            "mean": 18.19448266128414,
+            "familyMean": 20.86807942915065,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u9": {
+            "mean": 29.14383441512604,
+            "familyMean": 33.73667655545624,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredTotalMAE": {
+            "mean": 13.486096920385169,
+            "familyMean": 14.946507773626038,
+            "periods": 28,
+            "families": 4
+          }
+        },
+        "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+        "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+      },
+      "predictionHash": "99683cb79f25fd56fc1bdcc30ed938f1fed807e5c777a6c7bf9f8c4b7e895786"
     },
     {
       "seed": 46,
@@ -935,23 +1503,77 @@
               "cases": 12,
               "families": 10
             },
-            "censoredObservedSalesMAE": {
-              "mean": 0.475338717798392,
-              "familyMean": 0.4404584423328439,
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
               "cases": 10,
               "families": 8
             },
-            "forecastValid": {
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
               "mean": 1.0,
               "familyMean": 1.0,
               "cases": 12,
               "families": 10
             },
-            "uncensoredSalesMAE": {
-              "mean": 0.4985575051676659,
-              "familyMean": 0.5072561577444985,
+            "observationNLL": {
+              "mean": 0.72276771639801,
+              "familyMean": 0.8545229178689956,
               "cases": 12,
               "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 4.85514466833267,
+              "familyMean": 4.85514466833267,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 6.505476101762135,
+              "familyMean": 6.505476101762135,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 11.736992928514947,
+              "familyMean": 11.736992928514947,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 18.523271996805132,
+              "familyMean": 18.523271996805132,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 8.425997774863657,
+              "familyMean": 8.425997774863657,
+              "cases": 2,
+              "families": 2
             }
           }
         },
@@ -988,9 +1610,97 @@
           }
         }
       },
-      "predictionHash": "aadcd40c377a624633a0c932fba15a2fd879b93a70cbb0f009b777504d69b59e"
+      "demand": {
+        "periods": 324,
+        "families": 10,
+        "uncensoredPeriods": 28,
+        "censoredPeriods": 296,
+        "familyCounts": {
+          "truncated_normal": 0,
+          "lognormal": 324,
+          "weibull": 0
+        },
+        "samplesHash": "a406d5a23101fdb3087a2b4f80dbfbeff2777080b1ca8472006886a3c89e423f",
+        "metrics": {
+          "censoredOrderLossLowerBound_u1": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u3": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "censoredOrderLossLowerBound_u9": {
+            "mean": 0.0,
+            "familyMean": 0.0,
+            "periods": 296,
+            "families": 10
+          },
+          "distributionValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "observationNLL": {
+            "mean": 0.41401800613111245,
+            "familyMean": 0.37536856550188,
+            "periods": 324,
+            "families": 10
+          },
+          "orderValid": {
+            "mean": 1.0,
+            "familyMean": 1.0,
+            "periods": 324,
+            "families": 10
+          },
+          "uncensoredCRPS": {
+            "mean": 6.912925866955613,
+            "familyMean": 7.011429290864929,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredInterval80Coverage": {
+            "mean": 0.21428571428571427,
+            "familyMean": 0.515625,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u1": {
+            "mean": 9.487031221927493,
+            "familyMean": 9.868056597292645,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u3": {
+            "mean": 16.63032417818688,
+            "familyMean": 17.8333328109837,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredOrderLoss_u9": {
+            "mean": 26.19518052368389,
+            "familyMean": 28.083661273485685,
+            "periods": 28,
+            "families": 4
+          },
+          "uncensoredTotalMAE": {
+            "mean": 12.351028870645,
+            "familyMean": 12.738771100576708,
+            "periods": 28,
+            "families": 4
+          }
+        },
+        "aggregation": "Overlapping 7-day windows; family means group connected store/product sources",
+        "costs": "Surplus coefficient 1; shortage coefficients 1, 3, 9; normalized sales units"
+      },
+      "predictionHash": "b3713892171f8658b76697b6ae319d6bcc9be641f3f8d890c0975ff16b2f24a6"
     }
   ],
-  "datasetHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
+  "datasetHash": "b8e3604390b39aa006c84a8eb94fb98ab05869ba31721716a52583a0de38cff4",
   "scope": "Native components; not economic action-value efficacy"
 }

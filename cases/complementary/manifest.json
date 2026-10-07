@@ -145,7 +145,7 @@
     }
   },
   "configHash": "faf4c8b61b2b72d3b162e2327711099485a83999416d0eb4349aa04ad0d7eb38",
-  "transformHash": "666e74e1d08436a6b07feea745830d28f0141b0ede23196660aadc19790a019d",
+  "transformHash": "7130c148a2aab4c5505e4e402f60c7c239da338f0fcdbb88705342ac23ec84c8",
   "sources": {
     "cuad": {
       "repo": "The-Atticus-Project/cuad",
@@ -710,8 +710,8 @@
       "compiledCandidates": 60
     }
   },
-  "inputHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
-  "labelHash": "ec2b3984b6bce4f5d44e491186489fd21e255823020506ff1337f452fa806801",
+  "inputHash": "b8e3604390b39aa006c84a8eb94fb98ab05869ba31721716a52583a0de38cff4",
+  "labelHash": "c6e9bbb59334466422eabbb507e62c30b240366e8ddbf8270f1ef75bbf6cb0cf",
   "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
   "grouping": {
     "nearTemplatePairs": 0,
@@ -822,5 +822,6 @@
         "test": 12
       }
     }
-  }
+  },
+  "retailTask": "conditional-total-demand-v1"
 }
