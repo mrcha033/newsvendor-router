@@ -6,6 +6,8 @@
 | ShARC | [official data](https://sharc-data.github.io/data.html) | official ZIP의 SHA-256 보존; train 120건/dev 80건; CC BY-SA 3.0 |
 | FreshRetailNet-50K | [Dingdong-Inc dataset](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K) | Hub commit `08c1fab7f9257bc73679d415d65d644165d351d4`; 50개 매장/상품 시계열; CC BY 4.0 |
 | all-MiniLM-L6-v2 | [sentence-transformers model](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`; safetensors; 384차원 masked mean pooling; Apache 2.0 |
+| ModernBERT-base — 다음 모델 후보 | [공식 모델](https://huggingface.co/answerdotai/ModernBERT-base) | 예정 revision `8949b909ec900327062f0ebf497f51aef5e6f0c8`; 양방향 encoder 149M / 22층 / hidden 768 / 8,192 tokens; Apache 2.0 |
+| ModernBERT-large — 크기 비교 후보 | [공식 모델](https://huggingface.co/answerdotai/ModernBERT-large) | 예정 revision `45bb4654a4d5aaff24dd11d4781fa46d39bf8c13`; 양방향 encoder 395M / 28층 / hidden 1,024 / 8,192 tokens; Apache 2.0 |
 
 TAT-QA는 완전한 표·문단 context를 source group으로 사용한다. raw schema에서 원래 보고서의 식별자를 복원할 수 없으므로 전체 보고서 단위 분할을 보장했다고 표현하지 않는다. ShARC는 규칙 snippet hash로 묶고 두 공식 분할에서 중복 source를 제외한 뒤 표본 수를 채운다. 정답·derivation·mapping·evidence는 모델 입력에서 제거한다.
 
@@ -30,7 +32,9 @@ Suite의 원천에 기존 사람 주석이 있어도 새 업무 사례를 검토
 
 `src/newsvendor/retail/`은 위 revision의 Pydantic 자료 모델과 도구를 MIT notice와 함께 적용한다. 프레임워크 DB를 BaseModel로, toolkit 생성자를 로컬 DB로 교체하고 데코레이터·미사용 실행 예제를 제거했다. 이미 길이를 검사하는 zip에 strict를 추가했다. 나머지 도구 함수의 AST가 원천과 같은지 검사했다. 원래 환경 채점도 참고 도구 오류를 기록하고 계속하므로 동일하게 처리한다. 실패한 참고 변경만 있고 성공한 변경이 없는 과제는 주석 모호성을 표시한다.
 
-GPU 비교 모델은 [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), revision `a09a35458c702b33eeacc393d103063234e8bc28`, Apache 2.0이다. 동일 고정 가중치를 typed·agent·학습형 언어 helper 및 공통 사용자 simulator에 사용한다. 사용자 simulator와 사후 NL assertion judge는 비교 방법의 입력에 숨겨진 목표·정답을 전달하지 않는다. Judge는 모델 기반 참고 판정이며 사람 검토를 대체한 확증 결과로 취급하지 않는다. MiniLM은 모든 토큰을 256-token chunk로 나누어 고정 encoder를 통과시킨 뒤 토큰 수로 가중 평균한다.
+현재 GPU 비교 모델은 [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), revision `a09a35458c702b33eeacc393d103063234e8bc28`, Apache 2.0이다. 동일 고정 가중치를 typed·agent·기존 native-v3의 인자·질문·발화 helper 및 공통 사용자 simulator에 사용한다. 주문 경로의 helper는 누락 인자 질문과 변경 확인 요청도 구성한다. 다음 학습형은 이를 내부 인자·행동 head와 템플릿으로 처리하고 Qwen helper를 호출하지 않는다. Qwen은 비교군·공통 simulator·참고 judge에 유지한다. 사용자 simulator와 사후 NL assertion judge는 비교 방법의 입력에 숨겨진 목표·정답을 전달하지 않는다. MiniLM의 고정 256-token chunk 평균은 현재 구현 기록이다.
+
+다음 모델의 ModernBERT 출처는 Warner, Chaffin, Clavié 등 (2024), [Smarter, Better, Faster, Longer](https://arxiv.org/abs/2412.13663)와 위 공식 모델 카드·config이다. 표의 revision은 계획에 사용할 후보 가중치를 고정한 것이며 현재 `configs/native.json`·저장 가중치는 MiniLM 기반이다. 토큰 표현을 보존한 encoder 공동 미세조정, 256차원 2층 상태 결합, 2층 GRU hidden 128 및 공유 구조화 head는 다음 구현 계획이다. 152–155M 전체 파라미터는 설계 예산이며, 동일 head의 large를 약 400M 크기 비교군으로 둔다. 확보한 ABCD 원천의 Train 대화 8,034개 등으로 학습 자료를 확대하되 기존 Dev/Test와 연결된 출처·template를 제외한다. 독립 공개 문서를 FreshRetail의 SKU·기간에 임의로 연결하지 않는다.
 
 외부 API의 [TypeSafe choice](https://docs.typesafe.ai/primitives/choice)와 [SGLang decision models](https://docs.sglang.io/docs/supported-models/decision_models) 명세를 확인해 `/v1/systemone` 호출을 구성했다. vendor confidence나 내부 학습 방식에 관한 설명을 검증된 학술 결과로 취급하지 않는다.
 

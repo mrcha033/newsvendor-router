@@ -16,11 +16,15 @@
 
 ## 결과 해석
 
-2026-10-07: 영어 native adapter의 5개 seed × 9개 head를 CPU에서 실제 학습하고 Test 366건을 모두 채점했다. Train/Dev의 기존 주석만 학습 표적으로 사용하며 경제적 가치/type 표적은 만들지 않았다. 초기 Test 측정 후 adapter 구조를 조정했으므로 탐색적 결과다. 초기 원시 결과는 `results/native-initial/`, 발화/도구 분리 실행은 `results/native-action-state/`, 최종 측정과 replay는 `results/native/`에 보존한다. NumPy의 pickle 없는 가중치 export가 PyTorch checkpoint와 tensor 단위로 같음을 검사하고 5개 가중치·예측·측정·hash를 `models/native/`에 포함한다. 지표는 README의 표와 각 seed의 원시 JSONL에 기록한다.
+2026-10-07, 구현 기준 `6d3acf3`: native-router-v3의 5개 seed × 12개 head를 CPU에서 실제 학습하고 Test 366건을 채점했다. 고정 MiniLM 위의 언어 head 8개와 수요 종류·모수 head 4개이며 학습 파라미터는 209,824개다. Train/Dev의 원래 주석을 사용하며 경제적 행동 가치와 사실/선호 type는 native 학습 표적으로 만들지 않았다. 초기 원시 결과는 `results/native-initial/`, 발화/도구 분리 실행은 `results/native-action-state/`, 현재 측정은 `results/native/`에 보존한다. 5개 seed의 가중치·예측·원시 측정·hash는 `models/native/`에도 포함한다. 수요 분포 예측의 종류·모수·F·period·orders는 저장 가중치 재생과 동일함을 확인했다.
+
+7일 총수요 rolling 평가는 Train 810 / Dev 216 / Test 324기간이고 비품절 exact는 105 / 24 / 28기간이다. 5개 seed의 기간 평균 NLL 0.4093, CRPS 7.1025, 부족:잉여 3:1 실제 출력 발주 손실 17.4319, 80% 구간 포함률 21.4%를 기록했다. 모든 seed가 Test에서 로그정규를 선택했다. 분포·발주 형식의 유효성은 각 seed에서 100%이며, 품절 기간은 survival NLL과 손실 하한을 별도 기록한다. 이 결과는 현재 28차원 특성 기반 분포 head의 측정이다.
 
 연결된 τ² retail 114건을 수집하고 고객/주문 묶음 53개를 61/28/25로 분할했다. 공식 분할의 고객 중복 22명과 참고 행동 경고 15개 과제를 보존한다. 잘못된 identity를 정정하는 실패 조회는 원래 evaluator와 같이 계속 재생한다. 참고 변경만 실패한 `orders-105`는 그대로 유지하고 주석 모호성을 표시한다. 전체 참고 DB 재생, source 분할, 원천 도구 함수의 AST 일치, 격리 DB, 미승인 변경 거절과 독립 최종 상태 채점을 검사했다. Typed·agent의 확인→격리 변경 및 공통 원문 조회 흐름도 protocol fixture로 검사했으며 실제 모델 성능으로 세지 않는다.
 
-기존 13개 테스트를 유지하고 입력 누출 통합검사에 native provider의 metadata/label 불변성을 추가했다. Ruff·format·diff, source split 및 기존 30개 수치 smoke를 실행했다. CPU 가중치·가공 snapshot의 복원과 GPU 실행 preflight를 검사한다. Qwen 7B의 실제 typed/agent 추론, 학습형 출력 언어 helper 및 주문 대화 rollout만 CUDA 머신 실행으로 남긴다. Endpoint API 측정이나 실제 발주 손실 결과는 아니다.
+현재 테스트는 기존 13개와 종류·모수·F·실제 발주량의 일관성을 확인하는 통합검증 1개로 합계 14개다. 이번 문서 수정 후 기존 14개 테스트·Ruff/format·source 분할·30개 수치 smoke·snapshot/가중치 GPU preflight가 통과했다. DOCX 렌더링과 provenance hash를 확인했고 원본 OMML 수식 208개·drawing 13개를 보존했다. `scripts/run_gpu.py`에 남은 실행은 현재 Qwen 기반 typed/agent·기존 helper·주문 대화 진단이다. 이 runner가 다음 ModernBERT 모델을 구현하거나 학습하지는 않는다.
+
+이번 문서 revision 10은 ModernBERT-base 149M / large 395M, token-level 공유 연구 head와 내부 도구 인자 추출, 256차원 2층 결합, 2층 GRU hidden 128 및 152–155M 설계 예산을 반영한다. Train 확대·masked 주석 학습, 종류별 cross-fit 예상 손실 점수와 1일 보조/7일 총수요 likelihood, 실제 rollout 행동 가치, base/large/value 제거 비교는 다음 구현·GPU 학습 계획이다. 현재 결과와 새 모델 결과를 구분하며 기존 `proposal.docx`·README·`protocol.md`·`sources.md`를 수정한다.
 
 수정 full의 학습형 구성+정책 loss는 **178.223**, 같은 구성의 own-state planner는 **175.934**다. 차이는 2.289, 24개 source 묶음의 paired bootstrap 95% CI는 [-0.821, 7.013]이다. 이 과거 비교는 통제 rollout 표적의 근사도를 보는 진단이며, 주요 베이스라인과의 모델 우열을 측정하지 않는다. 2026-10-07부터 planner/reference/one-step/oracle은 기본 평가에서 제외하고 규칙 planner를 주요 비교 계약에서 제거했다. 이전 경제·문장·응답 조건의 loss와 직접 비교하지 않는다.
 

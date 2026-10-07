@@ -16,15 +16,47 @@
 
 원래 official split은 private provenance에 보존하되 공개 leaderboard와 다른 source 단위 split을 사용한다. 계약·대화·규칙 page/tree·매장/상품의 연결 성분, 동일 입력, 수치 정규화 문서, 5-word shingle Jaccard ≥0.85 template를 같은 분할에 둔다. 전체 보고서/조직 식별자를 모르는 자료의 분리를 보장했다고 표현하지 않는다. OR-ShARC의 주석 없는 651개 규칙 collection은 공통 공개 조회 자원이다. 올바른 규칙을 사전 선택해 주지 않는다. ABCD는 source `turn_count`가 비연속일 수 있어 같은 위치의 원문·speaker로 정렬하고 다음 턴부터 제외한다. 관측되지 않은 도구 인자는 인자 정확도 분모에서 제외한다.
 
-## 학습과 calibration
+## 현재 구현의 학습과 calibration
 
-Native adapter는 통제 planner를 사용하지 않는다. Train/Dev의 원래 상태·근거·도구·답/scale·미래 관측 판매를 표적으로 9개 head를 적합한다. ABCD는 발화 여부와 조건부 도구 선택을 분리한다. 경제적 행동 가치와 사실/선호 type에는 주석이 없어 해당 head를 학습했다고 주장하지 않는다. 후보 생성은 공개 source만 사용하며 정답이 후보에 없는 Train 사례는 해당 후보 선택 학습만 건너뛰고 coverage를 기록한다. Test 사례는 모두 채점 분모에 유지한다. 초기 Test를 adapter 개발 중 확인했으므로 현재 결과는 탐색적 측정이고 새 blind Test의 확증 결과가 아니다.
+현재 `native-router-v3`는 고정 all-MiniLM-L6-v2 encoder와 12개 head다. 256-token 조각을 토큰 수로 가중 평균한 384차원 표현 위에 CUAD 상태, ContractNLI 상태, 근거, OR-ShARC 상태, ABCD 발화 여부·조건부 도구 선택, TAT-QA 계산 후보·scale의 8개 언어 head를 적합한다. 수요 분포는 별도 28차원 판매 특성을 받는 종류 head와 절단정규·로그정규·Weibull 모수 head의 4개로 출력한다. Encoder 약 2,271만 파라미터는 고정하고 head 209,824개만 학습한다. 아래 제안 모델의 encoder 공동 학습과 내부 인자 decoder는 아직 이 checkpoint에 포함되지 않는다.
 
-고정 pretrained encoder 표현 위에 evidence/type/state/relation/value/recovery head와 rules용 value/recovery head를 학습한다. Construction은 32차원, 정책은 64차원 특성을 추가한다. CE+Brier, 후보 CE와 후보별 Huber 수치 손실, hold 비용으로 정규화한 value MSE, 허용 행동 mask를 적용한 recovery CE를 사용한다. 수치는 근거 span에서 calculator가 계산한다.
+Native adapter는 통제 planner를 사용하지 않는다. Train/Dev의 원래 상태·근거·도구·답/scale 및 미래 관측 판매로 학습한다. ABCD는 발화 여부와 조건부 도구 선택을 분리한다. 경제적 행동 가치와 사실/선호 type에는 주석이 없어 해당 head를 학습했다고 주장하지 않는다. 후보 생성은 공개 source만 사용하며 정답이 후보에 없는 Train 사례는 해당 후보 선택 학습만 건너뛰고 coverage를 기록한다. Test 사례는 모두 채점 분모에 유지한다. 초기 Test를 adapter 개발 중 확인했으므로 현재 결과는 탐색적 측정이고 새 blind Test의 확증 결과가 아니다.
+
+현재 수요 모수 head는 0 수요 확률과 종류별 두 모수를 출력하고, 비검열 기간에는 관측 총량의 density/zero-mass NLL, 검열 기간에는 관측 총량 이상의 survival NLL로 학습한다. 종류 head는 종류별 NLL을 사용해 학습하고 실제 argmax 종류의 Dev NLL로 checkpoint를 선택한다. 선택한 종류·모수로 7일 총수요의 65점 `F`를 만들고 공통 optimizer가 발주량을 계산한다. Train/Dev/Test의 rolling 관측 창은 810/216/324개이며 각각의 source 분할을 유지한다. Typed·agent의 판매 보조 진단에는 공통 seed-42 분포 모델을 사용하고, 학습형은 각 seed의 분포 모델을 사용한다.
+
+별도 통제 Newsvendor 구현은 고정 pretrained encoder 표현 위에 evidence/type/state/relation/value/recovery head와 rules용 value/recovery head를 학습한다. Construction은 32차원, 정책은 64차원 특성을 추가한다. CE+Brier, 후보 CE와 후보별 Huber 수치 손실, hold 비용으로 정규화한 value MSE, 허용 행동 mask를 적용한 recovery CE를 사용한다. 수치는 근거 span에서 calculator가 계산한다.
 
 Construction은 train 원본 묶음의 공개 도달 상태와 응답을 학습하고 dev 손실로 선택한다. Train 묶음 단위 3-fold cross-fit에서 해당 묶음을 학습하지 않은 구성 모델의 실제 예측 상태로 정책 표적을 만든다. 각 구성의 자기 `Ω`로 후속 손실을 계산하며 reference의 의미 상태로 바꾸지 않는다. 응답 뒤에도 같은 구성·검증·갱신을 적용한다. 통제 표적의 미래 응답 집합과 동역학은 여전히 생성기를 안다. Fold 적합/표적 묶음과 hash를 보존한다.
 
-충돌 검증은 evidence threshold보다 먼저 수행한다. 통과한 근거·식은 verified 상태로 정합시키고 raw head 확률을 보존한다. Calibration 자료는 temperature와 evidence F1 threshold에만 사용한다. Test는 최종 측정에만 사용한다. Checkpoint schema는 4이며 이전 policy 표적 checkpoint는 재학습해야 한다.
+통제 구현의 충돌 검증은 evidence threshold보다 먼저 수행한다. 통과한 근거·식은 verified 상태로 정합시키고 raw head 확률을 보존한다. Calibration 자료는 temperature와 evidence F1 threshold에만 사용한다. Test는 최종 측정에만 사용한다. 통제 checkpoint schema는 4이며 이전 policy 표적 checkpoint는 재학습해야 한다.
+
+## 제안 모델과 학습 계획
+
+제안 모델은 자연어를 생성하는 decoder 대신 사전학습 encoder와 업무별 구조화 head로 구성한다. 주 모델은 ModernBERT-base 약 149M, 크기 비교는 같은 계열의 ModernBERT-large 약 395M이다. 최대 8,192-token 문맥의 토큰별 표현과 원문 위치를 유지하고 encoder와 head를 공동 미세조정한다. 긴 자료는 원문 offset을 유지한 조각과 조회로 처리하며 전체 문서를 평균 벡터 하나로 축약하지 않는다. 두 크기에 동일 조회 자원·문맥 예산·head·학습 자료를 적용한다.
+
+문서·대화·표·도구 스키마와 slot을 공통 256차원으로 투영하고 2층 attention 결합층을 사용한다. 판매 이력은 판매·품절·가격 및 달력 등 실제 관측 특성의 순서를 유지하는 hidden 128, 2층 GRU로 인코딩한다. Base의 encoder·결합층·GRU·head를 합친 설계 예산은 약 152–155M이며, 이 수치는 새 구현 후 실제 파라미터 집계로 확정한다. 계약·대화 출처와 FreshRetail의 SKU·기간은 연결되어 있지 않으므로 임의로 짝지어 수요 head를 학습하지 않는다. 현재 자료에서는 언어 경로와 판매 경로를 각 원래 표적으로 학습하고, 실제 연결된 입력이 있는 과제에서 상태를 결합한다.
+
+| Head | 입력과 구조화 출력 |
+| --- | --- |
+| Evidence | Slot·도구 필드와 원문 토큰/표 cell/관측 entity를 연결하고 근거 위치와 값 후보를 선택한다. 복수 근거·복수 entity를 허용한다. |
+| Type | 사실·추정·선호·가정을 분류한다. 수요 분포 종류와 구분되는 모수 근거의 종류다. |
+| State | 미확인·후보·검증 가능·충돌·획득 불가를 출력한다. 단위·상품·기간·적용 조건·확인 상태를 함께 보존한다. |
+| Relation | 복사·환산·연산과 순서가 구분된 피연산자·조건의 pointer를 선택한다. 선택한 식은 공통 calculator가 실행한다. |
+| Value | 현재 자기 예측 상태와 허용 행동을 받아 행동 뒤 남을 실제 손실과 요청 비용의 합을 예측한다. |
+| Recovery | 수치 가치 표적이 없는 상태에서 조회·질문·선택 요청·확인·보류·종료 및 도구 후보를 선택한다. |
+| Demand family/parameters | 종류 head가 절단정규·로그정규·Weibull의 조건부 예상/초과 loss score 3개를 출력하고 최솟값의 종류를 선택한다. 해당 모수 head는 0 수요 확률과 두 모수를 출력한다. 주 출력은 요청 기간의 총수요 분포이고 1일 horizon은 보조 표적이다. |
+
+도구 인자는 별도 Qwen 호출 없이 공유 schema-conditioned decoder가 작성한다. 각 필드의 설명·형식·enum·필수 여부를 query로 삼아 `{span, entity, enum, expression, missing}` 값 출처와 해당 pointer/선택을 출력한다. ID는 관측된 원문·조회 결과에서 선택하고 금액·수량은 원문 수치 또는 검증된 식으로 계산한다. 목록은 복수 entity, 객체는 하위 필드를 선택한다. 필드별 누락·충돌 상태와 정확한 변경 제안의 승인 상태를 검사한 뒤 일반 코드가 JSON을 만든다. 질문은 대상 필드·이유·선택지, 확인 요청은 도구·정확한 인자로 출력하고 검토된 template로 표현한다. 근거·모수·행동을 선택한 후의 자유 문장 생성은 주 학습형 경로에 포함하지 않는다.
+
+기존 source 묶음의 Test와 Dev는 유지한다. 이미 확보한 전체 ABCD 등에서 Train을 확장할 때 기존 Dev/Test와 연결되는 대화·문서·SKU·template를 제외하고 새 source 묶음·hash를 기록한다. 현재 ABCD의 Train 도구 이벤트는 85개이며 전체 원천 Train은 8,034개 대화여서, encoder 크기 확대와 함께 관측 인자 표적을 확장한다. 원래 source split과의 관계도 기록한다. 확대 자료를 새 확증 Test로 쓰는 경우에는 그 Test를 학습·개발 전에 별도로 고정한다.
+
+학습은 먼저 근거·상태·관계·인자와 수요를 원래 주석으로 적합하고, 이어 자기 예측 상태에서 요청 정책을 적합한다. 공유 encoder의 multitask loss는 관측된 표적에만 적용한다. CUAD는 근거, ContractNLI는 상태·근거, OR-ShARC는 규칙·의사결정·질문할 조건, ABCD는 도구·관측 인자, TAT-QA는 피연산자·연산·scale·계산 답을 사용한다. 도구 인자의 비관측 값, 없는 type/value 주석, 서로 연결되지 않은 자료의 결합 표적에는 loss를 만들지 않는다. 주석을 갖는 통제 사례의 type/state 및 갱신 표적은 출처를 표시하여 함께 사용한다. TAT-QA는 정답이 고정 후보에 없던 실패를 operand/operator 선택으로 줄이고, 근거와 계산식을 별도로 채점한다.
+
+수요 종류 gate는 Train 내부의 source·시점 cross-fit으로 만든 종류별 out-of-fold NLL을 표적으로 학습한다. 먼저 held-out source와 각 예측 시점 이후 관측을 적합에서 제외한 모수 expert가 세 종류의 비검열 density/zero-mass 또는 검열 survival NLL을 산출한다. 종류 head는 이 NLL 또는 종류 공통 최솟값을 뺀 초과 NLL을 MSE로 회귀하여 조건부 기댓값 3개 score를 예측하고 최솟값의 종류를 선택한다. 출력 `familyScores`는 예상/초과 손실이며 분포 종류의 사후확률로 해석하지 않는다. 종류별 모수 head는 관측 NLL로 모두 학습하며, 선택된 종류만 학습해 나머지 종류가 굶는 구성을 피한다. 최종 모수 head는 허용 Train으로 재적합하고 Dev에서 gate·모수·calibration을 선택한다. 수요 head는 horizon을 입력으로 받는다. 요청 기간 총량과 다음 1일의 표적은 실제 관측 및 해당 기간의 검열 조건으로 만들며, 1일 분포를 단순 합산해 7일 분포라고 가정하지 않는다. 관측 시점까지의 척도만 사용하고 실제 단위에서 density를 비교한다. Test의 종류 빈도·score·모수·보정 결과를 보존한다. 현재 native-v3의 softmax·detached-NLL 학습 결과와 새 gate의 예상 loss score를 혼용하지 않는다.
+
+Value 표적은 Train의 실제로 관측 가능한 응답/도구 전이를 실행한 rollout의 잔여 최종 손실과 명시된 요청·시간 비용으로 만든다. 행동 후에도 같은 예측·검증·갱신 모델을 사용하며, 응답 belief는 Train에서 추정한다. source 단위 cross-fit으로 정책이 학습할 상태와 후속 손실을 만들고 행동 비용·표적·응답 provenance를 저장한다. 통제 planner의 imitation 표적은 기존 통제 진단으로 분리하고 새 주 모델의 실제 rollout 가치 학습을 대신하지 않는다. 공개 구성 과제의 다음 행동 주석은 Recovery의 imitation 표적이며 경제적 value로 변환하지 않는다. τ²의 task 성공·권한 위반·상호작용 비용은 그 환경의 정책 표적이고 FreshRetail의 발주 경제 가치와 구분한다.
+
+새 모델 calibration은 Dev 내부에서 checkpoint 선택 자료와 보정 자료를 source 단위로 분리해 상태·근거·인자 확률과 수요 CDF/구간 coverage를 보정한다. 보정 전후 지표와 선택한 threshold를 기록하며 Test를 보정에 사용하지 않는다.
 
 ## 비교 조건과 실행
 
@@ -40,7 +72,7 @@ Construction은 train 원본 묶음의 공개 도달 상태와 응답을 학습�
 
 ## 수치와 채점
 
-`scripts/run_gpu.py`는 정확한 가공 snapshot과 CPU 학습 가중치를 사용해 같은 pinned Qwen 7B의 typed·agent·학습형 언어 helper를 실행한다. Native typed는 고정 조회 계획→구조화 추출, agent는 최대 2회 adaptive 조회→구조화 답변이다. 동일 초기 fragment·원문 접근·계산 후보·토큰 상한을 제공한다. 학습형 helper는 선택된 도구/상태/근거/계산 값을 바꾸지 않고 인자·발화만 표현한다. 구성 요소별 지표에서 seed를 사례 안에서 평균한 뒤 source 묶음별 paired bootstrap을 수행한다. 관측 판매 예측은 공통 seed-42 forecaster를 사용하는 보조 진단으로 언어 routing 승패에 합치지 않는다.
+현재 `scripts/run_gpu.py`는 정확한 가공 snapshot과 CPU 학습 가중치를 사용해 같은 pinned Qwen 7B의 typed·agent·학습형 helper를 실행하는 기존 구현의 진단이다. 새 ModernBERT 모델을 학습하거나 평가하는 runner가 아니다. Native typed는 고정 조회 계획→구조화 추출, agent는 최대 2회 adaptive 조회→구조화 답변이다. 동일 초기 fragment·원문 접근·계산 후보·토큰 상한을 제공한다. 현재 학습형 helper는 선택된 도구/상태/근거/계산 값은 유지하지만 인자를 작성하며, 주문에서는 인자 누락에 따른 질문과 변경 확인 요청도 판단한다. 따라서 이 실행의 learned 결과는 내부 head만의 결과로 해석하지 않는다. 구성 요소별 지표에서 seed를 사례 안에서 평균한 뒤 source 묶음별 paired bootstrap을 수행한다. 수요 분포·발주 진단은 언어 routing 승패와 분리하고 실제 출력 발주량을 채점한다.
 
 연결된 모의 주문 환경은 pinned τ²-bench retail 114건과 원래 500명/1,000주문/50상품 DB를 사용한다. 고객 identity와 연결 주문의 53개 묶음을 Train/Dev/Test 61/28/25로 분할한다. 공식 분할의 고객 중복 22명을 기록하고 전체 catalog/정책의 공통 공개는 유지한다. 비교 모델은 사용자 시나리오·참고 행동·미래 응답을 보지 않는다. 공통 고정 사용자 simulator만 private scenario를 읽고, 생성된 첫 발화는 같은 cache key로 모든 방법에 동일하게 제공한다.
 
@@ -54,9 +86,9 @@ Loss·질문 수·보류/자율 처리·승인 오류와 evidence/type/state/exp
 
 ## 후속 실험 순서
 
-1. 영어 상보적 suite의 Dev에서 고정 typed/학습형/agent 입력 adapter를 먼저 연결한다. 모든 방법이 같은 원문·표·대화 prefix·조회 collection·도구를 받고 자기 근거와 상태를 구성한다. Gold rule, intent, 근거 span, 정답 수치 및 미래 턴을 후보 생성에 사용하지 않는다.
-2. 같은 경제 상태의 표현을 바꾸고, 같은 누락 상태의 발주 영향·질문 비용·지연을 독립 변화시킨다. 실제 ERP 필드는 모든 방법에 제공하고 쉬운 업무도 포함한다.
-3. Suite의 source split을 고정하고 원래 표적별로 구성 오류를 측정한다. CUAD 근거/미기재, NLI 상태+근거, OR-ShARC 규칙 선택/yes-no-ask/질문 참고 F1, ABCD 다음 행동/도구/관측 인자, TAT-QA 답·scale, Retail 비검열/검열 관측 판매 MAE를 따로 보고한다. 구성 요소 간 단일 점수나 발주 loss로 합치지 않는다. 누락 예측과 유효 forecast coverage를 함께 보고한다.
-4. 고정 typed/학습형/agent를 같은 원문·도구·validator·optimizer로 비교한다. 학습형 정책의 응답 belief는 train에서 추정한다. 고정 typed 구성+학습형 정책은 별도 ablation으로 분리한다.
-5. 사람 검토한 실제 업무 원문·응답·권한·시간·비용을 확보해 end-to-end 발주 사례를 만든다. 미형성 선호·검열 수요·지원 밖 조건을 구분한다. Source/template/연결된 조직·SKU·기간을 분리하고 fixture를 test로 쓰지 않는다. 질문 참고 정답을 인과적 가치 정답으로 취급하지 않는다. 그 뒤 동일 dataSeed의 5개 학습 seed와 재학습 ablation 및 비용·지연 대조 실험을 실행한다.
-6. 주 비교는 고정 typed router의 같은 source다. 손실 5% 개선과 paired CI를 확인하고 근거 없는 발주·마감 위반·자율 처리율·질문 시간 및 실제 추론 비용을 함께 보고한다.
+1. 기존 Dev/Test source를 보호하며 확보한 Train을 확장하고, 공통 토큰/표/entity와 도구 스키마 adapter를 만든다. 원문·표·대화 prefix·조회 collection·도구를 동일하게 제공한다. Gold rule, intent, 근거 span, 정답 수치와 미래 턴을 입력·후보 생성에 사용하지 않는다. 구조화 인자와 질문 template를 먼저 연결해 학습형 추론 경로에서 Qwen helper를 제거한다.
+2. Base encoder·공유 인자 decoder·core head·GRU·수요 head를 공동 학습한다. Source·시점 cross-fit의 수요 gate와 자기 예측 상태의 rollout value를 적합하고, Dev 내부에서 checkpoint와 보정을 선택한다. 현재 GPU runner의 저장 가중치를 새 모델 학습 결과로 사용하지 않는다.
+3. 주 비교는 고정 typed 파이프라인, 새 학습형 base, 도구 사용 agent의 세 방법이다. 같은 원문과 등록된 도구·validator·calculator·optimizer, 조회/턴 예산 및 응답 환경을 사용한다. Typed와 agent는 pinned Qwen을 사용하는 구조화 추출·도구 경로이고, 학습형은 내부 head가 인자와 질문·확인 결정을 전부 출력한다. 모든 방법에 미래 응답·참고 상태·정답 모수를 주지 않는다. 실제 ERP 필드가 있는 사례에서는 그 필드도 공통 입력으로 제공한다.
+4. 추가 비교는 같은 구조의 large와 base의 `no_value` 두 조건만 먼저 실행한다. Large는 같은 head·학습 자료·문맥·정책 조건에서 encoder 크기만 바꾼다. `no_value`는 value 학습과 예상 손실 선택을 제거하고 같은 구성·인자 decoder와 Recovery의 행동 선택을 재학습해, 가치 학습의 기여를 비교한다. 같은 경제 상태의 문서 표현, 같은 누락 상태의 발주 영향·질문 비용·지연을 독립 변화시킨다. 이후 추가 제거 실험은 이 결과에 따라 정한다.
+5. 원래 과제별로 근거·상태·type·계산식과 도구+관측 인자의 정확도를 보고한다. OR-ShARC는 질문할 조건과 rule 결정, 주문은 필요한 질문의 충족·중복 질문·확인 누락·권한 위반 및 최종 목표 달성을 채점한다. 질문 문장의 F1을 질문의 가치나 필요성으로 대체하지 않는다. FreshRetail은 검열 survival NLL과 비검열 NLL·CRPS·구간 coverage·평균 오차를 분리하고 종류 빈도·`familyScores`·모수를 보존한다. 분포 유효성과 별도로 모델이 실제 출력한 `q`의 실현 손실을 채점하며, scorer가 더 좋은 발주량으로 바꾸지 않는다. 연결되지 않은 공개 과제 점수를 하나의 발주 성과로 합치지 않는다.
+6. 5개 seed와 source 묶음별 paired CI로 base·large·`no_value` 및 primary 방법을 비교한다. 상태·인자·분포 보정 전후 성능, 근거 없는 발주·마감/승인 위반·자율 처리율, 필요한 질문과 처리 시간, 전체 encoder/조회/도구/표현 비용·지연·최대 GPU 메모리를 함께 보고한다. 발주 손실 5% 개선과 paired CI라는 기존 완료 기준을 유지하고, 정확도·질문 부담·실행 비용의 변화로 모델 크기를 선택한다. 실제 연결 업무의 계약·판매·응답·권한·시간·비용 자료가 확보되면 동일 출력 구조로 end-to-end 발주 실험을 실행한다.

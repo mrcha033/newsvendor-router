@@ -2,9 +2,9 @@
   "originalName": "1팀_중간_팀_과제_프로포절.docx",
   "originalSha256": "a3f8084527435cf4c0bb1894aac029e16dd7c2bf289c3dfc4e5c138aa5f24a15",
   "originalBytes": 1169222,
-  "sha256": "49c946e2450a62b513a571ca8c300a970c5b8b3cb8a5905671c62e482c5762ce",
-  "bytes": 1160344,
-  "revision": 9,
-  "updatedAt": "2026-10-06T17:37:57Z",
-  "implementationCommit": "9cdcbd470fdb87ec870ad33a6f1173d492ad571b"
+  "sha256": "0c1c2f5cf68983fc0f97565822a21a7edd9b620291f0a9bc88182687c1e7d11b",
+  "bytes": 1163350,
+  "revision": 10,
+  "updatedAt": "2026-10-07T05:51:54Z",
+  "implementationCommit": "6d3acf33fefe8093eb7436727ce136a8623f4beb"
 }

@@ -2,7 +2,75 @@
 
 업무 문서의 **근거 연결·모수 상태·행동 가치**를 학습하는 Decision Router의 실험 저장소입니다. 연구 모형은 [프로포절](docs/proposal.docx)에 정리했습니다. 주 비교는 같은 원문과 도구를 사용하는 **고정 typed 파이프라인·학습형 router·agent**입니다.
 
+## 채택한 모델 설계와 구현 상태
+
+다음 모델은 **ModernBERT encoder와 구조화 head를 함께 학습**하며, 도구 인자 작성도 모델 내부에 포함합니다. 출력은 근거·모수 상태·도구와 인자·분포 종류와 모수·다음 행동입니다. 질문과 확인 요청은 선택한 필드·선택지를 템플릿으로 표현합니다.
+
+| 구분 | 현재 구현·저장 결과 | 다음 구현 설계 |
+|---|---|---|
+| 자연어 표현 | 고정 MiniLM, 256-token 조각의 평균 벡터 | ModernBERT-base 전체 미세조정, 토큰별 표현 유지 |
+| 도구 인자 | CPU 정규식, GPU Qwen 보조 | 도구 스키마를 조건으로 한 내부 인자 head |
+| 연구 head | 통제 실험의 6개 연구 head와 공개 과제별 native-v3 head가 별도 경로 | 근거·종류·상태·계산 관계·행동 가치·복구를 공유 모형으로 연결 |
+| 수요 | 28개 통계 입력 → 종류·모수 4개 MLP | 판매 이력 encoder와 기간 조건부 종류·모수 head |
+| 실행 상태 | CPU 5개 seed 완료, 기존 GPU 비교 runner 제공 | GPU 학습·추론 코드와 새 가중치는 아직 구현 전 |
+
+아래 CPU 결과와 실행 명령은 **현재 `native-router-v3` 구현**을 재현합니다. ModernBERT의 성능 결과로 읽지 않습니다.
+
+### Encoder와 결합층
+
+| 구성 | 채택 설정 | 처리 대상 |
+|---|---|---|
+| 자연어 encoder | [ModernBERT-base](https://huggingface.co/answerdotai/ModernBERT-base), 약 149M 파라미터, 8,192-token 문맥, 전체 미세조정 | 요청·대화·업무 문서·표·도구 스키마 |
+| 판매 이력 encoder | 은닉 크기 128, 2층 GRU | 과거 판매·품절·할인·달력과 관측 mask |
+| 결합층 | 256차원, 2층 attention | 스키마 필드 표현·근거 토큰·판매 이력 표현 |
+| 전체 크기 예산 | 약 152–155M 파라미터 | base encoder에 결합층·이력 encoder·공유 head를 포함한 구현 목표 |
+| 크기 비교 | [ModernBERT-large](https://huggingface.co/answerdotai/ModernBERT-large), 약 395M, 같은 8,192-token 문맥 | 동일 head·결합 차원·분할에서 encoder 크기의 효과 확인 |
+
+계획에 사용할 모델 revision과 라이선스는 [출처 문서](docs/sources.md)에 고정합니다.
+
+문서는 겹치는 조각으로 나누고 원문 ID·토큰 위치·문자 offset을 보존합니다. 요청과 대화를 조건으로 근거를 조회·재순위화한 뒤 선택된 문서 조각을 함께 인코딩합니다. 근거 head와 인자 head는 토큰 표현을 사용하며, 문서 전체를 하나의 평균 벡터로 바꾸지 않습니다. 조회에서 정답 근거가 확보됐는지와 확보된 근거에서 head가 올바르게 판단했는지를 각각 측정합니다.
+
+문서와 판매 이력이 실제로 함께 주어진 사례에서 두 표현을 결합합니다. 개별 공개 과제는 존재하는 입력 경로와 주석만 사용하고 나머지는 mask합니다. 서로 다른 출처의 계약과 시계열을 임의로 붙여 결합 학습의 정답 사례로 만들지 않습니다. 위 파라미터 수는 설계 예산이며, 구현 후 실제 trainable 수·GPU 메모리·지연을 기록합니다.
+
+### 공유 head와 구조화 출력
+
+과제별 adapter는 원천 입력과 주석을 아래 공유 head에 연결합니다. 원천 과제의 정답과 상태 label을 보존하고, 대응되는 공유 head만 감독합니다.
+
+| Head | 출력 |
+|---|---|
+| 근거 `evidence` | 필드별 원문 ID와 근거 span·표 cell |
+| 종류 `type` | 사실·추정·선호·가정; 수요의 분포 종류와 별도 |
+| 상태 `state` | 확인됨·후보·미확인·충돌·미확보와 대상 필드 |
+| 계산 관계 `relation` | 연산 종류, 피연산자 span·cell·필드 연결과 단위·scale |
+| 행동 가치 `value` | 상태·후보 행동별 예상 후속 손실과 행동 비용 |
+| 복구 `recovery` | 추가 조회·질문·충돌 해소·확인·진행·보류할 대상과 행동 |
+| 도구·인자 | 도구 선택, 스키마 필드별 값·근거·누락·충돌 |
+| 수요 종류 | 절단정규·로그정규·Weibull의 조건부 손실 점수 `familyScores`, 최소 점수의 `family` |
+| 수요 모수 | 종류별 0수요 확률과 위치·척도, 로그평균·로그표준편차 또는 형상·척도 |
+
+도구 인자는 필드마다 별도 거대 모형을 두지 않고, 스키마를 조건으로 같은 head를 공유합니다. 원문 값은 span pointer, 닫힌 선택지는 분류, 숫자·날짜·단위는 추출 후 결정적 정규화로 처리합니다. 산술은 선택한 피연산자와 연산을 executor가 계산합니다. JSON 직렬화·스키마 검사·확인 절차 검사와 Newsvendor 최적화도 executor가 담당합니다.
+
+다음 학습형 추론에는 Qwen 보조를 호출하지 않습니다. 모델이 종류·모수에서 만든 `F`를 solver에 전달하고, 필요한 질문은 필드와 선택지를 출력합니다. 비교군 typed·agent, 주문 과제의 사용자 simulator·judge는 별도 실행 역할로 유지합니다.
+
+### 학습 순서와 수요 종류 선택
+
+1. **근거·필드 학습:** 공개 원천 Train을 확장해 토큰 근거, 인자, 상태와 계산 관계를 먼저 학습합니다. ModernBERT도 함께 학습하며 encoder와 새 층의 학습률을 분리합니다. 없는 주석은 loss에서 mask하고, 알 수 없는 값을 임의의 상태 정답으로 만들지 않습니다.
+2. **판매 이력·수요 학습:** GRU와 같은 기간 조건부 수요 head로 1일 관측을 보조 학습하고, 7일 총수요를 주 학습·평가 대상으로 둡니다. 7일 분포는 총수요에 직접 맞추며 일별 분포를 독립으로 가정해 합치지 않습니다. 품절 기간은 관측 총판매에 대한 survival likelihood를 사용합니다.
+3. **행동 가치·복구 학습:** Train의 관측 상호작용과 통제 rollout에서 후속 손실·질문/조회 비용을 학습하고, 주석이 연결된 경로를 공동 미세조정합니다. 공유 head가 구성한 상태와 후보 행동으로 결정하며, 정답 상태를 추론 입력으로 공급하지 않습니다.
+
+수요 종류 head의 다음 학습은 **Train 내부 출처·시간 단위 cross-fit**을 사용합니다. 시간 경계에서는 겹치는 미래 관측 기간도 분리합니다. 종류별 모수 모형이 자신이 학습하지 않은 구간에서 만든 density·survival NLL을 표적으로, 종류 head가 조건부 기대 손실 또는 초과 손실 3개를 예측합니다. 선택은 최소 예측 손실의 단일 종류이며, `familyScores`는 그 손실 점수입니다. 분포 종류 정답 label을 새로 만들거나 혼합분포 likelihood로 학습한 뒤 단일 종류로 바꿔 출력하지 않습니다.
+
+최종 모수 모형은 Train 전체로 학습하고, Dev는 **실제로 선택된 종류와 해당 모수**의 성능으로 checkpoint·보정을 결정합니다. Test는 선택·보정·cross-fit에서 제외합니다. 현재 native-v3의 detached NLL 가중 목적식과 `familyProbabilities` 출력은 아래 구현 기록에 그대로 구분해 두었습니다.
+
+### 원천 확장과 최소 비교
+
+현재 snapshot의 ABCD는 대화 80개에서 462개 사례를 준비했고, Train의 도구 호출 사례는 85개입니다. 다음 인자 학습은 원천 [ABCD Train의 8,034개 대화](https://github.com/asappresearch/abcd)를 활용하도록 확장합니다. CUAD·ContractNLI·OR-ShARC·TAT-QA·FreshRetail도 과제별 Train의 근거·인자·관측 표적을 확대합니다. 기존 snapshot의 Dev/Test와 연결된 출처 묶음은 확장 Train에서 제외하고, 대화·계약·규칙·context·매장/상품·중복 입력 단위 분할을 유지합니다. 새로운 자연어·시계열 결합 사례는 실제 연결된 자료와 Train의 명시적 주석으로 추가합니다.
+
+최소 학습형 비교는 **base 전체 모형, large 전체 모형, base에서 value를 제거한 `no_value`** 세 가지입니다. 같은 원문·스키마·도구·분할·행동 상한의 typed·agent를 주 베이스라인으로 둡니다. base/large는 같은 구조화 head와 내부 인자 출력을 사용합니다. `no_value`는 value 손실과 예상 손실에 따른 선택을 제거하고, 같은 구성·인자 모듈과 Recovery의 관측 행동 주석 학습으로 다음 행동을 선택하도록 재학습합니다. 근거·필드 상태·정확한 도구와 전체 인자·필요한 질문·최종 목표 달성·발주 손실·호출 비용·지연·메모리를 채점합니다. 자유 문장의 표현 F1을 학습형의 필수 출력 요건으로 두지 않습니다.
+
 ## 다른 GPU 머신에서 바로 실행
+
+아래 runner는 저장된 native-v3 head와 Qwen 보조를 사용하는 **현재 구현의 비교**입니다. 다음 ModernBERT 구조의 GPU 학습 명령은 구현 후 별도로 연결합니다.
 
 Python 3.12, [uv](https://docs.astral.sh/uv/getting-started/installation/), CUDA GPU를 사용합니다. GPU 메모리는 24GB 이상을 권장합니다.
 
@@ -57,7 +125,7 @@ Train/Dev/Test는 **1,074/362/366건**, 출처 묶음은 378개입니다. 같은
 
 사용자 simulator가 목표를 읽고 모든 방법에 같은 첫 발화를 제공합니다. 각 방법은 새 DB에서 시작해 고객 확인·변경 제안·승인·도구 실행을 진행합니다. 최종 상태와 목표 응답, 승인 위반, 결제 원장 차이와 상호작용 비용을 채점합니다. 출처·파일 hash는 [`configs/orders.json`](configs/orders.json)과 [manifest](cases/orders/manifest.json)에 있습니다.
 
-## CPU 학습과 평가 재현
+## 현재 native-v3 CPU 학습과 평가 재현
 
 포함된 가중치를 사용하는 GPU 평가만 진행한다면 이 단계는 건너뛸 수 있습니다. CPU 환경에서 새로 학습하려면 다음 순서로 실행합니다.
 
@@ -157,7 +225,7 @@ print(prediction["period"], len(F), sum(p for _, p in F))
 print(order(F, underage=3, overage=1))
 ```
 
-## GPU 비교 실행
+## 현재 구현의 GPU 비교 실행
 
 ### 구성 요소 비교
 
@@ -205,7 +273,7 @@ uv run --no-project scripts/run_gpu.py --stage components --max-calls 100
 | 결과 | 위치 | 확인할 내용 |
 |---|---|---|
 | 포함된 CPU 결과 | `models/native/{seed}.metrics.json`, `runs.json` | 5개 seed의 과제별 점수 |
-| 수요 분포·발주 평가 | `models/native/{seed}.demand.json`, `{seed}.demand.measurements.jsonl` | 324기간의 분포·비용별 손실과 재현 가능한 혼합분포 모수 |
+| 수요 분포·발주 평가 | `models/native/{seed}.demand.json`, `{seed}.demand.measurements.jsonl` | 324기간의 분포·비용별 손실과 선택한 종류·모수 |
 | 재학습 CPU 결과 | `results/native/{seed}/` | `model.pt`, `training.json`, `predictions.jsonl`, `measurements.jsonl`, `metrics.json`, `provenance.json` |
 | 학습형 GPU 결과 | `results/native/{seed}/gpu/` | seed별 예측·trace·원시 측정·지표 |
 | Typed·agent 구성 요소 결과 | `results/native/{typed,agent}/` | 원시 예측·조회·token·지연·지표 |
