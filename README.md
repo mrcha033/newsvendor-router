@@ -1,139 +1,217 @@
 # Newsvendor Decision Router
 
-업무 문서의 **근거 연결·모수 상태·행동 가치**를 직접 학습하는 Decision Router의 실험 저장소입니다. 사용자가 수정한 [프로포절](docs/proposal.docx)을 기준으로 Python·PyTorch 환경을 구성했습니다.
+업무 문서의 **근거 연결·모수 상태·행동 가치**를 학습하는 Decision Router의 실험 저장소입니다. 연구 모형은 [프로포절](docs/proposal.docx)에 정리했습니다. 주 비교는 같은 원문과 도구를 사용하는 **고정 typed 파이프라인·학습형 router·agent**입니다.
 
-## 실행
+## 다른 GPU 머신에서 바로 실행
 
-Python 3.12와 [uv](https://docs.astral.sh/uv/)를 사용합니다. 첫 실행에서 공개 pretrained encoder를 내려받습니다. 로컬 실험에는 API key가 필요하지 않습니다.
+Python 3.12, [uv](https://docs.astral.sh/uv/getting-started/installation/), CUDA GPU를 사용합니다. GPU 메모리는 24GB 이상을 권장합니다.
+
+```sh
+git clone https://github.com/mrcha033/newsvendor-router.git
+cd newsvendor-router
+
+# 포함된 데이터와 5개 seed 가중치의 hash·분할 검사
+uv run --no-project scripts/run_gpu.py --check
+
+# 남은 구성 요소 비교와 주문 대화 평가를 모두 실행
+uv run --no-project scripts/run_gpu.py --stage all
+```
+
+GPU runner는 데이터 snapshot을 자동 복원하고 저장된 CPU 학습 가중치를 읽습니다. 데이터 원천을 다시 수집하거나 head를 재학습할 필요 없이 실행할 수 있습니다. 첫 추론에서 고정 revision의 Qwen과 MiniLM을 다운로드합니다.
+
+프로젝트의 `uv sync`는 Linux에서 CPU PyTorch를 설치합니다. GPU 명령의 `--no-project`는 script에 선언된 별도 의존성 환경을 사용하기 위한 옵션입니다.
+
+## GitHub에 포함된 데이터와 가중치
+
+[`cases/evaluation.tar.xz`](cases/evaluation.tar.xz)에 **상보적 영어 과제 1,802건과 연결된 주문 과제 114건**의 가공 데이터를 담았습니다. 압축파일은 1,454,948 bytes이며 [`cases/evaluation.json`](cases/evaluation.json)에 파일별 SHA-256·원천 revision·라이선스를 기록했습니다.
+
+| 포함 항목 | 저장 위치 또는 복원 위치 | 구성 |
+|---|---|---|
+| 상보적 영어 과제 | `data/processed/complementary/` | 원문 입력·분리된 정답·공통 조회 collection·manifest |
+| 연결된 주문 과제 | `data/processed/orders/` | 원문 입력·분리된 정답·고객/주문/상품 DB·manifest |
+| CPU 학습 가중치 | [`models/native/{42..46}.npz`](models/native/) | 5개 seed의 9개 head, NumPy 가중치 |
+| 학습 설정·CPU 원시 결과 | [`models/native/`](models/native/) | seed별 metadata·예측·trace·측정·지표, 전체 `runs.json` |
+| 통제 Newsvendor 600건 | [`configs/full.json`](configs/full.json), [`corpus.py`](src/newsvendor/corpus.py) | `dataSeed=42`의 생성 코드·설정으로 재생성 |
+| 원문 개발 사례 | [`cases/pilot/`](cases/pilot/) | 입력 14건과 주석·manifest |
+
+복원되는 `data/processed/`와 실행 결과 `results/`는 Git에서 제외됩니다. 데이터 자체는 위 압축파일로 추적합니다. 통제 Newsvendor 600건은 아래의 `prepare` 명령으로 생성합니다.
+
+### 상보적 영어 과제의 출처와 분할
+
+| 원천 | 준비 규모 | 학습·채점 대상 |
+|---|---:|---|
+| [CUAD](https://github.com/The-Atticus-Project/cuad) | 450건 / 계약 75개 | 공급·제조·유통·구매 계약의 조건 근거와 미기재 |
+| [ContractNLI](https://github.com/stanfordnlp/contract-nli) | 360건 / NDA 60개 | 함의·모순·미기재와 근거 |
+| [OR-ShARC](https://github.com/Yifan-Gao/open_retrieval_conversational_machine_reading) | 240건 / 규칙 묶음 60개 | 651개 공통 규칙에서 조회 후 결정·추가 질문 |
+| [ABCD](https://github.com/asappresearch/abcd) | 462건 / 대화 80개 | 전체 정책·관측 대화에서 다음 발화·도구·인자 |
+| [TAT-QA](https://github.com/NExTplusplus/TAT-QA) | 240건 / context 60개 | 문장·표의 답·계산·단위·scale |
+| [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K) | 시계열 50개 | 과거 60일에서 후속 7일 관측 판매 예측 |
+
+Train/Dev/Test는 **1,074/362/366건**, 출처 묶음은 378개입니다. 같은 계약·규칙 page/tree·대화·매장·상품의 연결 묶음과 동일 입력·유사 template를 같은 분할에 둡니다. TAT-QA는 context 단위입니다. OR-ShARC의 전체 규칙과 ABCD의 전체 정책을 공통으로 제공하고, 각 모델이 사용할 근거와 다음 행동을 구성합니다.
+
+공통 모델 입력은 `newsvendor.suite.public_input(row)`이며 request·documents·tables·관측 history/sales·도구 목록을 반환합니다. 정답·근거 주석·의도·정답 규칙 ID·미래 턴은 별도 파일에 둡니다. 자료의 고정 revision과 수집 hash는 [`configs/complementary.json`](configs/complementary.json)과 [manifest](cases/complementary/manifest.json)에 있습니다.
+
+### 연결된 주문 과제의 출처와 분할
+
+[τ²-bench retail](https://github.com/sierra-research/tau2-bench/tree/5bfa7e37b36656b37dc6d022156be6563c1007f3/data/tau2/domains/retail)의 모의 주문 과제 114건과 고객 500명·주문 1,000건·상품 종류 50개의 DB, 원래 정책·도구를 사용합니다. 고객과 연결 주문을 53개 묶음으로 나눴으며 Train/Dev/Test는 **61/28/25건**입니다. 공식 분할에서 겹치던 고객 22명은 재분할 내역에 기록했습니다.
+
+사용자 simulator가 목표를 읽고 모든 방법에 같은 첫 발화를 제공합니다. 각 방법은 새 DB에서 시작해 고객 확인·변경 제안·승인·도구 실행을 진행합니다. 최종 상태와 목표 응답, 승인 위반, 결제 원장 차이와 상호작용 비용을 채점합니다. 출처·파일 hash는 [`configs/orders.json`](configs/orders.json)과 [manifest](cases/orders/manifest.json)에 있습니다.
+
+## CPU 학습과 평가 재현
+
+포함된 가중치를 사용하는 GPU 평가만 진행한다면 이 단계는 건너뛸 수 있습니다. CPU 환경에서 새로 학습하려면 다음 순서로 실행합니다.
 
 ```sh
 uv sync --frozen
-uv run pytest -q
-uv run newsvendor smoke
+
+# snapshot 복원: 파일 hash와 두 워크로드의 분할도 함께 검사
+uv run newsvendor restore-eval
+
+# 각각의 검사 결과를 다시 확인할 때
+uv run newsvendor check-suite
+uv run newsvendor check-orders
+
+# seed 42–46의 9개 head 학습 → Test 평가 → 가중치 export
+uv run newsvendor train-native --config configs/native.json
+```
+
+`train-native`는 `results/native/`와 Git에 추적된 `models/native/`를 갱신합니다. 설정은 [`configs/native.json`](configs/native.json)에 고정돼 있습니다.
+
+| 항목 | 설정 |
+|---|---|
+| Encoder | `sentence-transformers/all-MiniLM-L6-v2`, revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`; 가중치 고정 |
+| 표현 | 384차원; 전체 텍스트를 256-token 조각으로 인코딩한 뒤 토큰 수로 가중 평균 |
+| 학습 | seed 42, 43, 44, 45, 46; 최대 25 epochs; Dev loss로 checkpoint 선택 |
+| 최적화 | AdamW, 학습률 0.003, weight decay 0.0001, batch 128, gradient clip 5 |
+| 손실 | 분류 CE + 0.1 × Brier, 후보 선택 CE + 0.1 × 기대 Huber, 판매 예측 MSE |
+| Head | 은닉층 32; CUAD/NLI/규칙 상태, 근거, ABCD 발화/도구, TAT-QA 계산/scale, 7일 판매 예측 |
+| 후보 | 초기 근거 조각 12개, 계산·행동 후보 최대 48개 |
+| 채점 | 각 seed에서 Test 366건, 원래 과제별 지표와 원시 예측 보존 |
+
+현재 커밋에 포함된 CPU 결과는 다음과 같습니다. 각 수치는 5개 seed 평균입니다.
+
+| 지표 | 값 |
+|---|---:|
+| CUAD 상태·근거 결합 | 0.527 |
+| ContractNLI 상태 정확도 / 상태·근거 결합 | 0.578 / 0.227 |
+| OR-ShARC 의사결정 정확도 | 0.558 |
+| ABCD 도구 선택 / 관측 인자까지 정확 | 0.246 / 0.000 |
+| TAT-QA 답·scale 모두 정확 | 0.017 |
+| FreshRetail 비품절 관측 판매 MAE | 0.509 |
+
+TAT-QA Train 144건 중 정답 계산이 후보에 포함된 사례는 50건입니다. 후보 생성 실패와 선택 오류를 분리해 분석합니다. ABCD는 발화 여부와 조건부 도구 선택을 분리했으며 GPU 단계에서 선택 뒤 인자·발화 구성의 효과를 측정합니다. CPU 수치는 adapter 개발 과정에서 얻은 결과입니다.
+
+## GPU 비교 실행
+
+### 구성 요소 비교
+
+```sh
+uv run --no-project scripts/run_gpu.py --stage components
+```
+
+같은 Test 366건에서 고정 typed·agent와 5개 seed 학습형을 비교합니다. FreshRetail 판매 예측은 공통 seed-42 forecaster를 사용하는 보조 측정입니다.
+
+| 방법 | 처리 순서 |
+|---|---|
+| 고정 typed | 조회 계획 → 공통 도구로 최대 2회 조회 → 구조화 추출·답변 |
+| 학습형 router | 고정 encoder·학습 head로 근거/상태/도구/계산 선택 → Qwen으로 인자·질문·발화 표현 |
+| Agent | 관측 결과에 따라 최대 2회 조회 → 구조화 답변 |
+
+세 방법에 같은 원문 접근·관측 이력·초기 근거 조각·계산 후보를 제공합니다. 학습형의 언어 보조는 선택된 도구·상태·근거·계산 값을 유지합니다. Qwen2.5-7B-Instruct revision은 `a09a35458c702b33eeacc393d103063234e8bc28`이고, 문맥 상한은 32,768 token, 새 출력 상한은 512 token입니다.
+
+### 주문 대화 비교
+
+```sh
+uv run --no-project scripts/run_gpu.py --stage orders
+```
+
+주문 Test 25건에서 typed·learned·agent를 실행합니다. Learned는 seed-42 ABCD head를 전이하고 같은 Qwen으로 인자·발화를 구성합니다. 사용자 simulator와 사후 목표 judge도 같은 고정 모델을 사용합니다. 방법별 상한은 assistant 40턴·도구 호출 20회입니다.
+
+고객 identity와 정확한 변경 제안에 대한 확인을 공통 validator로 검사합니다. 최종 DB는 참고 행동을 재생한 DB와 비교하고, 조회 과제는 목표 응답과 필수 이관을 확인합니다. `orders-105`의 실패한 참고 변경은 manifest와 원시 판정에 표시합니다.
+
+### 나눠 실행하고 이어가기
+
+```sh
+# 모든 단계를 한 번에 실행
+uv run --no-project scripts/run_gpu.py --stage all
+
+# 이번 실행의 새 생성 수만 제한
+uv run --no-project scripts/run_gpu.py --stage components --max-calls 100
+
+# 같은 명령을 다시 실행: 기존 생성은 cache에서 읽고 다음 100회 진행
+uv run --no-project scripts/run_gpu.py --stage components --max-calls 100
+```
+
+`--max-calls N`은 API 호출이 아닌 **새 모델 생성 횟수**이며 양의 정수입니다. 생략하면 전체 단계를 진행합니다. 한도에 도달하면 `Generation budget exhausted`로 중단하며 그때까지의 생성은 `.cache/native-generation/`에 남습니다. 다시 실행하면 처음부터 순회하면서 기존 생성을 재사용합니다. 단계 완료 후 지표와 paired 결과가 생성되므로, 재개할 때 `.cache/`와 `results/`를 보존합니다.
+
+## 결과 파일과 비교 방법
+
+| 결과 | 위치 | 확인할 내용 |
+|---|---|---|
+| 포함된 CPU 결과 | `models/native/{seed}.metrics.json`, `runs.json` | 5개 seed의 과제별 점수 |
+| 재학습 CPU 결과 | `results/native/{seed}/` | `model.pt`, `training.json`, `predictions.jsonl`, `measurements.jsonl`, `metrics.json`, `provenance.json` |
+| 학습형 GPU 결과 | `results/native/{seed}/gpu/` | seed별 예측·trace·원시 측정·지표 |
+| Typed·agent 구성 요소 결과 | `results/native/{typed,agent}/` | 원시 예측·조회·token·지연·지표 |
+| 구성 요소 간 짝 비교 | `results/native/paired.json` | 과제별 learned−baseline 차이와 95% CI |
+| 주문 대화 | `results/orders/{typed,learned,agent}/` | `episodes.jsonl`, `metrics.json`; 상태·목표·승인·턴·도구·token |
+| 주문 대화 짝 비교 | `results/orders/paired.json` | 고객 묶음별 learned−baseline 차이와 95% CI |
+| 전체 실행 정보 | `results/gpu-run.json` | 실행 단계·새 생성 수·고정 모델 |
+| 원시 모델 생성 | `.cache/native-generation/` | 실제 입력·출력·모델 revision·token·지연·메모리 |
+
+```sh
+python -m json.tool results/native/paired.json
+python -m json.tool results/orders/paired.json
+```
+
+공개 과제는 사례 안에서 학습형 5개 seed를 먼저 평균한 뒤 출처 묶음별 paired bootstrap을 수행합니다. 주문 대화는 고객 묶음 단위로 비교합니다. `learnedMinusBaseline`은 정확도·성공률에서는 양수, MAE·위반·질문·token 수에서는 음수일 때 개선입니다. 구성 요소 지표와 주문 목표 달성, 결제 원장 차이(모의 USD), 처리 비용을 각각 읽습니다.
+
+## 통제 Newsvendor 실험
+
+6개 상황 × 20개 독립 업무 묶음 × 5개 문장·배치 변형의 600건을 생성합니다. 독립 참모수 조합은 120개이며 Train/Dev/보정/Test는 360/60/60/120건입니다. 같은 `dataSeed=42`로 문서·모수·분할을 유지하고 학습 seed만 바꿉니다.
+
+```sh
+# 데이터만 생성: data/synthetic/{inputs,labels}.jsonl, manifest.json
+uv run newsvendor prepare --config configs/full.json
+
+# 30개 서로 다른 업무 묶음의 수치·순차 실행 검사
+uv run newsvendor smoke --config configs/full.json
+
+# 단일 seed 학습·평가
+uv run newsvendor experiment --config configs/full.json
+
+# 저장된 checkpoint 재평가
+uv run newsvendor evaluate --config configs/full.json --checkpoint results/revised/full/model.pt
+
+# 같은 데이터에서 seed 42–46을 재학습·평가
+uv run newsvendor sweep --config configs/full.json
+```
+
+단일 seed의 출력은 `results/revised/full/`, sweep은 `results/seeds/{seed}/`입니다. 입력·정답·manifest, checkpoint, 학습·보정, trajectory, CSV와 묶음별 비교를 저장합니다. 구성 head는 근거·종류·상태·계산 관계를, value/recovery head는 후속 손실과 복구 행동을 학습합니다. 통제 planner는 자기 예측 상태의 rollout 학습 표적과 수치 진단에 사용합니다. 정책은 고정 목록·모든 누락 요청·불확실성 우선·학습형을 같은 구성 안에서 비교합니다.
+
+## 원천 재수집과 추가 실험
+
+새로 원천 자료를 수집·가공할 때는 별도 checkout에서 다음 명령을 사용합니다. 현재 snapshot 재현에는 `restore-eval`을 사용합니다.
+
+```sh
+uv run newsvendor prepare-suite --config configs/complementary.json
+uv run newsvendor prepare-orders --config configs/orders.json
+uv run newsvendor pack-eval
+```
+
+수집 설정과 원천 revision·라이선스는 `configs/`에, 실제 수집 hash와 분할은 각 manifest에 기록합니다. 원래 대용량 다운로드는 `data/raw/`에 보존합니다.
+
+Jev·SGLang endpoint나 OpenAI-compatible agent를 별도로 비교하려면 `.env.example`의 URL·실제 model·key를 설정합니다. 외부 `public` 진단 자료는 `fetch`로 준비합니다.
+
+```sh
 uv run newsvendor fetch
 uv run newsvendor check
-uv run newsvendor audit-workload --config configs/full.json
-uv run newsvendor check-workload --config configs/workload-review.json
-uv run newsvendor experiment --config configs/pilot.json
-```
-
-기본 full은 120개 독립 참모수 묶음의 문장/배치 변형 600건입니다. Train/Test 참모수 중복은 0이며, 구매/판매 비율·5점 수요 분포·질문 비용·응답률을 묶음별로 변화시킵니다. 일반 문장에서 숫자와 단위의 span을 추출합니다. 5개 학습 seed는 동일한 `dataSeed`와 분할을 사용합니다.
-
-```sh
-uv run newsvendor experiment --config configs/full.json
-uv run newsvendor evaluate --config configs/full.json --checkpoint results/revised/full/model.pt
-uv run newsvendor sweep
-uv run newsvendor doctor
-```
-
-`results/<실행>/`에 checkpoint, 학습 손실, calibration, 원시 trajectory, CSV, source 단위 bootstrap 결과와 보고서를 저장합니다. 원본 데이터와 모델 cache는 Git에서 제외합니다. source·설정·의존성 lock·encoder revision의 hash를 실행마다 기록합니다.
-
-## 구성
-
-| 구성 요소 | 역할 | 구현 |
-|---|---|---|
-| Pretrained encoder | 문서·slot·행동을 384차원 표현으로 변환; 가중치 고정 | `encoder.py` |
-| Construction heads | 근거 연결, 사실/추정/선호/가정, 확인 상태, 식 후보를 예측 | `construction.py`, `heads.py` |
-| Validator / calculator | SKU·기간·단위·선택 권한을 검사하고 원문 수치로 계산 | `construction.py` |
-| Newsvendor optimizer | 유한 공동 모수 집합에서 정확한 minimax regret 계산 | `optimizer.py` |
-| 통제 planner | 통제 환경의 rollout 학습 표적과 수치 진단 | `policy.py` |
-| Value / recovery heads | 행동별 후속 손실과 복구 행동을 학습 | `train.py` |
-| Updater / action selector | 관측 응답을 반영해 상태를 다시 구성하고 허용 행동 선택 | `corpus.py`, `policy.py` |
-
-주 비교 대상은 같은 원문부터 처리하는 **고정 typed 파이프라인과 도구 사용 agent**이며, 우리 학습형 router를 이들과 비교합니다. 규칙 기반·모형 기반 planner는 주요 베이스라인에서 제외합니다. 고정 typed 구성에 학습형 정책을 연결하는 조건은 구성 기여를 분리하는 ablation입니다. Validator·calculator·optimizer는 모든 방법이 공유하는 도구입니다.
-
-통제 실행은 고정 목록, 모든 누락 요청, 불확실성 우선, 학습형 정책을 규칙/학습형 구성과 교차하는 진단입니다. Planner·reference expert·one-step·oracle은 기본 평가에서 실행하지 않습니다. 통제 planner는 생성기 응답 모형을 사용하는 학습 표적 및 수치 진단에 사용하며, 주 비교의 승패 기준으로 사용하지 않습니다.
-
-참모수의 `Ω` 포함률과 발주 승인 가능 여부를 따로 채점합니다. 미해결 계약 충돌·검열 수요·마감/수량 위반이 있는 전달은 오류입니다. 과거 결과는 원래 설정과 인접 `metrics.json`을 확인하고 기록된 응답으로 다시 채점합니다: `newsvendor rescore --config <원래설정> --trajectories <원시기록>`.
-
-## 외부 비교
-
-`.env.example`을 `.env`로 복사해 endpoint와 실제 model 이름, 필요한 key를 설정합니다. 값은 Git에 올리지 않습니다. Jev와 SGLang은 `/v1/systemone` choice 형식, agent는 OpenAI-compatible chat 형식을 사용합니다.
-
-```sh
 uv run newsvendor external --provider sglang --suite public --limit 20
-uv run newsvendor external --provider jev --suite business --config configs/pilot.json --limit 12
-uv run newsvendor external --provider agent --suite business --config configs/pilot.json --limit 12
 uv run newsvendor benchmark --provider sglang --config configs/pilot.json --max-calls 1000
 uv run newsvendor raw-benchmark --provider agent --config configs/pilot.json --limit 14 --max-calls 100
 ```
 
-`benchmark`는 주석된 통제 입력의 공통 후보에서 기존 예측기의 evidence/type/state/expression을 구성하고, 자기 상태의 planner 표적으로 value/recovery를 학습합니다. 네 정책을 규칙/기존 예측기 구성과 교차하는 진단이며, paired 비교는 같은 구성의 정책끼리 수행합니다. `raw-benchmark`는 원문·실제 출처·동일 도구부터 typed/checklist와 agent를 실행합니다. 후보는 공통의 주석 없는 calculator가 만들며 적용 범위와 상태는 각 예측기가 판단합니다. Reference 상태·미래 응답·응답 확률은 제공하지 않습니다.
+이 경로의 `--max-calls`는 새 HTTP 호출 상한이며 기본값 0은 cache만 사용합니다. `benchmark`는 고정 typed 구성과 학습형 정책을 연결하는 통제 비교이고 `raw-benchmark`는 원문 개발 사례에서 직접 구성·행동을 실행합니다.
 
-원시 예측·호출 hash·usage·지연을 cache와 결과에 남깁니다. `--max-calls`는 새 HTTP 호출의 상한이고 기본값 0은 cache만 사용합니다. 예시의 상한은 완료 호출 수나 요금의 보장이 아닙니다.
+구현을 변경한 뒤 기존 검증을 실행하려면 `uv run pytest -q`를 사용합니다. 자료 분할은 `check-suite`·`check-orders`, 수치 계산은 `smoke`로 확인합니다.
 
-외부 실행은 직접 명령을 내렸을 때만 API를 호출합니다. 모델·endpoint가 없으면 실행 전에 중단합니다. 실제 Jev/SGLang/agent 측정은 아직 없습니다. 로컬 서버와 명시된 protocol fixture 검사는 실제 모델 성능 측정에 포함하지 않습니다.
-
-## 상보적 영어 워크로드
-
-`configs/complementary.json`은 영어 원문을 보존하는 6개 구성 요소를 준비합니다. 실제 계약·재무 문서와 판매 관측을 사용하며, 질의·도구 선택에는 공개된 사람 역할극 및 crowd 대화를 사용합니다. 출처가 다른 자료를 한 기업의 사건으로 결합하거나 없는 발주 정답을 생성하지 않습니다.
-
-| 원천 | 준비 건수 | 역할과 원래 채점 표적 |
-|---|---:|---|
-| CUAD 공급·제조·유통·구매 계약 | 450 / 계약 75개 | 기간·가격 제한·최소 구매·수량·보증 조건의 근거와 미기재 |
-| ContractNLI NDA | 360 / 계약 60개 | 함의·모순·미기재와 근거; 공급 조건 자료는 아님 |
-| OR-ShARC | 240 / 규칙 묶음 60개 | 공통 규칙 651개에서 조회한 뒤 yes/no 또는 추가 질문 |
-| ABCD | 462 / 대화 80개 | 전체 정책과 관측 대화에서 발화/도구 선택; 실제 고객 로그가 아닌 사람 역할극 |
-| TAT-QA | 240 / 문서 context 60개 | 표·문장 계산 및 단위·scale |
-| FreshRetailNet | 50개 시계열 | 과거 60일 → 미래 7일 관측 판매; 품절·비품절 오차를 따로 표시 |
-
-```sh
-uv run newsvendor prepare-suite
-uv run newsvendor check-suite
-uv run newsvendor retrieve-suite --query "electricity supplier help guarantee credit" --limit 5
-uv run newsvendor score-suite --predictions predictions.jsonl --split test
-```
-
-공통 입력은 `newsvendor.suite.public_input(row)`로 얻습니다. 영어 request, 원문 documents, tables, 관측 history·sales, 도구 목록만 반환합니다. 정답·의도·근거 주석·미래 대화·정답 규칙 ID는 제외합니다. OR-ShARC의 올바른 문서는 입력에 미리 넣지 않고 공통 조회 도구로 찾습니다. ABCD에는 현재 정답 workflow를 선택해서 주는 대신 전체 정책을 제공합니다.
-
-예측 JSONL은 `{"id":"<case id>","prediction":{"action":"answer","answer":12,"scale":"million"}}` 형식입니다. 행동은 `answer/ask/speak/call_tool/abstain`이며 근거는 `evidence:[{"document":"contract","start":0,"end":10}]`, 도구는 `tool`과 순서 있는 `arguments`, 조회 문서는 `retrieved`로 기록합니다. 학습은 Train/Dev 원래 주석만 읽고, Test 정답은 독립 채점기만 읽습니다. `native_inputs.py`가 주석 없는 원문 fragment·계산 후보를 만들고, `native_model.py`가 기존 PyTorch head를 원래 과제의 근거·상태·행동·계산·판매 예측에 적합합니다.
-
-가공 입력·정답·조회 collection·manifest는 `data/processed/complementary/`에, 원시 응답은 `data/raw/complementary/`에 저장합니다. 같은 계약·규칙 page/tree·대화·매장·상품을 연결하고, 동일 입력과 수치 정규화 문서 및 유사 template를 묶어 60/20/20%로 분할합니다. 이 실행은 Train/Dev/Test 1,074/362/366건, 378개 출처 묶음입니다. TAT-QA는 전체 보고서 식별자가 없어 context 수준 분할이고, OR-ShARC의 주석 없는 조회 collection은 모든 방법에 공통으로 공개됩니다.
-
-각 구성 요소의 점수와 묶음별 평균을 따로 보존합니다. 누락 예측은 분류 분모에 남고, 불완전한 판매 예측은 비교 가능 결과로 인정하지 않습니다. 기록된 질문·발화의 문구 유사도는 참고 지표입니다. 인과적 행동 가치·발주 손실·잠재수요는 이 공개 자료의 정답이 아니므로 해당 학습 표적은 만들지 않습니다. 준비 snapshot은 [manifest](cases/complementary/manifest.json)에 기록합니다.
-
-CPU에서 5개 seed의 9개 head 학습과 Test 366건 평가를 실행했습니다. [가중치와 원시 결과](models/native/)를 커밋에 포함합니다. 초기 Test를 개발 중 확인했으므로 확증 실험이 아닌 탐색적 adapter 결과입니다.
-
-| 원래 과제 지표 | 5개 seed 평균 |
-|---|---:|
-| CUAD 상태와 근거 결합 점수 | 0.527 |
-| ContractNLI 상태 정확도 / 상태와 근거 결합 점수 | 0.578 / 0.227 |
-| OR-ShARC 의사결정 정확도 | 0.558 |
-| ABCD 도구 선택 정확도 / 관측 인자까지 정확 | 0.246 / 0.000 |
-| TAT-QA 답과 scale 모두 정확 | 0.017 |
-| FreshRetail 비품절 관측 판매 MAE | 0.509 |
-
-ABCD는 발화 여부와 조건부 도구 선택을 분리했습니다. CPU 인자 추출은 제한된 공개 문법만 처리합니다. TAT-QA 계산 후보에 Train 정답 144건 중 50건만 포함되어 후보 생성과 선택 양쪽의 제약이 남습니다. 이 결과로 모델 우위를 주장하지 않습니다. GPU 실행은 같은 Qwen 7B를 사용해 typed·agent와 학습형 선택 후 인자/질문을 표현하는 조건을 측정하며, 선택된 도구·상태·근거·계산 값은 언어 helper가 바꾸지 못합니다.
-
-## 연결된 주문 사례와 남은 GPU 실행
-
-[τ²-bench retail](https://github.com/sierra-research/tau2-bench/tree/5bfa7e37b36656b37dc6d022156be6563c1007f3/data/tau2/domains/retail)의 영어 주문 운영 사례 114건, 고객 500명·주문 1,000건·상품 종류 50개의 연결 DB와 원래 정책/도구를 확보했습니다. 모두 모의 업무 자료이며 실제 발주·고객 로그가 아닙니다. 공식 Train/Test에는 고객 22명이 겹쳐 고객 묶음 53개로 다시 분할했습니다: Train/Dev/Test 61/28/25건. 공통 상품 catalog는 모든 방법에 공개됩니다.
-
-사용자 목표는 응답 환경만 읽고 비교 모델은 실제 생성된 첫 발화·이후 관측·정책·조회 도구만 받습니다. 각 방법은 새 격리 DB에서 시작합니다. 최종 DB 일치, 미승인/다른 고객 변경, 거래 원장 차이, 상호작용·추론 비용을 따로 채점합니다. 조회 과제는 DB 무변경만으로 성공 처리하지 않고 실제 목표 응답과 필수 이관도 확인합니다. 원장 차이는 모의 USD 차이이며 경제적 행동 가치나 실제 발주 손실이 아닙니다. 원래 evaluator처럼 실패한 참고 조회 뒤에도 재생을 계속하며 경고를 보존합니다. 참고 변경 자체가 실패하는 `orders-105`는 제거하지 않고 주석 모호성을 표시합니다.
-
-```sh
-# CPU 환경: 준비된 정확한 snapshot 복원과 재학습
-uv run newsvendor restore-eval
-uv run newsvendor train-native
-uv run newsvendor check-orders
-
-# CUDA 머신, Python 3.12: Git에 포함된 데이터와 가중치로 남은 비교 실행
-uv run --no-project scripts/run_gpu.py --stage all
-# 개별 실행: --stage components 또는 --stage orders
-```
-
-프로젝트의 `uv sync`는 Linux에서 CPU PyTorch를 설치하므로 GPU 실행에는 위의 별도 script 환경을 사용합니다. 24GB 이상 GPU를 권장합니다. Qwen2.5-7B-Instruct revision `a09a35458c702b33eeacc393d103063234e8bc28`을 고정하고 typed·agent와 학습형 출력 helper에 동일 가중치를 사용합니다. CUDA가 없으면 모델을 내려받기 전에 중단합니다. 토큰·도구·턴 상한과 원시 응답/cache를 보존하고 입력을 조용히 자르지 않습니다. `--max-calls N`으로 새 생성 수를 제한하고 같은 명령으로 cache에서 이어갈 수 있습니다.
-
-구성 요소 비교는 학습 seed를 사례 안에서 먼저 평균한 뒤 출처 묶음별 paired bootstrap을 수행합니다. 주문 비교는 seed 42의 ABCD head를 재학습 없이 전이한 진단입니다. Typed·agent 및 주문 대화의 실제 GPU 결과는 아직 실행하지 않았습니다. 결과는 `results/native/{seed}/gpu`, `results/native/{typed,agent}`와 `results/orders/`에 저장합니다. 별도 원시 다운로드 없이 실행할 수 있도록 [평가 snapshot](cases/evaluation.json)을 포함하며 각 원천의 라이선스를 유지합니다.
-
-## 실험 범위
-
-현재 실행은 제한된 영어 업무 문서와 유한 모수 후보를 사용하는 **통제 실험**입니다. `c,p,v,b`의 숫자 근거와 `F`의 관측 조건을 다루며, 임의의 한국어 문서·다기간 재고·잠재수요 복원을 구현한 결과는 아닙니다. 자동 주석의 사람 검토 수는 0으로 기록합니다.
-
-TAT-QA 200건, ShARC 200건, FreshRetailNet 50개 시계열을 준비합니다. 외부 public 진단은 각각 제한된 수치 후보 선택과 추가 질문 필요성 분류입니다. business 진단은 공통 규칙 모수 구성 위에서 기존 예측기의 직접 행동 선택을 검사합니다. **기존 예측기로 construction을 구성한 뒤 동일 학습 표적으로 value head를 적합하는 비교**는 `benchmark`로 실행합니다. 외부 모델을 확정한 뒤 cache·예측·API 비용을 실제 결과로 채워야 합니다.
-
-원문 14개 개발 사례는 조회/사실 질문/선호 선택, 계약 충돌, 검열 판매, 마감, MOQ·반품 한도·다기간 조건을 검사합니다. 구성 자료 13묶음에 공통 template가 하나이며 사람 검토는 0입니다. 학습형 router의 raw 학습/평가 연결과 실제 조직 자료의 source/template/기간 분할은 아직 필요합니다. 준비 상태는 `configs/workload-v2.json`에 명시합니다.
-
-제거 실험은 현재 추론 시 진단이며 재학습한 ablation 결과가 아닙니다. 본 연구의 효과를 주장하기 전에 [실험 명세](docs/protocol.md)의 사람 검토와 비교 조건을 충족해야 합니다.
-
-[검증 기록](docs/verification.md) · [데이터·모델 출처](docs/sources.md)
+[데이터·모델 출처](docs/sources.md) · [실험 명세](docs/protocol.md) · [프로포절](docs/proposal.docx)
