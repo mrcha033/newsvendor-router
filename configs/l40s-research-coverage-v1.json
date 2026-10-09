@@ -1,0 +1,128 @@
+{
+  "dataset": "data/processed/core-tatqa-train-v1",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-research-coverage-v1/base/42",
+  "seed": 42,
+  "seeds": [
+    42
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25,
+    "scopePrefix": false
+  },
+  "training": {
+    "epochs": 2,
+    "encoderLr": 1e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 512,
+    "checkpointEvery": 16384,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "research",
+    "validateInitial": true,
+    "validationEvery": 0,
+    "patience": 0,
+    "distillWeight": 4.0
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 30,
+    "noise": 0.0,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 2,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed",
+    "selection": "benchmark_normalized",
+    "responseSamples": 1
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "demandCheckpoint": null,
+  "documentComponents": [
+    "cuad",
+    "contractnli",
+    "orsharc",
+    "tatqa"
+  ],
+  "evaluateInitial": true,
+  "originalResearch": true,
+  "constructionReplay": [
+    "results/l40s-research-state-replay-v2/construction-replay.jsonl",
+    "results/parameter-contrasts-v2/fit.jsonl"
+  ],
+  "coverageStudy": {
+    "scope": "Restore all source-separated public Train annotations during full-encoder financial parameter construction. Every research and public Train case occurs once per epoch; no repeated small public subset.",
+    "testUsed": false,
+    "epochs": 2,
+    "seed": 42,
+    "teacher": "Same immutable forecast-v1 parent, public Train inputs only, distillWeight 4.0 fixed",
+    "comparison": "Historical retention-v1 has the same parent, encoder, head, learning rates, epochs, research cases and frozen GRU. Expanded public coverage and number of optimizer steps change together; this is not an isolated equal-compute data-only experiment.",
+    "selection": "Unchanged original research Dev construction gate; value training uses original benchmark-normalized Dev. Full adoption also requires public extraction retention, necessary manager requests, recovery, evidence and actual ordering loss.",
+    "demand": "Frozen shared GRU. No new claim on demand calibration.",
+    "storage": "Preserve all language epoch weights and final language optimizer plus every value-head candidate; archive with verified hashes."
+  }
+}
