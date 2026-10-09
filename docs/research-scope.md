@@ -8,7 +8,9 @@
 
 이어 encoder까지 추가 학습하면서 모수 학습과 실제 추출의 query 입력 불일치를 수정했다. 같은 학습 조건에서 Dev 상태 오류가 46개에서 14개로 줄었지만 부모의 12개보다 많아 두 후보 모두 거부됐다. 복원 후 정책 학습도 개선하지 못했으며 현재 모델 가중치는 유지한다. [입력 수정과 두 L40S 실행](constructor-training.md)
 
-문서의 SKU·기간·신구 버전을 바꾸는 Train 진단에서는 별도 약점이 확인됐다. 추가 학습 후보의 금액 오류는 쉬운 표식이 있는 조건에서 0개였으나, 같은 문서의 다른 SKU·기간을 정상 형식으로 바꾼 552개 상태에서는 기존 모델의 726개보다 많은 1,450개였다. 원래 생성 Dev 총손실·판매 요청·공개 문서 성능도 일부 악화해 채택하지 않았다. 자료 생성 규칙과 상태 점수가 금액·근거 하락을 상쇄하던 checkpoint 선택 기준을 수정했으며, 수정 후 재학습은 아직 하지 않았다. [형식 의존 진단과 후보 채택 실패](parameter-contrasts.md)
+문서의 SKU·기간·신구 버전을 바꾸는 진단에서 쉬운 형식 표식에 의존하던 약점을 확인해 자료 생성·checkpoint 선택을 수정했다. 이후 정상 형식 자료로 두 조건을 L40S에서 각각 2 epochs 학습했다. SKU·기간을 query 앞에 명시한 후보는 변형 학습에서 제외한 Train 출처의 금액 오류를 5,036개 중 1,902개에서 54개로 줄였다. 그러나 원래 생성 Dev 손실은 147.6813에서 148.3549로 늘고 TAT-QA는 16/48에서 10/48로 낮아져 채택하지 않았다. 명시 없이 같은 자료만 학습한 후보도 판매 질문 20건을 놓쳤다. 모든 후보·실패·원시 예측을 보존하며 현재 가중치는 유지한다. [적용 범위 수정과 두 조건의 전체 결과](parameter-contrasts.md)
+
+현재 선택한 ModernBERT·head·GRU의 전체 추론 가중치와 토크나이저도 공개했다. 원래 학습 자료 없이 로드하며, CPU·L40S에서 기존 checkpoint와 관측 예제 8개의 출력이 장치별로 일치했다. 이는 추론 재현 검사이고 확장 Train과 optimizer를 포함한 완전한 학습 배포는 아니다. [가중치·실행 명령·검증 범위](model-bundle.md)
 
 최신 Dev 선택에서는 문서·행동 가중치를 고정하고 수요 GRU를 교체해 통제 retail 총손실이 **44.3274 → 24.3925**로 줄었다. 모수·근거 100%, 불필요한 요청·잘못된 발주 진행 0건을 유지했으며 `no_value`·고정 질문도 같은 손실이었다. 정확한 손실은 고유 판매 기간 5개에 한정한다. [최신 학습 횟수 선택과 통합 비교](demand-selection.md)
 
@@ -226,6 +228,6 @@ Train 자기 상태 928개의 입력을 감사해, 정렬한 상태 JSON이 128-
 
 공개 snapshot과 기존 연구 작업 폴더는 retail 요청 문구와 관련 manifest·입력 hash가 다르다. 50개 판매 이력, 정답, family와 분할은 모두 같고 다른 문서 과제도 같다. 기존 checkpoint의 데이터 신원 검사는 이 차이를 거부하며 이를 우회하지 않는다. [대조 기록](evidence/research-snapshot-audit.json)
 
-새 clone용 경로는 공개 snapshot에서 GRU를 새로 학습하고, 고정 revision의 ModernBERT와 새로운 기능 head에 연결한다. 과거 checkpoint를 내려받아 같은 수치를 재평가하는 경로와는 구분한다. README에는 현재 연구 경로를 두고 native-v3·Qwen·`familyProbabilities` 설명은 [과거 실행 기록](native-history.md)으로 옮겼다. CI에는 snapshot 복원·출처 검사와 연구 입력의 `check` 단계를 추가했다. 과거 ModernBERT checkpoint와 확장 자료 전체의 공개 배포는 아직 완료하지 않았다.
+새 clone용 학습 경로는 공개 snapshot에서 GRU를 새로 학습하고, 고정 revision의 ModernBERT와 새로운 기능 head에 연결한다. README에는 현재 연구 경로를 두고 native-v3·Qwen·`familyProbabilities` 설명은 [과거 실행 기록](native-history.md)으로 옮겼다. CI에는 snapshot 복원·출처 검사와 연구 입력의 `check` 단계를 추가했다. 이후 선택한 ModernBERT 전체 추론 가중치를 [별도 묶음](model-bundle.md)으로 공개했으며, 확장 Train 전체와 과거 optimizer 배포는 아직 제공하지 않는다.
 
 별도 source export에서 공개 snapshot 복원, 연구 자료 검사, CPU GRU의 전체 cross-fitting 학습(205.78초), 해당 GRU를 사전학습 ModernBERT에 연결한 forward·backward·optimizer step을 확인했다. Encoder gradient와 실제 가중치 변경을 대조했다. 이 검증은 설치된 Python 환경과 공개 사전학습 모델 cache를 재사용했으며 과거 연구 checkpoint는 요구하지 않았다. 완전한 cold-start 문서·정책 재학습을 반복한 것은 아니다. 같은 소스의 테스트 193개, Ruff lint·format, 30개 수치 smoke가 통과했다. [재현 경로 검증](evidence/research-reproduction-checks.json)

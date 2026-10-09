@@ -1,0 +1,43 @@
+{
+  "models": {
+    "parent": {
+      "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt"
+    },
+    "control_selected": {
+      "checkpoint": "results/l40s-research-scope-v1/control/42/common.pt"
+    },
+    "control_last": {
+      "checkpoint": "results/l40s-research-scope-v1/control/42/common.pt",
+      "weights": "results/l40s-research-scope-v1/control/42/language-progress.pt"
+    },
+    "prefix_first": {
+      "checkpoint": "results/l40s-research-scope-v1/prefix/42/common.pt",
+      "weights": "/dev/shm/newsvendor-scope-prefix-epoch1.pt"
+    },
+    "prefix_selected": {
+      "checkpoint": "results/l40s-research-scope-v1/prefix/42/common.pt"
+    },
+    "prefix_last": {
+      "checkpoint": "results/l40s-research-scope-v1/prefix/42/common.pt",
+      "weights": "results/l40s-research-scope-v1/prefix/42/language-progress.pt"
+    }
+  },
+  "manifest": "results/parameter-contrasts-v2/manifest.json",
+  "output": "results/l40s-parameter-scope-held-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "524d2b99db7cdd1bb990fa59bd4e892f7e4d7d2d919b96c46a42a7b2336efca0",
+  "files": {
+    "/dev/shm/newsvendor-scope-prefix-epoch1.pt": "caf5ee1ed7e6fb8dde164ea1d42492ab1f797210c7a279b4b9521fc9087d1371",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/l40s-research-scope-v1/control/42/common.pt": "3ca9b7763a0d0607862bcff31b930a95e9925edb91473007108b08b5ed247c3f",
+    "results/l40s-research-scope-v1/control/42/language-progress.pt": "0eb320149a7f13b781d5bb232a18e7b014c81d7966f945737282748c18b50a67",
+    "results/l40s-research-scope-v1/prefix/42/common.pt": "dd00cc7e6372a7da50870594a0b4faae91156d5a22661cf9a5c4774b9cd49675",
+    "results/l40s-research-scope-v1/prefix/42/language-progress.pt": "8f7dd7b786f3e620f7512b20269ab5809c41fc5435843e06e3e15ee4009d0a2e",
+    "results/parameter-contrasts-v2/held.jsonl": "d0413045ec37e38061d70080db40093c426d69462590249aaa4625760b3c879f",
+    "results/parameter-contrasts-v2/manifest.json": "75e94b0f07cdeeecfb3cc48f566e3566bf56d931e03bc06512cf4c49c5372f2c",
+    "scripts/evaluate_parameter_contrasts.py": "91c6fbabcc8674b921538f93f4ab9c162670d940b5de384624ce155059f3d6c5"
+  },
+  "testUsed": false,
+  "trainingPerformed": false,
+  "scope": "Evaluate all registered selected/last candidates and the preserved rejected prefix epoch on augmentation-held Train sources. Distinguish selected weights from actually trained candidates; no independent-source or organizational effectiveness claim."
+}

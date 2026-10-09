@@ -67,6 +67,6 @@ uv run --no-project scripts/reproduce_retail_forecast.py \
   --device cuda --output results/reproduce-retail-forecast
 ```
 
-고정 CUDA PyTorch 환경과 등록된 L40S를 사용한다. CPU도 실행할 수 있지만 원래 L40S 수치와의 엄격한 일치 검사는 실패했다. 종류 선택은 모두 같았으나 `F`의 최대 절대 차이는 0.0246682, 발주량은 0.0080205였다. 허용 오차를 넓혀 통과시키지 않았으며 두 장비의 원시 예측과 실패 기록을 함께 보존한다. 이 검증은 작은 수요 경로의 재현이며 미공개 전체 ModernBERT 모델의 순차 질문·발주 재현까지 제공한다는 뜻은 아니다. [재현 검사와 원시 기록](evidence/research-retail-forecast-reproduction.json)
+고정 CUDA PyTorch 환경과 등록된 L40S를 사용한다. CPU도 실행할 수 있지만 원래 L40S 수치와의 엄격한 일치 검사는 실패했다. 종류 선택은 모두 같았으나 `F`의 최대 절대 차이는 0.0246682, 발주량은 0.0080205였다. 허용 오차를 넓혀 통과시키지 않았으며 두 장비의 원시 예측과 실패 기록을 함께 보존한다. 이 검증은 작은 수요 경로의 재현이다. 이후 전체 ModernBERT 모델도 [별도 추론 묶음](model-bundle.md)으로 공개했지만, 위 1,782개 일치 결과를 전체 순차 질문·발주 재현 결과로 바꾸어 해석하지 않는다. [재현 검사와 원시 기록](evidence/research-retail-forecast-reproduction.json)
 
 검증에는 이미 설치된 고정 Python 환경을 재사용했다. 빈 장비에서의 CUDA 패키지 설치까지 반복한 검증은 아니다.

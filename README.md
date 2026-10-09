@@ -40,6 +40,8 @@ GRU 교체 전 replay-v1을 고정한 **생성 Test 120건의 총손실은 243.6
 
 ## 새 clone에서 실행
 
+현재 선택 모델의 전체 추론 가중치는 [공개 release](https://github.com/mrcha033/newsvendor-router/releases/tag/research-forecast-v1)에서 받을 수 있습니다. encoder·head·GRU·토크나이저가 함께 들어 있으며 원래 학습 자료 없이 CPU 또는 CUDA로 실행합니다. [다운로드·hash 검증·추론 명령](docs/model-bundle.md)
+
 Python 3.12와 uv를 사용합니다. 아래 경로는 저장소에 포함된 자료와 고정 revision의 공개 ModernBERT로 **새 수요 GRU부터 학습**합니다. 이전 로컬 checkpoint는 필요하지 않습니다. 기존 실험의 가중치를 복원하는 명령은 아니므로 과거 표의 수치와 동일하다고 보장하지 않습니다.
 
 ```sh
@@ -81,14 +83,14 @@ uv run --no-project scripts/run_research.py \
 | --- | --- |
 | 원본 상보적 과제·주문 과제 | [압축 snapshot](cases/evaluation.tar.xz), [파일 hash·revision·라이선스](cases/evaluation.json); `restore-eval`로 복원 |
 | 원래 통제 시나리오 | [생성 설정](configs/full.json)과 [생성 코드](src/newsvendor/corpus.py); 600건, 출처 family 120개 |
-| 선택한 ModernBERT 통합 모델 | 학습·추론 코드, 설정, 부모·선택 checkpoint hash 제공. 전체 checkpoint는 아직 공개되지 않음 |
+| 선택한 ModernBERT 통합 모델 | [전체 추론 가중치·토크나이저·설정·파일 hash와 실행 명령](docs/model-bundle.md). Optimizer와 확장 Train 전체는 미포함 |
 | 선택한 수요 GRU와 반복 실험 | [세 seed의 실제 가중치·모든 내부 검증 손실·Dev 예측](docs/evidence/research-selection-results.json)을 압축 artifact로 제공 |
 | 새 출처 27개의 고정 평가 | [입력·분리된 결과 주석·모든 예측과 순차 경로](docs/evidence/research-retail-holdout-results.json) 공개. 전체 ModernBERT 없이 작은 GRU의 예측을 [L40S에서 정확히 재현](docs/retail-holdout.md#공개-artifact만으로-수요-예측-재계산)했으며 CPU 수치 차이도 기록 |
 | 확장 문서·판매 자료 | [문서 확장 기록](docs/evidence/research-document-expansion.json), [판매 확장 기록](docs/evidence/research-retail-expansion.json), [분할 검사](docs/evidence/research-expansion-audit.json). 기본 snapshot에는 미포함 |
 | 실험 요약과 검증 | [연구 범위](docs/research-scope.md), [추적되는 evidence JSON](docs/evidence/). JSON 안의 `results/` 경로는 로컬 원시 파일의 위치와 hash이며 다운로드 링크가 아님 |
 | 과거 native-v3 | [CPU 가중치와 원시 결과](models/native/), [이전 실행 안내](docs/native-history.md). 현재 ModernBERT의 가중치가 아님 |
 
-따라서 새 학습은 저장소만으로 시작할 수 있지만, **기존 ModernBERT 결과의 정확한 checkpoint 재평가와 확장 자료 실험의 완전 재현은 아직 제공하지 못합니다.** 주 결과의 작은 표본, 생성된 문서 조건, 미공개 원시 파일도 결과의 한계로 남깁니다. 공개 snapshot과 기존 작업 자료는 retail 요청 문구·manifest가 달라 이전 checkpoint 신원 검사에서 거부되며, 판매 관측·정답·분할이 같다는 [대조 기록](docs/evidence/research-snapshot-audit.json)을 남겼습니다. 같은 head의 base/large 비교는 과거 고정 실험 기록이며, 새 코드로 실행한 수치로 덮어쓰지 않습니다.
+새 학습은 공개 snapshot으로 시작할 수 있고, 선택한 ModernBERT 전체 가중치로 별도 추론도 실행할 수 있습니다. **확장 Train 원본·optimizer를 포함한 과거 학습의 완전 재현과 모든 과거 표의 자동 재평가는 아직 제공하지 못합니다.** 주 결과의 작은 표본과 생성된 문서 조건도 한계로 남깁니다. 공개 snapshot과 기존 작업 자료는 retail 요청 문구·manifest가 달라 기존 학습 checkpoint loader의 신원 검사에서 거부되며, 판매 관측·정답·분할이 같다는 [대조 기록](docs/evidence/research-snapshot-audit.json)을 남겼습니다. 별도 추론 묶음은 학습 자료를 요구하지 않습니다. 같은 head의 base/large 비교는 과거 고정 실험 기록이며, 새 코드로 실행한 수치로 덮어쓰지 않습니다.
 
 ## 검증과 이전 실험
 

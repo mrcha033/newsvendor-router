@@ -63,7 +63,7 @@ class ResearchRouter:
     @torch.inference_mode()
     def construct(self, value):
         self.model.eval()
-        observed = research_input(value)
+        observed = research_input(value, self.config)
         key = digest(
             [observed, value["observations"], value.get("historySource"), value.get("memory")]
         )
@@ -174,7 +174,7 @@ class ResearchRouter:
         if "missing" in state:
             summary["missing"] = state["missing"]
         view = prepare(
-            research_input(value),
+            research_input(value, self.config),
             self.tokenizer,
             self.config,
             fields=FIELDS,

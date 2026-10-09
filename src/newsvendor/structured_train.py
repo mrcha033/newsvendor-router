@@ -247,7 +247,7 @@ def language_view(case, tokenizer, config, labels, collection, round=0, state=No
     mode, row = case
     if mode == "research":
         view = prepare(
-            research_input(row["input"]),
+            research_input(row["input"], config["encoder"]),
             tokenizer,
             config["encoder"],
             fields=FIELDS,

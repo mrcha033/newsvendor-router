@@ -4157,12 +4157,44 @@ def test_research_cases_use_actual_bounded_replies_and_reject_test():
         research_cases([{**episode, "split": "test"}])
 
 
+def test_task_scope_survives_long_state_and_history_without_changing_pointer_sources(
+    tokenizer, settings
+):
+    episode = corpus.generate(read("configs/full.json"))[0]
+    value = copy.deepcopy(episode["input"])
+    value["task"].update(sku="SKU-001", period="2024-05-09/2024-05-15")
+    tokenizer.add_tokens([value["task"]["sku"], value["task"]["period"]])
+    value["history"] = [{"action": "request_b", "text": "shipping " * 200}]
+    baseline = research_input(value)
+    assert baseline == research_input(value, {})
+    configured = settings | {"scopePrefix": True}
+    scoped = research_input(value, configured)
+    assert scoped.pop("taskScope") == {k: value["task"][k] for k in ("sku", "period")}
+    assert scoped == baseline
+    scoped = research_input(value, configured)
+    state = {"description": "shipping " * 200}
+    original = prepare(baseline, tokenizer, settings, fields=FIELDS, state=state)
+    changed = prepare(scoped, tokenizer, configured, fields=FIELDS, state=state)
+    scope_ids = [tokenizer.convert_tokens_to_ids(value["task"][k]) for k in ("sku", "period")]
+    before = original["batch"]["input_ids"][0, 1 : 1 + settings["queryTokens"]].tolist()
+    after = changed["batch"]["input_ids"][0, 1 : 1 + settings["queryTokens"]].tolist()
+    assert all(token not in before for token in scope_ids)
+    assert all(token in after for token in scope_ids)
+    assert changed["locations"] == original["locations"]
+    hidden = copy.deepcopy(value)
+    hidden["task"].update(rho={"b": 0.99}, partial={"b": 0.01})
+    hidden["gold"] = {"theta": {"b": 9999}}
+    assert research_input(hidden, configured) == scoped
+
+
+@pytest.mark.parametrize("scope_prefix", [False, True])
 def test_research_field_training_matches_constructor_inputs(
-    tokenizer, settings, model, monkeypatch
+    tokenizer, settings, model, monkeypatch, scope_prefix
 ):
     from newsvendor import structured_rollout
     from newsvendor.structured_train import language_view
 
+    settings["scopePrefix"] = scope_prefix
     episode = next(
         e
         for e in corpus.generate(read("configs/full.json"))
@@ -4211,3 +4243,74 @@ def test_policy_selection_keeps_benchmarks_separate_and_is_unit_invariant():
     assert selection_score(episodes, measured, "benchmark_normalized")[0] == score
     with pytest.raises(ValueError, match="Mixed benchmarks"):
         selection_score(episodes, measured)
+
+
+def test_portable_bundle_loads_exactly_without_training_data_or_network(
+    model, tokenizer, settings, tmp_path, monkeypatch
+):
+    from newsvendor import bundle, structured_train
+
+    model.eval()
+    settings["attention"] = "eager"
+    checkpoint = tmp_path / "original.pt"
+    torch.save(model.state_dict(), checkpoint)
+    directory = tmp_path / "bundle"
+    config = {"encoder": settings, "noValue": False, "dataset": "absent-training-data"}
+    manifest = bundle.export_bundle(
+        directory, model, tokenizer, config, {"checkpointHash": bundle.file_hash(checkpoint)}
+    )
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Inference must use only local bundle assets")
+
+    monkeypatch.setattr(structured_train, "dataset_hashes", forbidden)
+    monkeypatch.setattr(structured_train, "load_backbone", forbidden)
+    monkeypatch.setattr("socket.create_connection", forbidden)
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    monkeypatch.chdir(empty)
+    restored, other_tokenizer, other_config, observed = bundle.load_bundle(directory)
+    assert observed == manifest and set(other_config) == {"encoder", "noValue"}
+    assert all(torch.equal(v, restored.state_dict()[k]) for k, v in model.state_dict().items())
+    value = payload(request="purchase cost 10", documents=[], tables=[], tools=[], history=[])
+    actions = [{"id": "hold", "text": TEXT["hold"]}]
+    first = prepare(value, tokenizer, settings, fields=FIELDS, actions=actions)
+    second = prepare(
+        value, other_tokenizer, other_config["encoder"], fields=FIELDS, actions=actions
+    )
+    assert torch.equal(first["batch"]["input_ids"], second["batch"]["input_ids"])
+    with torch.inference_mode():
+        left, right = model(first), restored(second)
+    for key, tensor in left.items():
+        if isinstance(tensor, torch.Tensor):
+            assert torch.equal(tensor, right[key]), key
+
+
+@pytest.mark.parametrize("asset", ["model.pt", "encoder/tokenizer.json"])
+def test_portable_bundle_rejects_modified_assets_before_loading(
+    model, tokenizer, settings, tmp_path, asset
+):
+    from newsvendor import bundle
+
+    directory = tmp_path / "bundle"
+    bundle.export_bundle(
+        directory, model, tokenizer, {"encoder": settings}, {"checkpointHash": "fixture"}
+    )
+    path = directory / asset
+    changed = bytearray(path.read_bytes())
+    changed[len(changed) // 2] ^= 1
+    path.write_bytes(changed)
+    with pytest.raises(ValueError, match="file hash changed"):
+        bundle.load_bundle(directory)
+
+
+def test_portable_bundle_rejects_extra_tokenizer_assets(model, tokenizer, settings, tmp_path):
+    from newsvendor import bundle
+
+    directory = tmp_path / "bundle"
+    bundle.export_bundle(
+        directory, model, tokenizer, {"encoder": settings}, {"checkpointHash": "fixture"}
+    )
+    (directory / "encoder/added_tokens.json").write_text('{"changed": 999}')
+    with pytest.raises(ValueError, match="Unregistered bundle files"):
+        bundle.load_bundle(directory)

@@ -120,7 +120,7 @@ def schemas(tools, definitions=None, positional=False):
     return fields
 
 
-def research_input(value):
+def research_input(value, config=None):
     """Only currently observed research inputs; environment truth is not accepted here."""
     docs = []
     for doc in value["docs"]:
@@ -151,7 +151,7 @@ def research_input(value):
             "text": json.dumps(history, sort_keys=True),
         }
     )
-    return {
+    result = {
         "request": "Construct purchase cost, selling price, net refund, manager preference and "
         "demand; choose the next action. "
         + json.dumps(
@@ -180,6 +180,9 @@ def research_input(value):
         ],
         "observations": [],
     }
+    if (config or {}).get("scopePrefix"):
+        result["taskScope"] = {k: task[k] for k in ("sku", "period")}
+    return result
 
 
 def sources(value):
@@ -373,6 +376,9 @@ def prepare(
     # before the recent dialogue can evict the user's latest words from the prefix.
     summary = {k: v for k, v in (state or {}).items() if k not in ("memory", "procedureIds")}
     context = json.dumps(summary, sort_keys=True) + "\n" + recent + "\n" + value["request"]
+    if config.get("scopePrefix") and value.get("taskScope"):
+        scope = value["taskScope"]
+        context = f"Task sku {scope['sku']}; period {scope['period']}.\n" + context
     context_ids = query_tokens(tokenizer, context)
     max_length = config["maxLength"]
     prefix = context_ids[: min(config.get("queryTokens", 128), max_length // 3)]
