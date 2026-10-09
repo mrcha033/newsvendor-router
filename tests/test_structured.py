@@ -3870,6 +3870,66 @@ def test_numeric_state_survives_prefix_truncation_and_cached_value_training(
             assert torch.equal(old, current.state_dict()[name])
 
 
+@pytest.mark.parametrize("numeric_state", [False, True])
+@pytest.mark.parametrize("batch_fusion", [False, True])
+def test_action_fp32_preserves_numeric_inputs_and_matches_cached_training(
+    tokenizer, settings, model, numeric_state, batch_fusion
+):
+    from newsvendor.structured_rollout import ResearchRouter
+    from newsvendor.structured_train import import_core
+    from newsvendor.structured_value import STATE_FEATURES, constrain
+
+    config = {
+        **settings,
+        "queryTokens": 1,
+        "numericState": numeric_state,
+        "actionPrecision": "float32",
+        "exactActionCosts": True,
+    }
+    current = Router(copy.deepcopy(model.encoder), config).eval()
+    import_core(current, model.state_dict())
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    router = ResearchRouter(current, tokenizer, config)
+    before = router.view(episode["input"], reference(episode["input"]))
+    after = copy.deepcopy(before)
+    column = STATE_FEATURES.index("p_value")
+    if numeric_state:
+        for old, new in zip(before["economicFeatures"], after["economicFeatures"], strict=True):
+            old[column], new[column] = 0.5, 0.501
+        assert torch.tensor(0.5).bfloat16() == torch.tensor(0.501).bfloat16()
+        with torch.no_grad():
+            current.heads["value"].layers[0].weight[:, 256 + column] = 1
+    views = [before, after]
+    encoded = [(t.bfloat16(), q.bfloat16()) for t, q in current.encode_batch(views)]
+    with torch.autocast("cpu", dtype=torch.bfloat16):
+        outputs = (
+            current.finish_batch(views, encoded)
+            if batch_fusion
+            else [current.finish(v, *e) for v, e in zip(views, encoded, strict=True)]
+        )
+    for view, out in zip(views, outputs, strict=True):
+        assert out["actionState"].dtype == out["recovery"].dtype == torch.float32
+        assert out["type"].dtype == torch.bfloat16
+        cached = constrain(
+            torch.nn.functional.softplus(current.heads["value"](out["actionState"])),
+            view["valueCosts"],
+        )
+        torch.testing.assert_close(out["value"], cached, rtol=0, atol=0)
+        recovery = current.heads["recovery"](out["actionState"]).flatten()
+        allowed = torch.tensor(view["allowedActions"])
+        torch.testing.assert_close(out["recovery"], recovery.masked_fill(~allowed, -1e9))
+        if numeric_state:
+            torch.testing.assert_close(
+                out["actionState"][:, 256:], torch.tensor(view["economicFeatures"]), rtol=0, atol=0
+            )
+    if numeric_state:
+        assert not torch.equal(outputs[0]["value"], outputs[1]["value"])
+    sum(out["value"].sum() for out in outputs).backward()
+    assert any(p.grad is not None and p.grad.abs().sum() > 0 for p in current.encoder.parameters())
+    if numeric_state:
+        assert current.heads["value"].layers[0].weight.grad[:, 256 + column].abs().sum() > 0
+
+
 def test_generated_cost_rejects_pointer_to_selling_price(tokenizer, settings, model, monkeypatch):
     from newsvendor import structured_rollout
     from newsvendor.construction import candidates

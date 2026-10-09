@@ -22,6 +22,10 @@ class Router(nn.Module):
         super().__init__()
         self.config = config
         require(
+            config.get("actionPrecision", "encoder") in ("encoder", "float32"),
+            "Unknown action-head precision",
+        )
+        require(
             not config.get("contextRerank")
             or (config.get("structuredTools") and config.get("dialogueController")),
             "Contextual reranking requires structured tools and the dialogue controller",
@@ -283,7 +287,13 @@ class Router(nn.Module):
         heads = {
             name: head(fused)
             for name, head in self.heads.items()
-            if not (self.config.get("numericState") and name in ("value", "recovery"))
+            if not (
+                name in ("value", "recovery")
+                and (
+                    self.config.get("numericState")
+                    or self.config.get("actionPrecision") == "float32"
+                )
+            )
         }
         pointers = {name: pointer(fused) for name, pointer in self.pointers.items()}
         return [
@@ -311,6 +321,9 @@ class Router(nn.Module):
             ]
         )
         fields, actions = joined[:count], joined[count : count + action_count]
+        action_fp32 = self.config.get("actionPrecision") == "float32"
+        if action_fp32:
+            actions = actions.float()
         if self.config.get("numericState"):
             numeric = actions.new_tensor(
                 view.get("economicFeatures", [[0.0] * len(STATE_FEATURES)] * action_count)
@@ -320,6 +333,12 @@ class Router(nn.Module):
         output = {}
         for name, head in self.heads.items():
             on_actions = name in ("value", "recovery")
+            if on_actions and action_fp32:
+                # Cached critic fitting uses FP32. Preserve numeric inputs before
+                # the head and use the same arithmetic during mixed-precision inference.
+                with torch.autocast(device.type, enabled=False):
+                    output[name] = head(actions)
+                continue
             if on_actions and self.config.get("numericState"):
                 output[name] = head(actions)
                 continue
