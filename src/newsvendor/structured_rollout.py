@@ -16,7 +16,14 @@ from .structured_inputs import prepare, research_input
 from .structured_model import assemble, extract
 
 FIELDS = [
-    {"id": name, "name": name, "description": description, "choices": [], "required": True, "stateRequired": True}
+    {
+        "id": name,
+        "name": name,
+        "description": description,
+        "choices": [],
+        "required": True,
+        "stateRequired": True,
+    }
     for name, description in {**SLOTS, "F": "Observed or estimated demand distribution"}.items()
 ]
 TEXT = {
@@ -41,11 +48,7 @@ class ResearchRouter:
         self.cache = {} if enabled else None
 
     def allowed(self, value, state):
-        allowed = (
-            structured_forecast.actions(value, state)
-            if "forecast" in value["task"]
-            else actions(value, state)
-        )
+        allowed = structured_forecast.actions(value, state)
         lookups = sum(h["action"] == "retrieve" for h in value["history"])
         if (
             value["remaining"] > 0
@@ -61,7 +64,9 @@ class ResearchRouter:
     def construct(self, value):
         self.model.eval()
         observed = research_input(value)
-        key = digest([observed, value["observations"], value.get("historySource"), value.get("memory")])
+        key = digest(
+            [observed, value["observations"], value.get("historySource"), value.get("memory")]
+        )
         if self.cache is not None and key in self.cache:
             return copy.deepcopy(self.cache[key])
         view = prepare(
@@ -123,10 +128,35 @@ class ResearchRouter:
             result = structured_forecast.finish(value, record, forecast, error)
         else:
             # Preserve the original generated benchmark and its loss definition.
+            structured_forecast.copy_memory(value, record)
+            structured_forecast.copy_responses(value, record)
             Fs = demand(value, record)
+            structured_forecast.resolved_fields(record, None)
+            source = record["links"].get("F")
+            evidence = (
+                [{"kind": "series", "id": source, "historyHash": digest(value["observations"])}]
+                if source == "observed-demand"
+                else [{"kind": "document", "id": source}]
+                if source is not None
+                else []
+            )
+            record["fields"][-1].update(
+                state=record["state"]["F"],
+                evidence=evidence,
+                value=Fs[0] if record["state"]["F"] == "verified" else None,
+            )
             result = finish(value, record, Fs)
+            result.update(
+                taskKey=structured_forecast.task_key(value),
+                sourceHashes={
+                    slot: digest(next(d for d in value["docs"] if d["id"] == record["links"][slot]))
+                    for slot in SLOTS
+                    if slot in record["values"]
+                },
+            )
         result["retrieval"] = {
-            "indexedChunks": view["indexedChunks"], "selectedChunks": view["selectedChunks"],
+            "indexedChunks": view["indexedChunks"],
+            "selectedChunks": view["selectedChunks"],
             "unreadChunks": max(0, view["indexedChunks"] - view["selectedChunks"]),
         }
         if self.cache is not None:
@@ -140,9 +170,7 @@ class ResearchRouter:
         }
         summary["retrievalCost"] = self.config.get("retrievalCost", 1.0)
         if state.get("forecast") is not None:
-            summary["demand"] = {
-                k: state["forecast"][k] for k in ("distribution", "period")
-            }
+            summary["demand"] = {k: state["forecast"][k] for k in ("distribution", "period")}
         if "missing" in state:
             summary["missing"] = state["missing"]
         view = prepare(
@@ -160,9 +188,13 @@ class ResearchRouter:
 
             task = value["task"]
             view["valueCosts"] = known_costs(
-                allowed, hold=task["hold"], costs=task["costs"],
-                remaining=value["remaining"], history_length=len(value["history"]),
-                deadline=task["deadline"], retrieval_cost=self.config.get("retrievalCost", 1.0),
+                allowed,
+                hold=task["hold"],
+                costs=task["costs"],
+                remaining=value["remaining"],
+                history_length=len(value["history"]),
+                deadline=task["deadline"],
+                retrieval_cost=self.config.get("retrievalCost", 1.0),
             )
         return view
 
@@ -182,8 +214,10 @@ class ResearchRouter:
             description = "uncensored demand history or a forecast" if slot == "F" else SLOTS[slot]
             result["question"] = {
                 "field": slot,
-                "reason": next((f.get("reason", f["state"]) for f in state["fields"] if f["name"] == slot),
-                               state["state"].get(slot, "unconfirmed")),
+                "reason": next(
+                    (f.get("reason", f["state"]) for f in state["fields"] if f["name"] == slot),
+                    state["state"].get(slot, "unconfirmed"),
+                ),
                 "choices": [],
                 "text": "Please provide or confirm " + description + ".",
             }
@@ -216,7 +250,10 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
     if linked:
         from . import structured_retail
 
-        require(episode.get("benchmark") == structured_retail.VERSION, "Forecast rollout requires its own outcome evaluator")
+        require(
+            episode.get("benchmark") == structured_retail.VERSION,
+            "Forecast rollout requires its own outcome evaluator",
+        )
     events, cost = [], 0.0
     for step in range(current["remaining"] + 2):
         state = router.construct(current)
@@ -242,9 +279,8 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
         events.append(event)
         if action in ("hold", "handoff"):
             break
-        if linked:
-            current = copy.deepcopy(current)
-            current["memory"] = structured_forecast.remember(current, state)
+        current = copy.deepcopy(current)
+        current["memory"] = structured_forecast.remember(current, state)
         if action == "retrieve":
             cost += router.config.get("retrievalCost", 1.0)
             current = copy.deepcopy(current)
@@ -256,20 +292,28 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
         cost += current["task"]["costs"][action]
         observed = (
             structured_retail.response(episode, current, action, noise)
-            if linked else response(episode, current, action, noise)
+            if linked
+            else response(episode, current, action, noise)
         )
         event["observedResponse"] = observed
         current = outcome(current, action, observed)
     if linked:
         evaluation = structured_retail.evaluate(episode, current, state, action)
         return {
-            "id": episode["id"], "family": episode["family"], "split": episode["split"],
-            "result": action, "q": state["q"] if action == "handoff" else None,
+            "id": episode["id"],
+            "family": episode["family"],
+            "split": episode["split"],
+            "result": action,
+            "q": state["q"] if action == "handoff" else None,
             "requestCost": cost,
-            "total": evaluation["terminalLoss"] + cost if evaluation["terminalLoss"] is not None else None,
+            "total": evaluation["terminalLoss"] + cost
+            if evaluation["terminalLoss"] is not None
+            else None,
             "interactions": sum(e["action"] not in ("hold", "handoff") for e in events),
-            **evaluation, **structured_retail.interactions(events),
-            "elapsedMs": (time.perf_counter() - started) * 1000, "events": events,
+            **evaluation,
+            **structured_retail.interactions(events),
+            "elapsedMs": (time.perf_counter() - started) * 1000,
+            "events": events,
         }
     evaluation = score(episode, current, state, action)
     terminal = (
@@ -299,13 +343,18 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
     }
 
 
-def collect(episodes, router, split="train", noise=0, progress=None, policy="behavior", with_values=True):
+def collect(
+    episodes, router, split="train", noise=0, progress=None, policy="behavior", with_values=True
+):
     require(
         split in ("train", "dev") and all(e["split"] == split for e in episodes),
         "Rollout supervision may use only its requested Train/Dev partition",
     )
     require(
-        not with_values or all("forecast" not in e["input"]["task"] or all(e["target"]["complete"]) for e in episodes),
+        not with_values
+        or all(
+            "forecast" not in e["input"]["task"] or all(e["target"]["complete"]) for e in episodes
+        ),
         "Economic rollout targets require complete observed demand, not censored lower bounds",
     )
     rows, measurements = [], []
@@ -321,10 +370,14 @@ def collect(episodes, router, split="train", noise=0, progress=None, policy="beh
         for event in observed["events"]:
             value, state = event["input"], event["state"]
             permitted = allowed_actions(router, value, state)
-            outcomes = [
-                rollout(episode, router, value=value, first=action, noise=noise)
-                for action in permitted
-            ] if with_values else []
+            outcomes = (
+                [
+                    rollout(episode, router, value=value, first=action, noise=noise)
+                    for action in permitted
+                ]
+                if with_values
+                else []
+            )
             scale = value["task"]["hold"]
             rows.append(
                 {
@@ -339,8 +392,12 @@ def collect(episodes, router, split="train", noise=0, progress=None, policy="beh
                 }
             )
             if with_values:
-                rows[-1].update(values=[[r["terminalLoss"] / scale, r["requestCost"] / scale] for r in outcomes],
-                                valueIndices=list(range(len(permitted))))
+                rows[-1].update(
+                    values=[
+                        [r["terminalLoss"] / scale, r["requestCost"] / scale] for r in outcomes
+                    ],
+                    valueIndices=list(range(len(permitted))),
+                )
             for action, measured in zip(permitted if with_values else [], outcomes, strict=True):
                 measurements.append(
                     {

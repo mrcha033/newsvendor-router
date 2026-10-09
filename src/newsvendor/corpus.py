@@ -114,7 +114,12 @@ def outcome(input, action, value):
             )
         next["observations"] = observations
     else:
-        title = {"c": "Purchase quotation", "p": "Sales price list", "v": "return", "b": "Manager decision"}[action]
+        title = {
+            "c": "Purchase quotation",
+            "p": "Sales price list",
+            "v": "return",
+            "b": "Manager decision",
+        }[action]
         next["docs"] = [d for d in next["docs"] if title not in d["title"]]
         next["docs"].append(answer_doc(next, action, value, f"response-{action}"))
     return next

@@ -1,0 +1,235 @@
+{
+  "scope": "Dev model-selection diagnostics; no Test or overall effectiveness claim",
+  "testUsed": false,
+  "comparisonDirection": "daily10 minus comparator; lower loss is better",
+  "comparisons": {
+    "daily03": {
+      "1": {
+        "observationNLL": {
+          "meanDifference": 0.039759848252044774,
+          "familyBootstrap95": [
+            -0.0606306767864457,
+            0.17273861342332925
+          ],
+          "periods": 264,
+          "families": 8
+        },
+        "uncensoredCRPS": {
+          "meanDifference": -0.02894833026598637,
+          "familyBootstrap95": [
+            -0.04190048158199287,
+            -0.012628039459887783
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u1": {
+          "meanDifference": -0.022330652460045237,
+          "familyBootstrap95": [
+            -0.0402272115092738,
+            -0.0013931727357532032
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u3": {
+          "meanDifference": -0.12033517014828768,
+          "familyBootstrap95": [
+            -0.1612669538406558,
+            -0.07852416843870641
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u9": {
+          "meanDifference": -0.3214427010645798,
+          "familyBootstrap95": [
+            -0.4424429228824564,
+            -0.1672233114776694
+          ],
+          "periods": 177,
+          "families": 8
+        }
+      },
+      "7": {
+        "observationNLL": {
+          "meanDifference": -0.020042693410528608,
+          "familyBootstrap95": [
+            -0.06339075083856444,
+            0.013665074906641142
+          ],
+          "periods": 264,
+          "families": 8
+        },
+        "uncensoredCRPS": {
+          "meanDifference": -1.3355372226030413,
+          "familyBootstrap95": [
+            -1.9792710308050732,
+            -0.41131980099303567
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u1": {
+          "meanDifference": -1.87650781082817,
+          "familyBootstrap95": [
+            -2.76035092253583,
+            -0.66858368683387
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u3": {
+          "meanDifference": -2.9297014197977367,
+          "familyBootstrap95": [
+            -4.356709609662861,
+            -0.7860798978865619
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u9": {
+          "meanDifference": -4.798126185231558,
+          "familyBootstrap95": [
+            -6.905650512128336,
+            -1.9614906194463047
+          ],
+          "periods": 30,
+          "families": 6
+        }
+      }
+    },
+    "previous": {
+      "1": {
+        "observationNLL": {
+          "meanDifference": 0.0414889951827496,
+          "familyBootstrap95": [
+            -0.12270582267577235,
+            0.2940550364813953
+          ],
+          "periods": 264,
+          "families": 8
+        },
+        "uncensoredCRPS": {
+          "meanDifference": -0.018685471525489068,
+          "familyBootstrap95": [
+            -0.03658173697553099,
+            -0.003222592700435948
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u1": {
+          "meanDifference": -0.026257428309594034,
+          "familyBootstrap95": [
+            -0.052019973972731504,
+            -0.0038036281010430514
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u3": {
+          "meanDifference": -0.06873127505716461,
+          "familyBootstrap95": [
+            -0.12756411605910825,
+            -0.01675860887508389
+          ],
+          "periods": 177,
+          "families": 8
+        },
+        "uncensoredOrderLoss_u9": {
+          "meanDifference": -0.13010575180092931,
+          "familyBootstrap95": [
+            -0.24509650627531032,
+            -0.038422065804831845
+          ],
+          "periods": 177,
+          "families": 8
+        }
+      },
+      "7": {
+        "observationNLL": {
+          "meanDifference": -0.05778738867090206,
+          "familyBootstrap95": [
+            -0.11970138554644087,
+            -0.0044103533602530215
+          ],
+          "periods": 264,
+          "families": 8
+        },
+        "uncensoredCRPS": {
+          "meanDifference": -0.3989058321500259,
+          "familyBootstrap95": [
+            -0.9868776572896263,
+            0.5233346737362339
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u1": {
+          "meanDifference": -0.5180209769499893,
+          "familyBootstrap95": [
+            -1.3126518907887008,
+            0.7830497187905385
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u3": {
+          "meanDifference": -0.19474887375623642,
+          "familyBootstrap95": [
+            -1.2977487569754658,
+            1.7278627395898505
+          ],
+          "periods": 30,
+          "families": 6
+        },
+        "uncensoredOrderLoss_u9": {
+          "meanDifference": -0.012664955743994295,
+          "familyBootstrap95": [
+            -1.5203029892153184,
+            2.6584341646637246
+          ],
+          "periods": 30,
+          "families": 6
+        }
+      }
+    }
+  },
+  "rawSources": {
+    "daily03": {
+      "path": "results/research-checks/demand-weight-study/daily03/dev.jsonl",
+      "hash": "e06521999d1b118a485e1013f69de036b8db49406781ec4761412badc9aa5626"
+    },
+    "daily10": {
+      "path": "results/research-checks/demand-weight-study/daily10/dev.jsonl",
+      "hash": "72e0886c5fd767880b54e15a6dd3e0fb554a87bb18047410c898abfc21b30658"
+    },
+    "previous": {
+      "path": "results/research-checks/demand-dev-v3/raw.jsonl",
+      "hash": "0eef0dfc676d0b758583524976bbf795f86b28b6cfd5592aa9689e5a9d92feb2"
+    }
+  },
+  "fixedStateSwap": {
+    "previousMean": 44.32742132570505,
+    "candidateMean": 42.26582178849101,
+    "paired": {
+      "meanDifference": -2.061599537214048,
+      "familyBootstrap95": [
+        -6.915699097701351,
+        3.416284555263602
+      ],
+      "periods": 35,
+      "families": 4
+    },
+    "uniquePeriods": 5,
+    "rawHash": "3d8dcb108ce6074f68d2c42819ad65c9be05d0da2e75b6281f79b805434f7372",
+    "limitation": "Keep the old final parameter states and request costs fixed; no new policy rollout or real organizational efficacy."
+  },
+  "scriptHash": "603fa1d65f41d45ab0dde44d6e8d7954e0edfee7158857e893576fd037087b87",
+  "limitations": [
+    "One training seed; only eight Dev source families.",
+    "Exact order scores use uncensored periods, a selected subset.",
+    "Paired bootstrap resamples entire source families; generated financial conditions are not independent trials."
+  ]
+}

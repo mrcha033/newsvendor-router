@@ -30,6 +30,8 @@ from .suite import public_input
 from .suite_score import score
 from .train import seed
 
+DEMAND_SCHEMA = "newsvendor-demand-gru-v1"
+
 
 def variant(config, name, value=None):
     result = copy.deepcopy(config)
@@ -51,7 +53,9 @@ def dataset_hashes(config):
         result["toolSchema"] = digest(read(config["encoder"]["toolSchema"]))
     result["researchConfig"] = digest(read(config["researchConfig"]))
     if config.get("constructionReplay"):
-        result["constructionReplay"] = {path: digest(Path(path).read_bytes()) for path in config["constructionReplay"]}
+        result["constructionReplay"] = {
+            path: digest(Path(path).read_bytes()) for path in config["constructionReplay"]
+        }
     if config.get("linkedManifest"):
         result["linkedManifest"] = digest(read(config["linkedManifest"]))
     return result
@@ -90,31 +94,65 @@ def initialize(config):
     from .structured_tool_eval import weights_hash
 
     warm = config.get("warmStart")
-    require(bool(warm) != bool(config.get("demandCheckpoint")), "Specify a core warm start or a shared demand checkpoint")
+    require(
+        bool(warm) != bool(config.get("demandCheckpoint")),
+        "Specify a core warm start or a shared demand checkpoint",
+    )
     path = Path(warm or config["demandCheckpoint"])
     payload = torch.load(path, map_location="cpu", weights_only=True, mmap=True)
-    require(dataset_hashes(payload["config"]) == payload["datasetHashes"], "Parent checkpoint data changed")
+    require(
+        dataset_hashes(payload["config"]) == payload["datasetHashes"],
+        "Parent checkpoint data changed",
+    )
+    if payload.get("schema") == DEMAND_SCHEMA:
+        require(not warm, "A demand-only checkpoint cannot warm-start the full core")
+        require(
+            all(k.startswith("demand.") for k in payload["weights"]),
+            "Demand-only checkpoint contains unrelated weights",
+        )
     if warm:
-        require(all(config["encoder"][k] == payload["config"]["encoder"][k] for k in ("model", "revision")),
-                "Warm-start backbone identity differs")
+        require(
+            all(
+                config["encoder"][k] == payload["config"]["encoder"][k]
+                for k in ("model", "revision")
+            ),
+            "Warm-start backbone identity differs",
+        )
     tokenizer, encoder = load_backbone(config["encoder"])
     # Backbone loading consumes different amounts of RNG across model sizes.
     seed(config["seed"])
     model = Router(encoder, config["encoder"])
     if warm:
-        weights = {k: v for k, v in payload["weights"].items() if not k.startswith(("tools.", "control."))}
+        weights = {
+            k: v for k, v in payload["weights"].items() if not k.startswith(("tools.", "control."))
+        }
         model.load_state_dict(weights, strict=True)
     else:
-        weights = {k.removeprefix("demand."): v for k, v in payload["weights"].items() if k.startswith("demand.")}
+        weights = {
+            k.removeprefix("demand."): v
+            for k, v in payload["weights"].items()
+            if k.startswith("demand.")
+        }
         model.demand.load_state_dict(weights, strict=True)
     parent = {
         "mode": "warm_start" if warm else "pretrained_encoder_and_fresh_heads",
-        "checkpoint" if warm else "demandCheckpoint": str(path), "fileHash": digest(path.read_bytes()),
+        "checkpoint" if warm else "demandCheckpoint": str(path),
+        "fileHash": digest(path.read_bytes()),
         "encoder": {k: config["encoder"][k] for k in ("model", "revision")},
         "coreWeightsHash": weights_hash(model.state_dict()),
-        "sharedHeadsHash": weights_hash({k: v for k, v in model.state_dict().items() if not k.startswith(("encoder.", "project."))}),
+        "sharedHeadsHash": weights_hash(
+            {
+                k: v
+                for k, v in model.state_dict().items()
+                if not k.startswith(("encoder.", "project."))
+            }
+        ),
         "demandWeightsHash": weights_hash(model.demand.state_dict()),
-        "removedAuxiliaryParameters": sum(v.numel() for k, v in payload["weights"].items() if k.startswith(("tools.", "control."))) if warm else 0,
+        "removedAuxiliaryParameters": sum(
+            v.numel() for k, v in payload["weights"].items() if k.startswith(("tools.", "control."))
+        )
+        if warm
+        else 0,
     }
     return model, tokenizer, parent
 
@@ -137,6 +175,47 @@ def cases(rows, episodes, split, limit=None):
     return [("public", r) for r in public] + [("research", e) for e in research]
 
 
+def research_cases(episodes):
+    """Initial inputs and actual replies, without hypothetical response-availability labels."""
+    from . import structured_retail
+    from .construction import demand as observed_demand
+    from .construction import parameter_record
+    from .policy import response
+
+    result = []
+    for episode in episodes:
+        require(episode["split"] in ("train", "dev"), "Research supervision is Train/Dev only")
+        result.append(("research", episode))
+        value = episode["input"]
+        linked = "forecast" in value["task"]
+        for action in value["task"]["costs"]:
+            if value["remaining"] <= 0 or len(value["history"]) >= value["task"]["deadline"]:
+                break
+            record = parameter_record(value)
+            if not linked:
+                observed_demand(value, record)
+            missing = (
+                record["state"].get("F") == "unconfirmed"
+                if action == "demand"
+                else action not in record["values"]
+            )
+            if not missing:
+                continue
+            received = (
+                structured_retail.response(episode, value, action)
+                if linked
+                else response(episode, value, action, 0)
+            )
+            value = corpus.outcome(value, action, received)
+            result.append(
+                (
+                    "research",
+                    {**episode, "id": episode["id"] + ":response-" + action, "input": value},
+                )
+            )
+    return result
+
+
 def language_view(case, tokenizer, config, labels, collection, round=0, state=None):
     mode, row = case
     if mode == "research":
@@ -150,7 +229,9 @@ def language_view(case, tokenizer, config, labels, collection, round=0, state=No
         )
         target = research_targets(view, row["input"])
     else:
-        view = prepare(row, tokenizer, config["encoder"], collection=collection, round=round, state=state)
+        view = prepare(
+            row, tokenizer, config["encoder"], collection=collection, round=round, state=state
+        )
         target = suite_targets(view, row["component"], labels[row["id"]])
         if row["component"] == "abcd" and row.get("split") == "train":
             label = labels[row["id"]]
@@ -165,15 +246,28 @@ def replay_construction(paths, episodes):
     result = []
     for path in paths:
         for row in lines(path):
-            require(row["split"] == "train" and row["id"] in allowed, "Construction replay accepts Train only")
+            require(
+                row["split"] == "train" and row["id"] in allowed,
+                "Construction replay accepts Train only",
+            )
             episode = allowed[row["id"]]
             require(row["family"] == episode["family"], "Construction replay source family differs")
             key = digest(row["input"])
             if key in seen:
                 continue
             seen.add(key)
-            result.append(("research", {"id": row["id"] + ":state:" + key[:16], "family": row["family"],
-                                       "split": "train", "input": row["input"], "scenario": episode["scenario"]}))
+            result.append(
+                (
+                    "research",
+                    {
+                        "id": row["id"] + ":state:" + key[:16],
+                        "family": row["family"],
+                        "split": "train",
+                        "input": row["input"],
+                        "scenario": episode["scenario"],
+                    },
+                )
+            )
     return result
 
 
@@ -181,24 +275,47 @@ def balance_cases(cases, config):
     fractions = config.get("mix")
     if not fractions:
         return cases
-    require(set(fractions) <= {"tools", "research", "public"} and math.isclose(sum(fractions.values()), 1), "Invalid language task mixture")
+    require(
+        set(fractions) <= {"tools", "research", "public"}
+        and math.isclose(sum(fractions.values()), 1),
+        "Invalid language task mixture",
+    )
     pools = {name: [] for name in fractions}
     for case in cases:
         mode, row = case
-        name = "research" if mode == "research" else "tools" if row["component"] == "abcd" else "public"
+        name = (
+            "research"
+            if mode == "research"
+            else "tools"
+            if row["component"] == "abcd"
+            else "public"
+        )
         require(name in pools, "Training component omitted from language mixture")
         pools[name].append(case)
-    require(all(pools.values()) and all(v > 0 for v in fractions.values()), "Empty language mixture component")
+    require(
+        all(pools.values()) and all(v > 0 for v in fractions.values()),
+        "Empty language mixture component",
+    )
     total = max(math.ceil(len(pool) / fractions[name]) for name, pool in pools.items())
     # Every original case remains present; only Train examples are repeated.
-    return [pool[i % len(pool)] for name, pool in pools.items() for i in range(math.ceil(total * fractions[name]))]
+    return [
+        pool[i % len(pool)]
+        for name, pool in pools.items()
+        for i in range(math.ceil(total * fractions[name]))
+    ]
 
 
 def action_weights(counts, preserve_prior=False):
     selected = {k: n for k, n in counts.items() if not preserve_prior or k != "speak"}
-    weights = {k: min(3.0, max(0.25, (sum(selected.values()) / len(selected) / n) ** 0.5))
-               for k, n in selected.items()}
-    normalizer = sum(weights[k] * n for k, n in selected.items()) / sum(selected.values()) if selected else 1.0
+    weights = {
+        k: min(3.0, max(0.25, (sum(selected.values()) / len(selected) / n) ** 0.5))
+        for k, n in selected.items()
+    }
+    normalizer = (
+        sum(weights[k] * n for k, n in selected.items()) / sum(selected.values())
+        if selected
+        else 1.0
+    )
     result = {k: w / normalizer for k, w in weights.items()}
     if preserve_prior and "speak" in counts:
         result["speak"] = 1.0
@@ -215,12 +332,23 @@ def conversation_successors(cases):
     for group in groups.values():
         ordered = sorted(group, key=lambda pair: len(pair[1]))
         for (index, history), (next_index, next_history) in zip(ordered, ordered[1:], strict=False):
-            if len(next_history) > len(history) and next_history[:len(history)] == history:
+            if len(next_history) > len(history) and next_history[: len(history)] == history:
                 result[index] = next_index
     return result
 
 
-def language_backward(model, group, tokenizer, config, train, labels, collection, scale=1.0, teacher=None, distill_weight=0.0):
+def language_backward(
+    model,
+    group,
+    tokenizer,
+    config,
+    train,
+    labels,
+    collection,
+    scale=1.0,
+    teacher=None,
+    distill_weight=0.0,
+):
     """One primary case loss; optional Train-supervised retrieval is averaged into that case."""
     views, targets = zip(*group, strict=True)
     teacher_output = None
@@ -229,18 +357,24 @@ def language_backward(model, group, tokenizer, config, train, labels, collection
             teacher_output = teacher(list(views))
     output = model(list(views))
     objectives = [
-        objective(o, t, no_value=config["noValue"])
-        for o, t in zip(output, targets, strict=True)
+        objective(o, t, no_value=config["noValue"]) for o, t in zip(output, targets, strict=True)
     ]
     expand = [
-        "caseIndex" in t and ((bool(t.get("needsRetrieval"))
-        and v["selectedChunks"] < v["indexedChunks"])
-        or (config["encoder"].get("structuredTools", False) and t["caseIndex"] % 4 == 0
-            and (not config["training"].get("nextTurnTraining") or "nextIndex" in t)))
+        "caseIndex" in t
+        and (
+            (bool(t.get("needsRetrieval")) and v["selectedChunks"] < v["indexedChunks"])
+            or (
+                config["encoder"].get("structuredTools", False)
+                and t["caseIndex"] % 4 == 0
+                and (not config["training"].get("nextTurnTraining") or "nextIndex" in t)
+            )
+        )
         for v, t in zip(views, targets, strict=True)
     ]
-    loss = sum(o[0] * (0.5 if follow else 1) * t.get("weight", 1.0)
-               for o, follow, t in zip(objectives, expand, targets, strict=True))
+    loss = sum(
+        o[0] * (0.5 if follow else 1) * t.get("weight", 1.0)
+        for o, follow, t in zip(objectives, expand, targets, strict=True)
+    )
     if teacher_output is not None:
         from .structured_policy import distillation
 
@@ -262,15 +396,29 @@ def language_backward(model, group, tokenizer, config, train, labels, collection
             from .structured_tools import remember
 
             current = output[i]
-            ids = current["procedure"].topk(min(3, len(current["procedure"]))).indices.tolist() if "procedure" in current else []
+            ids = (
+                current["procedure"].topk(min(3, len(current["procedure"]))).indices.tolist()
+                if "procedure" in current
+                else []
+            )
             prediction = assemble(views[i], current, no_value=config["noValue"], use_value=False)
-            state = {"memory": remember(prediction),
-                     "procedureIds": [views[i]["procedures"][j]["id"] for j in ids]}
+            state = {
+                "memory": remember(prediction),
+                "procedureIds": [views[i]["procedures"][j]["id"] for j in ids],
+            }
         next_index = targets[i].get("nextIndex")
-        retrieval = bool(targets[i].get("needsRetrieval")) and views[i]["selectedChunks"] < views[i]["indexedChunks"]
+        retrieval = (
+            bool(targets[i].get("needsRetrieval"))
+            and views[i]["selectedChunks"] < views[i]["indexedChunks"]
+        )
         view, target = language_view(
-            train[next_index if next_index is not None and not retrieval else targets[i]["caseIndex"]],
-            tokenizer, config, labels, collection,
+            train[
+                next_index if next_index is not None and not retrieval else targets[i]["caseIndex"]
+            ],
+            tokenizer,
+            config,
+            labels,
+            collection,
             0 if next_index is not None and not retrieval else targets[i]["retrievalRound"],
             state=state,
         )
@@ -323,16 +471,33 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
     stale = resumed.get("stale", 0) if resumed else 0
     validation_every = config["training"].get("validationEvery", 0) if select_tools else 0
     maximum = config["training"].get("maxCases", 0)
-    require(not maximum or (validation_every > 0 and maximum > 0 and maximum % validation_every == 0),
-            "Case budget must end at a scheduled Dev check")
+    require(
+        not maximum or (validation_every > 0 and maximum > 0 and maximum % validation_every == 0),
+        "Case budget must end at a scheduled Dev check",
+    )
     stopped = resumed.get("stopped", False) if resumed else False
     next_turn = conversation_successors(train) if config["training"].get("nextTurnTraining") else {}
     if not resumed and config["training"].get("validateInitial") and select_tools:
-        best, dev_loss, tool_metrics = tool_selection(model, tokenizer, config, dev, labels, collection,
-            Path(config["output"]) / "language-dev-initial.jsonl")
+        best, dev_loss, tool_metrics = tool_selection(
+            model,
+            tokenizer,
+            config,
+            dev,
+            labels,
+            collection,
+            Path(config["output"]) / "language-dev-initial.jsonl",
+        )
         saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
-        checks.append({"epoch": 0, "processed": 0, "tools": tool_metrics,
-                       "devLoss": dev_loss, "accepted": True, "initial": True})
+        checks.append(
+            {
+                "epoch": 0,
+                "processed": 0,
+                "tools": tool_metrics,
+                "devLoss": dev_loss,
+                "accepted": True,
+                "initial": True,
+            }
+        )
         if progress:
             progress.update("language_dev", **checks[-1])
     if resumed and resumed.get("validateBest") and select_tools:
@@ -341,15 +506,30 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
         current = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
         random_state = rng_state()
         model.load_state_dict(saved)
-        best, dev_loss, tool_metrics = tool_selection(model, tokenizer, config, dev, labels, collection,
-            Path(config["output"]) / "language-dev-parent-revalidated.jsonl")
+        best, dev_loss, tool_metrics = tool_selection(
+            model,
+            tokenizer,
+            config,
+            dev,
+            labels,
+            collection,
+            Path(config["output"]) / "language-dev-parent-revalidated.jsonl",
+        )
         model.load_state_dict(current)
         restore_rng(random_state)
         del current
         stale, stopped = 0, False
-        checks.append({"epoch": selected, "processed": resumed["offset"], "tools": tool_metrics,
-                       "devLoss": dev_loss, "accepted": True, "revalidatedParent": True,
-                       "sourceHash": progress.identity["sourceHash"]})
+        checks.append(
+            {
+                "epoch": selected,
+                "processed": resumed["offset"],
+                "tools": tool_metrics,
+                "devLoss": dev_loss,
+                "accepted": True,
+                "revalidatedParent": True,
+                "sourceHash": progress.identity["sourceHash"],
+            }
+        )
         progress.update("language_dev_revalidated", **checks[-1])
     if stopped:
         model.load_state_dict(saved)
@@ -361,7 +541,10 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
     )
     checkpoint_every = config["training"].get("checkpointEvery", 1000)
     require(checkpoint_every % accumulation == 0, "Checkpoint must follow a full optimizer step")
-    require(not validation_every or validation_every % accumulation == 0, "Dev check must follow optimizer step")
+    require(
+        not validation_every or validation_every % accumulation == 0,
+        "Dev check must follow optimizer step",
+    )
     needed = config["training"].get("retrievalTraining") == "needed"
     require(not needed or config.get("maxRetrievals", 2) > 0, "Needed retrieval requires a budget")
     for epoch in range(first, config["training"]["epochs"]):
@@ -375,7 +558,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             # The checkpoint generator state precedes only the remaining retrieval draws.
             rand.bit_generator.state = resumed["random"]
         if maximum:
-            order = order[:max(0, maximum - epoch * len(train))]
+            order = order[: max(0, maximum - epoch * len(train))]
         epoch_cases = len(order)
         require(epoch_cases > offset, "Training budget has no remaining cases")
         stamp = time.perf_counter()
@@ -402,7 +585,9 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             batch_size,
             rand,
             make,
-            max_round=config.get("maxRetrievals", 2) - 1 if needed else config.get("maxRetrievals", 2),
+            max_round=config.get("maxRetrievals", 2) - 1
+            if needed
+            else config.get("maxRetrievals", 2),
             workers=config["training"].get("prefetchWorkers", 0),
         )
         for number, group, random_state in prepared:
@@ -410,8 +595,13 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             segments = model.training_batches(views)
             for lo, hi in segments:
                 values, measurements, cost = language_backward(
-                    model, list(zip(views[lo:hi], targets[lo:hi], strict=True)),
-                    tokenizer, config, train, labels, collection,
+                    model,
+                    list(zip(views[lo:hi], targets[lo:hi], strict=True)),
+                    tokenizer,
+                    config,
+                    train,
+                    labels,
+                    collection,
                 )
                 batches.extend(values)
                 for item in measurements:
@@ -440,7 +630,9 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     total=epoch_cases,
                     casesPerSecond=rate,
                     remainingEpochSeconds=(epoch_cases - processed) / rate,
-                    remainingBudgetSeconds=max(0, maximum - epoch * len(train) - processed) / rate if maximum else None,
+                    remainingBudgetSeconds=max(0, maximum - epoch * len(train) - processed) / rate
+                    if maximum
+                    else None,
                     meanLoss=float(np.mean(batches)),
                     encoderBatch=getattr(model, "last_batch", None),
                     plannedCases=len(group),
@@ -449,8 +641,15 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     retrievalExamples=workload["retrievals"],
                 )
             if validation_every and (processed % validation_every == 0 or processed == epoch_cases):
-                candidate_key, dev_loss, tool_metrics = tool_selection(model, tokenizer, config, dev, labels, collection,
-                    Path(config["output"]) / f"language-dev-{epoch + 1}-{processed}.jsonl")
+                candidate_key, dev_loss, tool_metrics = tool_selection(
+                    model,
+                    tokenizer,
+                    config,
+                    dev,
+                    labels,
+                    collection,
+                    Path(config["output"]) / f"language-dev-{epoch + 1}-{processed}.jsonl",
+                )
                 meaningful = candidate_key[:3] > best[:3]
                 stale = 0 if meaningful else stale + 1
                 accepted = candidate_key > best
@@ -458,25 +657,49 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     best, selected = candidate_key, epoch + 1
                     saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
                 seen = epoch * len(train) + processed
-                budget_stop = bool(config["training"].get("maxCases") and seen >= config["training"]["maxCases"])
+                budget_stop = bool(
+                    config["training"].get("maxCases") and seen >= config["training"]["maxCases"]
+                )
                 goal_stop = False
                 goal_checks = config["training"].get("stopAtGoalChecks", 0)
                 if config["training"].get("selection") == "goal" and goal_checks:
                     from .structured_metrics import performance_goal
 
-                    passed = performance_goal(tool_metrics, 0., config["performanceGoal"])["passed"]
-                    previous = checks[-(goal_checks - 1):] if goal_checks > 1 else []
-                    goal_stop = (passed and len(previous) == goal_checks - 1
-                                 and all(c.get("languageGoalPassed", False) for c in previous)
-                                 and seen >= config["training"].get("minGoalCases", 0))
+                    passed = performance_goal(tool_metrics, 0.0, config["performanceGoal"])[
+                        "passed"
+                    ]
+                    previous = checks[-(goal_checks - 1) :] if goal_checks > 1 else []
+                    goal_stop = (
+                        passed
+                        and len(previous) == goal_checks - 1
+                        and all(c.get("languageGoalPassed", False) for c in previous)
+                        and seen >= config["training"].get("minGoalCases", 0)
+                    )
                 else:
                     passed = False
-                stopped = budget_stop or goal_stop or (seen >= config["training"].get("minCases", 0)
-                           and stale >= config["training"].get("patience", 3))
-                checks.append({"epoch": epoch + 1, "processed": processed, "seenCases": seen,
-                               "tools": tool_metrics, "devLoss": dev_loss, "accepted": accepted,
-                               "staleChecks": stale, "earlyStopped": stopped, "budgetStopped": budget_stop,
-                               "languageGoalPassed": passed, "goalStopped": goal_stop})
+                stopped = (
+                    budget_stop
+                    or goal_stop
+                    or (
+                        seen >= config["training"].get("minCases", 0)
+                        and stale >= config["training"].get("patience", 3)
+                    )
+                )
+                checks.append(
+                    {
+                        "epoch": epoch + 1,
+                        "processed": processed,
+                        "seenCases": seen,
+                        "tools": tool_metrics,
+                        "devLoss": dev_loss,
+                        "accepted": accepted,
+                        "staleChecks": stale,
+                        "earlyStopped": stopped,
+                        "budgetStopped": budget_stop,
+                        "languageGoalPassed": passed,
+                        "goalStopped": goal_stop,
+                    }
+                )
                 if progress:
                     progress.update("language_dev", **checks[-1])
                 model.train()
@@ -497,7 +720,9 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                         "selected": selected,
                         "saved": saved,
                         "workload": workload,
-                        "checks": checks, "stale": stale, "stopped": stopped,
+                        "checks": checks,
+                        "stale": stale,
+                        "stopped": stopped,
                     },
                     optimizer,
                 )
@@ -507,7 +732,9 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
         validation = []
         with torch.inference_mode():
             for case in dev:
-                validation.append(language_validation(model, case, tokenizer, config, labels, collection))
+                validation.append(
+                    language_validation(model, case, tokenizer, config, labels, collection)
+                )
         dev_loss = float(np.mean(validation))
         report.append(
             {
@@ -522,11 +749,21 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
         candidate_key = None
         if select_tools and not validation_every:
             candidate_key, _, tool_metrics = tool_selection(
-                model, tokenizer, config, dev, labels, collection,
-                Path(config["output"]) / f"language-dev-{epoch + 1}.jsonl", loss=dev_loss,
+                model,
+                tokenizer,
+                config,
+                dev,
+                labels,
+                collection,
+                Path(config["output"]) / f"language-dev-{epoch + 1}.jsonl",
+                loss=dev_loss,
             )
             report[-1]["tools"] = tool_metrics
-        if (candidate_key is not None and candidate_key > best) if select_tools else (dev_loss < best):
+        if (
+            (candidate_key is not None and candidate_key > best)
+            if select_tools
+            else (dev_loss < best)
+        ):
             best, selected = candidate_key if select_tools else dev_loss, epoch + 1
             # CPU copies avoid doubling GPU memory during checkpoint selection.
             saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
@@ -550,12 +787,18 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     "selected": selected,
                     "saved": saved,
                     "workload": {"tokens": 0, "retrievals": 0},
-                    "checks": checks, "stale": stale, "stopped": stopped,
+                    "checks": checks,
+                    "stale": stale,
+                    "stopped": stopped,
                 },
                 optimizer,
             )
         resumed = None
-        if stopped or (not validation_every and config["training"].get("patience") and epoch + 1 - selected >= config["training"]["patience"]):
+        if stopped or (
+            not validation_every
+            and config["training"].get("patience")
+            and epoch + 1 - selected >= config["training"]["patience"]
+        ):
             break
     require(saved is not None, "Language training requires epochs and Dev cases")
     model.load_state_dict(saved)
@@ -572,42 +815,103 @@ def tool_selection(model, tokenizer, config, dev, labels, collection, path, *, l
 
         router = ResearchRouter(model, tokenizer, config["encoder"])
         selected = [row for mode, row in dev if mode == "research"]
-        require(selected and all(row["split"] == "dev" for row in selected), "Research selection requires Dev cases")
+        require(
+            selected and all(row["split"] == "dev" for row in selected),
+            "Research selection requires Dev cases",
+        )
         records = []
         for row in selected:
             state = router.construct(row["input"])
-            records.append({"id": row["id"], "family": row["family"], "state": state,
-                            "metrics": parameter_metrics(row["input"], state)})
+            records.append(
+                {
+                    "id": row["id"],
+                    "family": row["family"],
+                    "state": state,
+                    "metrics": parameter_metrics(row["input"], state),
+                }
+            )
         jsonl(path, records)
-        metrics = {key: float(np.mean([r["metrics"][key] for r in records]))
-                   for key in ("parameterAccuracy", "allParametersCorrect", "stateAccuracy", "rawStateAccuracy", "rawParameterAccuracy", "typeAccuracy", "rawTypeAccuracy")}
-        metrics["evidenceAccuracy"] = sum(r["metrics"]["evidenceCorrect"] for r in records) / max(1, sum(r["metrics"]["evidenceCount"] for r in records))
+        metrics = {
+            key: float(np.mean([r["metrics"][key] for r in records]))
+            for key in (
+                "parameterAccuracy",
+                "allParametersCorrect",
+                "stateAccuracy",
+                "rawStateAccuracy",
+                "rawParameterAccuracy",
+                "typeAccuracy",
+                "rawTypeAccuracy",
+            )
+        }
+        metrics["evidenceAccuracy"] = sum(r["metrics"]["evidenceCorrect"] for r in records) / max(
+            1, sum(r["metrics"]["evidenceCount"] for r in records)
+        )
         if loss is None:
-            loss = float(np.mean([language_validation(model, c, tokenizer, config, labels, collection) for c in dev]))
+            loss = float(
+                np.mean(
+                    [
+                        language_validation(model, c, tokenizer, config, labels, collection)
+                        for c in dev
+                    ]
+                )
+            )
         return tool_selection_key(metrics, loss, config), loss, metrics
     selected = [c for c in dev if c[0] == "public" and c[1]["component"] == "abcd"]
-    metrics = public_validation(model, tokenizer, config, selected, labels, collection, path)["abcd"]
+    metrics = public_validation(model, tokenizer, config, selected, labels, collection, path)[
+        "abcd"
+    ]
     if loss is None:
-        loss = float(np.mean([language_validation(model, c, tokenizer, config, labels, collection) for c in dev]))
+        loss = float(
+            np.mean(
+                [language_validation(model, c, tokenizer, config, labels, collection) for c in dev]
+            )
+        )
     return tool_selection_key(metrics, loss, config), loss, metrics
 
 
 def tool_selection_key(metrics, loss, config):
     if config["training"].get("selection") == "research":
-        rates = [metrics[k] for k in ("parameterAccuracy", "rawStateAccuracy", "rawTypeAccuracy", "evidenceAccuracy")]
+        rates = [
+            metrics[k]
+            for k in (
+                "parameterAccuracy",
+                "rawStateAccuracy",
+                "rawTypeAccuracy",
+                "evidenceAccuracy",
+            )
+        ]
         return (min(rates), sum(rates), metrics["allParametersCorrect"], -loss)
     if config["training"].get("selection") == "goal":
-        rates = [metrics["toolExact"], metrics["observableToolAndArgumentsExact"],
-                 metrics["correctCall"] / max(metrics["predictedCall"], 1e-12)]
+        rates = [
+            metrics["toolExact"],
+            metrics["observableToolAndArgumentsExact"],
+            metrics["correctCall"] / max(metrics["predictedCall"], 1e-12),
+        ]
         return (min(rates), sum(rates), rates[1], -loss)
-    names = ("argumentsDecisionAccuracy", "toolDecisionAccuracy", "actionAccuracy") if config["training"].get("selection") == "calls" else ("observableToolAndArgumentsExact", "toolExact", "actionAccuracy")
+    names = (
+        ("argumentsDecisionAccuracy", "toolDecisionAccuracy", "actionAccuracy")
+        if config["training"].get("selection") == "calls"
+        else ("observableToolAndArgumentsExact", "toolExact", "actionAccuracy")
+    )
     return tuple(metrics[k] for k in names) + (-loss,)
 
 
-def train_policy(model, tokenizer, config, episodes, progress=None, public_train=(), public_dev=(), labels=None, collection=()):
+def train_policy(
+    model,
+    tokenizer,
+    config,
+    episodes,
+    progress=None,
+    public_train=(),
+    public_dev=(),
+    labels=None,
+    collection=(),
+):
     from .structured_policy import fit
 
-    return fit(model, tokenizer, config, episodes, progress, public_train, public_dev, labels, collection)
+    return fit(
+        model, tokenizer, config, episodes, progress, public_train, public_dev, labels, collection
+    )
 
 
 @torch.inference_mode()
@@ -625,16 +929,25 @@ def infer(
 ):
     model.eval()
     if linked or "forecast" in value.get("task", {}):
-        require("forecast" in value.get("task", {}) and "docs" in value and "historySource" in value,
-                "Linked inference requires an explicit Newsvendor task, docs and historySource")
+        require(
+            "forecast" in value.get("task", {}) and "docs" in value and "historySource" in value,
+            "Linked inference requires an explicit Newsvendor task, docs and historySource",
+        )
         if state is not None:
             from .structured_forecast import remember
 
             value = {**value, "memory": remember(value, state)}
         router = ResearchRouter(model, tokenizer, config["encoder"], config.get("noValue", False))
         result = router.decision(value)
-        return result, [{"linkedSources": True, "inputHash": digest(research_input(value)),
-                         "historyHash": digest(value["observations"]), "memoryHash": digest(value.get("memory", [])), "prediction": result}]
+        return result, [
+            {
+                "linkedSources": True,
+                "inputHash": digest(research_input(value)),
+                "historyHash": digest(value["observations"]),
+                "memoryHash": digest(value.get("memory", [])),
+                "prediction": result,
+            }
+        ]
     if value["observations"]:
         return sequence.predict(model.demand, value, demand.horizon(value)), []
     traces = []
@@ -829,27 +1142,44 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
     if config["encoder"].get("structuredTools"):
         from .structured_procedures import annotations
 
-        procedure_targets = annotations(rows, config["encoder"]["toolSchema"],
-                                        config["encoder"].get("workflowProgress", False),
-                                        config["training"].get("sourceRoleSupervision", False),
-                                        config["encoder"].get("dialogueState", False))
+        procedure_targets = annotations(
+            rows,
+            config["encoder"]["toolSchema"],
+            config["encoder"].get("workflowProgress", False),
+            config["training"].get("sourceRoleSupervision", False),
+            config["encoder"].get("dialogueState", False),
+        )
         for key, annotation in procedure_targets.items():
             labels[key] = labels[key] | annotation
-        counts = Counter(labels[r["id"]]["tool"] if labels[r["id"]]["action"] == "call_tool" else "speak"
-                         for r in rows if r["split"] == "train" and r["component"] == "abcd")
-        config["training"]["actionWeights"] = action_weights(counts, config["training"].get("preserveCallPrior", False))
+        counts = Counter(
+            labels[r["id"]]["tool"] if labels[r["id"]]["action"] == "call_tool" else "speak"
+            for r in rows
+            if r["split"] == "train" and r["component"] == "abcd"
+        )
+        config["training"]["actionWeights"] = action_weights(
+            counts, config["training"].get("preserveCallPrior", False)
+        )
     progress = Progress(config, dataset_hashes(config), device, limit, resume)
     if config["encoder"].get("workflowProgress"):
-        jsonl(progress.directory / "procedure-targets.jsonl", [{"id": key, **target} for key, target in sorted(procedure_targets.items())])
-        write(progress.directory / "procedure-targets.json", {
-            "scope": "Train targets only; future tools never enter model inputs",
-            "hash": digest(procedure_targets), "cases": len(procedure_targets),
-            "nodeCases": sum("workflowNodes" in t for t in procedure_targets.values()),
-            "sourceRoleCases": sum("argumentRoles" in t for t in procedure_targets.values()),
-            "pastToolCases": sum("pastTools" in t for t in procedure_targets.values()),
-            "pastToolTargets": sum(len(t.get("pastTools", [])) for t in procedure_targets.values()),
-            "sourceHashes": progress.identity["datasetHashes"],
-        })
+        jsonl(
+            progress.directory / "procedure-targets.jsonl",
+            [{"id": key, **target} for key, target in sorted(procedure_targets.items())],
+        )
+        write(
+            progress.directory / "procedure-targets.json",
+            {
+                "scope": "Train targets only; future tools never enter model inputs",
+                "hash": digest(procedure_targets),
+                "cases": len(procedure_targets),
+                "nodeCases": sum("workflowNodes" in t for t in procedure_targets.values()),
+                "sourceRoleCases": sum("argumentRoles" in t for t in procedure_targets.values()),
+                "pastToolCases": sum("pastTools" in t for t in procedure_targets.values()),
+                "pastToolTargets": sum(
+                    len(t.get("pastTools", [])) for t in procedure_targets.values()
+                ),
+                "sourceHashes": progress.identity["datasetHashes"],
+            },
+        )
     if continuation and not (progress.directory / "language-progress.pt").exists():
         progress.import_language(continuation)
     progress.update("loading")
@@ -866,11 +1196,23 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
     training = cases(rows, episodes, "train", limit)
     replay = replay_construction(config.get("constructionReplay", []), episodes)
     if limit:
-        replay = [case for scenario in corpus.SCENARIOS for case in [c for c in replay if c[1]["scenario"] == scenario][:limit]]
+        replay = [
+            case
+            for scenario in corpus.SCENARIOS
+            for case in [c for c in replay if c[1]["scenario"] == scenario][:limit]
+        ]
     training = balance_cases(training + replay, config["training"])
     if replay or config["training"].get("mix"):
-        progress.update("language_mixture", constructionStates=len(replay), cases=len(training),
-                        components=dict(Counter("research" if mode == "research" else row["component"] for mode, row in training)))
+        progress.update(
+            "language_mixture",
+            constructionStates=len(replay),
+            cases=len(training),
+            components=dict(
+                Counter(
+                    "research" if mode == "research" else row["component"] for mode, row in training
+                )
+            ),
+        )
     development = cases(rows, episodes, "dev", limit)
     complete = progress.restore("policy-done", model)
     common = complete or progress.restore("common", model)
@@ -883,7 +1225,9 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
     if common:
         language, demand_report = common["language"], common["demand"]
     else:
-        warm = progress.import_tools(config["warmStart"], model) if config.get("warmStart") else None
+        warm = (
+            progress.import_tools(config["warmStart"], model) if config.get("warmStart") else None
+        )
         language_done = progress.restore("language-done", model)
         if language_done:
             language = language_done["language"]
@@ -895,8 +1239,10 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
         progress.update("demand")
         if warm:
             demand_report = warm["demand"]
-            shutil.copyfile(Path(config["warmStart"]).parent / "demand-crossfit.jsonl",
-                            Path(config["output"]) / "demand-crossfit.jsonl")
+            shutil.copyfile(
+                Path(config["warmStart"]).parent / "demand-crossfit.jsonl",
+                Path(config["output"]) / "demand-crossfit.jsonl",
+            )
         else:
             forecasts = sequence.samples(rows, labels, config["demand"]["minHistory"])
             fit = [r for r in forecasts if r["split"] == "train"]
@@ -920,8 +1266,15 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
         complete["policy"]
         if complete
         else train_policy(
-            model, tokenizer, config, [e for e in episodes if e["id"] in allowed_ids], progress,
-            training, development, labels, collection,
+            model,
+            tokenizer,
+            config,
+            [e for e in episodes if e["id"] in allowed_ids],
+            progress,
+            training,
+            development,
+            labels,
+            collection,
         )
     )
     progress.checkpoint("policy-done", model, common | {"policy": policies})
@@ -961,7 +1314,9 @@ def run(config, device="cpu", limit=None, resume=False, reuse_common=None, conti
 
         public = policies[-1]["publicDevBaseline"]["abcd"]
         economic_loss = policies[-1]["devActualTotalLoss"]
-        report["goalDevelopment"] = performance_goal(public, economic_loss, config["performanceGoal"])
+        report["goalDevelopment"] = performance_goal(
+            public, economic_loss, config["performanceGoal"]
+        )
         if not report["goalDevelopment"]["passed"]:
             evaluation_split = "dev"
     save(Path(config["output"]) / "model.pt", model, config, report)

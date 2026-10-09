@@ -1,0 +1,602 @@
+{
+  "scope": "Same replay-trained core, shared demand and frozen Train/Dev; value scores versus recovery classification. No final Test and no organizational effectiveness claim.",
+  "testUsed": false,
+  "registration": {
+    "status": "registered before final base policy results; not started",
+    "scope": "Same replay-trained encoder, constructor and demand; train recovery without economic value targets",
+    "parent": "results/l40s-research-replay-v1/base/42/common.pt",
+    "sha256": "52c0c8aebc6829241c2fe2a9462ade503c4e002a9c5e342c669fd2bc0879337a",
+    "config": {
+      "dataset": "data/processed/core-tatqa-train-v1",
+      "expansion": null,
+      "researchConfig": "configs/full.json",
+      "output": "results/l40s-research-replay-v1/no_value/42",
+      "seed": 42,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "maxRetrievals": 4,
+      "backbones": {
+        "base": {
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+        },
+        "large": {
+          "model": "answerdotai/ModernBERT-large",
+          "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+          "splitLongBatches": true
+        }
+      },
+      "encoder": {
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 55000,
+        "compileLayers": false,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+        "exactActionCosts": true,
+        "paddingRatio": 1.25
+      },
+      "training": {
+        "epochs": 2,
+        "encoderLr": 1e-05,
+        "headLr": 0.0003,
+        "weightDecay": 0.01,
+        "accumulation": 32,
+        "progressEvery": 512,
+        "checkpointEvery": 8192,
+        "caseBatch": {
+          "base": 32,
+          "large": 32,
+          "no_value": 32
+        },
+        "prefetchWorkers": 2,
+        "fusedOptimizer": true,
+        "retrievalTraining": "needed",
+        "selection": "loss",
+        "validateInitial": false,
+        "validationEvery": 0,
+        "patience": 0,
+        "mix": {
+          "research": 0.25,
+          "public": 0.75
+        }
+      },
+      "demand": {
+        "epochs": 20,
+        "selectorEpochs": 20,
+        "folds": 3,
+        "lr": 0.001,
+        "batchSize": 64,
+        "dailyWeight": 0.3,
+        "minHistory": 28
+      },
+      "policy": {
+        "iterations": 2,
+        "epochs": 40,
+        "noise": 0.1,
+        "trainable": "value",
+        "batchSize": 64,
+        "valueLr": 0.001,
+        "validationEvery": 10,
+        "patience": 3,
+        "rankWeight": 0.25,
+        "collectionPolicy": "mixed",
+        "selection": "benchmark_normalized"
+      },
+      "variant": "no_value",
+      "noValue": true,
+      "dataSeed": 53,
+      "cutoffStride": 7,
+      "warmStart": "results/l40s-research-replay-v1/base/42/common.pt",
+      "demandCheckpoint": null,
+      "documentComponents": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "evaluateInitial": false,
+      "originalResearch": true,
+      "replayStudy": {
+        "scope": "Original generated Train construction and observed replies restored alongside unchanged retail and public document Train; no Test model evaluation",
+        "selection": "Language: Dev annotated loss. Policy: equal mean of the generated and retail mean total/declared hold cost. Raw totals are reported separately.",
+        "responseAvailability": "Policy masks and document-state annotations do not inspect rho or partial; only the response simulator reads them after an action.",
+        "demand": "Retain prior GRU; expanded and nested-epoch candidates did not improve weekly order quality.",
+        "seed": 42,
+        "languageEpochs": 2,
+        "testUsed": false,
+        "changes": [
+          "Original Train/Dev cases and actual bounded response states included",
+          "Shared memory and response copying for both input paths",
+          "Observed-only request masks and state labels",
+          "Explicit benchmark normalization for joint policy checkpoint selection"
+        ]
+      }
+    },
+    "testUsed": false
+  },
+  "sourceHash": "0cbc020152b1bdf71e2461f328605c7aa5bfc08359603d01a91d415f6ed3d399",
+  "constructorAndDemandIdentical": true,
+  "manifestsIdentical": true,
+  "noValueHeadUnchangedAndNotUsed": true,
+  "sharedWeightsHash": "168d2f757a8dbe10d7e9660be3b9918d6c64f07a3cb8753d3980cc92dbf4a2ad",
+  "secondsPolicyAndEvaluation": 255.1735030100681,
+  "policy": [
+    {
+      "iteration": 0,
+      "ownStateTargets": 786,
+      "trainRawHash": "99034fc98d3c7b9943cd796f076d79dd0f29feba0c97b210ab550bda924580ca",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.012997195984308537,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.00364254592344738,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.0018555663902169238,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.0011142855151914633,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 9,
+        "selectionMetric": "benchmark_normalized",
+        "selectionLoss": 0.22275414143943137
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "7512a7c3f8b86d88e222b86a05ebe73a5b26bbad5a99af68fe33f2b32585af20",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "cf7c180a5c5ba03f962c627c7ef774e12f4ee36d417af9baa7e6108dc0933a68"
+      },
+      "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+      "target": "Observed missing-parameter request/checklist, no economic targets",
+      "selectionMetric": "benchmark_normalized",
+      "devBenchmarks": {
+        "retail": {
+          "episodes": 35,
+          "meanTotal": 44.32742132570505,
+          "meanNormalizedTotal": 0.08995452388853398
+        },
+        "generated": {
+          "episodes": 60,
+          "meanTotal": 181.67582129739634,
+          "meanNormalizedTotal": 0.35555375899032876
+        }
+      },
+      "devSelectionLoss": 0.22275414143943137
+    },
+    {
+      "iteration": 1,
+      "ownStateTargets": 1048,
+      "trainRawHash": "9dfa6ff6bbadc538d13ebaeed4f9ce5ad6528e7b310b29ae2c6d8640e6567978",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.0001492058312150595,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 3.879714259870953e-05,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 1.8997853283722445e-05,
+          "devSelectionLoss": 0.22275414143943137,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 9,
+        "selectionMetric": "benchmark_normalized",
+        "selectionLoss": 0.22275414143943137
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "7512a7c3f8b86d88e222b86a05ebe73a5b26bbad5a99af68fe33f2b32585af20",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "cf7c180a5c5ba03f962c627c7ef774e12f4ee36d417af9baa7e6108dc0933a68"
+      },
+      "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+      "target": "Observed missing-parameter request/checklist, no economic targets",
+      "selectionMetric": "benchmark_normalized",
+      "devBenchmarks": {
+        "retail": {
+          "episodes": 35,
+          "meanTotal": 44.32742132570505,
+          "meanNormalizedTotal": 0.08995452388853398
+        },
+        "generated": {
+          "episodes": 60,
+          "meanTotal": 181.67582129739634,
+          "meanNormalizedTotal": 0.35555375899032876
+        }
+      },
+      "devSelectionLoss": 0.22275414143943137
+    }
+  ],
+  "baseGeneratedDev": {
+    "episodes": 60,
+    "sourceFamilies": 12,
+    "meanTotal": 147.6812873023908,
+    "meanRequestCost": 20.800383333333333,
+    "meanInteractions": 0.35,
+    "falseHandoffs": 0,
+    "holds": 11,
+    "initialParameters": {
+      "parameterAccuracy": 1.0,
+      "stateAccuracy": 1.0,
+      "typeAccuracy": 1.0
+    },
+    "finalParameters": {
+      "parameterAccuracy": 1.0,
+      "allParametersCorrect": 1.0,
+      "stateAccuracy": 1.0,
+      "typeAccuracy": 1.0
+    },
+    "finalEvidenceAccuracy": 1.0,
+    "missingFieldRequests": 21,
+    "resolvedFieldRequests": 0,
+    "resolvedAfterRequest": 10,
+    "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+    "rawHash": "70ed13347b05f2adb231ee945814f9bbffdc7fa1f7530491b972f6771d7287db"
+  },
+  "noValueGeneratedDev": {
+    "episodes": 60,
+    "sourceFamilies": 12,
+    "meanTotal": 181.67582129739634,
+    "meanRequestCost": 61.33535833333334,
+    "meanInteractions": 1.0,
+    "falseHandoffs": 0,
+    "holds": 11,
+    "initialParameters": {
+      "parameterAccuracy": 1.0,
+      "stateAccuracy": 1.0,
+      "typeAccuracy": 1.0
+    },
+    "finalParameters": {
+      "parameterAccuracy": 1.0,
+      "allParametersCorrect": 1.0,
+      "stateAccuracy": 0.9583333333333334,
+      "typeAccuracy": 1.0
+    },
+    "finalEvidenceAccuracy": 1.0,
+    "missingFieldRequests": 60,
+    "resolvedFieldRequests": 0,
+    "resolvedAfterRequest": 35,
+    "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+    "rawHash": "63b631143065c498d40d567a10f12620ac220dfd466e6514af271fedebd3bf75"
+  },
+  "noValueRetailDev": {
+    "episodes": 336,
+    "sourceFamilies": 8,
+    "completePeriods": 35,
+    "censoredPeriods": 301,
+    "uniqueObservedPeriods": 48,
+    "completeUniquePeriods": 5,
+    "initialParameters": {
+      "parameterAccuracy": 1.0,
+      "stateAccuracy": 1.0,
+      "rawStateAccuracy": 1.0,
+      "rawParameterAccuracy": 1.0,
+      "typeAccuracy": 1.0,
+      "rawTypeAccuracy": 1.0
+    },
+    "finalParameters": {
+      "parameterAccuracy": 1.0,
+      "allParametersCorrect": 1.0,
+      "stateAccuracy": 1.0,
+      "rawStateAccuracy": 1.0,
+      "rawParameterAccuracy": 1.0,
+      "typeAccuracy": 1.0,
+      "rawTypeAccuracy": 1.0
+    },
+    "finalEvidenceAccuracy": 1.0,
+    "meanTotalOnCompletePeriods": 44.32742132570505,
+    "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+    "falseHandoffs": 0,
+    "handoffs": 336,
+    "meanInteractions": 1.0,
+    "meanRequestCost": 9.868955782312925,
+    "necessaryRequests": 336,
+    "unnecessaryRequests": 0,
+    "recoveredAfterRequest": 336,
+    "unresolvedAfterRequest": 0,
+    "missingParametersAtStop": 0,
+    "forecast": {
+      "censoredOrderLossLowerBound_u1": {
+        "mean": 0.13258348916604606,
+        "count": 301
+      },
+      "censoredOrderLossLowerBound_u3": {
+        "mean": 0.12810672730654898,
+        "count": 301
+      },
+      "censoredOrderLossLowerBound_u9": {
+        "mean": 0.0,
+        "count": 301
+      },
+      "distributionValid": {
+        "mean": 1.0,
+        "count": 336
+      },
+      "observationNLL": {
+        "mean": 0.5085259733941647,
+        "count": 336
+      },
+      "orderValid": {
+        "mean": 1.0,
+        "count": 336
+      },
+      "uncensoredCRPS": {
+        "mean": 2.0093434787946483,
+        "count": 35
+      },
+      "uncensoredInterval80Coverage": {
+        "mean": 0.4,
+        "count": 35
+      },
+      "uncensoredOrderLoss_u1": {
+        "mean": 2.815752807475904,
+        "count": 35
+      },
+      "uncensoredOrderLoss_u3": {
+        "mean": 5.690399745459264,
+        "count": 35
+      },
+      "uncensoredOrderLoss_u9": {
+        "mean": 9.251552947391962,
+        "count": 35
+      },
+      "uncensoredTotalMAE": {
+        "mean": 3.745209897999465,
+        "count": 35
+      }
+    },
+    "rawHash": "bb2ba8017427b407ad0ece65af077a87cdc485f5b970699282774424f779ee1b"
+  },
+  "pairedGeneratedDelta": {
+    "baseMinusNoValue": -33.99453399500552,
+    "familyBootstrap95CI": [
+      -66.09923815752235,
+      -5.277413305536398
+    ],
+    "sourceFamilies": 12,
+    "resamples": 5000,
+    "seed": 53,
+    "byFamily": [
+      {
+        "family": "conflicting-05",
+        "base": 659.5174000000001,
+        "no_value": 659.5174000000001
+      },
+      {
+        "family": "conflicting-19",
+        "base": 494.67544,
+        "no_value": 494.67544
+      },
+      {
+        "family": "missing_contract-00",
+        "base": 65.84657363946138,
+        "no_value": 85.17463657581226
+      },
+      {
+        "family": "missing_contract-11",
+        "base": 53.427898856917466,
+        "no_value": 139.23271908553397
+      },
+      {
+        "family": "missing_demand-14",
+        "base": 42.908,
+        "no_value": 42.908
+      },
+      {
+        "family": "missing_demand-18",
+        "base": 400.80688,
+        "no_value": 400.80688
+      },
+      {
+        "family": "sufficient-01",
+        "base": 0.0,
+        "no_value": 0.0
+      },
+      {
+        "family": "sufficient-11",
+        "base": 0.0,
+        "no_value": 0.0
+      },
+      {
+        "family": "unavailable-03",
+        "base": 4.2426439158691664,
+        "no_value": 88.47904072183327
+      },
+      {
+        "family": "unavailable-17",
+        "base": 10.115065259992662,
+        "no_value": 173.4415876438652
+      },
+      {
+        "family": "unset_preference-05",
+        "base": 38.707788247893326,
+        "no_value": 6.375
+      },
+      {
+        "family": "unset_preference-08",
+        "base": 1.927757708555589,
+        "no_value": 89.49915154171113
+      }
+    ]
+  },
+  "interpretation": [
+    "This comparison includes the inherited value head; the newly fitted value candidates were not selected. It cannot establish an incremental benefit from the new value-fitting phase.",
+    "Generated Dev and linked retail are reported separately; protected Test and demand calibration remain incomplete."
+  ],
+  "artifacts": {
+    "report.json": {
+      "path": "results/l40s-research-replay-v1/no_value/42/report.json",
+      "sha256": "736fe2cf4ca62cec99f11f6206f9288588fcb8add1b5efd672c1e036413ecc73"
+    },
+    "model.pt": {
+      "path": "results/l40s-research-replay-v1/no_value/42/model.pt",
+      "sha256": "b48ead97bd18b7011cdd364416b0124ebee8c55fad1b2dfbf24825854db1b69e"
+    },
+    "source.tar.gz": {
+      "path": "results/l40s-research-replay-v1/no_value/42/source.tar.gz",
+      "sha256": "64d51bc32a0fcb64140dbef8926ee9033a1a2512a64e9fc03965df5fd1eb76a0"
+    },
+    "final-generated-dev-learned.jsonl": {
+      "path": "results/l40s-research-replay-v1/no_value/42/final-generated-dev-learned.jsonl",
+      "sha256": "63b631143065c498d40d567a10f12620ac220dfd466e6514af271fedebd3bf75"
+    },
+    "final-dev-learned.jsonl": {
+      "path": "results/l40s-research-replay-v1/no_value/42/final-dev-learned.jsonl",
+      "sha256": "bb2ba8017427b407ad0ece65af077a87cdc485f5b970699282774424f779ee1b"
+    }
+  }
+}

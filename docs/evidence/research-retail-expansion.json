@@ -1,0 +1,127 @@
+{
+  "output": "data/processed/core-retail-train-v1",
+  "scope": "Original Train only, add at most 512 new independent store/product histories",
+  "source": {
+    "path": "data/raw/complementary/retail/08c1fab7f9257bc73679d415d65d644165d351d4/train.parquet",
+    "url": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K/resolve/08c1fab7f9257bc73679d415d65d644165d351d4/data/train.parquet",
+    "revision": "08c1fab7f9257bc73679d415d65d644165d351d4",
+    "sha256": "6706832db892bbae4969c19d87e07975d2543d2ba7d7d4756360654785de5a3d",
+    "bytes": 106436287,
+    "split": "official train only"
+  },
+  "identityCandidates": 50000,
+  "selectionSeed": 53,
+  "selection": "Hash-order greedy matching; no shared store or product with any original row or another addition",
+  "selectedHash": "796782028f420611a470367eb8b1b9e3eb8fbb8c3b0ecb70ae58ca7502554757",
+  "excludedSnapshotKeysHash": "413db2e7556b6d5a7cb2d9f4f55d75a1e6115aef665f8b217a8923b5b7abd0d7",
+  "historyDays": 60,
+  "horizonDays": 7,
+  "sourceOutcomeSelection": false,
+  "baseFileHashes": {
+    "inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e"
+  },
+  "scriptHash": "ed193a37355b0c16f846b875bd73c895bf06d92f03d0685d96dee84f7b5c0a6e",
+  "pyarrow": "25.0.1",
+  "addedHistories": 512,
+  "allOriginalRowsUnchanged": true,
+  "protectedSnapshotHash": "0dfa62ca18a9ea34147e7ea290cf843bb9d50a4e972a8ce2f363d01f0d6a72bf",
+  "checks": {
+    "cases": 2314,
+    "components": {
+      "abcd": {
+        "cases": 462,
+        "families": 80,
+        "splits": {
+          "dev": 96,
+          "train": 270,
+          "test": 96
+        },
+        "splitFamilies": {
+          "train": 48,
+          "dev": 16,
+          "test": 16
+        }
+      },
+      "contractnli": {
+        "cases": 360,
+        "families": 60,
+        "splits": {
+          "train": 216,
+          "dev": 72,
+          "test": 72
+        },
+        "splitFamilies": {
+          "train": 36,
+          "dev": 12,
+          "test": 12
+        }
+      },
+      "cuad": {
+        "cases": 450,
+        "families": 75,
+        "splits": {
+          "train": 270,
+          "test": 90,
+          "dev": 90
+        },
+        "splitFamilies": {
+          "train": 45,
+          "dev": 15,
+          "test": 15
+        }
+      },
+      "orsharc": {
+        "cases": 240,
+        "families": 60,
+        "splits": {
+          "train": 144,
+          "dev": 48,
+          "test": 48
+        },
+        "splitFamilies": {
+          "train": 36,
+          "dev": 12,
+          "test": 12
+        }
+      },
+      "retail": {
+        "cases": 562,
+        "families": 555,
+        "splits": {
+          "train": 542,
+          "test": 12,
+          "dev": 8
+        },
+        "splitFamilies": {
+          "train": 537,
+          "dev": 8,
+          "test": 10
+        }
+      },
+      "tatqa": {
+        "cases": 240,
+        "families": 60,
+        "splits": {
+          "train": 144,
+          "dev": 48,
+          "test": 48
+        },
+        "splitFamilies": {
+          "train": 36,
+          "dev": 12,
+          "test": 12
+        }
+      }
+    },
+    "sourceOverlaps": 0,
+    "inputOverlaps": 0,
+    "retrievalDocuments": 651,
+    "language": "en",
+    "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+    "endToEndOrderBenchmarkReady": false
+  },
+  "seconds": 9.136389949009754
+}

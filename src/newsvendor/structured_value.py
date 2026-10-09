@@ -11,8 +11,10 @@ def known_costs(actions, *, hold, costs, remaining, history_length, deadline, re
     future = remaining > 1 and history_length + 1 < deadline
     fixed, learned = [], []
     for action in actions:
-        require(action in ("hold", "handoff", "c", "p", "v", "b", "demand", "retrieve"),
-                "Unknown economic action")
+        require(
+            action in ("hold", "handoff", "c", "p", "v", "b", "demand", "retrieve"),
+            "Unknown economic action",
+        )
         terminal = action in ("hold", "handoff")
         cost = 0.0 if terminal else retrieval_cost if action == "retrieve" else costs[action]
         require(math.isfinite(cost) and cost >= 0, "Invalid request cost")

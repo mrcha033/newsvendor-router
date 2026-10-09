@@ -1,0 +1,146 @@
+{
+  "output": "data/processed/core-tatqa-train-v1",
+  "source": {
+    "repo": "NExTplusplus/TAT-QA",
+    "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+    "license": "CC-BY-4.0",
+    "origin": "real-financial-report-contexts; original QA annotations",
+    "source": "https://github.com/NExTplusplus/TAT-QA",
+    "groups": 60,
+    "perGroup": 4,
+    "files": [
+      {
+        "path": "dataset_raw/tatqa_dataset_train.json",
+        "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_train.json",
+      "sha256": "2df6e722cdbaaa37efcbfb280f5c9a15be29a6ec18f618ef936fe63cc6d07c69",
+      "bytes": 12845647
+    }
+  ],
+  "originalTrainQuestions": 13215,
+  "addedQuestions": 12951,
+  "addedContexts": 2177,
+  "exclusions": {
+    "protected_context_or_template": 48,
+    "existing": 216
+  },
+  "baseFileHashes": {
+    "inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e"
+  },
+  "protectedSnapshotHash": "0dfa62ca18a9ea34147e7ea290cf843bb9d50a4e972a8ce2f363d01f0d6a72bf",
+  "allOriginalRowsUnchanged": true,
+  "templateThreshold": 0.85,
+  "nearContextPairs": 6,
+  "nearPairsHash": "022b51842880960a0ef6fef636d4c405874dd945c934ca11355d9adfbba7622c",
+  "sourceOverlaps": 0,
+  "newSourceSplit": "official Train only",
+  "scriptHash": "a3fe95b9fbe7766816af75a22139c67194ec8b1bbb53bf563348b221e6ee4aff",
+  "limitations": [
+    "Context/template protection cannot establish original-report or organization disjointness.",
+    "Protected source identities are used only to exclude Train candidates, never as model features."
+  ],
+  "seconds": 14.922299657016993,
+  "checks": {
+    "cases": 14753,
+    "components": {
+      "abcd": {
+        "cases": 462,
+        "families": 80,
+        "splits": {
+          "dev": 96,
+          "train": 270,
+          "test": 96
+        },
+        "splitFamilies": {
+          "train": 48,
+          "dev": 16,
+          "test": 16
+        }
+      },
+      "contractnli": {
+        "cases": 360,
+        "families": 60,
+        "splits": {
+          "train": 216,
+          "dev": 72,
+          "test": 72
+        },
+        "splitFamilies": {
+          "train": 36,
+          "dev": 12,
+          "test": 12
+        }
+      },
+      "cuad": {
+        "cases": 450,
+        "families": 75,
+        "splits": {
+          "train": 270,
+          "test": 90,
+          "dev": 90
+        },
+        "splitFamilies": {
+          "train": 45,
+          "dev": 15,
+          "test": 15
+        }
+      },
+      "orsharc": {
+        "cases": 240,
+        "families": 60,
+        "splits": {
+          "train": 144,
+          "dev": 48,
+          "test": 48
+        },
+        "splitFamilies": {
+          "train": 36,
+          "dev": 12,
+          "test": 12
+        }
+      },
+      "retail": {
+        "cases": 50,
+        "families": 43,
+        "splits": {
+          "train": 30,
+          "test": 12,
+          "dev": 8
+        },
+        "splitFamilies": {
+          "train": 25,
+          "dev": 8,
+          "test": 10
+        }
+      },
+      "tatqa": {
+        "cases": 13191,
+        "families": 2201,
+        "splits": {
+          "train": 13095,
+          "dev": 48,
+          "test": 48
+        },
+        "splitFamilies": {
+          "train": 2177,
+          "dev": 12,
+          "test": 12
+        }
+      }
+    },
+    "sourceOverlaps": 0,
+    "inputOverlaps": 0,
+    "retrievalDocuments": 651,
+    "language": "en",
+    "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+    "endToEndOrderBenchmarkReady": false
+  }
+}

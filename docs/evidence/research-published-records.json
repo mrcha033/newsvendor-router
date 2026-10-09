@@ -1,0 +1,41 @@
+{
+  "scope": "Exact copies of local reports cited by research-scope.md; checkpoint and raw-file paths inside reports remain local, not published downloads.",
+  "files": [
+    {
+      "source": "results/research-checks/calibration-bounds/report.json",
+      "published": "docs/evidence/research-calibration-bounds.json",
+      "sha256": "098d6be97c2f9fc279031ebd3f0720b73bda1e3e2063a852083aee6de335d737",
+      "bytes": 9265
+    },
+    {
+      "source": "results/research-checks/demand-weight-study/comparison.json",
+      "published": "docs/evidence/research-demand-weight-comparison.json",
+      "sha256": "fa1798f1642df00485248301dfa341e1dcb9e137c4c7bc2c0b42c22668aa4793",
+      "bytes": 6898
+    },
+    {
+      "source": "results/research-checks/demand-weight-seeds/comparison.json",
+      "published": "docs/evidence/research-demand-weight-seeds.json",
+      "sha256": "4e279a3e0a9d3941a9c61763ec174f41abf4624de049a2b68946aa75469816e0",
+      "bytes": 27489
+    },
+    {
+      "source": "results/research-checks/retail-expansion.json",
+      "published": "docs/evidence/research-retail-expansion.json",
+      "sha256": "acb3bfff3dd4812549287bfd1719dbcd4bcd7510a12d9317d954931a71613856",
+      "bytes": 3697
+    },
+    {
+      "source": "results/research-checks/expansion-audit.json",
+      "published": "docs/evidence/research-expansion-audit.json",
+      "sha256": "eda11ef124a16eda2ee232d1c8d42694045c06f3a26ee669abaa70a4d2360954",
+      "bytes": 5718
+    },
+    {
+      "source": "results/research-checks/document-expansion.json",
+      "published": "docs/evidence/research-document-expansion.json",
+      "sha256": "4d052754658b23764eddb9db1bdca27b3b391c6162db09eba2c4ec55fbdc0758",
+      "bytes": 4037
+    }
+  ]
+}

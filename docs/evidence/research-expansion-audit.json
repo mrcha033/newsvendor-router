@@ -1,0 +1,217 @@
+{
+  "scope": "Source identity and unchanged held-out inputs/labels; no model Test evaluation",
+  "modelTestEvaluated": false,
+  "datasets": {
+    "core-tatqa-train-v1": {
+      "manifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+      "addedCases": 12951,
+      "originalRowsUnchanged": true,
+      "protectedSourceOverlap": 0,
+      "check": {
+        "cases": 14753,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 13191,
+            "families": 2201,
+            "splits": {
+              "train": 13095,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 2177,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "protectedContexts": 24,
+      "newContexts": 2177,
+      "independentContextComparisons": 52248,
+      "protectedNearContextOverlap": 0,
+      "limitation": "Context checks do not identify every original report or organization"
+    },
+    "core-retail-train-v1": {
+      "manifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+      "addedCases": 512,
+      "originalRowsUnchanged": true,
+      "protectedSourceOverlap": 0,
+      "check": {
+        "cases": 2314,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 562,
+            "families": 555,
+            "splits": {
+              "train": 542,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "newStores": 512,
+      "newProducts": 512,
+      "overlapWithAnyOriginalSource": 0
+    }
+  },
+  "scriptHash": "41a96897aefb6ac4c7f951c909cb6a68fec16dbfa96ca8a2301479ee7b4a3400"
+}

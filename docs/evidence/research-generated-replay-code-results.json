@@ -1,0 +1,371 @@
+{
+  "scope": "Original generated Dev benchmark, separate from retail; not final Test or real organizational evidence",
+  "testUsed": false,
+  "device": "cpu",
+  "threads": 4,
+  "checkpoint": "results/l40s-research-documents-v1/base/42/model.pt",
+  "checkpointHash": "63e1d0cbfaacdee027dbb5e5810c40282d7b322590134e74b1af82f391ab9a50",
+  "inputHash": "0431e5141e98ed4f951b71832747a875ece37f25fe82313f05ac846d6a387c3b",
+  "results": {
+    "learned": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 526.9858516190978,
+      "meanRequestCost": 69.59540166666667,
+      "meanInteractions": 1.2833333333333334,
+      "falseHandoffs": 0,
+      "holds": 51,
+      "initialParameters": {
+        "parameterAccuracy": 0.4625,
+        "stateAccuracy": 0.4625,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 0.5791666666666667,
+        "allParametersCorrect": 0.11666666666666667,
+        "stateAccuracy": 0.5416666666666666,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 0.5049019607843137,
+      "missingFieldRequests": 39,
+      "resolvedFieldRequests": 38,
+      "resolvedAfterRequest": 21,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "944ddb19d1543d147d7419401a0e1569997cbc9bd3a2cdaac447cba99cf05061",
+      "scenarios": {
+        "sufficient": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 516.7285828786802,
+          "meanRequestCost": 40.053270000000005,
+          "meanInteractions": 1.1,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.275,
+            "stateAccuracy": 0.275,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.575,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.575,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.575,
+          "missingFieldRequests": 0,
+          "resolvedFieldRequests": 11,
+          "resolvedAfterRequest": 0,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "missing_contract": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 462.14869891971284,
+          "meanRequestCost": 43.31811,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 7,
+          "initialParameters": {
+            "parameterAccuracy": 0.7,
+            "stateAccuracy": 0.7,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.725,
+            "allParametersCorrect": 0.2,
+            "stateAccuracy": 0.675,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.6206896551724138,
+          "missingFieldRequests": 6,
+          "resolvedFieldRequests": 4,
+          "resolvedAfterRequest": 4,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "missing_demand": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 365.5964,
+          "meanRequestCost": 51.002449999999996,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10,
+          "initialParameters": {
+            "parameterAccuracy": 0.275,
+            "stateAccuracy": 0.275,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.475,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.475,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.475,
+          "missingFieldRequests": 3,
+          "resolvedFieldRequests": 12,
+          "resolvedAfterRequest": 2,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "unset_preference": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 591.8525448641959,
+          "meanRequestCost": 92.85659000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.5,
+            "stateAccuracy": 0.5,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.625,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.6,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.6052631578947368,
+          "missingFieldRequests": 9,
+          "resolvedFieldRequests": 6,
+          "resolvedAfterRequest": 8,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "conflicting": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 778.2914499999999,
+          "meanRequestCost": 104.14975000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10,
+          "initialParameters": {
+            "parameterAccuracy": 0.3,
+            "stateAccuracy": 0.3,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.35,
+            "allParametersCorrect": 0.0,
+            "stateAccuracy": 0.35,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.1875,
+          "missingFieldRequests": 10,
+          "resolvedFieldRequests": 5,
+          "resolvedAfterRequest": 2,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "unavailable": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 447.29743305199855,
+          "meanRequestCost": 86.19224,
+          "meanInteractions": 1.1,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.725,
+            "stateAccuracy": 0.725,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.725,
+            "allParametersCorrect": 0.2,
+            "stateAccuracy": 0.575,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.56,
+          "missingFieldRequests": 11,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 5,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        }
+      }
+    },
+    "checklist": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 532.976469568812,
+      "meanRequestCost": 89.46008333333334,
+      "meanInteractions": 1.5833333333333333,
+      "falseHandoffs": 0,
+      "holds": 50,
+      "initialParameters": {
+        "parameterAccuracy": 0.4625,
+        "stateAccuracy": 0.4625,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 0.575,
+        "allParametersCorrect": 0.11666666666666667,
+        "stateAccuracy": 0.5166666666666667,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 0.5211267605633803,
+      "missingFieldRequests": 50,
+      "resolvedFieldRequests": 45,
+      "resolvedAfterRequest": 28,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "8322779009a35a5b65df4bb6a8ee45a163782976182d4239c7391eae54f57039",
+      "scenarios": {
+        "sufficient": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 563.6395349423955,
+          "meanRequestCost": 87.10799,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.275,
+            "stateAccuracy": 0.275,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.55,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.55,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.55,
+          "missingFieldRequests": 0,
+          "resolvedFieldRequests": 15,
+          "resolvedAfterRequest": 0,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "missing_contract": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 411.12317257934444,
+          "meanRequestCost": 68.72524999999999,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 6,
+          "initialParameters": {
+            "parameterAccuracy": 0.7,
+            "stateAccuracy": 0.7,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.725,
+            "allParametersCorrect": 0.2,
+            "stateAccuracy": 0.5,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.6451612903225806,
+          "missingFieldRequests": 15,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 6,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "missing_demand": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 357.69201,
+          "meanRequestCost": 43.09806,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10,
+          "initialParameters": {
+            "parameterAccuracy": 0.275,
+            "stateAccuracy": 0.275,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.45,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.45,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.45,
+          "missingFieldRequests": 0,
+          "resolvedFieldRequests": 15,
+          "resolvedAfterRequest": 0,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "unset_preference": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 599.641163365133,
+          "meanRequestCost": 106.30165000000002,
+          "meanInteractions": 2.0,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.5,
+            "stateAccuracy": 0.5,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.65,
+            "allParametersCorrect": 0.1,
+            "stateAccuracy": 0.625,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.6410256410256411,
+          "missingFieldRequests": 10,
+          "resolvedFieldRequests": 10,
+          "resolvedAfterRequest": 9,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "conflicting": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 778.2914499999999,
+          "meanRequestCost": 104.14975000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10,
+          "initialParameters": {
+            "parameterAccuracy": 0.3,
+            "stateAccuracy": 0.3,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.35,
+            "allParametersCorrect": 0.0,
+            "stateAccuracy": 0.35,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.1875,
+          "missingFieldRequests": 10,
+          "resolvedFieldRequests": 5,
+          "resolvedAfterRequest": 2,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        },
+        "unavailable": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 487.47148652599924,
+          "meanRequestCost": 127.37780000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 8,
+          "initialParameters": {
+            "parameterAccuracy": 0.725,
+            "stateAccuracy": 0.725,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 0.725,
+            "allParametersCorrect": 0.2,
+            "stateAccuracy": 0.625,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 0.6451612903225806,
+          "missingFieldRequests": 15,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 11,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+        }
+      }
+    }
+  },
+  "seconds": 221.67408117407467,
+  "sourceHash": "0cbc020152b1bdf71e2461f328605c7aa5bfc08359603d01a91d415f6ed3d399",
+  "reportHash": "bc5cb03303dcc8ee0f0be34d6ace62d32b8ea36389938d0e982665fc1976f751",
+  "comparison": "Same checkpoint, CPU and inputs; shared memory/response copying and observed-only masks now enabled. Retraining is measured separately."
+}

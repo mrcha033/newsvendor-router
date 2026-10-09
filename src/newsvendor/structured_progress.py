@@ -17,8 +17,15 @@ def objective_config(config):
     value = {**config, "encoder": dict(config["encoder"]), "training": dict(config["training"])}
     value.pop("output", None)
     runtime = (
-        "encoderBatch", "gradientCheckpointing", "bucketLengths", "checkpointTokenLimit",
-        "attention", "compileLayers", "compileLimit", "padMultiple", "splitLongBatches",
+        "encoderBatch",
+        "gradientCheckpointing",
+        "bucketLengths",
+        "checkpointTokenLimit",
+        "attention",
+        "compileLayers",
+        "compileLimit",
+        "padMultiple",
+        "splitLongBatches",
         "paddingRatio",
     )
     value["backbones"] = {name: dict(backbone) for name, backbone in config["backbones"].items()}
@@ -26,7 +33,11 @@ def objective_config(config):
         for key in runtime:
             encoder.pop(key, None)
     for key in (
-        "caseBatch", "prefetchWorkers", "progressEvery", "checkpointEvery", "fusedOptimizer",
+        "caseBatch",
+        "prefetchWorkers",
+        "progressEvery",
+        "checkpointEvery",
+        "fusedOptimizer",
     ):
         value["training"].pop(key, None)
     return value
@@ -122,60 +133,78 @@ class Progress:
             "Parent data/scope differ",
         )
         old_objective, new_objective = objective_config(old_config), objective_config(self.config)
-        controller_upgrade = bool(old_objective["encoder"].get("dialogueController")
-                                  and not old_objective["encoder"].get("controllerResidual")
-                                  and new_objective["encoder"].get("controllerResidual"))
+        controller_upgrade = bool(
+            old_objective["encoder"].get("dialogueController")
+            and not old_objective["encoder"].get("controllerResidual")
+            and new_objective["encoder"].get("controllerResidual")
+        )
         if controller_upgrade:
             # A declared score-composition upgrade keeps parameter/optimizer shapes,
             # observed inputs, targets, splits and all other training settings intact.
             old_objective["encoder"]["controllerResidual"] = True
-        auxiliary_upgrade = bool(old_objective["encoder"].get("dialogueController")
-                                 and old_objective["encoder"].get("controllerResidual")
-                                 and not old_objective["encoder"].get("controllerAuxiliary")
-                                 and new_objective["encoder"].get("controllerAuxiliary"))
+        auxiliary_upgrade = bool(
+            old_objective["encoder"].get("dialogueController")
+            and old_objective["encoder"].get("controllerResidual")
+            and not old_objective["encoder"].get("controllerAuxiliary")
+            and new_objective["encoder"].get("controllerAuxiliary")
+        )
         if auxiliary_upgrade:
             # Add direct supervision of the same contextual scores with the same
             # action labels. Parameters, optimizer moments and inputs are unchanged.
             old_objective["encoder"]["controllerAuxiliary"] = True
-        context_upgrade = bool(old_objective["encoder"].get("dialogueController")
-                               and not old_objective["encoder"].get("procedureContext")
-                               and new_objective["encoder"].get("procedureContext"))
+        context_upgrade = bool(
+            old_objective["encoder"].get("dialogueController")
+            and not old_objective["encoder"].get("procedureContext")
+            and new_objective["encoder"].get("procedureContext")
+        )
         if context_upgrade:
             # Versioned input correction: complete public action conditions, neutral
             # list wording, and no unsupported count-to-workflow transition feature.
             # Weight/optimizer shapes, labels and all other settings remain fixed.
             old_objective["encoder"].update(
-                procedureContext=True, controllerLength=3072, controllerPolicyTokens=1536,
+                procedureContext=True,
+                controllerLength=3072,
+                controllerPolicyTokens=1536,
             )
-        rerank_upgrade = bool(old_objective["encoder"].get("structuredTools")
-                              and not old_objective["encoder"].get("rerankSupervision")
-                              and new_objective["encoder"].get("rerankSupervision"))
+        rerank_upgrade = bool(
+            old_objective["encoder"].get("structuredTools")
+            and not old_objective["encoder"].get("rerankSupervision")
+            and new_objective["encoder"].get("rerankSupervision")
+        )
         if rerank_upgrade:
             # Preserve the two recovery losses, but train base and reranked scores
             # separately even when inference currently selects the base branch.
             old_objective["encoder"]["rerankSupervision"] = True
-            if not old_objective["encoder"].get("rerank", True) and new_objective["encoder"].get("rerank", True):
+            if not old_objective["encoder"].get("rerank", True) and new_objective["encoder"].get(
+                "rerank", True
+            ):
                 old_objective["encoder"]["rerank"] = True
-        workflow_upgrade = bool(old_objective["encoder"].get("procedureContext")
-                                and old_objective["encoder"].get("rerankSupervision")
-                                and not old_objective["encoder"].get("workflowProgress")
-                                and new_objective["encoder"].get("workflowProgress"))
+        workflow_upgrade = bool(
+            old_objective["encoder"].get("procedureContext")
+            and old_objective["encoder"].get("rerankSupervision")
+            and not old_objective["encoder"].get("workflowProgress")
+            and new_objective["encoder"].get("workflowProgress")
+        )
         if workflow_upgrade:
             # Explicit target correction: conditional next public tool nodes from
             # official Train traces replace past-call counts. Parameter shapes,
             # optimizer, observed inputs and every other setting remain intact.
             old_objective["encoder"]["workflowProgress"] = True
-        role_upgrade = bool(old_objective["encoder"].get("structuredTools")
-                            and not old_objective["training"].get("sourceRoleSupervision")
-                            and new_objective["training"].get("sourceRoleSupervision"))
+        role_upgrade = bool(
+            old_objective["encoder"].get("structuredTools")
+            and not old_objective["training"].get("sourceRoleSupervision")
+            and new_objective["training"].get("sourceRoleSupervision")
+        )
         if role_upgrade:
             # Add named source-slot labels only to official Train tool arguments.
             # No new parameters, inference candidates, inputs or data splits.
             old_objective["training"]["sourceRoleSupervision"] = True
-        dialogue_upgrade = bool(old_objective["encoder"].get("dialogueState")
-                                and old_objective["encoder"].get("workflowProgress")
-                                and not old_objective["encoder"].get("dialogueWorkflow")
-                                and new_objective["encoder"].get("dialogueWorkflow"))
+        dialogue_upgrade = bool(
+            old_objective["encoder"].get("dialogueState")
+            and old_objective["encoder"].get("workflowProgress")
+            and not old_objective["encoder"].get("dialogueWorkflow")
+            and new_objective["encoder"].get("dialogueWorkflow")
+        )
         if dialogue_upgrade:
             # Route the existing learned state into procedure/progress/reranking.
             # Keep parameters, optimizer moments, observations and targets intact.
@@ -209,7 +238,16 @@ class Progress:
             measurement["parent"] = read(previous)
             measurement["previousSeconds"] += measurement["parent"]["previousSeconds"]
         payload["identity"] = self.identity
-        if (controller_upgrade or auxiliary_upgrade or context_upgrade or rerank_upgrade or workflow_upgrade or role_upgrade or dialogue_upgrade or old_run["identity"]["sourceHash"] != self.identity["sourceHash"]) and payload["state"].get("saved") is not None:
+        if (
+            controller_upgrade
+            or auxiliary_upgrade
+            or context_upgrade
+            or rerank_upgrade
+            or workflow_upgrade
+            or role_upgrade
+            or dialogue_upgrade
+            or old_run["identity"]["sourceHash"] != self.identity["sourceHash"]
+        ) and payload["state"].get("saved") is not None:
             payload["state"]["validateBest"] = True
         torch.save(payload, destination)
         atomic_json(self.directory / "continuation.json", measurement)
@@ -236,15 +274,19 @@ class Progress:
         model.load_state_dict(payload["weights"], strict=True)
         restore_rng(payload["rng"])
         lineage = {
-            "checkpoint": str(path), "checkpointHash": digest(path.read_bytes()),
-            "identity": payload["identity"], "config": shared,
+            "checkpoint": str(path),
+            "checkpointHash": digest(path.read_bytes()),
+            "identity": payload["identity"],
+            "config": shared,
             "provenance": parent["provenance"],
             "sourceArchiveHash": digest((path.parent / "source.tar.gz").read_bytes()),
             "scope": "Explicit language/demand warm start; policy code and objectives may change.",
         }
         state = payload["state"] | {
-            "config": self.config, "reusedCommon": str(path),
-            "commonHash": lineage["checkpointHash"], "commonLineage": lineage,
+            "config": self.config,
+            "reusedCommon": str(path),
+            "commonHash": lineage["checkpointHash"],
+            "commonLineage": lineage,
         }
         self.checkpoint("common", model, state)
         atomic_json(self.directory / "common-parent.json", lineage)
@@ -259,21 +301,36 @@ class Progress:
         require(payload["identity"] == parent["identity"], "Parent checkpoint/run differ")
         require(digest(shared) == parent["identity"]["configHash"], "Parent config changed")
         for key in ("snapshot", "expansion", "researchConfig"):
-            require(payload["identity"]["datasetHashes"].get(key) == self.identity["datasetHashes"].get(key),
-                    "Tool warm-start data differ: " + key)
+            require(
+                payload["identity"]["datasetHashes"].get(key)
+                == self.identity["datasetHashes"].get(key),
+                "Tool warm-start data differ: " + key,
+            )
         for key in ("model", "revision"):
-            require(shared["encoder"][key] == self.config["encoder"][key], "Warm-start backbone differs")
+            require(
+                shared["encoder"][key] == self.config["encoder"][key], "Warm-start backbone differs"
+            )
         require(shared["demand"] == self.config["demand"], "Warm-start demand settings differ")
         require("policy" not in payload["state"], "Warm start must precede policy learning")
         mismatch = model.load_state_dict(payload["weights"], strict=False)
-        expected = {k for k in model.state_dict() if k.startswith(("tools.", "control.")) and k not in payload["weights"]}
-        require(set(mismatch.missing_keys) == expected and not mismatch.unexpected_keys,
-                "Unexpected warm-start parameter mismatch")
-        lineage = {"checkpoint": str(path), "checkpointHash": digest(path.read_bytes()),
-                   "identity": payload["identity"], "config": shared,
-                   "sourceArchiveHash": digest((path.parent / "source.tar.gz").read_bytes()),
-                   "scope": "Tool-head continuation with full encoder fine-tuning; unchanged demand weights reused",
-                   "initializedParameters": sorted(expected)}
+        expected = {
+            k
+            for k in model.state_dict()
+            if k.startswith(("tools.", "control.")) and k not in payload["weights"]
+        }
+        require(
+            set(mismatch.missing_keys) == expected and not mismatch.unexpected_keys,
+            "Unexpected warm-start parameter mismatch",
+        )
+        lineage = {
+            "checkpoint": str(path),
+            "checkpointHash": digest(path.read_bytes()),
+            "identity": payload["identity"],
+            "config": shared,
+            "sourceArchiveHash": digest((path.parent / "source.tar.gz").read_bytes()),
+            "scope": "Tool-head continuation with full encoder fine-tuning; unchanged demand weights reused",
+            "initializedParameters": sorted(expected),
+        }
         atomic_json(self.directory / "tools-parent.json", lineage)
         return {"demand": payload["state"]["demand"], "lineage": lineage}
 

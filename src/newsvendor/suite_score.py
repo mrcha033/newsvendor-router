@@ -161,7 +161,9 @@ def metrics(row, target, prediction):
             result["spokenReferenceF1"] = correct_action * text_f1(answer, target["answer"])
     elif component == "tatqa":
         scale = float(prediction.get("scale", "") == target["scale"])
-        rounded = rounded_numeric_exact if target.get("answerType") in ("arithmetic", "count") else exact
+        rounded = (
+            rounded_numeric_exact if target.get("answerType") in ("arithmetic", "count") else exact
+        )
         result.update(
             scaleAccuracy=scale,
             answerExact=correct_action * scale * float(exact(answer, target["answer"])),

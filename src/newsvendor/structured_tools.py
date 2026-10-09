@@ -71,7 +71,17 @@ def memory(fields, previous=(), *, active_tool=None):
             if field.get("value") is not None:
                 result[field["field"]] = {
                     k: field[k]
-                    for k in ("field", "name", "tool", "value", "evidence", "role", "expression", "state", "type")
+                    for k in (
+                        "field",
+                        "name",
+                        "tool",
+                        "value",
+                        "evidence",
+                        "role",
+                        "expression",
+                        "state",
+                        "type",
+                    )
                     if k in field
                 }
     return list(result.values())

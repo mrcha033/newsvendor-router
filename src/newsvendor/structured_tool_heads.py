@@ -53,16 +53,23 @@ class ToolHeads(nn.Module):
         values = queries[view["procedureStart"] : view["controllerStart"]]
         output["procedure"] = self.procedure(context) @ values.T / math.sqrt(256)
         if view.get("workflowProgress"):
-            require(all(len(p["steps"]) < STAGES for p in view["procedures"]),
-                    "Public tool nodes exceed progress head capacity")
+            require(
+                all(len(p["steps"]) < STAGES for p in view["procedures"]),
+                "Public tool nodes exceed progress head capacity",
+            )
             # Each procedure has its own node distribution. Its observed dialogue
             # and policy representations condition the existing shared head.
             stage_context = context[None] + values
             if view.get("controllerStart") is not None:
                 stage_context = stage_context + queries[view["controllerStart"] + len(actions)]
             logits = self.stage(stage_context / 2)
-            mask = torch.tensor([[s < len(p["steps"]) or s == STAGES - 1 for s in range(STAGES)]
-                                 for p in view["procedures"]], device=device)
+            mask = torch.tensor(
+                [
+                    [s < len(p["steps"]) or s == STAGES - 1 for s in range(STAGES)]
+                    for p in view["procedures"]
+                ],
+                device=device,
+            )
             output["stage"] = logits.masked_fill(~mask, -1e9)
         else:
             output["stage"] = self.stage(context)
@@ -80,14 +87,24 @@ class ToolHeads(nn.Module):
             # Keep the old count-indexed mapping only for legacy reproduction.
             transitions = torch.tensor(
                 [
-                    [[float(s < len(p["steps"]) and n == p["steps"][s]) for n in names]
-                     for s in range(STAGES)]
+                    [
+                        [float(s < len(p["steps"]) and n == p["steps"][s]) for n in names]
+                        for s in range(STAGES)
+                    ]
                     for p in view["procedures"]
-                ], device=device,
+                ],
+                device=device,
             )
-            transition = torch.einsum("p,ps,psa->a", probabilities, stages, transitions) if view.get("workflowProgress") else torch.einsum("p,s,psa->a", probabilities, stages, transitions)
-        progress = ((probabilities * stages.max(-1).values).sum() if view.get("workflowProgress")
-                    else (stages * torch.arange(STAGES, device=device)).sum() / STAGES)
+            transition = (
+                torch.einsum("p,ps,psa->a", probabilities, stages, transitions)
+                if view.get("workflowProgress")
+                else torch.einsum("p,s,psa->a", probabilities, stages, transitions)
+            )
+        progress = (
+            (probabilities * stages.max(-1).values).sum()
+            if view.get("workflowProgress")
+            else (stages * torch.arange(STAGES, device=device)).sum() / STAGES
+        )
         modes, use = output["mode"].float().softmax(-1), output["use"].float().softmax(-1)[:, 1]
         features = []
         for a, action in enumerate(view["actions"]):
@@ -128,18 +145,33 @@ class ToolHeads(nn.Module):
     def rerank_context(self, view, actions, queries, output):
         """Rerank complete candidate probabilities, including the call decision."""
         start = view["controllerStart"]
-        context = queries[start:start + len(actions)]
+        context = queries[start : start + len(actions)]
         if "dialogueState" in output:
             context = context + output["dialogueState"]
-        delta = self.rerank(torch.cat([actions + context, output["rerankFeatures"]], -1)).flatten().float()
-        scores, gate, calls = output["controlRecovery"].float(), output["callGate"].float(), output["callMask"]
+        delta = (
+            self.rerank(torch.cat([actions + context, output["rerankFeatures"]], -1))
+            .flatten()
+            .float()
+        )
+        scores, gate, calls = (
+            output["controlRecovery"].float(),
+            output["callGate"].float(),
+            output["callMask"],
+        )
         allowed = torch.tensor(view["allowedActions"], device=scores.device, dtype=torch.bool)
         scores = scores.masked_fill(~allowed, -1e9)
         normalizer = torch.where(calls, scores[calls].logsumexp(0), scores[~calls].logsumexp(0))
         prior = scores - normalizer + gate.log_softmax(-1)[calls.long()]
         joint = (prior + delta).masked_fill(~allowed, -1e9)
-        output.update(baseControlRecovery=output["controlRecovery"], baseCallGate=output["callGate"],
-                      rerankDelta=delta, rerankPrior=prior, rerankJoint=joint)
+        output.update(
+            baseControlRecovery=output["controlRecovery"],
+            baseCallGate=output["callGate"],
+            rerankDelta=delta,
+            rerankPrior=prior,
+            rerankJoint=joint,
+        )
         if view["rerank"]:
             output["controlRecovery"] = joint
-            output["callGate"] = torch.stack([joint[~calls].logsumexp(0), joint[calls].logsumexp(0)])
+            output["callGate"] = torch.stack(
+                [joint[~calls].logsumexp(0), joint[calls].logsumexp(0)]
+            )

@@ -7,7 +7,9 @@ import pytest
 
 from newsvendor.io import digest, read, write
 
-SPEC = importlib.util.spec_from_file_location("finalize_tools", Path(__file__).parents[1] / "scripts/finalize_tools.py")
+SPEC = importlib.util.spec_from_file_location(
+    "finalize_tools", Path(__file__).parents[1] / "scripts/finalize_tools.py"
+)
 finalize = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(finalize)
 
@@ -28,14 +30,28 @@ def test_dev_failure_can_be_frozen_but_incomplete_or_changed_runs_cannot(tmp_pat
     monkeypatch.setattr(structured_train, "dataset_hashes", lambda config: {"snapshot": "fixed"})
     baseline = tmp_path / "baseline.pt"
     baseline.write_bytes(b"prior model")
-    config = {"encoder": {"rerank": True}, "performanceGoal": {"toolExact": .9},
-              "comparisonBaseline": str(baseline)}
-    identity = {"sourceHash": "pinned", "datasetHashes": {"snapshot": "fixed"},
-                "configHash": digest(config), "limit": None}
+    config = {
+        "encoder": {"rerank": True},
+        "performanceGoal": {"toolExact": 0.9},
+        "comparisonBaseline": str(baseline),
+    }
+    identity = {
+        "sourceHash": "pinned",
+        "datasetHashes": {"snapshot": "fixed"},
+        "configHash": digest(config),
+        "limit": None,
+    }
     write(tmp_path / "config.json", config)
     write(tmp_path / "run.json", {"identity": identity})
-    write(tmp_path / "training.json", {"config": config, "limitedCasesPerComponent": None,
-                                      "language": {"checks": []}, "policy": [{"selected": 1}]})
+    write(
+        tmp_path / "training.json",
+        {
+            "config": config,
+            "limitedCasesPerComponent": None,
+            "language": {"checks": []},
+            "policy": [{"selected": 1}],
+        },
+    )
     for name in ("language-done.pt", "common.pt", "policy-done.pt", "model.pt"):
         (tmp_path / name).write_bytes(name.encode())
     write(tmp_path / "job.json", {"pid": 123, "stage": "failed"})
@@ -51,22 +67,57 @@ def test_dev_failure_can_be_frozen_but_incomplete_or_changed_runs_cannot(tmp_pat
 
 
 def test_final_goal_uses_configured_toggle_and_validates_all_comparisons():
-    config = {"encoder": {"rerank": False}, "performanceGoal": {
-        "toolExact": .9, "observableToolAndArgumentsExact": .9,
-        "callPrecision": .9, "generatedTestTotalLossBelow": 240.35}}
-    frozen = {"selectedRerank": False, "files": {"common.pt": "common", "policy-done.pt": "policy"},
-              "baseline": {"checkpoint": "prior.pt", "hash": "prior"}, "identity": {"sourceHash": "pinned"}}
-    passing = {"toolExact": 1., "observableToolAndArgumentsExact": 1., "predictedCall": .3, "correctCall": .3}
-    failing = dict(passing, toolExact=.6)
+    config = {
+        "encoder": {"rerank": False},
+        "performanceGoal": {
+            "toolExact": 0.9,
+            "observableToolAndArgumentsExact": 0.9,
+            "callPrecision": 0.9,
+            "generatedTestTotalLossBelow": 240.35,
+        },
+    }
+    frozen = {
+        "selectedRerank": False,
+        "files": {"common.pt": "common", "policy-done.pt": "policy"},
+        "baseline": {"checkpoint": "prior.pt", "hash": "prior"},
+        "identity": {"sourceHash": "pinned"},
+    }
+    passing = {
+        "toolExact": 1.0,
+        "observableToolAndArgumentsExact": 1.0,
+        "predictedCall": 0.3,
+        "correctCall": 0.3,
+    }
+    failing = dict(passing, toolExact=0.6)
     conditions = {}
-    for name in ("decoder_fixed", "common_rerank_off", "common_rerank_on", "policy_rerank_off",
-                 "policy_rerank_on", "policy_recovery_only"):
-        conditions[name] = {"checkpoint": "prior.pt" if name == "decoder_fixed" else "current.pt",
-                            "checkpointHash": "prior" if name == "decoder_fixed" else "common" if name.startswith("common_") else "policy",
-                            "public": {k: {"mean": v} for k, v in (failing if name == "policy_rerank_off" else passing).items()},
-                            "research": {"0.0": {"total": {"mean": 100.}}}}
-    comparison = {"status": "complete", "conditions": conditions, "goalTest": {"passed": True},
-                  "trainingProvenance": {"sourceHash": "pinned"}, "evaluationProvenance": {"sourceHash": "pinned"}}
+    for name in (
+        "decoder_fixed",
+        "common_rerank_off",
+        "common_rerank_on",
+        "policy_rerank_off",
+        "policy_rerank_on",
+        "policy_recovery_only",
+    ):
+        conditions[name] = {
+            "checkpoint": "prior.pt" if name == "decoder_fixed" else "current.pt",
+            "checkpointHash": "prior"
+            if name == "decoder_fixed"
+            else "common"
+            if name.startswith("common_")
+            else "policy",
+            "public": {
+                k: {"mean": v}
+                for k, v in (failing if name == "policy_rerank_off" else passing).items()
+            },
+            "research": {"0.0": {"total": {"mean": 100.0}}},
+        }
+    comparison = {
+        "status": "complete",
+        "conditions": conditions,
+        "goalTest": {"passed": True},
+        "trainingProvenance": {"sourceHash": "pinned"},
+        "evaluationProvenance": {"sourceHash": "pinned"},
+    }
     result = finalize.result(comparison, config, frozen)
     assert result["status"] == "goal_not_met" and not result["goalTest"]["passed"]
     missing = copy.deepcopy(comparison)

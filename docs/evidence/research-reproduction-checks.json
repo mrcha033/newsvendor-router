@@ -1,0 +1,1121 @@
+{
+  "status": "portable fresh-training bootstrap verified; historical research weights remain unpublished",
+  "scope": "Clean source export from HEAD plus reviewed changes, published data snapshot, shared installed Python environment and cached pinned public ModernBERT. No historical research checkpoint needed. Full cold-start language/policy training was not repeated in this portability check.",
+  "sourceHash": "e4f8c6f496d1fa2e8f2dbbbb1b64d04c68a7347f59f8ca5446c0d590cf89b095",
+  "testUsed": false,
+  "tests": {
+    "passed": 193,
+    "seconds": 25.16,
+    "sourceAndTestFilesIdentical": 66
+  },
+  "ruff": {
+    "lint": "passed",
+    "formatFiles": 68,
+    "formatASTUnchanged": {
+      "astUnchanged": true,
+      "formatted": [
+        "scripts/train_demand.py",
+        "src/newsvendor/construction.py",
+        "src/newsvendor/corpus.py",
+        "src/newsvendor/demand.py",
+        "src/newsvendor/structured_compare.py",
+        "src/newsvendor/structured_control.py",
+        "src/newsvendor/structured_critic.py",
+        "src/newsvendor/structured_forecast.py",
+        "src/newsvendor/structured_inputs.py",
+        "src/newsvendor/structured_labels.py",
+        "src/newsvendor/structured_metrics.py",
+        "src/newsvendor/structured_model.py",
+        "src/newsvendor/structured_orders.py",
+        "src/newsvendor/structured_policy.py",
+        "src/newsvendor/structured_procedures.py",
+        "src/newsvendor/structured_progress.py",
+        "src/newsvendor/structured_retail.py",
+        "src/newsvendor/structured_rollout.py",
+        "src/newsvendor/structured_tool_eval.py",
+        "src/newsvendor/structured_tool_heads.py",
+        "src/newsvendor/structured_tools.py",
+        "src/newsvendor/structured_train.py",
+        "src/newsvendor/structured_value.py",
+        "src/newsvendor/suite_score.py",
+        "tests/test_finalize.py",
+        "tests/test_structured.py",
+        "tests/test_suite.py",
+        "scripts/run_research.py"
+      ]
+    }
+  },
+  "publishedDataCheck": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "1da511fad5734a5ed035a563a94dfa349aa8af13d19fbb0a306b6cee2b7beb04",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "ec0a227a5ce0dfc3fb11e9d4aa6ae2686084355f7c8dd42be90933ada7e47f0b",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "c253468489bd734c6380046a04097b41eace840c9c0091867228b846f7e2c108",
+      "labelsHash": "5109048706d6b1fe06a8d1c71a2a36613bf9167989b86358545429431766a1d2",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 144
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "numericalSmoke": {
+    "episodes": 600,
+    "smokeEpisodes": 30,
+    "split": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "falseHandoffs": 0,
+    "provenance": {
+      "configHash": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "sourceHash": "e4f8c6f496d1fa2e8f2dbbbb1b64d04c68a7347f59f8ca5446c0d590cf89b095",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "87ccb0758f210c4d93d7d436aa369c041a4886720747929ebf40e7c5fa64d945",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "2203902ec724350e15f1dfd4f1b05f41ffff0eff1f033088218640ca9d014896",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "5ae5935d22b79f0795d2fdce2b07132b4ada744dcc4a1f32bf1856d6352c3f93",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "fb4746c3d6df73ee1d16ec039b09fba88f323f0a4dd71c5424b7e026ef06eaf4",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "772f542ddb728849d7860b5cc8c0d71143f106a751c087b12b305490164bae71",
+        "src/newsvendor/structured_rollout.py": "ce3d7b5e4016792c6f040a576a178f53f778f695494bb91c52073a277b5a80f7",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "85f3f3d198afb243f09dd720bf827c8bfb946df810191fc67b2fa283a73e9196",
+        "src/newsvendor/structured_value.py": "a43b52459f63e30a1fd0e4646a65ae93eccb28f82eb7e846a7e55d7a53807956",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": null,
+      "timestamp": "2026-10-09T09:35:00.170761+00:00"
+    }
+  },
+  "demandBootstrap": {
+    "scope": "New training from the published snapshot; not restoration of historical weights",
+    "observationModel": "Complete totals use density; censored totals use an aggregate lower-bound survival score, which is not generally the likelihood of separately censored daily observations",
+    "testUsed": false,
+    "config": {
+      "dataset": "data/processed/complementary",
+      "expansion": null,
+      "researchConfig": "configs/full.json",
+      "output": "results/research-from-scratch/base/42",
+      "seed": 42,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "maxRetrievals": 4,
+      "backbones": {
+        "base": {
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+        },
+        "large": {
+          "model": "answerdotai/ModernBERT-large",
+          "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+          "splitLongBatches": true
+        }
+      },
+      "encoder": {
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 55000,
+        "compileLayers": false,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+        "exactActionCosts": true,
+        "paddingRatio": 1.25
+      },
+      "training": {
+        "epochs": 5,
+        "encoderLr": 2e-05,
+        "headLr": 0.0003,
+        "weightDecay": 0.01,
+        "accumulation": 32,
+        "progressEvery": 128,
+        "checkpointEvery": 2048,
+        "caseBatch": {
+          "base": 32,
+          "large": 32,
+          "no_value": 32
+        },
+        "prefetchWorkers": 2,
+        "fusedOptimizer": true,
+        "retrievalTraining": "needed",
+        "selection": "loss",
+        "validateInitial": false,
+        "validationEvery": 0,
+        "patience": 0,
+        "mix": {
+          "research": 0.5,
+          "public": 0.5
+        }
+      },
+      "demand": {
+        "epochs": 20,
+        "selectorEpochs": 20,
+        "folds": 3,
+        "lr": 0.001,
+        "batchSize": 64,
+        "dailyWeight": 0.3,
+        "minHistory": 28
+      },
+      "policy": {
+        "iterations": 2,
+        "epochs": 40,
+        "noise": 0.1,
+        "trainable": "value",
+        "batchSize": 64,
+        "valueLr": 0.001,
+        "validationEvery": 10,
+        "patience": 3,
+        "rankWeight": 0.25,
+        "collectionPolicy": "mixed",
+        "selection": "benchmark_normalized"
+      },
+      "variant": "base",
+      "noValue": false,
+      "dataSeed": 53,
+      "cutoffStride": 7,
+      "warmStart": null,
+      "demandCheckpoint": "results/research-from-scratch/demand/model.pt",
+      "documentComponents": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "evaluateInitial": false,
+      "originalResearch": true
+    },
+    "device": "cpu",
+    "provenance": {
+      "configHash": "e251c9f14dfdffbbf80c2439c369a4fe032a0a0c245b30fad1104aa3a6bc8b38",
+      "sourceHash": "e4f8c6f496d1fa2e8f2dbbbb1b64d04c68a7347f59f8ca5446c0d590cf89b095",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "87ccb0758f210c4d93d7d436aa369c041a4886720747929ebf40e7c5fa64d945",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "2203902ec724350e15f1dfd4f1b05f41ffff0eff1f033088218640ca9d014896",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "5ae5935d22b79f0795d2fdce2b07132b4ada744dcc4a1f32bf1856d6352c3f93",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "fb4746c3d6df73ee1d16ec039b09fba88f323f0a4dd71c5424b7e026ef06eaf4",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "772f542ddb728849d7860b5cc8c0d71143f106a751c087b12b305490164bae71",
+        "src/newsvendor/structured_rollout.py": "ce3d7b5e4016792c6f040a576a178f53f778f695494bb91c52073a277b5a80f7",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "85f3f3d198afb243f09dd720bf827c8bfb946df810191fc67b2fa283a73e9196",
+        "src/newsvendor/structured_value.py": "a43b52459f63e30a1fd0e4646a65ae93eccb28f82eb7e846a7e55d7a53807956",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": null,
+      "timestamp": "2026-10-09T09:31:32.230802+00:00"
+    },
+    "scriptHash": "3a07e33954c17de8809cc4ee1c23f21a926949373bbfc99926e852df77bad800",
+    "initialWeightsHash": "f6cceda589dbed21223ea339f402372cd7b16094884b10397d649337b61ac31b",
+    "samples": {
+      "train": {
+        "forecasts": 1980,
+        "families": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ]
+      },
+      "dev": {
+        "forecasts": 528,
+        "families": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ]
+      }
+    },
+    "training": {
+      "folds": [
+        {
+          "fold": 0,
+          "fitFamilies": [
+            "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+            "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+            "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+            "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+            "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+            "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+            "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+            "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+            "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+            "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+            "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+            "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+            "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+            "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+            "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+            "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+          ],
+          "heldFamilies": [
+            "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+            "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+            "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+            "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+            "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+            "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+            "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+            "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+            "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e"
+          ],
+          "losses": [
+            0.9199936870071623,
+            0.6150834891531203,
+            0.5966567430231307,
+            0.604764085676935,
+            0.600897330376837,
+            0.5998560753133562,
+            0.6025116145610809,
+            0.5934553841749827,
+            0.5828957508007685,
+            0.5928049567672942,
+            0.5718294895357556,
+            0.5687539494699902,
+            0.5431966235240301,
+            0.5412866191731559,
+            0.5138985696766112,
+            0.5438006586498685,
+            0.5532450874646505,
+            0.4983553538719813,
+            0.49936076005299884,
+            0.5455716765589185
+          ]
+        },
+        {
+          "fold": 1,
+          "fitFamilies": [
+            "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+            "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+            "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+            "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+            "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+            "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+            "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+            "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+            "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+            "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+            "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+            "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+            "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+            "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+            "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+            "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+            "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e"
+          ],
+          "heldFamilies": [
+            "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+            "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+            "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+            "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+            "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+            "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+            "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+            "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+          ],
+          "losses": [
+            0.6524777723395306,
+            0.49917198523231177,
+            0.4924157948597618,
+            0.49439637039018713,
+            0.4899561793907829,
+            0.4899603789267333,
+            0.4840226043825564,
+            0.48600192951119464,
+            0.46203786653021106,
+            0.4434393462927445,
+            0.43067117488902545,
+            0.4364797952382461,
+            0.4100002821372903,
+            0.41522893892682117,
+            0.4175440306248872,
+            0.39697377318921295,
+            0.3951933409856713,
+            0.38032352794771607,
+            0.3783267308836398,
+            0.3616878915092219
+          ]
+        },
+        {
+          "fold": 2,
+          "fitFamilies": [
+            "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+            "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+            "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+            "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+            "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+            "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+            "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+            "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+            "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+            "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+            "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+            "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+            "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+            "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+            "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+            "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+            "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+          ],
+          "heldFamilies": [
+            "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+            "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+            "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+            "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+            "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+            "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+            "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+            "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53"
+          ],
+          "losses": [
+            0.8215455656701868,
+            0.609230789271268,
+            0.6158291873606768,
+            0.6043692976236343,
+            0.6102993447672237,
+            0.6087842895226045,
+            0.6019980040463534,
+            0.5988767268982801,
+            0.5989219139922749,
+            0.5899335132403807,
+            0.586101999337023,
+            0.5701674710620533,
+            0.5480053722858429,
+            0.5617857588963076,
+            0.5432616025209427,
+            0.5390378047119487,
+            0.5251111943613399,
+            0.522088033231822,
+            0.5307440933856097,
+            0.5262284671718424
+          ]
+        }
+      ],
+      "parameterLosses": [
+        0.7096367555279885,
+        0.5722985921367523,
+        0.5700318274959442,
+        0.5713138743754356,
+        0.5689212295316881,
+        0.5650609683605933,
+        0.5588835958511599,
+        0.5547223283398536,
+        0.5356995146120748,
+        0.5244405990646731,
+        0.4957807227488487,
+        0.5082879095308243,
+        0.4840788975838692,
+        0.4904079350732988,
+        0.47867435216903687,
+        0.4807079395940227,
+        0.47462079025083975,
+        0.46398120157180295,
+        0.47114451469913604,
+        0.4545827046517403
+      ],
+      "selectorLosses": [
+        0.42640430672514823,
+        0.4116373059730376,
+        0.4105229507530889,
+        0.40794529237093463,
+        0.4073393301617715,
+        0.4094708893568285,
+        0.40669005075770037,
+        0.4093575388673813,
+        0.4063428746115777,
+        0.4107973289585883,
+        0.40828996656402466,
+        0.40520223518533094,
+        0.4029455144078501,
+        0.4030836159663816,
+        0.4037451318675472,
+        0.4026605342665026,
+        0.40186746947226987,
+        0.4081278938439585,
+        0.40110226432161944,
+        0.3999780947642942
+      ],
+      "selectedEpoch": 11,
+      "devSelectedNLL": 0.33805541875048994,
+      "objective": "Train source-held-out family NLL regression; minimum predicted loss",
+      "targetHash": "c531c486b60170e13f8c8dcb48d7ea95afe5f0535ebae43420709e9f6d97bfb1"
+    },
+    "crossfitHash": "bd4bdc4cc81bce56174a29863fc7a46f446ea855be41c88f5699cfdf9c668eec",
+    "finalWeightsHash": "7f39157ef60ee236d073cf033ad289b64b86ba144804f828370d30275cded660",
+    "seconds": 205.77711336896755,
+    "checkpoint": "results/research-from-scratch/demand/model.pt",
+    "checkpointHash": "52f4ab1805aad0aa7cbf2915ed7d953be97d22343ecaa42458ae59223d73c81f"
+  },
+  "encoderIntegration": {
+    "scope": "Published snapshot plus newly trained GRU and pinned pretrained ModernBERT; one optimizer step, not an effectiveness experiment",
+    "parent": {
+      "mode": "pretrained_encoder_and_fresh_heads",
+      "demandCheckpoint": "results/research-from-scratch/demand/model.pt",
+      "fileHash": "52f4ab1805aad0aa7cbf2915ed7d953be97d22343ecaa42458ae59223d73c81f",
+      "encoder": {
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+      },
+      "coreWeightsHash": "6fa4216c80d3b94f4676a8f0a39dcbb69f8eae7b1b5e93500e1f9ee33692faea",
+      "sharedHeadsHash": "c07712526fce346beb7b81716823153da70f974be0899f344449d71de0cd322c",
+      "demandWeightsHash": "7f39157ef60ee236d073cf033ad289b64b86ba144804f828370d30275cded660",
+      "removedAuxiliaryParameters": 0
+    },
+    "encoderGradNorm": 5.396477222442627,
+    "encoderUpdated": true,
+    "loss": 15.832813262939453,
+    "demandFamily": "weibull",
+    "FMass": 1.0,
+    "seconds": 8.1411259759916,
+    "testUsed": false,
+    "provenance": {
+      "configHash": "e251c9f14dfdffbbf80c2439c369a4fe032a0a0c245b30fad1104aa3a6bc8b38",
+      "sourceHash": "e4f8c6f496d1fa2e8f2dbbbb1b64d04c68a7347f59f8ca5446c0d590cf89b095",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "87ccb0758f210c4d93d7d436aa369c041a4886720747929ebf40e7c5fa64d945",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "2203902ec724350e15f1dfd4f1b05f41ffff0eff1f033088218640ca9d014896",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "5ae5935d22b79f0795d2fdce2b07132b4ada744dcc4a1f32bf1856d6352c3f93",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "fb4746c3d6df73ee1d16ec039b09fba88f323f0a4dd71c5424b7e026ef06eaf4",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "772f542ddb728849d7860b5cc8c0d71143f106a751c087b12b305490164bae71",
+        "src/newsvendor/structured_rollout.py": "ce3d7b5e4016792c6f040a576a178f53f778f695494bb91c52073a277b5a80f7",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "85f3f3d198afb243f09dd720bf827c8bfb946df810191fc67b2fa283a73e9196",
+        "src/newsvendor/structured_value.py": "a43b52459f63e30a1fd0e4646a65ae93eccb28f82eb7e846a7e55d7a53807956",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": null,
+      "timestamp": "2026-10-09T09:36:52.159283+00:00"
+    },
+    "scriptHash": "dba0ca9d9b2699fa0d2ee9c0a487f3c2b22572e2a155a4f43115a94e74fe5670"
+  },
+  "expectedRejections": [
+    "A checkpoint prepared on the previous workspace capture was rejected against the public snapshot; neither data identities nor checkpoint metadata were weakened.",
+    "An empty local pretrained cache fails in offline mode; the verified path reused only the public, pinned pretrained ModernBERT cache."
+  ],
+  "limitations": [
+    "Exact historical checkpoint reevaluation and full expanded-data capture are not published.",
+    "Aggregate censoring demand objective remains an acknowledged modeling issue.",
+    "This bootstrap test does not establish statistical effectiveness or final Test performance."
+  ],
+  "artifacts": {
+    "tests": {
+      "path": "results/research-checks/reproduction/tests.log",
+      "sha256": "e8ab5b087167ac25a7feb19163d32ab9f30a79303894fa1b4b014d0d8a514be2"
+    },
+    "format": {
+      "path": "results/research-checks/reproduction/format.log",
+      "sha256": "4cfce4314a68bfd72805ca6ee4c4477596a8626548f54945751eb6fcfa34f996"
+    },
+    "restore": {
+      "path": "results/research-checks/reproduction/restore.log",
+      "sha256": "26cdde1e799776c29152f64d2e55a442b81e48b21eb3d6226384ec3772421b5e"
+    },
+    "check": {
+      "path": "results/research-checks/reproduction/check.json",
+      "sha256": "e47fb59d29312a28f8366feb11c67d819ec3aa1a07d7327b43905eee245e4f8d"
+    },
+    "smoke": {
+      "path": "results/research-checks/reproduction/smoke.json",
+      "sha256": "618e478e56a21eddc76b53e0c60a5480be4dc2f0c9402639566be46f66f4c79a"
+    },
+    "demand": {
+      "path": "results/research-checks/reproduction/demand.json",
+      "sha256": "f0da277ff277fa5ad09e1c04e32fea47e0c7d6d38f2442c13707ecc67713e388"
+    },
+    "initialization": {
+      "path": "results/research-checks/reproduction/initialization.json",
+      "sha256": "36dbdabb2b50071bff18c45dee303dcda6488c072d5922213a011edd830b849f"
+    },
+    "script": {
+      "path": "results/research-checks/reproduction/script.py",
+      "sha256": "dba0ca9d9b2699fa0d2ee9c0a487f3c2b22572e2a155a4f43115a94e74fe5670"
+    }
+  },
+  "sourceChecks": {
+    "data/processed/complementary": {
+      "cases": 1802,
+      "components": {
+        "abcd": {
+          "cases": 462,
+          "families": 80,
+          "splits": {
+            "dev": 96,
+            "train": 270,
+            "test": 96
+          },
+          "splitFamilies": {
+            "train": 48,
+            "dev": 16,
+            "test": 16
+          }
+        },
+        "contractnli": {
+          "cases": 360,
+          "families": 60,
+          "splits": {
+            "train": 216,
+            "dev": 72,
+            "test": 72
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "cuad": {
+          "cases": 450,
+          "families": 75,
+          "splits": {
+            "train": 270,
+            "test": 90,
+            "dev": 90
+          },
+          "splitFamilies": {
+            "train": 45,
+            "dev": 15,
+            "test": 15
+          }
+        },
+        "orsharc": {
+          "cases": 240,
+          "families": 60,
+          "splits": {
+            "train": 144,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "retail": {
+          "cases": 50,
+          "families": 43,
+          "splits": {
+            "train": 30,
+            "test": 12,
+            "dev": 8
+          },
+          "splitFamilies": {
+            "train": 25,
+            "dev": 8,
+            "test": 10
+          }
+        },
+        "tatqa": {
+          "cases": 240,
+          "families": 60,
+          "splits": {
+            "train": 144,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        }
+      },
+      "sourceOverlaps": 0,
+      "inputOverlaps": 0,
+      "retrievalDocuments": 651,
+      "language": "en",
+      "scope": "native component diagnostics, not an end-to-end order benchmark",
+      "endToEndOrderBenchmarkReady": false
+    },
+    "data/processed/core-retail-train-v1": {
+      "cases": 2314,
+      "components": {
+        "abcd": {
+          "cases": 462,
+          "families": 80,
+          "splits": {
+            "dev": 96,
+            "train": 270,
+            "test": 96
+          },
+          "splitFamilies": {
+            "train": 48,
+            "dev": 16,
+            "test": 16
+          }
+        },
+        "contractnli": {
+          "cases": 360,
+          "families": 60,
+          "splits": {
+            "train": 216,
+            "dev": 72,
+            "test": 72
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "cuad": {
+          "cases": 450,
+          "families": 75,
+          "splits": {
+            "train": 270,
+            "test": 90,
+            "dev": 90
+          },
+          "splitFamilies": {
+            "train": 45,
+            "dev": 15,
+            "test": 15
+          }
+        },
+        "orsharc": {
+          "cases": 240,
+          "families": 60,
+          "splits": {
+            "train": 144,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "retail": {
+          "cases": 562,
+          "families": 555,
+          "splits": {
+            "train": 542,
+            "test": 12,
+            "dev": 8
+          },
+          "splitFamilies": {
+            "train": 537,
+            "dev": 8,
+            "test": 10
+          }
+        },
+        "tatqa": {
+          "cases": 240,
+          "families": 60,
+          "splits": {
+            "train": 144,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        }
+      },
+      "sourceOverlaps": 0,
+      "inputOverlaps": 0,
+      "retrievalDocuments": 651,
+      "language": "en",
+      "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+      "endToEndOrderBenchmarkReady": false
+    },
+    "data/processed/core-tatqa-train-v1": {
+      "cases": 14753,
+      "components": {
+        "abcd": {
+          "cases": 462,
+          "families": 80,
+          "splits": {
+            "dev": 96,
+            "train": 270,
+            "test": 96
+          },
+          "splitFamilies": {
+            "train": 48,
+            "dev": 16,
+            "test": 16
+          }
+        },
+        "contractnli": {
+          "cases": 360,
+          "families": 60,
+          "splits": {
+            "train": 216,
+            "dev": 72,
+            "test": 72
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "cuad": {
+          "cases": 450,
+          "families": 75,
+          "splits": {
+            "train": 270,
+            "test": 90,
+            "dev": 90
+          },
+          "splitFamilies": {
+            "train": 45,
+            "dev": 15,
+            "test": 15
+          }
+        },
+        "orsharc": {
+          "cases": 240,
+          "families": 60,
+          "splits": {
+            "train": 144,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 36,
+            "dev": 12,
+            "test": 12
+          }
+        },
+        "retail": {
+          "cases": 50,
+          "families": 43,
+          "splits": {
+            "train": 30,
+            "test": 12,
+            "dev": 8
+          },
+          "splitFamilies": {
+            "train": 25,
+            "dev": 8,
+            "test": 10
+          }
+        },
+        "tatqa": {
+          "cases": 13191,
+          "families": 2201,
+          "splits": {
+            "train": 13095,
+            "dev": 48,
+            "test": 48
+          },
+          "splitFamilies": {
+            "train": 2177,
+            "dev": 12,
+            "test": 12
+          }
+        }
+      },
+      "sourceOverlaps": 0,
+      "inputOverlaps": 0,
+      "retrievalDocuments": 651,
+      "language": "en",
+      "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+      "endToEndOrderBenchmarkReady": false
+    }
+  },
+  "expansionAuditHash": "eda11ef124a16eda2ee232d1c8d42694045c06f3a26ee669abaa70a4d2360954"
+}

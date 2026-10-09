@@ -7,7 +7,7 @@ import re
 import torch
 from torch.nn import functional as fn
 
-from .construction import candidates, parameter_record, reference
+from .construction import candidates, demand, parameter_record
 from .corpus import KINDS, STATUSES
 from .structured_inputs import DECISIONS, MODES, OPS, SCALES, same_source, span_indices
 from .structured_model import compute
@@ -56,11 +56,20 @@ def suite_targets(view, component, target):
     action = target["action"]
     if component == "abcd":
         if target.get("pastTools") and view.get("controllerTurns"):
-            turns = {turn["historyIndex"]: i for i, turn in enumerate(view["controllerTurns"]) if turn["role"] == "tool"}
-            tools = {view["actions"][action]["id"].removeprefix("call_tool:"): i
-                     for i, action in enumerate(view["historyActions"])}
-            result["pastTools"] = [[turns[t["historyIndex"]], tools[t["tool"]]] for t in target["pastTools"]
-                                   if t["historyIndex"] in turns and t["tool"] in tools]
+            turns = {
+                turn["historyIndex"]: i
+                for i, turn in enumerate(view["controllerTurns"])
+                if turn["role"] == "tool"
+            }
+            tools = {
+                view["actions"][action]["id"].removeprefix("call_tool:"): i
+                for i, action in enumerate(view["historyActions"])
+            }
+            result["pastTools"] = [
+                [turns[t["historyIndex"]], tools[t["tool"]]]
+                for t in target["pastTools"]
+                if t["historyIndex"] in turns and t["tool"] in tools
+            ]
         action = "call_tool:" + target["tool"] if action == "call_tool" else "respond"
         if target["action"] == "speak" and "?" in target.get("answer", ""):
             text = " " + canonical(target["answer"]) + " "
@@ -82,21 +91,38 @@ def suite_targets(view, component, target):
             if len(target["arguments"]) > len(indices):
                 result["unsupportedArgumentCount"] = True
                 indices = []
-            for position, (index, value) in enumerate(zip(indices, target["arguments"], strict=False)):
+            for position, (index, value) in enumerate(
+                zip(indices, target["arguments"], strict=False)
+            ):
                 pairs = occurrences(view, value)
                 choices = view["fields"][index].get("choices", [])
                 role_ids = role_targets(view["fields"][index], value) if view.get("roles") else []
                 annotated_roles = target.get("argumentRoles", [])
-                if not role_ids and position < len(annotated_roles) and annotated_roles[position] and view.get("roles"):
+                if (
+                    not role_ids
+                    and position < len(annotated_roles)
+                    and annotated_roles[position]
+                    and view.get("roles")
+                ):
                     # Source scenario slots are Train loss annotations only. Restrict
                     # them to this observed tool's declared role vocabulary. Shared
                     # enum values can denote a different role in the current action;
                     # preserve those existing marginal labels rather than narrowing.
-                    role_ids = [i for i, role in enumerate(view["fields"][index].get("roles", []))
-                                if role["name"] in annotated_roles[position]] or role_ids
+                    role_ids = [
+                        i
+                        for i, role in enumerate(view["fields"][index].get("roles", []))
+                        if role["name"] in annotated_roles[position]
+                    ] or role_ids
                 if role_ids:
-                    fields[index]["role"] = [view["roles"].index(view["fields"][index]["roles"][i]["name"]) for i in role_ids]
-                entity_ids = [i for i, e in enumerate(view.get("entities", [])) if canonical(str(e["value"])) == canonical(str(value))]
+                    fields[index]["role"] = [
+                        view["roles"].index(view["fields"][index]["roles"][i]["name"])
+                        for i in role_ids
+                    ]
+                entity_ids = [
+                    i
+                    for i, e in enumerate(view.get("entities", []))
+                    if canonical(str(e["value"])) == canonical(str(value))
+                ]
                 if value in choices:
                     fields[index]["mode"] = MODES.index("choice")
                     fields[index]["choice"] = next(
@@ -112,12 +138,18 @@ def suite_targets(view, component, target):
                     fields[index]["mode"] = MODES.index("span")
                     fields[index]["spans"] = pairs
                     fields[index]["evidence"] = 1
-                elif any(re.search(re.escape(str(value).strip()), s["text"], re.I) for s in view["sources"] if str(value).strip()):
+                elif any(
+                    re.search(re.escape(str(value).strip()), s["text"], re.I)
+                    for s in view["sources"]
+                    if str(value).strip()
+                ):
                     # Train/Dev loss metadata only: observed support exists outside the current view.
                     result["needsRetrieval"] = True
                 # A hidden/unobservable argument is not a missing-state annotation.
         if target.get("procedure") and view.get("procedures"):
-            matches = [i for i, p in enumerate(view["procedures"]) if p["id"] == target["procedure"]]
+            matches = [
+                i for i, p in enumerate(view["procedures"]) if p["id"] == target["procedure"]
+            ]
             if matches:
                 result["procedure"] = matches
                 if view.get("workflowProgress"):
@@ -125,7 +157,11 @@ def suite_targets(view, component, target):
                         result["workflowNodes"] = target["workflowNodes"]
                 elif "stage" in target:
                     result["stage"] = target["stage"]
-                if view.get("controllerStart") is None and target["action"] == "call_tool" and not visible(view, view["procedures"][matches[0]]):
+                if (
+                    view.get("controllerStart") is None
+                    and target["action"] == "call_tool"
+                    and not visible(view, view["procedures"][matches[0]])
+                ):
                     result["needsRetrieval"] = True
     if component == "tatqa":
         fields[0]["scale"] = SCALES.index(target["scale"])
@@ -143,10 +179,7 @@ def suite_targets(view, component, target):
     if action == "abstain":
         action = "hold"
     ids = [a["id"] for a in view["actions"]]
-    if (
-        result.get("needsRetrieval")
-        and view["selectedChunks"] < view["indexedChunks"]
-    ):
+    if result.get("needsRetrieval") and view["selectedChunks"] < view["indexedChunks"]:
         # Existing span annotation supervises retrieval coverage, not a fabricated parameter state.
         action = "retrieve"
     if action in ids:
@@ -176,22 +209,41 @@ def derivation(view, text, scale="", answer=None):
         percent = False
         if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
             for factor, expression in ((node.left, node.right), (node.right, node.left)):
-                if isinstance(factor, ast.Constant) and factor.value == 100 and isinstance(expression, ast.BinOp) and isinstance(expression.op, ast.Div):
+                if (
+                    isinstance(factor, ast.Constant)
+                    and factor.value == 100
+                    and isinstance(expression, ast.BinOp)
+                    and isinstance(expression.op, ast.Div)
+                ):
                     node, percent = expression, True
                     break
         # Both written forms denote the same ordered pair of source values.
-        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Sub) and isinstance(node.left, ast.BinOp) and isinstance(node.left.op, ast.Div) and constant(node.right) == 1:
+        if (
+            isinstance(node, ast.BinOp)
+            and isinstance(node.op, ast.Sub)
+            and isinstance(node.left, ast.BinOp)
+            and isinstance(node.left.op, ast.Div)
+            and constant(node.right) == 1
+        ):
             vals = [constant(node.left.left), constant(node.left.right)]
             if scale != "percent":
                 return None
             op = "change"
-        elif isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div) and isinstance(node.left, ast.BinOp):
+        elif (
+            isinstance(node, ast.BinOp)
+            and isinstance(node.op, ast.Div)
+            and isinstance(node.left, ast.BinOp)
+        ):
             left = node.left
             vals = [constant(left.left), constant(left.right)]
             denominator = constant(node.right)
             if isinstance(left.op, ast.Add) and denominator == 2 and not percent:
                 op = "average"
-            elif isinstance(left.op, ast.Sub) and denominator == vals[1] and (percent or scale == "percent"):
+            elif (
+                isinstance(left.op, ast.Sub)
+                and denominator == vals[1]
+                and (percent or scale == "percent")
+            ):
                 op = "change"
             else:
                 return None
@@ -229,7 +281,9 @@ def derivation(view, text, scale="", answer=None):
 
 def research_targets(view, value):
     linked = "forecast" in value["task"]
-    ref = parameter_record(value) if linked else reference(value)
+    ref = parameter_record(value)
+    if not linked:
+        demand(value, ref)
     result = {"fields": []}
     for field in view["fields"]:
         slot = field["name"]
@@ -289,19 +343,29 @@ def objective(output, targets, *, no_value=False):
         target = targets["control"]
         call = int(output["callMask"][target])
         device = output["controlRecovery"].device
-        control_key = "baseControlRecovery" if "baseControlRecovery" in output else "controlRecovery"
+        control_key = (
+            "baseControlRecovery" if "baseControlRecovery" in output else "controlRecovery"
+        )
         call_key = "baseCallGate" if "baseCallGate" in output else "callGate"
-        for suffix, action_key, gate_key in (("", control_key, call_key),
-                                              ("Context", "contextRecovery", "contextCallGate")):
+        for suffix, action_key, gate_key in (
+            ("", control_key, call_key),
+            ("Context", "contextRecovery", "contextCallGate"),
+        ):
             if action_key not in output:
                 continue
-            losses["callGate" + suffix] = [fn.cross_entropy(output[gate_key][None], torch.tensor([call], device=device))]
+            losses["callGate" + suffix] = [
+                fn.cross_entropy(output[gate_key][None], torch.tensor([call], device=device))
+            ]
             scores = output[action_key].masked_fill(output["callMask"].bool() != bool(call), -1e9)
-            losses["control" + suffix] = [fn.cross_entropy(scores[None], torch.tensor([target], device=device))]
+            losses["control" + suffix] = [
+                fn.cross_entropy(scores[None], torch.tensor([target], device=device))
+            ]
         if "rerankJoint" in output:
             # Supervise the exact combined call/tool distribution regardless of
             # the inference ablation toggle. No gold state enters its features.
-            losses["rerank"] = [fn.cross_entropy(output["rerankJoint"][None], torch.tensor([target], device=device))]
+            losses["rerank"] = [
+                fn.cross_entropy(output["rerankJoint"][None], torch.tensor([target], device=device))
+            ]
     for i, field in enumerate(targets.get("fields", [])):
         for name, target in field.items():
             if name == "spans":
@@ -326,18 +390,28 @@ def objective(output, targets, *, no_value=False):
             )
         ]
         if "baseRecovery" in output:
-            losses["baseRecovery"] = [fn.cross_entropy(output["baseRecovery"][None],
-                torch.tensor([targets["recovery"]], device=output["recovery"].device))]
+            losses["baseRecovery"] = [
+                fn.cross_entropy(
+                    output["baseRecovery"][None],
+                    torch.tensor([targets["recovery"]], device=output["recovery"].device),
+                )
+            ]
     if "procedure" in targets:
-        losses["procedure"] = [-torch.logsumexp(output["procedure"].log_softmax(-1)[targets["procedure"]], 0)]
+        losses["procedure"] = [
+            -torch.logsumexp(output["procedure"].log_softmax(-1)[targets["procedure"]], 0)
+        ]
     if "workflowNodes" in targets:
         # Marginalize genuinely ambiguous node alternatives, conditional on the
         # annotated procedure. No forced target for out-of-catalog actions.
         conditional = output["stage"][targets["procedure"]].log_softmax(-1)
         losses["stage"] = [-torch.logsumexp(conditional[:, targets["workflowNodes"]], -1).mean()]
     elif "stage" in targets:
-        losses["stage"] = [fn.cross_entropy(output["stage"][None],
-            torch.tensor([targets["stage"]], device=output["stage"].device))]
+        losses["stage"] = [
+            fn.cross_entropy(
+                output["stage"][None],
+                torch.tensor([targets["stage"]], device=output["stage"].device),
+            )
+        ]
     if "question" in targets:
         ids = targets["question"]
         ids = ids if isinstance(ids, list) else [ids]

@@ -75,7 +75,9 @@ def catalog(text):
                     "actions": actions,
                     # Public policies contain alternatives and conditional branches.
                     # Preserve their own wording, including non-tool communication.
-                    "context": title + "\nAction descriptions:\n" + "\n".join(
+                    "context": title
+                    + "\nAction descriptions:\n"
+                    + "\n".join(
                         (a["tool"] or "speak") + ": " + a["text"] + " " + " ".join(a["subtext"])
                         for a in actions
                     ),
@@ -87,7 +89,8 @@ def catalog(text):
 def observed_catalog(value, contextual=False):
     return [
         p | {"document": doc["id"], "text": p["summary"] if contextual else p["text"]}
-        for doc in value["documents"] for p in catalog(doc["text"])
+        for doc in value["documents"]
+        for p in catalog(doc["text"])
     ]
 
 
@@ -158,28 +161,41 @@ def annotations(rows, schema_path, workflow=False, source_roles=False, history=F
                 continue
             for tool in row["input"]["tools"]:
                 slots = tool.get("argumentSlots", [])
-                require(tool_slots.get(tool["id"], slots) == slots, "Train tool role declarations conflict")
+                require(
+                    tool_slots.get(tool["id"], slots) == slots,
+                    "Train tool role declarations conflict",
+                )
                 tool_slots[tool["id"]] = slots
     if workflow:
         # Only public policy documents observed in Train supply node identities.
-        documents = {doc["text"] for row in rows if row["id"] in allowed
-                     for doc in row["input"]["documents"]}
+        documents = {
+            doc["text"] for row in rows if row["id"] in allowed for doc in row["input"]["documents"]
+        }
         for text in sorted(documents):
             for procedure in catalog(text):
                 previous = procedures.get(procedure["id"])
-                require(previous is None or previous["steps"] == procedure["steps"],
-                        "Public procedure node definitions conflict")
+                require(
+                    previous is None or previous["steps"] == procedure["steps"],
+                    "Public procedure node definitions conflict",
+                )
                 procedures[procedure["id"]] = procedure
         require(procedures, "No observed Train policies for workflow supervision")
     for split, conversations in raw.items():
         for conversation in conversations:
             if str(conversation["convo_id"]) not in conversations_allowed:
                 continue
-            nodes = workflow_targets(conversation["delexed"], schema["procedureMap"], procedures) if workflow and split == "train" else None
+            nodes = (
+                workflow_targets(conversation["delexed"], schema["procedureMap"], procedures)
+                if workflow and split == "train"
+                else None
+            )
             stage, past = 0, []
             original = []
             if history and split == "train":
-                require(len(conversation["original"]) == len(conversation["delexed"]), "Observed turn alignment changed")
+                require(
+                    len(conversation["original"]) == len(conversation["delexed"]),
+                    "Observed turn alignment changed",
+                )
                 roles = {"customer": "user", "agent": "assistant", "action": "tool"}
                 original = [{"role": roles[t[0]], "text": t[1]} for t in conversation["original"]]
             for i, turn in enumerate(conversation["delexed"]):
@@ -193,15 +209,26 @@ def annotations(rows, schema_path, workflow=False, source_roles=False, history=F
                         elif nodes is not None and nodes[i] is not None:
                             result[key]["workflowNodes"] = nodes[i]
                         if source_roles and split == "train" and turn["speaker"] == "action":
-                            roles = argument_roles(turn["targets"][3], conversation["scenario"],
-                                                   tool_slots.get(turn["targets"][2], []))
+                            roles = argument_roles(
+                                turn["targets"][3],
+                                conversation["scenario"],
+                                tool_slots.get(turn["targets"][2], []),
+                            )
                             if any(roles):
                                 result[key]["argumentRoles"] = roles
                     if history and split == "train":
-                        require(observed[key] == original[:i], "Past tool targets do not match observed Train history")
+                        require(
+                            observed[key] == original[:i],
+                            "Past tool targets do not match observed Train history",
+                        )
                         if past:
                             result.setdefault(key, {})["pastTools"] = list(past)
-                if history and split == "train" and turn["speaker"] == "action" and turn["targets"][2] in names:
+                if (
+                    history
+                    and split == "train"
+                    and turn["speaker"] == "action"
+                    and turn["targets"][2] in names
+                ):
                     past.append({"historyIndex": i, "tool": turn["targets"][2]})
                 stage += int(turn["speaker"] == "action")
     require(set(result) <= allowed, "Procedure labels escaped Train")

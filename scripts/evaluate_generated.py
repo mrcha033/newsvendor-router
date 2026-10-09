@@ -20,12 +20,12 @@ def main():
     parser.add_argument("--threads", type=int, default=4)
     args = parser.parse_args()
 
-    import numpy as np
     import torch
 
     from newsvendor import corpus, structured_train
     from newsvendor.cli import provenance
     from newsvendor.io import digest, jsonl, read, require, write
+    from newsvendor.structured_metrics import generated_metrics
     from newsvendor.structured_rollout import ResearchRouter, rollout
 
     torch.set_num_threads(args.threads)
@@ -61,17 +61,10 @@ def main():
                           "total": len(episodes), "seconds": time.perf_counter() - started})
             path = output / f"{policy}.jsonl"
             jsonl(path, records)
-            def summarize(rows):
-                return {"episodes": len(rows), "sourceFamilies": len({r["family"] for r in rows}),
-                        "meanTotal": float(np.mean([r["total"] for r in rows])),
-                        "meanRequestCost": float(np.mean([r["requestCost"] for r in rows])),
-                        "meanInteractions": float(np.mean([r["interactions"] for r in rows])),
-                        "falseHandoffs": sum(r["falseHandoff"] for r in rows),
-                        "holds": sum(r["result"] == "hold" for r in rows)}
             scenarios = {e["id"]: e["scenario"] for e in episodes}
             report["results"][policy] = {
-                **summarize(records), "rawHash": digest(path.read_bytes()),
-                "scenarios": {s: summarize([r for r in records if scenarios[r["id"]] == s]) for s in corpus.SCENARIOS},
+                **generated_metrics(records), "rawHash": digest(path.read_bytes()),
+                "scenarios": {s: generated_metrics([r for r in records if scenarios[r["id"]] == s]) for s in corpus.SCENARIOS},
             }
             write(output / "partial.json", report)
         report["seconds"] = time.perf_counter() - started

@@ -22,9 +22,11 @@ def encode(value, actions, procedures, tokenizer, config, selected_ids=(), *, tu
         slots = tool.get("argumentSlots", list(tool.get("parameters", {}).get("properties", {})))
         if slots:
             text += ". Argument roles: " + ", ".join(slots)
-        candidates.append(query_tokens(tokenizer, text)[:config.get("controllerActionTokens", 48)])
+        candidates.append(query_tokens(tokenizer, text)[: config.get("controllerActionTokens", 48)])
     ranked = rank(procedures, role_text, len(procedures)) if procedures else []
-    policy = sorted(ranked, key=lambda p: p["id"] not in selected_ids)[:config.get("controllerProcedures", 3)]
+    policy = sorted(ranked, key=lambda p: p["id"] not in selected_ids)[
+        : config.get("controllerProcedures", 3)
+    ]
     policy_key = "context" if config.get("procedureContext") else "text"
     policy_ids = query_tokens(tokenizer, "\n".join(p[policy_key] for p in policy))
     policy_limit = config.get("controllerPolicyTokens", 384)
@@ -38,16 +40,24 @@ def encode(value, actions, procedures, tokenizer, config, selected_ids=(), *, tu
     tool_count = sum(h["role"] == "tool" for h in value["history"])
     header = f"Observed tool results: {tool_count}.\n"
     text = header + role_text
-    tokenized = tokenizer(text, add_special_tokens=False, return_offsets_mapping=True) if turns else None
+    tokenized = (
+        tokenizer(text, add_special_tokens=False, return_offsets_mapping=True) if turns else None
+    )
     history = tokenized["input_ids"] if turns else query_tokens(tokenizer, text)
     retained = list(range(len(history)))
     truncated = len(history) > available
     if truncated:
         # Keep the initial request and the newest observations when the dialogue is long.
         first = min(128, available // 4)
-        retained = retained[:first] + retained[-(available - first):]
+        retained = retained[:first] + retained[-(available - first) :]
         history = [history[i] for i in retained]
-    ids = [tokenizer.cls_token_id, *history, tokenizer.sep_token_id, *policy_ids, tokenizer.sep_token_id]
+    ids = [
+        tokenizer.cls_token_id,
+        *history,
+        tokenizer.sep_token_id,
+        *policy_ids,
+        tokenizer.sep_token_id,
+    ]
     spans = []
     for candidate in candidates:
         start = len(ids)
@@ -63,9 +73,15 @@ def encode(value, actions, procedures, tokenizer, config, selected_ids=(), *, tu
         original = {i for i, (lo, hi) in enumerate(offsets) if lo < end and hi > cursor}
         positions = [i + 1 for i, source in enumerate(retained) if source in original]
         if positions:
-            layout.append({"historyIndex": index, "role": turn["role"],
-                           "start": min(positions), "end": max(positions) + 1,
-                           "partial": len(positions) != len(original)})
+            layout.append(
+                {
+                    "historyIndex": index,
+                    "role": turn["role"],
+                    "start": min(positions),
+                    "end": max(positions) + 1,
+                    "partial": len(positions) != len(original),
+                }
+            )
         cursor = end + 1
     return ids, spans, truncated, layout
 
@@ -84,11 +100,13 @@ class History(nn.Module):
 
     def forward(self, view, queries, candidates, output):
         layout = view["controllerTurns"]
-        states = queries[view["historyStart"]:view["historyStart"] + len(layout)]
+        states = queries[view["historyStart"] : view["historyStart"] + len(layout)]
         tools = candidates[view["historyActions"]]
         scores = self.tool(states) @ tools.T / math.sqrt(256)
         output["pastTools"] = scores
-        role_ids = [{"user": 0, "assistant": 1, "tool": 2, "system": 3}.get(t["role"], 4) for t in layout]
+        role_ids = [
+            {"user": 0, "assistant": 1, "tool": 2, "system": 3}.get(t["role"], 4) for t in layout
+        ]
         roles = torch.tensor(role_ids, device=states.device)
         expected = self.value(scores.softmax(-1) @ tools)
         expected = expected * (roles == 2)[:, None]
@@ -100,7 +118,9 @@ class History(nn.Module):
 class Controller(nn.Module):
     def __init__(self, residual=False, auxiliary=False, history=False):
         super().__init__()
-        require(not auxiliary or residual, "Auxiliary controller loss requires residual composition")
+        require(
+            not auxiliary or residual, "Auxiliary controller loss requires residual composition"
+        )
         self.residual = residual
         self.auxiliary = auxiliary
         self.action = Head(256, 128, 1)
@@ -111,14 +131,20 @@ class Controller(nn.Module):
     def forward(self, view, queries, output):
         start = view["controllerStart"]
         count = len(view["actions"])
-        states = queries[start:start + count]
+        states = queries[start : start + count]
         summary = queries[start + count]
         if "dialogueState" in output or (hasattr(self, "history") and view.get("controllerTurns")):
-            correction = output["dialogueState"] if "dialogueState" in output else self.history(view, queries, states, output)
+            correction = (
+                output["dialogueState"]
+                if "dialogueState" in output
+                else self.history(view, queries, states, output)
+            )
             states, summary = states + correction, summary + correction
         output["controlRecovery"] = self.action(states).flatten()
         output["callGate"] = self.call(summary)
-        output["callMask"] = torch.tensor([a["id"].startswith("call_tool:") for a in view["actions"]], device=states.device)
+        output["callMask"] = torch.tensor(
+            [a["id"].startswith("call_tool:") for a in view["actions"]], device=states.device
+        )
         if self.auxiliary:
             output["contextRecovery"] = output["controlRecovery"]
             output["contextCallGate"] = output["callGate"]
@@ -127,9 +153,12 @@ class Controller(nn.Module):
             prior = output["recovery"].float()
             mask = output["callMask"]
             output["controlRecovery"] = prior + output["controlRecovery"]
-            output["callGate"] = output["callGate"].float() + torch.stack([
-                prior[~mask].logsumexp(0), prior[mask].logsumexp(0),
-            ])
+            output["callGate"] = output["callGate"].float() + torch.stack(
+                [
+                    prior[~mask].logsumexp(0),
+                    prior[mask].logsumexp(0),
+                ]
+            )
 
 
 def selection(output, allowed):

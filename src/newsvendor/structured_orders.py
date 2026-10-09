@@ -21,7 +21,7 @@ class Actor:
         self.state, self.history = None, []
 
     def decide(self, public, history, confirmed):
-        if history[:len(self.history)] != self.history:
+        if history[: len(self.history)] != self.history:
             self.reset()
         tools = [
             {
@@ -41,10 +41,13 @@ class Actor:
         )
         synchronize(self.model)
         start = time.perf_counter()
-        result, trace = infer(self.model, self.tokenizer, value, self.config, adapt=False,
-                              state=self.state)
-        self.state = {"memory": result.get("memory", []),
-                      "procedureIds": result.get("procedureIds", [])}
+        result, trace = infer(
+            self.model, self.tokenizer, value, self.config, adapt=False, state=self.state
+        )
+        self.state = {
+            "memory": result.get("memory", []),
+            "procedureIds": result.get("procedureIds", []),
+        }
         self.history = [dict(h) for h in history]
         action = result["action"]
         response = result

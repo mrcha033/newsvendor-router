@@ -60,7 +60,11 @@ def research_measurements(rows):
         for key in ("state", "types", "values"):
             for slot in ("c", "p", "v", "b", "F"):
                 a, b = expected[key].get(slot), actual[key].get(slot)
-                equal = isclose(a, b, rel_tol=1e-6, abs_tol=1e-6) if isinstance(a, (int, float)) and isinstance(b, (int, float)) else a == b
+                equal = (
+                    isclose(a, b, rel_tol=1e-6, abs_tol=1e-6)
+                    if isinstance(a, (int, float)) and isinstance(b, (int, float))
+                    else a == b
+                )
                 if not equal:
                     return True
         return False

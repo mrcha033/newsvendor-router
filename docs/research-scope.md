@@ -74,7 +74,7 @@ v3는 받은 수치 응답을 현재의 동일 SKU·기간·최신 근거와 대
 
 전체 rolling 판매 Dev를 따로 점검하면 8개 source family에서 1일/7일 각각 264개 예측 구간이 나온다. 완전 관측은 각각 177개/30개이며, 이 구간에서 80% 예측구간 적중률은 77.40%/33.33%였다. 이웃 구간이 겹치고 품절 없는 기간만의 조건부 지표이므로 독립 표본 수나 전체 수요의 calibration으로 해석하지 않는다. Train의 source-group cross-fitting으로 종류를 선택하고 검열 likelihood로 모수를 적합한 단순 기준선도 비교했다. 기준선의 관측 NLL은 GRU보다 1일 0.0861, 7일 0.0898 낮았지만, 품절 없는 7일 구간의 CRPS와 발주 손실은 GRU가 더 낮았다. 한 지표만으로 수요 경로의 우위를 선언하지 않는다. 원시 측정은 `results/research-checks/demand-dev-v3`와 `demand-baseline`에 보존했다.
 
-품절 구간도 버리지 않고 적중률의 식별 가능한 범위를 계산했다. 관측 판매 하한이 예측구간 상단을 이미 넘었으면 반드시 미적중이고, 그렇지 않은 품절 구간은 적중 여부를 알 수 없다. 현재 GRU의 전체 관측 적중률 범위는 1일 51.89–81.06%, 7일 3.79–92.05%다. 7일의 비품절 적중률 33.33%만으로 전체 calibration을 확정할 수 없으며, 이 넓은 범위도 적절성을 입증하지 않는다. source family 단위 재표본화와 실제 optimizer에 전달된 이산 `F`의 구간 질량을 함께 기록했다. [품절 포함 식별 범위](../results/research-checks/calibration-bounds/report.json)
+품절 구간도 버리지 않고 적중률의 식별 가능한 범위를 계산했다. 관측 판매 하한이 예측구간 상단을 이미 넘었으면 반드시 미적중이고, 그렇지 않은 품절 구간은 적중 여부를 알 수 없다. 현재 GRU의 전체 관측 적중률 범위는 1일 51.89–81.06%, 7일 3.79–92.05%다. 7일의 비품절 적중률 33.33%만으로 전체 calibration을 확정할 수 없으며, 이 넓은 범위도 적절성을 입증하지 않는다. source family 단위 재표본화와 실제 optimizer에 전달된 이산 `F`의 구간 질량을 함께 기록했다. [품절 포함 식별 범위](evidence/research-calibration-bounds.json)
 
 순차 추론은 `structured_train.infer(..., linked=True, state=previous["constructedState"])`에 이전 채택 상태를 전달한다. 내부 rollout도 동일한 근거 검증을 거쳐 상태를 전달한다. 반환한 `fields`는 실제 optimizer 입력이며, `constructedState.rawFields`는 보존 전 모델 예측이다.
 
@@ -94,7 +94,7 @@ no_value는 첫 iteration의 10번째 epoch를 선택했고, 최종 Dev에서 ba
 
 표는 동일한 5개 완전 관측 기간에 대한 평균 총손실이다. 세 정책은 모든 336사례에서 같은 질문 집합을 시도했고, 가치 정책의 질문 순서만 35사례에서 달랐다. 현재 응답 모형은 질문 위치별로 고정된 난수 표본을 사용하므로 순서가 바뀌면 실제 응답 누락 표본도 달라진다. 모든 필수 질문을 시도하고 각 응답의 누락이 독립이며 비용이 순서에 무관하다는 이 환경의 가정 아래에서는 세 정책의 기대 총손실이 같다. 실제 질문 집합과 성공 시 발주량을 대조한 계산값은 10%에서 89.9262, 20%에서 134.2033이다. 표의 차이를 가치 학습의 일반적 열세나 우위로 확정하지 않는다. 경제 가치 head가 유리해지도록 평가 조건을 추가하지 않았다.
 
-남은 주 검증은 수요분포의 적절성, 현재 core의 공개 문서 과제 성능 유지, 동일한 초기화·자료·head·학습 예산을 적용한 base/large 비교다. 현재 통제 조건의 높은 정확도를 전체 연구 완료로 해석하지 않는다.
+이 시점의 후속 검증 중 동일한 초기화·자료·head·학습 예산을 적용한 base/large 비교는 아래 기록처럼 완료했다. 수요분포의 적절성과 공개 문서 과제 성능 유지는 계속 검증해야 한다. 현재 통제 조건의 높은 정확도를 전체 연구 완료로 해석하지 않는다.
 
 ## 공개 문서 학습 주석 점검
 
@@ -126,13 +126,13 @@ no_value는 첫 iteration의 10번째 epoch를 선택했고, 최종 Dev에서 ba
 
 새 base와 동일한 `common.pt`에서 시작한 no_value도 133.22초에 학습·평가를 마쳤다. 최종 encoder·모수 구성기·수요 GRU가 base와 동일하고, 경제 가치 가중치는 초기값 그대로이며 추론에서 사용되지 않는 것을 직접 대조했다. recovery head는 자기 예측 상태에서 학습해 첫 iteration의 10번째 epoch를 선택했다. 최종 모수·근거 100%, 필요한 질문 336건·불필요한 질문 0건·잘못된 발주 진행 0건, 같은 완전 관측 기간의 손실 44.3274였다. 현재 조건은 큰 backbone이나 경제 가치 head의 필요성을 입증하지 않는다. [동일 구성기의 no_value 비교](evidence/research-paired-no-value-results.json)
 
-별도로 같은 작은 GRU의 일별 보조 likelihood 비중 0.3과 1.0을 같은 초기화·출처별 cross-fitting·학습 횟수로 비교했다. seed 42에서 비중 1.0은 7일 관측 NLL과 비품절 CRPS·발주 손실을 낮췄지만 1일 NLL은 높였다. 현재 사용 중인 GRU와 비교하면 7일 NLL은 0.5441에서 0.4863, 비품절 CRPS는 2.7732에서 2.3743으로 낮아졌다. 다만 CRPS·발주 손실의 출처별 재표본화 구간은 0 차이를 포함한다. 이전 모수 상태·질문 비용을 고정하고 `F`만 교체한 진단에서는 총손실이 44.3274에서 42.2658로 낮아졌으나, 이것은 새로운 순차 정책 실행 결과가 아니다. seed 43·44를 추가 확인하는 실험은 첫 seed를 본 뒤 등록한 Dev 민감도 분석이며 Test를 사용하지 않는다. [수요 비교](../results/research-checks/demand-weight-study/comparison.json)
+별도로 같은 작은 GRU의 일별 보조 likelihood 비중 0.3과 1.0을 같은 초기화·출처별 cross-fitting·학습 횟수로 비교했다. seed 42에서 비중 1.0은 7일 관측 NLL과 비품절 CRPS·발주 손실을 낮췄지만 1일 NLL은 높였다. 현재 사용 중인 GRU와 비교하면 7일 NLL은 0.5441에서 0.4863, 비품절 CRPS는 2.7732에서 2.3743으로 낮아졌다. 다만 CRPS·발주 손실의 출처별 재표본화 구간은 0 차이를 포함한다. 이전 모수 상태·질문 비용을 고정하고 `F`만 교체한 진단에서는 총손실이 44.3274에서 42.2658로 낮아졌으나, 이것은 새로운 순차 정책 실행 결과가 아니다. seed 43·44를 추가 확인하는 실험은 첫 seed를 본 뒤 등록한 Dev 민감도 분석이며 Test를 사용하지 않는다. [수요 비교](evidence/research-demand-weight-comparison.json)
 
-추가 seed 43·44도 완료했다. 세 seed를 모두 포함하면 일별 비중 1.0은 0.3보다 7일 평균 NLL 0.0262, 비품절 CRPS 0.9534를 낮췄다. 그러나 seed 44에서는 부족 비용 비율 3·9의 7일 발주 손실이 증가했고, 1일 평균 NLL은 0.0556 증가했다. 현재 사용 중인 단일 GRU와 비교한 세 seed의 평균 7일 CRPS는 0.0549, 부족 비용 비율 1·3의 발주 손실은 0.2854·0.3801 높았다. 유리한 seed만 골라 교체하지 않는다. 관측 기간 수에 seed 수를 곱하지 않고 출처 그룹별 불확실성을 기록했다. [모든 반복 실험의 비교](../results/research-checks/demand-weight-seeds/comparison.json)
+추가 seed 43·44도 완료했다. 세 seed를 모두 포함하면 일별 비중 1.0은 0.3보다 7일 평균 NLL 0.0262, 비품절 CRPS 0.9534를 낮췄다. 그러나 seed 44에서는 부족 비용 비율 3·9의 7일 발주 손실이 증가했고, 1일 평균 NLL은 0.0556 증가했다. 현재 사용 중인 단일 GRU와 비교한 세 seed의 평균 7일 CRPS는 0.0549, 부족 비용 비율 1·3의 발주 손실은 0.2854·0.3801 높았다. 유리한 seed만 골라 교체하지 않는다. 관측 기간 수에 seed 수를 곱하지 않고 출처 그룹별 불확실성을 기록했다. [모든 반복 실험의 비교](evidence/research-demand-weight-seeds.json)
 
-작은 표본에 의존한 추가 조정보다 실제 Train 관측의 확대를 먼저 준비했다. 고정 revision의 FreshRetail 원본 Train parquet에서 기존 모든 매장·상품과 겹치지 않는 이력 512개를 관측값을 보기 전에 선택했다. 추가 이력끼리도 매장·상품을 공유하지 않는다. 수요 Train은 기존 30개 이력·25개 출처 그룹에서 542개 이력·537개 출처 그룹으로 늘며, 기존 Dev·Test는 그대로다. 첫 60일을 입력, 다음 7일을 결과로 나누고 품절 판매를 참수요로 표시하지 않는다. 새 버전은 `data/processed/core-retail-train-v1`이며 아직 개선된 모델의 증거가 아니다. 원본 출처는 [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K/tree/08c1fab7f9257bc73679d415d65d644165d351d4), 파일 hash·선택 과정은 [자료 기록](../results/research-checks/retail-expansion.json)에 보존한다.
+작은 표본에 의존한 추가 조정보다 실제 Train 관측의 확대를 먼저 준비했다. 고정 revision의 FreshRetail 원본 Train parquet에서 기존 모든 매장·상품과 겹치지 않는 이력 512개를 관측값을 보기 전에 선택했다. 추가 이력끼리도 매장·상품을 공유하지 않는다. 수요 Train은 기존 30개 이력·25개 출처 그룹에서 542개 이력·537개 출처 그룹으로 늘며, 기존 Dev·Test는 그대로다. 첫 60일을 입력, 다음 7일을 결과로 나누고 품절 판매를 참수요로 표시하지 않는다. 새 버전은 `data/processed/core-retail-train-v1`이며 아직 개선된 모델의 증거가 아니다. 원본 출처는 [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K/tree/08c1fab7f9257bc73679d415d65d644165d351d4), 파일 hash·선택 과정은 [자료 기록](evidence/research-retail-expansion.json)에 보존한다.
 
-문서 경로에는 원본 TAT-QA Train의 12,951개 주석을 별도 버전 `data/processed/core-tatqa-train-v1`으로 준비했다. 기존 Dev·Test에 연결되는 원문·정규화 문맥·유사 문맥을 제외하고 기존 행과 분할을 유지했다. 확장 Train의 산술 5,492건 중 현재 계산기가 표현하는 4,526건은 원천 답과 반올림 기준이 일치하고, 나머지는 해당 연산 손실을 적용하지 않는다. 숫자·단위·근거 학습 자료의 보강이며 범용 업무 절차나 도구 기능의 추가가 아니다. 원문 문맥 분리는 원래 기업이나 보고서 전체의 분리를 보장하지 않는다. 독립 검증은 [두 확장 자료의 검사](../results/research-checks/expansion-audit.json)에 기록했다.
+문서 경로에는 원본 TAT-QA Train의 12,951개 주석을 별도 버전 `data/processed/core-tatqa-train-v1`으로 준비했다. 기존 Dev·Test에 연결되는 원문·정규화 문맥·유사 문맥을 제외하고 기존 행과 분할을 유지했다. 확장 Train의 산술 5,492건 중 현재 계산기가 표현하는 4,526건은 원천 답과 반올림 기준이 일치하고, 나머지는 해당 연산 손실을 적용하지 않는다. 숫자·단위·근거 학습 자료의 보강이며 범용 업무 절차나 도구 기능의 추가가 아니다. 원문 문맥 분리는 원래 기업이나 보고서 전체의 분리를 보장하지 않는다. 독립 검증은 [두 확장 자료의 검사](evidence/research-expansion-audit.json)에 기록했다.
 
 확장 수요 자료의 L40S 학습은 seed 42·43·44 모두 종료됐다. 같은 seed의 작은 자료 학습과 비교하면 1일 NLL은 평균 0.1837 낮아졌지만, 7일 NLL은 0.3152, 비품절 CRPS는 0.9474 높아졌다. 세 seed 모두 7일 NLL·CRPS가 악화했다. 부족:잉여 비용 9:1의 발주 손실은 평균 1.7545 낮아졌으나 출처별 재표본화 구간은 0 차이를 포함했다. 현재 사용 중인 GRU와 비교해도 7일 NLL은 평균 0.2505 높았다. 후보 종류 선택뿐 아니라 각 종류의 모수 예측 손실도 악화했으므로 기존 수요 checkpoint를 유지한다. 자료량 외에 batch 크기와 CPU/GPU도 달라진 비교이며, 8개 Dev 출처와 30개 비품절 주간 구간의 결과를 일반적인 자료 확대 효과로 단정하지 않는다. [모든 seed의 비교와 종류별 진단](evidence/research-demand-expanded-results.json)
 
@@ -146,6 +146,32 @@ no_value는 첫 iteration의 10번째 epoch를 선택했고, 최종 Dev에서 ba
 
 원래 생성 시나리오의 Dev 60건·12개 출처 그룹도 별도로 실행했다. 같은 입력·평가 코드에서 기존 paired base의 학습 정책 평균 총손실은 535.9733, 문서 추가 학습 후에는 478.9948이었다. 잘못된 발주 진행은 12건에서 6건으로 줄었지만 후자도 47건에서 보류했으므로 요청·회복 성능이 해결된 결과는 아니다. 이 수치는 원래 Test 목표 240.35나 retail 총손실과 직접 비교하지 않는다. [원래 생성 Dev 결과](evidence/research-generated-dev-results.json)
 
-기존 paired base의 95회 조회는 모두 읽을 문서가 남아 있지 않은 상태에서 발생했고, 25개 최종 상태에서 판매가격이 원가로 채택됐다. 원래 생성 경로에도 모수 역할 검증과 미열람 문서 확인을 적용했다. 이 검증은 잘못 연결한 값을 거부하며 정답 값을 채워 넣지는 않는다. 현재 core 학습 구성에는 원래 생성 Train 사례가 포함되지 않는 문제도 남아 있다. 위 Dev 수치는 수정 전 코드의 측정이며, 수정 후 신경망 재평가·학습과 최종 Test는 아직 완료하지 않았다.
+기존 paired base의 95회 조회는 모두 읽을 문서가 남아 있지 않은 상태에서 발생했고, 25개 최종 상태에서 판매가격이 원가로 채택됐다. 원래 생성 경로에도 모수 역할 검증과 미열람 문서 확인을 적용했다. 이 검증은 잘못 연결한 값을 거부하며 정답 값을 채워 넣지는 않는다. 해당 학습 구성에는 원래 생성 Train 사례가 포함되지 않았다. 위 Dev 수치는 수정 전 코드의 측정이며, 다음의 재학습과 구분한다. 최종 Test는 아직 사용하지 않았다.
 
 정책 후보 저장은 고정 encoder·구성기·수요 모델을 `policy-base.pt`에 한 번 보존하고, 각 후보의 학습된 head·optimizer·RNG와 정확한 base hash를 따로 저장한다. 같은 실행을 이어갈 때도 기존 base의 신원과 고정 가중치를 검증하고 파일을 덮어쓰지 않는다. 최종 `common.pt`와 `model.pt`는 기존의 완전한 가중치 형식을 유지한다. value/recovery 복원·재학습, 원가 역할 및 반복 조회 회귀 검사를 포함해 전체 185개 테스트, 세 자료 버전의 출처 분리, 확장 자료의 보호 원문 중복 검사, 30개 수치 smoke를 통과했다. [수정·검증 기록](evidence/research-generated-core-fixes.json)
+
+## 원래 생성 Train과 매니저 응답 상태의 재학습
+
+원래 생성 경로와 판매 이력이 연결된 경로에 같은 모수 메모리·응답 반영·행동 허용 검사를 적용했다. Train 360건·72개 family와 Dev 60건·12개 family를 기존 분할 그대로 복구하고, 실제 환경 응답 후 상태까지 포함해 각각 740개·120개의 구성 학습 사례를 만들었다. 응답 가능성 `rho/partial`이나 숨겨진 참모수는 입력·상태 주석·행동 허용 조건에 사용하지 않는다. 환경은 선택된 질문에 실제로 응답할 때만 응답 확률을 사용한다. [누출·회귀 검사](evidence/research-replay-checks.json)
+
+추론 코드를 먼저 고정하고 같은 부모 checkpoint를 평가하면 생성 Dev 평균 총손실은 526.9859, 보류 51건, 잘못된 발주 진행 0건이었다. 그 다음 동일 코드에서 문서 encoder·구성기를 추가 학습했다. 생성 자료와 retail의 손실 단위가 다르므로 정책 선택은 각 자료의 `총손실 / 공개 보류 비용` 평균에 동일 가중치를 주고, 원래 단위의 총손실도 따로 보존했다. [재학습 전 대조군](evidence/research-generated-replay-code-results.json)
+
+L40S base 실행은 1,413.65초에 종료됐다. 원래 생성 Dev의 학습 정책은 평균 총손실 **147.6813**, 보류 11건, 잘못된 발주 진행 0건, 최종 모수·근거 정확도 100%였다. 관측상 누락된 모수 요청은 21건이고 이미 해결된 모수의 재질문은 0건이었다. 이는 원래 minimax 과제에서 모든 요청이 경제적으로 필수였다는 뜻은 아니다. 고정 질문 정책은 181.6758이었다. 보호된 Test의 240.35 기준을 달성했다고 해석하지 않는다. 생성 Dev의 독립 출처는 여전히 12개다. 모수 정확도는 당시 관측으로 확인할 수 있는 값과 누락 상태의 일치를 뜻하며, 미관측 참모수를 모두 알아냈다는 뜻이 아니다. [전체 결과](evidence/research-replay-results.json)
+
+같은 실행에서 TAT-QA 엄격 정답은 16/48, 반올림 진단은 22/48, scale은 46/48이었다. ContractNLI 상태 정답은 44/72로 앞선 문서 추가 학습의 45/72보다 한 건 줄었다. Retail의 최종 모수·근거, 질문, 발주 손실은 기존 44.3274 결과를 유지했다. 두 번의 새 행동 가치 학습에서는 사전에 정한 Dev 선택 기준을 개선한 후보가 없어 상속한 value head를 유지했다. 따라서 생성 Dev 개선은 이번 구성기 재학습 이후의 결과이며, 새 가치 학습 단계의 추가 효과는 입증하지 못했다.
+
+동일한 `common.pt`와 Train/Dev에서 시작한 `no_value`의 정책 학습·평가는 255.17초에 종료됐다. 생성 Dev 손실은 181.6758로 고정 질문 정책과 같았고, 가치 정책과의 출처별 평균 차이는 −33.9945였다. 독립 family 12개를 재표본화한 95% 구간은 [−66.0992, −5.2774]였다. Retail에서는 세 정책 모두 44.3274를 유지했다. Encoder·구성기·GRU가 동일하고 no_value의 value 가중치가 변경되거나 사용되지 않았음을 대조했다. 이 비교는 상속한 가치 head까지 포함하므로 새 가치 학습 단계의 효과와 분리해서 해석한다. [동일 구성기 비교](evidence/research-replay-no-value-results.json)
+
+## 주간 품절 점수의 관측 모형 점검
+
+기존 수요 모형은 하루라도 품절이면 7일 합계 판매를 수요의 하한으로 사용한다. 하한 자체는 유효하지만, 합계의 survival 점수를 날짜별로 검열된 관측의 정확한 likelihood라고 일반화할 수는 없다. 참 일평균 1인 독립 지수 수요를 매일 재고 1로 검열하는 수치 예제에서 날짜별 likelihood는 약 1을 복원했고, 7일 합계 하한 방식은 약 1.46을 추정했다. 일별 보조 손실을 더해도 약 1.28이었다. 세 seed와 1·2·7일 조건의 측정 및 [실행 코드](evidence/scripts/aggregate-censoring-smoke.py)를 보존한다. 이는 가정의 수치 점검이며 실제 FreshRetail에서의 편향 크기나 새 수요 모형의 개선을 입증하지 않는다. [수치 결과](evidence/research-aggregate-censoring-check.json)
+
+## 공개 재현 범위
+
+로컬 `results/`의 자료 검증·수요 보고서 여섯 개를 변경 없이 `docs/evidence/`로 복사하고 링크를 수정했다. [원본과 공개 사본의 hash](evidence/research-published-records.json)를 기록한다. 보고서 내부의 checkpoint·원시 측정 경로는 로컬 경로이며 공개 다운로드를 의미하지 않는다.
+
+공개 snapshot과 기존 연구 작업 폴더는 retail 요청 문구와 관련 manifest·입력 hash가 다르다. 50개 판매 이력, 정답, family와 분할은 모두 같고 다른 문서 과제도 같다. 기존 checkpoint의 데이터 신원 검사는 이 차이를 거부하며 이를 우회하지 않는다. [대조 기록](evidence/research-snapshot-audit.json)
+
+새 clone용 경로는 공개 snapshot에서 GRU를 새로 학습하고, 고정 revision의 ModernBERT와 새로운 기능 head에 연결한다. 과거 checkpoint를 내려받아 같은 수치를 재평가하는 경로와는 구분한다. README에는 현재 연구 경로를 두고 native-v3·Qwen·`familyProbabilities` 설명은 [과거 실행 기록](native-history.md)으로 옮겼다. CI에는 snapshot 복원·출처 검사와 연구 입력의 `check` 단계를 추가했다. 과거 ModernBERT checkpoint와 확장 자료 전체의 공개 배포는 아직 완료하지 않았다.
+
+별도 source export에서 공개 snapshot 복원, 연구 자료 검사, CPU GRU의 전체 cross-fitting 학습(205.78초), 해당 GRU를 사전학습 ModernBERT에 연결한 forward·backward·optimizer step을 확인했다. Encoder gradient와 실제 가중치 변경을 대조했다. 이 검증은 설치된 Python 환경과 공개 사전학습 모델 cache를 재사용했으며 과거 연구 checkpoint는 요구하지 않았다. 완전한 cold-start 문서·정책 재학습을 반복한 것은 아니다. 같은 소스의 테스트 193개, Ruff lint·format, 30개 수치 smoke가 통과했다. [재현 경로 검증](evidence/research-reproduction-checks.json)

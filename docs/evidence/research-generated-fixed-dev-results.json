@@ -1,0 +1,287 @@
+{
+  "scope": "Original generated Dev benchmark, separate from retail; not final Test or real organizational evidence",
+  "testUsed": false,
+  "device": "cpu",
+  "threads": 4,
+  "checkpoint": "results/l40s-research-documents-v1/base/42/model.pt",
+  "checkpointHash": "63e1d0cbfaacdee027dbb5e5810c40282d7b322590134e74b1af82f391ab9a50",
+  "scriptHash": "48cd771d50303cb5c9dc5c41b069918b0c2d9ab8536e00d6e482386156ce81ab",
+  "inputHash": "0431e5141e98ed4f951b71832747a875ece37f25fe82313f05ac846d6a387c3b",
+  "results": {
+    "learned": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 538.2307516190979,
+      "meanRequestCost": 69.59540166666667,
+      "meanInteractions": 1.2833333333333334,
+      "falseHandoffs": 0,
+      "holds": 52,
+      "rawHash": "c9da19633c9e616277e662c25c17341a2fdc6c32fe20fc2cce2290b68ca05e6f",
+      "scenarios": {
+        "sufficient": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 584.1979828786801,
+          "meanRequestCost": 40.053270000000005,
+          "meanInteractions": 1.1,
+          "falseHandoffs": 0,
+          "holds": 9
+        },
+        "missing_contract": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 462.14869891971273,
+          "meanRequestCost": 43.318110000000004,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 7
+        },
+        "missing_demand": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 365.5964,
+          "meanRequestCost": 51.002449999999996,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10
+        },
+        "unset_preference": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 591.852544864196,
+          "meanRequestCost": 92.85659000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 8
+        },
+        "conflicting": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 778.29145,
+          "meanRequestCost": 104.14975000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10
+        },
+        "unavailable": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 447.29743305199855,
+          "meanRequestCost": 86.19224,
+          "meanInteractions": 1.1,
+          "falseHandoffs": 0,
+          "holds": 8
+        }
+      }
+    },
+    "checklist": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 548.1215750081543,
+      "meanRequestCost": 89.46008333333333,
+      "meanInteractions": 1.5833333333333333,
+      "falseHandoffs": 0,
+      "holds": 52,
+      "rawHash": "add2c5ea4f1d8b30aceb53cbcf10923df5ffe9364b637f8645646f97c81c20ab",
+      "scenarios": {
+        "sufficient": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 563.6395349423955,
+          "meanRequestCost": 87.10799,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 8
+        },
+        "missing_contract": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 425.3063952153983,
+          "meanRequestCost": 68.72524999999999,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 7
+        },
+        "missing_demand": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 357.69201,
+          "meanRequestCost": 43.09805999999999,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10
+        },
+        "unset_preference": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 599.641163365133,
+          "meanRequestCost": 106.30165,
+          "meanInteractions": 2.0,
+          "falseHandoffs": 0,
+          "holds": 8
+        },
+        "conflicting": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 778.29145,
+          "meanRequestCost": 104.14975000000001,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 10
+        },
+        "unavailable": {
+          "episodes": 10,
+          "sourceFamilies": 2,
+          "meanTotal": 564.1588965259992,
+          "meanRequestCost": 127.37780000000002,
+          "meanInteractions": 1.5,
+          "falseHandoffs": 0,
+          "holds": 9
+        }
+      }
+    }
+  },
+  "seconds": 225.6879089110298,
+  "sourceHash": "e2f6d0cd0081026d3abfbb41996b7dc760bdfc05692777bdc00a754413bb3bf9",
+  "reportHash": "3a7522bd7eefe59dd4fae927d9ce1767e71e5cc5da1ae5076d4efd86ad40a889",
+  "comparison": {
+    "sameCheckpoint": true,
+    "sameInputs": true,
+    "sameCPUDeviceAndThreads": true,
+    "before": {
+      "learned": {
+        "episodes": 60,
+        "sourceFamilies": 12,
+        "meanTotal": 478.9947678967348,
+        "meanRequestCost": 1.3666666666666667,
+        "meanInteractions": 1.3666666666666667,
+        "falseHandoffs": 6,
+        "holds": 47,
+        "rawHash": "ee12e62626e5b8f4525f1e61a1ac4817af6e4e058cbdd0a4c128b2db2c283968",
+        "scenarios": {
+          "sufficient": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 545.4447128786802,
+            "meanRequestCost": 1.3,
+            "meanInteractions": 1.3,
+            "falseHandoffs": 0,
+            "holds": 9
+          },
+          "missing_contract": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 353.50107311153334,
+            "meanRequestCost": 1.0,
+            "meanInteractions": 1.0,
+            "falseHandoffs": 4,
+            "holds": 2
+          },
+          "missing_demand": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 316.09395000000006,
+            "meanRequestCost": 1.5,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10
+          },
+          "unset_preference": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 545.406074864196,
+            "meanRequestCost": 1.8,
+            "meanInteractions": 1.8,
+            "falseHandoffs": 0,
+            "holds": 9
+          },
+          "conflicting": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 675.6416999999999,
+            "meanRequestCost": 1.5,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10
+          },
+          "unavailable": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 437.8810965259992,
+            "meanRequestCost": 1.1,
+            "meanInteractions": 1.1,
+            "falseHandoffs": 2,
+            "holds": 7
+          }
+        }
+      },
+      "checklist": {
+        "episodes": 60,
+        "sourceFamilies": 12,
+        "meanTotal": 501.3440637808389,
+        "meanRequestCost": 18.633703333333333,
+        "meanInteractions": 1.5833333333333333,
+        "falseHandoffs": 7,
+        "holds": 47,
+        "rawHash": "9a1845f6f7d33245261f5b433042983d12b46a57e3cc2919ee6712a7211011bd",
+        "scenarios": {
+          "sufficient": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 638.35275,
+            "meanRequestCost": 27.663549999999997,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 1,
+            "holds": 9
+          },
+          "missing_contract": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 386.85329202496104,
+            "meanRequestCost": 21.579449999999998,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 4,
+            "holds": 3
+          },
+          "missing_demand": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 316.3868100000001,
+            "meanRequestCost": 1.79286,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10
+          },
+          "unset_preference": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 511.027873365133,
+            "meanRequestCost": 17.68836,
+            "meanInteractions": 2.0,
+            "falseHandoffs": 0,
+            "holds": 8
+          },
+          "conflicting": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 675.6416999999999,
+            "meanRequestCost": 1.5,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10
+          },
+          "unavailable": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 479.80195729493926,
+            "meanRequestCost": 41.577999999999996,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 2,
+            "holds": 7
+          }
+        }
+      }
+    },
+    "finding": "False handoffs eliminated, but holds and mean total loss worsened; guard fixes alone do not achieve the goal."
+  }
+}

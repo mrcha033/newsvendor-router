@@ -18,11 +18,17 @@ def atoms(doc):
         label, number = match.groups()
         unit = (
             "count"
-            if re.search(r"\b(?:pack size|(?:units?|items?|pieces?) per (?:pack|carton|box|bundle))\b", label, re.I)
+            if re.search(
+                r"\b(?:pack size|(?:units?|items?|pieces?) per (?:pack|carton|box|bundle))\b",
+                label,
+                re.I,
+            )
             else "currency/pack"
             if re.search(r"\b(?:pack|carton|box|bundle) price\b", label, re.I)
             else "currency/unit"
-            if re.search(r"\bper (?:unit|item|piece)\b|\bunit (?:price|cost|refund|fee)\b", label, re.I)
+            if re.search(
+                r"\bper (?:unit|item|piece)\b|\bunit (?:price|cost|refund|fee)\b", label, re.I
+            )
             else "currency/unknown"
         )
         result.append(
@@ -123,6 +129,7 @@ def demand(input, record):
     try:
         Fs = [empirical(input["observations"])]
         record["state"]["F"] = "verified"
+        record.setdefault("links", {})["F"] = "observed-demand"
     except ValueError:
         Fs = input["task"]["allowed"]["F"]
         record["state"]["F"] = "unconfirmed"
@@ -146,6 +153,7 @@ def demand(input, record):
             if F and abs(sum(p for _, p in F) - 1) < 1e-8:
                 Fs = [F]
                 record["state"]["F"] = "verified"
+                record.setdefault("links", {})["F"] = forecasts[-1]["id"]
                 record["errors"].remove("censored-demand")
     record["types"]["F"] = "estimate"
     return Fs

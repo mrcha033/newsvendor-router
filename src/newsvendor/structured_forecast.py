@@ -26,7 +26,7 @@ def compatible(expression, slot):
 
 
 def task_key(value):
-    return digest({k: value["task"][k] for k in ("sku", "period", "quantityUnit")})
+    return digest({k: value["task"].get(k) for k in ("sku", "period", "quantityUnit")})
 
 
 def remember(value, state):
@@ -37,11 +37,27 @@ def remember(value, state):
     for slot in SLOTS:
         if slot not in state["values"] or state["state"].get(slot) != "verified":
             continue
-        expr = next((e for e in candidates(value, slot) if e["id"] == state["expressions"].get(slot)
-                     and compatible(e, slot) and math.isclose(e["value"], state["values"][slot], rel_tol=1e-9, abs_tol=1e-8)), None)
+        expr = next(
+            (
+                e
+                for e in candidates(value, slot)
+                if e["id"] == state["expressions"].get(slot)
+                and compatible(e, slot)
+                and math.isclose(e["value"], state["values"][slot], rel_tol=1e-9, abs_tol=1e-8)
+            ),
+            None,
+        )
         if expr is not None and state.get("sourceHashes", {}).get(slot) == digest(expr["doc"]):
-            result.append({"slot": slot, "value": expr["value"], "type": state["types"][slot],
-                           "expression": expr["id"], "sourceHash": digest(expr["doc"]), "taskKey": state["taskKey"]})
+            result.append(
+                {
+                    "slot": slot,
+                    "value": expr["value"],
+                    "type": state["types"][slot],
+                    "expression": expr["id"],
+                    "sourceHash": digest(expr["doc"]),
+                    "taskKey": state["taskKey"],
+                }
+            )
     return result
 
 
@@ -51,28 +67,57 @@ def copy_memory(value, record):
         slot = item.get("slot")
         if slot not in SLOTS or slot in record["values"] or record["state"][slot] == "conflict":
             continue
-        if item.get("taskKey") != task_key(value) or (slot == "b" and item.get("type") != "preference"):
+        if item.get("taskKey") != task_key(value) or (
+            slot == "b" and item.get("type") != "preference"
+        ):
             continue
         if type(item.get("value")) not in (int, float) or not math.isfinite(item["value"]):
             continue
         # An already accepted, still grounded expression does not need a template title.
         # Include titled competitors so newer or conflicting evidence still blocks copying.
-        pool = [e for e in candidates(value, slot)
-                if (e["id"] == item.get("expression") or matches(e["doc"], slot)) and compatible(e, slot)]
+        pool = [
+            e
+            for e in candidates(value, slot)
+            if (e["id"] == item.get("expression") or matches(e["doc"], slot))
+            and compatible(e, slot)
+        ]
         version = max((e["doc"]["version"] for e in pool), default=0)
         current = [e for e in pool if e["doc"]["version"] == version]
-        if any(not math.isclose(e["value"], item["value"], rel_tol=1e-9, abs_tol=1e-8) for e in current):
+        if any(
+            not math.isclose(e["value"], item["value"], rel_tol=1e-9, abs_tol=1e-8) for e in current
+        ):
             continue
-        expr = next((e for e in current if e["id"] == item.get("expression")
-                     and digest(e["doc"]) == item.get("sourceHash")), None)
+        expr = next(
+            (
+                e
+                for e in current
+                if e["id"] == item.get("expression") and digest(e["doc"]) == item.get("sourceHash")
+            ),
+            None,
+        )
         if expr is None:
             continue
         record["values"][slot], record["links"][slot] = expr["value"], expr["doc"]["id"]
-        record["expressions"][slot], record["state"][slot], record["types"][slot] = expr["id"], "verified", item["type"]
+        record["expressions"][slot], record["state"][slot], record["types"][slot] = (
+            expr["id"],
+            "verified",
+            item["type"],
+        )
         record["errors"] = [e for e in record["errors"] if not e.endswith("-" + slot)]
-        locations = [{"kind": "document", "id": expr["doc"]["id"], "start": a["span"][0], "end": a["span"][1]} for a in expr["args"]]
-        copied[slot] = {"expression": {"op": expr["op"], "operands": locations}, "evidence": locations,
-                        "sourceHash": item["sourceHash"]}
+        locations = [
+            {
+                "kind": "document",
+                "id": expr["doc"]["id"],
+                "start": a["span"][0],
+                "end": a["span"][1],
+            }
+            for a in expr["args"]
+        ]
+        copied[slot] = {
+            "expression": {"op": expr["op"], "operands": locations},
+            "evidence": locations,
+            "sourceHash": item["sourceHash"],
+        }
     record["copiedMemory"] = copied
 
 
@@ -80,16 +125,24 @@ def copy_responses(value, record):
     """Copy a received typed reply only when its current source agrees in value and scope."""
     latest = {}
     for index, event in enumerate(value["history"]):
-        if event["action"] in SLOTS and type(event["answer"]) in (int, float) and math.isfinite(event["answer"]):
+        if (
+            event["action"] in SLOTS
+            and type(event["answer"]) in (int, float)
+            and math.isfinite(event["answer"])
+        ):
             latest[event["action"]] = (index, event["answer"])
     copied = {}
     for slot, (index, answer) in latest.items():
         if type(answer) not in (int, float) or not math.isfinite(answer):
             continue
-        pool = [e for e in candidates(value, slot) if matches(e["doc"], slot) and compatible(e, slot)]
+        pool = [
+            e for e in candidates(value, slot) if matches(e["doc"], slot) and compatible(e, slot)
+        ]
         version = max((e["doc"]["version"] for e in pool), default=0)
         current = [e for e in pool if e["doc"]["version"] == version]
-        if not current or any(not math.isclose(e["value"], answer, rel_tol=1e-9, abs_tol=1e-8) for e in current):
+        if not current or any(
+            not math.isclose(e["value"], answer, rel_tol=1e-9, abs_tol=1e-8) for e in current
+        ):
             continue
         reply = next((e for e in current if e["doc"]["id"] == "response-" + slot), None)
         if reply is None:
@@ -99,12 +152,25 @@ def copy_responses(value, record):
         record["expressions"][slot] = reply["id"]
         record["state"][slot] = "verified"
         record["types"][slot] = "preference" if slot == "b" else "fact"
-        record["errors"] = [e for e in record["errors"] if not e.endswith("-" + slot)
-                            and not (slot == "b" and e == "unselected-preference")]
-        locations = [{"kind": "document", "id": reply["doc"]["id"], "start": a["span"][0], "end": a["span"][1]} for a in reply["args"]]
+        record["errors"] = [
+            e
+            for e in record["errors"]
+            if not e.endswith("-" + slot) and not (slot == "b" and e == "unselected-preference")
+        ]
+        locations = [
+            {
+                "kind": "document",
+                "id": reply["doc"]["id"],
+                "start": a["span"][0],
+                "end": a["span"][1],
+            }
+            for a in reply["args"]
+        ]
         copied[slot] = {
-            "historyIndex": index, "responseHash": digest(value["history"][index]),
-            "expression": {"op": reply["op"], "operands": locations}, "evidence": locations,
+            "historyIndex": index,
+            "responseHash": digest(value["history"][index]),
+            "expression": {"op": reply["op"], "operands": locations},
+            "evidence": locations,
         }
     record["copiedResponses"] = copied
 
@@ -126,24 +192,42 @@ def resolved_fields(record, forecast):
             current.update(scale="", source=record["links"][slot])
             if slot in record.get("copiedMemory", {}):
                 entry = record["copiedMemory"][slot]
-                current.update(mode="compute", type=record["types"][slot], evidence=entry["evidence"],
-                               expression=entry["expression"], copiedFromState=entry["sourceHash"])
+                current.update(
+                    mode="compute",
+                    type=record["types"][slot],
+                    evidence=entry["evidence"],
+                    expression=entry["expression"],
+                    copiedFromState=entry["sourceHash"],
+                )
             if slot in record.get("copiedResponses", {}):
                 reply = record["copiedResponses"][slot]
-                current.update(mode="compute", type=record["types"][slot], evidence=reply["evidence"],
-                               expression=reply["expression"], copiedFromHistory=reply["historyIndex"])
+                current.update(
+                    mode="compute",
+                    type=record["types"][slot],
+                    evidence=reply["evidence"],
+                    expression=reply["expression"],
+                    copiedFromHistory=reply["historyIndex"],
+                )
         else:
-            current["reason"] = next((e for e in record["errors"] if e.endswith("-" + slot)),
-                                     "unselected-preference" if slot == "b" and field["type"] != "preference"
-                                     else current["state"])
+            current["reason"] = next(
+                (e for e in record["errors"] if e.endswith("-" + slot)),
+                "unselected-preference"
+                if slot == "b" and field["type"] != "preference"
+                else current["state"],
+            )
         fields.append(current)
-    fields.append({
-        "field": "F", "name": "F", "mode": "distribution", "type": "estimate",
-        "state": "verified" if forecast is not None else "unconfirmed",
-        "value": copy.deepcopy(forecast["distribution"]) if forecast is not None else None,
-        "evidence": [{"kind": "series", **forecast["source"]}] if forecast is not None else [],
-        "period": copy.deepcopy(forecast["period"]) if forecast is not None else None,
-    })
+    fields.append(
+        {
+            "field": "F",
+            "name": "F",
+            "mode": "distribution",
+            "type": "estimate",
+            "state": "verified" if forecast is not None else "unconfirmed",
+            "value": copy.deepcopy(forecast["distribution"]) if forecast is not None else None,
+            "evidence": [{"kind": "series", **forecast["source"]}] if forecast is not None else [],
+            "period": copy.deepcopy(forecast["period"]) if forecast is not None else None,
+        }
+    )
     record["fields"] = fields
 
 
@@ -162,7 +246,10 @@ def predict(model, value, min_history=28):
     require(type(days) is int and days in (1, 7), "Demand head was trained for horizons 1 and 7")
     start = date.fromisoformat(spec["start"])
     end = start + timedelta(days=days - 1)
-    require(task["period"] == f"{start.isoformat()}/{end.isoformat()}", "Order and forecast periods differ")
+    require(
+        task["period"] == f"{start.isoformat()}/{end.isoformat()}",
+        "Order and forecast periods differ",
+    )
     require(len(rows) >= min_history, "Insufficient demand history")
     dates = [date.fromisoformat(row["date"]) for row in rows]
     require(
@@ -170,12 +257,15 @@ def predict(model, value, min_history=28):
         "Demand history must end before the forecast and contain consecutive dates",
     )
     require(
-        all(row.get("stockoutHours") is not None and 0 <= row["stockoutHours"] <= 24 for row in rows),
+        all(
+            row.get("stockoutHours") is not None and 0 <= row["stockoutHours"] <= 24 for row in rows
+        ),
         "Demand history needs observed stockout status",
     )
     forecast = sequence.predict(model.demand, {"observations": rows}, days)
     require(
-        forecast["period"] == {"start": start.isoformat(), "end": end.isoformat(), "days": days, "unit": spec["unit"]},
+        forecast["period"]
+        == {"start": start.isoformat(), "end": end.isoformat(), "days": days, "unit": spec["unit"]},
         "Demand model returned a different period or unit",
     )
     forecast["source"] = {
@@ -198,8 +288,11 @@ def finish(value, record, forecast, error=None):
     result = {
         **record,
         "taskKey": task_key(value),
-        "sourceHashes": {slot: digest(next(d for d in value["docs"] if d["id"] == record["links"][slot]))
-                         for slot in SLOTS if slot in record["values"]},
+        "sourceHashes": {
+            slot: digest(next(d for d in value["docs"] if d["id"] == record["links"][slot]))
+            for slot in SLOTS
+            if slot in record["values"]
+        },
         "forecast": forecast,
         "omega": [],
         "q": None,
@@ -231,7 +324,14 @@ def finish(value, record, forecast, error=None):
 def actions(value, state):
     """A small request set based only on public availability and our constructed state."""
     task = value["task"]
-    allowed = ["handoff", "hold"] if state["valid"] else ["hold"]
+    ready = state["valid"]
+    if "forecast" not in task:
+        ready = (
+            ready
+            and task["decision"] == "minimax"
+            and (task["tolerance"] is None or state["gamma"] <= task["tolerance"])
+        )
+    allowed = ["handoff", "hold"] if ready else ["hold"]
     if value["remaining"] <= 0 or len(value["history"]) >= task["deadline"]:
         return allowed
     for action in (*SLOTS, "demand"):
@@ -242,6 +342,15 @@ def actions(value, state):
             continue
         cost = task["costs"][action]
         require(math.isfinite(cost) and cost >= 0, "Invalid declared request cost")
-        if slot in state["missing"] and not any(h["action"] == action for h in value["history"]):
+        missing = (
+            slot in state["missing"]
+            if "missing" in state
+            else (
+                "censored-demand" in state["errors"]
+                if slot == "F"
+                else slot not in state["values"] or state["state"].get(slot) == "conflict"
+            )
+        )
+        if missing and not any(h["action"] == action for h in value["history"]):
             allowed.append(action)
     return allowed

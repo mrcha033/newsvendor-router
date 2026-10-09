@@ -21,16 +21,28 @@ class Router(nn.Module):
     def __init__(self, encoder, config):
         super().__init__()
         self.config = config
-        require(not config.get("contextRerank") or (config.get("structuredTools") and config.get("dialogueController")),
-                "Contextual reranking requires structured tools and the dialogue controller")
-        require(not config.get("dialogueState") or (config.get("structuredTools") and config.get("dialogueController")),
-                "Dialogue state requires structured tools and the dialogue controller")
-        require(not config.get("dialogueWorkflow") or (config.get("dialogueState") and config.get("workflowProgress")),
-                "Dialogue workflow coupling requires dialogue state and workflow progress")
+        require(
+            not config.get("contextRerank")
+            or (config.get("structuredTools") and config.get("dialogueController")),
+            "Contextual reranking requires structured tools and the dialogue controller",
+        )
+        require(
+            not config.get("dialogueState")
+            or (config.get("structuredTools") and config.get("dialogueController")),
+            "Dialogue state requires structured tools and the dialogue controller",
+        )
+        require(
+            not config.get("dialogueWorkflow")
+            or (config.get("dialogueState") and config.get("workflowProgress")),
+            "Dialogue workflow coupling requires dialogue state and workflow progress",
+        )
         self.encoder = encoder.requires_grad_(True)
         if config.get("sharedQueries", False):
             require(
-                all(getattr(encoder.config, name, 0) == 0 for name in ("embedding_dropout", "mlp_dropout", "attention_dropout")),
+                all(
+                    getattr(encoder.config, name, 0) == 0
+                    for name in ("embedding_dropout", "mlp_dropout", "attention_dropout")
+                ),
                 "Shared query encoding requires deterministic dropout-free schema representations",
             )
         if config.get("compileLayers", False):
@@ -74,8 +86,11 @@ class Router(nn.Module):
         if config.get("dialogueController"):
             from .structured_control import Controller
 
-            self.control = Controller(config.get("controllerResidual", False), config.get("controllerAuxiliary", False),
-                                      config.get("dialogueState", False))
+            self.control = Controller(
+                config.get("controllerResidual", False),
+                config.get("controllerAuxiliary", False),
+                config.get("dialogueState", False),
+            )
 
     def forward(self, view):
         multiple = isinstance(view, list)
@@ -90,7 +105,9 @@ class Router(nn.Module):
             if len(views) > 1 and self.config.get("batchFusion", False):
                 outputs = self.finish_batch(views, encoded)
             else:
-                outputs = [self.finish(v, *states) for v, states in zip(views, encoded, strict=True)]
+                outputs = [
+                    self.finish(v, *states) for v, states in zip(views, encoded, strict=True)
+                ]
         # Promote loss inputs and inference scores to FP32 after encoder/head computation.
         outputs = [{k: v.float() for k, v in output.items()} for output in outputs]
         return outputs if multiple else outputs[0]
@@ -122,9 +139,10 @@ class Router(nn.Module):
         for item in sequences:
             length = math.ceil(item[2] / multiple) * multiple
             proposed = max(width, length)
-            if current and (len(current) == size or (
-                ratio is not None and (len(current) + 1) * proposed > ratio * (tokens + length)
-            )):
+            if current and (
+                len(current) == size
+                or (ratio is not None and (len(current) + 1) * proposed > ratio * (tokens + length))
+            ):
                 batches.append((current, width))
                 current, width, tokens = [], 0, 0
             current.append(item)
@@ -180,10 +198,14 @@ class Router(nn.Module):
             )
             prefix = (
                 fn.pad(hidden.float().cumsum(1), (0, 0, 1, 0))
-                if any(owner in query_map for case, seq, _ in current for owner in owners[case, seq])
+                if any(
+                    owner in query_map for case, seq, _ in current for owner in owners[case, seq]
+                )
                 else None
             )
-            for case in sorted({case_id for canonical, seq, _ in current for case_id, _ in owners[canonical, seq]}):
+            for case in sorted(
+                {case_id for canonical, seq, _ in current for case_id, _ in owners[canonical, seq]}
+            ):
                 locations, original, queries, query_order = [], [], [], []
                 for row, (owner, seq, _) in enumerate(current):
                     for actual, actual_seq in owners[owner, seq]:
@@ -217,7 +239,8 @@ class Router(nn.Module):
     def checkpoint_limit(self):
         config = self.encoder.config
         return (
-            self.config["checkpointTokenLimit"] * (22 * (768 + 2 * 1152))
+            self.config["checkpointTokenLimit"]
+            * (22 * (768 + 2 * 1152))
             / (config.num_hidden_layers * (config.hidden_size + 2 * config.intermediate_size))
         )
 
@@ -249,7 +272,9 @@ class Router(nn.Module):
         tokens = nn.utils.rnn.pad_sequence(memory, batch_first=True)
         qlengths = torch.tensor([len(q) for q in joined], device=queries.device)
         lengths = torch.tensor([len(t) for t in memory], device=tokens.device)
-        query_mask = torch.arange(queries.shape[1], device=queries.device)[None] >= qlengths[:, None]
+        query_mask = (
+            torch.arange(queries.shape[1], device=queries.device)[None] >= qlengths[:, None]
+        )
         token_mask = torch.arange(tokens.shape[1], device=tokens.device)[None] >= lengths[:, None]
         fused = self.fusion(
             queries, tokens, tgt_key_padding_mask=query_mask, memory_key_padding_mask=token_mask
@@ -258,8 +283,13 @@ class Router(nn.Module):
         pointers = {name: pointer(fused) for name, pointer in self.pointers.items()}
         return [
             self.finish(
-                view, *states,
-                fused=(fused[i], {k: v[i] for k, v in heads.items()}, {k: v[i] for k, v in pointers.items()}),
+                view,
+                *states,
+                fused=(
+                    fused[i],
+                    {k: v[i] for k, v in heads.items()},
+                    {k: v[i] for k, v in pointers.items()},
+                ),
             )
             for i, (view, states) in enumerate(zip(views, encoded, strict=True))
         ]
@@ -269,16 +299,25 @@ class Router(nn.Module):
         count = len(view["fields"])
         action_count = len(view["actions"])
         joined = (
-            fused[0] if fused is not None
-            else self.fusion(self.joined_queries(view, queries).unsqueeze(0), tokens.unsqueeze(0))[0]
+            fused[0]
+            if fused is not None
+            else self.fusion(self.joined_queries(view, queries).unsqueeze(0), tokens.unsqueeze(0))[
+                0
+            ]
         )
         fields, actions = joined[:count], joined[count : count + action_count]
         output = {}
         for name, head in self.heads.items():
             on_actions = name in ("value", "recovery")
             output[name] = (
-                fused[1][name][count : count + action_count] if on_actions else fused[1][name][:count]
-            ) if fused is not None else head(actions if on_actions else fields)
+                (
+                    fused[1][name][count : count + action_count]
+                    if on_actions
+                    else fused[1][name][:count]
+                )
+                if fused is not None
+                else head(actions if on_actions else fields)
+            )
         output["type"] = output.pop("kind")
         output["fieldState"] = fields
         output["actionState"] = actions
@@ -295,11 +334,15 @@ class Router(nn.Module):
                 / (bounds[:, 1] - bounds[:, 0])[:, None]
             ).to(tokens.dtype)
             for name in ("operand1", "operand2"):
-                projected = fused[2][name][:count] if fused is not None else self.pointers[name](fields)
+                projected = (
+                    fused[2][name][:count] if fused is not None else self.pointers[name](fields)
+                )
                 output[name] = projected @ atoms.T / math.sqrt(256)
         if view["choices"]:
             choice = queries[count + action_count :][view["choiceQueries"]]
-            projected = fused[2]["choice"][:count] if fused is not None else self.pointers["choice"](fields)
+            projected = (
+                fused[2]["choice"][:count] if fused is not None else self.pointers["choice"](fields)
+            )
             output["choice"] = projected @ choice.T / math.sqrt(256)
             allowed = torch.tensor(view["choiceFields"], device=device)
             output["choice"] = output["choice"].masked_fill(
@@ -310,13 +353,18 @@ class Router(nn.Module):
         allowed = torch.tensor(view["allowedActions"], device=device)
         output["recovery"] = output["recovery"].masked_fill(~allowed, -1e9)
         allowed_modes = torch.tensor(
-            [["modes" not in field or mode in field["modes"] for mode in MODES] for field in view["fields"]],
+            [
+                ["modes" not in field or mode in field["modes"] for mode in MODES]
+                for field in view["fields"]
+            ],
             device=device,
         )
         output["mode"] = output["mode"].masked_fill(~allowed_modes, -1e9)
         if view.get("dialogueWorkflow") and view.get("controllerTurns"):
             start = view["controllerStart"]
-            output["dialogueState"] = self.control.history(view, queries, queries[start:start + action_count], output)
+            output["dialogueState"] = self.control.history(
+                view, queries, queries[start : start + action_count], output
+            )
         if hasattr(self, "tools"):
             self.tools(view, fields, actions, tokens, queries, output)
         if hasattr(self, "control") and view.get("controllerStart") is not None:
@@ -423,9 +471,13 @@ def extract(view, output):
         if field.get("roles") and "role" in output:
             result["role"] = view["roles"][int(output["role"][i].argmax())]
         state_required = field.get("stateRequired", False)
-        if mode in ("missing", "conflict") or (state_required and status in ("conflict", "unavailable")):
+        if mode in ("missing", "conflict") or (
+            state_required and status in ("conflict", "unavailable")
+        ):
             result["reason"] = (
-                "conflict" if mode == "conflict" or (state_required and status == "conflict") else "missing"
+                "conflict"
+                if mode == "conflict" or (state_required and status == "conflict")
+                else "missing"
             )
         else:
             start, end = best_span(view, output["start"][i], output["end"][i])
@@ -436,7 +488,9 @@ def extract(view, output):
                 result["value"] = view["choiceValues"][selected]
                 from .suite import canonical
 
-                result["evidence"] = [loc] if canonical(text) == canonical(str(result["value"])) else []
+                result["evidence"] = (
+                    [loc] if canonical(text) == canonical(str(result["value"])) else []
+                )
                 result["source"] = "observed" if result["evidence"] else "schema"
             elif mode == "compute" and view["atoms"]:
                 op = OPS[int(output["relation"][i].argmax())]
@@ -458,10 +512,17 @@ def extract(view, output):
                 # Computed entities retain their separately revalidated expression.
                 agrees = copy_agrees(entity, text, result.get("role"))
                 if view.get("copyAgreement") and not agrees and "expression" not in entity:
-                    result.update(value=text.strip(), evidence=[loc], mode="span",
-                                  source="observed", copyRejected="current_field_disagrees")
+                    result.update(
+                        value=text.strip(),
+                        evidence=[loc],
+                        mode="span",
+                        source="observed",
+                        copyRejected="current_field_disagrees",
+                    )
                 else:
-                    result.update(value=entity["value"], evidence=entity["evidence"], source=entity["origin"])
+                    result.update(
+                        value=entity["value"], evidence=entity["evidence"], source=entity["origin"]
+                    )
                     if "expression" in entity:
                         result["expression"] = entity["expression"]
             elif mode == "span" or (mode == "entity" and not view.get("structuredTools")):
@@ -471,7 +532,11 @@ def extract(view, output):
                 result["reason"] = "unsupported_value"
         if not state_required:
             result["state"] = (
-                "conflict" if mode == "conflict" else "candidate" if result["value"] is not None else "unavailable"
+                "conflict"
+                if mode == "conflict"
+                else "candidate"
+                if result["value"] is not None
+                else "unavailable"
             )
         fields.append(result)
     return fields
@@ -520,15 +585,26 @@ def assemble(view, output, *, no_value=False, use_value=True):
         result.pop("actionValues")
     if "callGate" in output:
         result["callProbability"] = float(output["callGate"].softmax(-1)[1])
-        result["controllerScores"] = [{"action": a["id"], "score": float(output["controlRecovery"][i])}
-                                      for i, a in enumerate(view["actions"]) if view["allowedActions"][i]]
+        result["controllerScores"] = [
+            {"action": a["id"], "score": float(output["controlRecovery"][i])}
+            for i, a in enumerate(view["actions"])
+            if view["allowedActions"][i]
+        ]
     if "pastTools" in output:
         probabilities = output["pastTools"].softmax(-1)
         result["observedActions"] = [
-            {"historyIndex": turn["historyIndex"], "source": {"kind": "history", "id": str(turn["historyIndex"])},
-             "tool": view["actions"][view["historyActions"][int(probabilities[i].argmax())]]["id"].removeprefix("call_tool:"),
-             "probability": float(probabilities[i].max()), "partial": turn["partial"], "type": "prediction"}
-            for i, turn in enumerate(view["controllerTurns"]) if turn["role"] == "tool"
+            {
+                "historyIndex": turn["historyIndex"],
+                "source": {"kind": "history", "id": str(turn["historyIndex"])},
+                "tool": view["actions"][view["historyActions"][int(probabilities[i].argmax())]][
+                    "id"
+                ].removeprefix("call_tool:"),
+                "probability": float(probabilities[i].max()),
+                "partial": turn["partial"],
+                "type": "prediction",
+            }
+            for i, turn in enumerate(view["controllerTurns"])
+            if turn["role"] == "tool"
         ]
     result["policyMode"] = "recovery" if no_value or not use_value else "value"
     if "procedure" in output:
@@ -536,31 +612,55 @@ def assemble(view, output, *, no_value=False, use_value=True):
         indices = probabilities.topk(min(3, len(probabilities))).indices.tolist()
         result["procedureIds"] = [view["procedures"][i]["id"] for i in indices]
         stages = output["stage"].softmax(-1)
-        node = int(stages[indices[0]].argmax()) if view.get("workflowProgress") else int(stages.argmax())
-        result["progress"] = {"stage": node,
-                              "procedureScores": [{"id": view["procedures"][i]["id"], "score": float(probabilities[i])} for i in indices]}
+        node = (
+            int(stages[indices[0]].argmax())
+            if view.get("workflowProgress")
+            else int(stages.argmax())
+        )
+        result["progress"] = {
+            "stage": node,
+            "procedureScores": [
+                {"id": view["procedures"][i]["id"], "score": float(probabilities[i])}
+                for i in indices
+            ],
+        }
         if view.get("workflowProgress"):
             result["progress"]["stageMeaning"] = "next_public_tool_node_or_no_further_logged_tool"
             result["progress"]["nextNodes"] = []
             for i in indices:
                 procedure = view["procedures"][i]
                 node = int(stages[i].argmax())
-                result["progress"]["nextNodes"].append({
-                    "procedure": procedure["id"], "node": node,
-                    "tool": procedure["steps"][node] if node < len(procedure["steps"]) else None,
-                    "score": float(stages[i, node]),
-                    "source": {"kind": "document", "id": procedure["document"],
-                               "start": procedure["start"], "end": procedure["end"]},
-                })
+                result["progress"]["nextNodes"].append(
+                    {
+                        "procedure": procedure["id"],
+                        "node": node,
+                        "tool": procedure["steps"][node]
+                        if node < len(procedure["steps"])
+                        else None,
+                        "score": float(stages[i, node]),
+                        "source": {
+                            "kind": "document",
+                            "id": procedure["document"],
+                            "start": procedure["start"],
+                            "end": procedure["end"],
+                        },
+                    }
+                )
         elif view.get("procedureContext"):
             result["progress"]["stageMeaning"] = "observed_tool_count_capped_at_15"
     if "rerankDelta" in output:
         base = output["rerankPrior"] if "rerankPrior" in output else output["baseRecovery"]
         if "rerankPrior" in output:
             result["actionScoreSpace"] = "joint_call_and_conditional_tool"
-        result["actionScores"] = [{"action": a["id"], "base": float(base[i]),
-                                   "reranked": float(base[i] + output["rerankDelta"][i])}
-                                  for i, a in enumerate(view["actions"]) if view["allowedActions"][i]]
+        result["actionScores"] = [
+            {
+                "action": a["id"],
+                "base": float(base[i]),
+                "reranked": float(base[i] + output["rerankDelta"][i]),
+            }
+            for i, a in enumerate(view["actions"])
+            if view["allowedActions"][i]
+        ]
     if action in ("ask", "confirm"):
         eligible = [
             f
@@ -584,10 +684,16 @@ def assemble(view, output, *, no_value=False, use_value=True):
     elif action.startswith("call_tool:"):
         tool = action.split(":", 1)[1]
         result["action"], result["tool"] = "call_tool", tool
-        positional = [i for i, f in enumerate(view["fields"]) if f.get("tool") == tool and "position" in f]
+        positional = [
+            i for i, f in enumerate(view["fields"]) if f.get("tool") == tool and "position" in f
+        ]
         used = [i for i in positional if fields[i]["use"]]
         # Never compact a gap in ordered arguments into a different executable call.
-        gaps = [i for i in positional[:positional.index(used[-1]) + 1] if not fields[i]["use"]] if used else []
+        gaps = (
+            [i for i in positional[: positional.index(used[-1]) + 1] if not fields[i]["use"]]
+            if used
+            else []
+        )
         missing = [
             i
             for i, spec in enumerate(view["fields"])
@@ -599,7 +705,9 @@ def assemble(view, output, *, no_value=False, use_value=True):
         if missing:
             index = max(missing, key=lambda i: float(output["question"][i, 0]))
             roles = {r["name"] for i in missing for r in view["fields"][i].get("roles", [])}
-            roles.update(view["fields"][i]["name"] for i in missing if "position" not in view["fields"][i])
+            roles.update(
+                view["fields"][i]["name"] for i in missing if "position" not in view["fields"][i]
+            )
             named = [
                 i
                 for i, f in enumerate(view["fields"])
@@ -623,7 +731,9 @@ def assemble(view, output, *, no_value=False, use_value=True):
                 try:
                     from .structured_tools import validate
 
-                    role = next((r for r in spec.get("roles", []) if r["name"] == f.get("role")), None)
+                    role = next(
+                        (r for r in spec.get("roles", []) if r["name"] == f.get("role")), None
+                    )
                     value = validate(value, spec, role)
                 except (ValueError, TypeError):
                     result["action"] = "ask"

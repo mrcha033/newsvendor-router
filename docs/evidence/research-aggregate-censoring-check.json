@@ -1,0 +1,109 @@
+{
+  "scope": "Mathematical/optimizer smoke only; generated data do not demonstrate real demand effectiveness",
+  "model": "Independent exponential daily demand, known fixed cap 1; sum has exact Gamma(shape=days, scale=dailyMean)",
+  "correctLikelihood": "For observed daily values and censor indicators: sum(sales)/theta + count(exact)*log(theta)",
+  "aggregateSurrogate": "Gamma density on complete totals, Gamma survival at summed sales when any day stocks out",
+  "dailyAuxiliary": "Mean correct daily NLL added with weight 1, analogous to horizon auxiliary training",
+  "records": [
+    {
+      "seed": 42,
+      "days": 1,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.006852811236243,
+      "aggregateLowerBoundMean": 1.0068528003886337,
+      "aggregatePlusDailyMean": 1.0068528056667365,
+      "censoredFraction": 0.37034
+    },
+    {
+      "seed": 42,
+      "days": 2,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.002492091951462,
+      "aggregateLowerBoundMean": 1.1059625636663868,
+      "aggregatePlusDailyMean": 1.0659836041470863,
+      "censoredFraction": 0.60122
+    },
+    {
+      "seed": 42,
+      "days": 7,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.0003776978437522,
+      "aggregateLowerBoundMean": 1.4580035170591583,
+      "aggregatePlusDailyMean": 1.276976700565925,
+      "censoredFraction": 0.95982
+    },
+    {
+      "seed": 43,
+      "days": 1,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.0081148862781601,
+      "aggregateLowerBoundMean": 1.008114868310414,
+      "aggregatePlusDailyMean": 1.00811487699794,
+      "censoredFraction": 0.37046
+    },
+    {
+      "seed": 43,
+      "days": 2,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.0159005539955046,
+      "aggregateLowerBoundMean": 1.1223325864209142,
+      "aggregatePlusDailyMean": 1.0811041602754448,
+      "censoredFraction": 0.60684
+    },
+    {
+      "seed": 43,
+      "days": 7,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.0040604137211404,
+      "aggregateLowerBoundMean": 1.466035117360093,
+      "aggregatePlusDailyMean": 1.2822901985859014,
+      "censoredFraction": 0.96048
+    },
+    {
+      "seed": 44,
+      "days": 1,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 0.9979312043625385,
+      "aggregateLowerBoundMean": 0.9979304144019738,
+      "aggregatePlusDailyMean": 0.9979317652870388,
+      "censoredFraction": 0.36832
+    },
+    {
+      "seed": 44,
+      "days": 2,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.004712301899607,
+      "aggregateLowerBoundMean": 1.1077424724458846,
+      "aggregatePlusDailyMean": 1.0679402908964655,
+      "censoredFraction": 0.60194
+    },
+    {
+      "seed": 44,
+      "days": 7,
+      "periods": 50000,
+      "trueDailyMean": 1.0,
+      "dailyObservedLikelihoodMean": 1.0014937155257726,
+      "aggregateLowerBoundMean": 1.45754158593221,
+      "aggregatePlusDailyMean": 1.2774773116085678,
+      "censoredFraction": 0.9596
+    }
+  ],
+  "scriptHash": "df9b3b0a1f2e8980ecb7975dee2b4993228fe7434b9641ea985b0fa5465e60b0",
+  "testUsed": false,
+  "limitation": "This counterexample diagnoses an assumption, not the size of this effect on FreshRetail or a replacement model's effectiveness.",
+  "sourceContext": {
+    "sequenceSourceHash": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+    "demandSourceHash": "25eeccfceba6de4f0d16e98ab913e8a1ecb36835e7c643519681f2c46d881fa5",
+    "paper": "https://arxiv.org/html/2505.16319v1",
+    "publicCode": "https://github.com/Dingdong-Inc/frn-50k-baseline",
+    "interpretation": "Counterexample derived and evaluated locally; the paper describes hourly availability and recovery, not this numerical counterexample."
+  }
+}

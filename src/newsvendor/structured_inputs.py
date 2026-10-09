@@ -25,9 +25,11 @@ def numeric_spans(source):
     from .suite_score import number
 
     text = source["text"]
-    accounting = re.fullmatch(
-        r"\s*[$£€]?\s*(\(\s*[$£€]?\s*(\d[\d,]*(?:\.\d+)?%?)\s*\))\s*", text
-    ) if source["kind"] == "cell" else None
+    accounting = (
+        re.fullmatch(r"\s*[$£€]?\s*(\(\s*[$£€]?\s*(\d[\d,]*(?:\.\d+)?%?)\s*\))\s*", text)
+        if source["kind"] == "cell"
+        else None
+    )
     if accounting:
         value = number(accounting.group(2))
         yield -value if value is not None else None, *accounting.span(1)
@@ -274,7 +276,8 @@ def merge_chunks(chunks, raw, tokenizer):
     merged = []
     for chunk in chunks:
         if (
-            merged and merged[-1]["source"] == chunk["source"]
+            merged
+            and merged[-1]["source"] == chunk["source"]
             and chunk["tokenStart"] <= merged[-1]["tokenEnd"]
         ):
             first = merged[-1]
@@ -374,13 +377,15 @@ def prepare(
     max_length = config["maxLength"]
     prefix = context_ids[: min(config.get("queryTokens", 128), max_length // 3)]
     header_limit = min(48, max_length // 4)
-    width = min(
-        config.get("chunkTokens", max_length), max_length - len(prefix) - header_limit - 3
-    )
+    width = min(config.get("chunkTokens", max_length), max_length - len(prefix) - header_limit - 3)
     overlap = config.get("overlap", 64)
     require(0 <= overlap < width, "Chunk overlap exceeds available source tokens")
     raw = sources(value)
-    procedures = observed_catalog(value, config.get("procedureContext", False)) if config.get("structuredTools") else []
+    procedures = (
+        observed_catalog(value, config.get("procedureContext", False))
+        if config.get("structuredTools")
+        else []
+    )
     chunks = []
     for index, source in enumerate(raw):
         encoded = source_tokens(tokenizer, source["text"])
@@ -403,8 +408,9 @@ def prepare(
                 break
     require(chunks, "Empty source tokens")
     documents = [c for c in chunks if raw[c["source"]]["kind"] == "document"]
-    selected = document_chunks(documents, context, config, round, raw, procedures,
-                               (state or {}).get("procedureIds", []))
+    selected = document_chunks(
+        documents, context, config, round, raw, procedures, (state or {}).get("procedureIds", [])
+    )
     for source_kind, limit in (
         ("history", config.get("historyChunks", 64)),
         ("cell", config.get("tableChunks", 128)),
@@ -442,10 +448,16 @@ def prepare(
             offsets = chunk["offsets"][begin : begin + available]
             if not packed:
                 base = 2 + len(prefix) + len(header)
-                sequence_ids.append([
-                    tokenizer.cls_token_id, *prefix, *header, tokenizer.sep_token_id,
-                    *ids, tokenizer.sep_token_id,
-                ])
+                sequence_ids.append(
+                    [
+                        tokenizer.cls_token_id,
+                        *prefix,
+                        *header,
+                        tokenizer.sep_token_id,
+                        *ids,
+                        tokenizer.sep_token_id,
+                    ]
+                )
             else:
                 if (
                     not sequence_ids
@@ -481,14 +493,18 @@ def prepare(
     query_prefix = [] if config.get("sharedQueries", False) else prefix
     unique_choices = list(dict.fromkeys(choices))
     query_positions = []
-    role_names = list(dict.fromkeys(r["name"] for f in fields for r in f.get("roles", []))) if config.get("structuredTools") else []
+    role_names = (
+        list(dict.fromkeys(r["name"] for f in fields for r in f.get("roles", [])))
+        if config.get("structuredTools")
+        else []
+    )
     extra_queries = ["Argument role: " + n.replace("_", " ") for n in role_names]
     procedure_start = len(queries) + len(unique_choices) + len(extra_queries)
     extra_queries += [p["text"] for p in procedures]
     for query in queries + unique_choices + extra_queries:
         qids = query_tokens(tokenizer, query)
-        if query in extra_queries and query not in extra_queries[:len(role_names)]:
-            qids = qids[:config.get("procedureTokens", 96)]
+        if query in extra_queries and query not in extra_queries[: len(role_names)]:
+            qids = qids[: config.get("procedureTokens", 96)]
         qids = qids[: max_length - len(query_prefix) - 3]
         if config.get("packedQueries", False):
             if (
@@ -512,11 +528,23 @@ def prepare(
             query_positions.append((len(sequence_ids) - 1, 0, 1))
     controller_start, controller_truncated = None, False
     history_start, controller_turns = None, []
-    if config.get("dialogueController") and value["tools"] and value["history"] and kind(value) == "abcd":
+    if (
+        config.get("dialogueController")
+        and value["tools"]
+        and value["history"]
+        and kind(value) == "abcd"
+    ):
         from .structured_control import encode
 
-        encoded = encode(value, actions, procedures, tokenizer, config, (state or {}).get("procedureIds", []),
-                         turns=config.get("dialogueState", False))
+        encoded = encode(
+            value,
+            actions,
+            procedures,
+            tokenizer,
+            config,
+            (state or {}).get("procedureIds", []),
+            turns=config.get("dialogueState", False),
+        )
         ids, spans, controller_truncated = encoded[:3]
         controller_start = len(query_positions)
         seq = len(sequence_ids)
@@ -567,7 +595,9 @@ def prepare(
         "controllerTurns": controller_turns,
         "dialogueWorkflow": config.get("dialogueWorkflow", False),
         "historyStart": history_start,
-        "historyActions": [i for i, action in enumerate(actions) if action["id"].startswith("call_tool:")],
+        "historyActions": [
+            i for i, action in enumerate(actions) if action["id"].startswith("call_tool:")
+        ],
         "contextRerank": config.get("contextRerank", False),
         "fields": fields,
         "actions": actions,
@@ -597,9 +627,7 @@ def prepare(
         "indexedChunks": len(chunks),
         "selectedChunks": count,
         "encodedTokens": int(batch_mask.sum()),
-        "documentTokens": sum(
-            1 for loc in token_locations if loc["kind"] == "document"
-        ),
+        "documentTokens": sum(1 for loc in token_locations if loc["kind"] == "document"),
         "queryTruncated": len(context_ids) > len(prefix),
     }
 

@@ -1,0 +1,468 @@
+{
+  "scope": "Published capture versus existing research workspace, without rewriting either dataset",
+  "publishedManifestHash": "ec0a227a5ce0dfc3fb11e9d4aa6ae2686084355f7c8dd42be90933ada7e47f0b",
+  "workspaceManifestHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+  "identicalIds": true,
+  "changedInputRows": 50,
+  "changes": [
+    {
+      "id": "retail:0:38",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:119:6",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:140:600",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:150:631",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:160:23",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:173:310",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:191:104",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:200:213",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:213:635",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:242:190",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:245:76",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:263:596",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:272:344",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:291:554",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:29:489",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:309:567",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:313:104",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:346:596",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:354:55",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:363:104",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:367:765",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:405:578",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:421:127",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:434:769",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:452:629",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:472:822",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:500:684",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:503:554",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:506:259",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:528:580",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:540:4",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:561:644",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:593:563",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:59:489",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:600:145",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:632:293",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:640:769",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:692:70",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:719:112",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:737:515",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:741:136",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:745:522",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:787:562",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:799:500",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:805:740",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:80:117",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:847:116",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:849:638",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:857:191",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    },
+    {
+      "id": "retail:93:23",
+      "inputFields": [
+        "request"
+      ],
+      "labelFields": [
+        "leakageKeys"
+      ]
+    }
+  ],
+  "allSourceSplitsEqual": true,
+  "allObservationHistoriesEqual": true,
+  "allOutcomeTargetsEqual": true,
+  "allOtherComponentsEqual": true,
+  "requestExample": {
+    "published": "Predict the next 7-day total demand distribution after 2024-05-26 for store 0, product 38. Return F as [[demand, probability], ...] in globally normalized sales units, with nonnegative demand and probabilities summing to one. Use sales history and stockout information to estimate demand.",
+    "workspace": "Forecast the next 7 daily observed sales after 2024-05-26 for store 0, product 38. Return 7 numbers in chronological order in globally normalized sales units. Past stockouts censor demand; do not infer that observed sales on those days equal latent demand."
+  },
+  "consequence": "Historical checkpoint manifest hashes are intentionally rejected against the published capture. Fresh training uses the published capture without editing checkpoint identities."
+}

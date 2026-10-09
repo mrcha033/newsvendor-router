@@ -1,0 +1,1154 @@
+{
+  "status": "base and matched no_value complete; final Test and demand adequacy not established",
+  "scope": "Original generated Train and real manager reply snapshots restored to the compact research model. Same-checkpoint control uses identical inference source. Generated data are not organizational effectiveness evidence.",
+  "testUsed": false,
+  "run": "results/l40s-research-replay-v1/base/42",
+  "sourceHash": "0cbc020152b1bdf71e2461f328605c7aa5bfc08359603d01a91d415f6ed3d399",
+  "parameters": 151848374,
+  "seconds": 1413.64603653003,
+  "peakGpuBytes": 34036366336,
+  "parent": {
+    "mode": "warm_start",
+    "checkpoint": "results/l40s-research-documents-v1/base/42/model.pt",
+    "fileHash": "63e1d0cbfaacdee027dbb5e5810c40282d7b322590134e74b1af82f391ab9a50",
+    "encoder": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "coreWeightsHash": "e3987c1cca61b540c5f0a1c636a6adef2a03d9c90bbfedb9068aebc3a53eb513",
+    "sharedHeadsHash": "fd27b2f970297b40034d48228ee0acd99b2d67122d7206b31c1cd2e502946e74",
+    "demandWeightsHash": "3c07b4f758b8b6bbc4f67775db693999183071c5b12bc63b9ab13374edc022e8",
+    "removedAuxiliaryParameters": 0
+  },
+  "manifest": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+      "labelsHash": "a89f6bfe8091c431aa8435e13a182946a2ec91f9114bd2fb126cf95ea822da59",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 13095
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "language": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "trainLoss": 1.131119336346088,
+        "devLoss": 0.5503801397796876,
+        "supervisedHeads": {
+          "type": 4575,
+          "state": 4575,
+          "evidence": 15345,
+          "relation": 9101,
+          "operand1": 9101,
+          "mode": 14933,
+          "operand2": 9101,
+          "scale": 13095,
+          "recovery": 13806,
+          "spans": 5880,
+          "decision": 351
+        },
+        "headLosses": {
+          "type": 4.15071799401285e-07,
+          "state": 0.048925996504126365,
+          "evidence": 0.013288676790020645,
+          "relation": 0.06827116591565824,
+          "operand1": 0.23365574741879097,
+          "mode": 0.05121442027651946,
+          "operand2": 0.2719697519696173,
+          "scale": 0.21776988694290322,
+          "recovery": 0.027619202155282446,
+          "spans": 1.8742155259107287,
+          "decision": 0.6819967136126638
+        },
+        "workload": {
+          "tokens": 17681540,
+          "retrievals": 81
+        }
+      },
+      {
+        "epoch": 2,
+        "trainLoss": 0.7950638208989896,
+        "devLoss": 0.5944349115055853,
+        "supervisedHeads": {
+          "scale": 13095,
+          "spans": 5881,
+          "mode": 14933,
+          "evidence": 15345,
+          "recovery": 13806,
+          "relation": 9101,
+          "operand1": 9101,
+          "operand2": 9101,
+          "type": 4575,
+          "state": 4575,
+          "decision": 351
+        },
+        "headLosses": {
+          "scale": 0.1606877754415057,
+          "spans": 1.3115313194159823,
+          "mode": 0.03994775172043084,
+          "evidence": 0.009994896145615197,
+          "recovery": 0.02550986961704426,
+          "relation": 0.05373564739548779,
+          "operand1": 0.15342444660268723,
+          "operand2": 0.1779519241594807,
+          "type": 1.128253944702149e-08,
+          "state": 0.01929477418805638,
+          "decision": 0.6439324371845718
+        },
+        "workload": {
+          "tokens": 17711587,
+          "retrievals": 81
+        }
+      }
+    ],
+    "selectedEpoch": 1,
+    "checks": [],
+    "earlyStopped": false
+  },
+  "policyOutcomeCoverage": {
+    "train": 514,
+    "dev": 95
+  },
+  "policySelection": "benchmark_normalized",
+  "policy": [
+    {
+      "iteration": 0,
+      "ownStateTargets": 928,
+      "trainRawHash": "19798355e8cf6296c2659672653ef4ee01103c4896b22f7a93ac421323df4597",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.04279644377529621,
+          "devSelectionLoss": 0.19071414081209487,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 148.35488705755532,
+              "meanNormalizedTotal": 0.29147375773565576
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.0406170775492986,
+          "devSelectionLoss": 0.21511407893710233,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 153.40772872422198,
+              "meanNormalizedTotal": 0.3402736339856707
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.03923412176469962,
+          "devSelectionLoss": 0.21511407893710233,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 153.40772872422198,
+              "meanNormalizedTotal": 0.3402736339856707
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": null,
+        "epoch": null,
+        "selectionMetric": "benchmark_normalized",
+        "selectionLoss": 0.1899591554464823
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "731a3715ed7108fb52c6555c20e8c25e14976c3a1a55fb26cdfb6aa55a0562ea",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "48a168600148596256e053f0378c13f0e9875165c4880bc9d3df9e84a6943e07"
+      },
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "selectionMetric": "benchmark_normalized",
+      "devBenchmarks": {
+        "retail": {
+          "episodes": 35,
+          "meanTotal": 44.32742132570505,
+          "meanNormalizedTotal": 0.08995452388853398
+        },
+        "generated": {
+          "episodes": 60,
+          "meanTotal": 147.68128730239084,
+          "meanNormalizedTotal": 0.2899637870044306
+        }
+      },
+      "devSelectionLoss": 0.1899591554464823
+    },
+    {
+      "iteration": 1,
+      "ownStateTargets": 928,
+      "trainRawHash": "b6b1e9a5e47e6410e0864cf3f5fa78d41f2abf791b4dbe31124ddb5cddf6040b",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.04380362046261629,
+          "devSelectionLoss": 0.19071414081209487,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 148.35488705755532,
+              "meanNormalizedTotal": 0.29147375773565576
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.043665697673956554,
+          "devSelectionLoss": 0.20047411606209786,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 150.37602372422194,
+              "meanNormalizedTotal": 0.31099370823566175
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.04029418701926867,
+          "devSelectionLoss": 0.21511407893710233,
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 153.40772872422198,
+              "meanNormalizedTotal": 0.3402736339856707
+            }
+          },
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": null,
+        "epoch": null,
+        "selectionMetric": "benchmark_normalized",
+        "selectionLoss": 0.1899591554464823
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "731a3715ed7108fb52c6555c20e8c25e14976c3a1a55fb26cdfb6aa55a0562ea",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "48a168600148596256e053f0378c13f0e9875165c4880bc9d3df9e84a6943e07"
+      },
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "selectionMetric": "benchmark_normalized",
+      "devBenchmarks": {
+        "retail": {
+          "episodes": 35,
+          "meanTotal": 44.32742132570505,
+          "meanNormalizedTotal": 0.08995452388853398
+        },
+        "generated": {
+          "episodes": 60,
+          "meanTotal": 147.68128730239084,
+          "meanNormalizedTotal": 0.2899637870044306
+        }
+      },
+      "devSelectionLoss": 0.1899591554464823
+    }
+  ],
+  "generatedBeforeTraining": {
+    "scope": "Original generated Dev benchmark, separate from retail; not final Test or real organizational evidence",
+    "testUsed": false,
+    "device": "cpu",
+    "threads": 4,
+    "checkpoint": "results/l40s-research-documents-v1/base/42/model.pt",
+    "checkpointHash": "63e1d0cbfaacdee027dbb5e5810c40282d7b322590134e74b1af82f391ab9a50",
+    "inputHash": "0431e5141e98ed4f951b71832747a875ece37f25fe82313f05ac846d6a387c3b",
+    "results": {
+      "learned": {
+        "episodes": 60,
+        "sourceFamilies": 12,
+        "meanTotal": 526.9858516190978,
+        "meanRequestCost": 69.59540166666667,
+        "meanInteractions": 1.2833333333333334,
+        "falseHandoffs": 0,
+        "holds": 51,
+        "initialParameters": {
+          "parameterAccuracy": 0.4625,
+          "stateAccuracy": 0.4625,
+          "typeAccuracy": 1.0
+        },
+        "finalParameters": {
+          "parameterAccuracy": 0.5791666666666667,
+          "allParametersCorrect": 0.11666666666666667,
+          "stateAccuracy": 0.5416666666666666,
+          "typeAccuracy": 1.0
+        },
+        "finalEvidenceAccuracy": 0.5049019607843137,
+        "missingFieldRequests": 39,
+        "resolvedFieldRequests": 38,
+        "resolvedAfterRequest": 21,
+        "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+        "rawHash": "944ddb19d1543d147d7419401a0e1569997cbc9bd3a2cdaac447cba99cf05061",
+        "scenarios": {
+          "sufficient": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 516.7285828786802,
+            "meanRequestCost": 40.053270000000005,
+            "meanInteractions": 1.1,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.275,
+              "stateAccuracy": 0.275,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.575,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.575,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.575,
+            "missingFieldRequests": 0,
+            "resolvedFieldRequests": 11,
+            "resolvedAfterRequest": 0,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "missing_contract": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 462.14869891971284,
+            "meanRequestCost": 43.31811,
+            "meanInteractions": 1.0,
+            "falseHandoffs": 0,
+            "holds": 7,
+            "initialParameters": {
+              "parameterAccuracy": 0.7,
+              "stateAccuracy": 0.7,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.725,
+              "allParametersCorrect": 0.2,
+              "stateAccuracy": 0.675,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.6206896551724138,
+            "missingFieldRequests": 6,
+            "resolvedFieldRequests": 4,
+            "resolvedAfterRequest": 4,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "missing_demand": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 365.5964,
+            "meanRequestCost": 51.002449999999996,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10,
+            "initialParameters": {
+              "parameterAccuracy": 0.275,
+              "stateAccuracy": 0.275,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.475,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.475,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.475,
+            "missingFieldRequests": 3,
+            "resolvedFieldRequests": 12,
+            "resolvedAfterRequest": 2,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "unset_preference": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 591.8525448641959,
+            "meanRequestCost": 92.85659000000001,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.5,
+              "stateAccuracy": 0.5,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.625,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.6,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.6052631578947368,
+            "missingFieldRequests": 9,
+            "resolvedFieldRequests": 6,
+            "resolvedAfterRequest": 8,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "conflicting": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 778.2914499999999,
+            "meanRequestCost": 104.14975000000001,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10,
+            "initialParameters": {
+              "parameterAccuracy": 0.3,
+              "stateAccuracy": 0.3,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.35,
+              "allParametersCorrect": 0.0,
+              "stateAccuracy": 0.35,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.1875,
+            "missingFieldRequests": 10,
+            "resolvedFieldRequests": 5,
+            "resolvedAfterRequest": 2,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "unavailable": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 447.29743305199855,
+            "meanRequestCost": 86.19224,
+            "meanInteractions": 1.1,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.725,
+              "stateAccuracy": 0.725,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.725,
+              "allParametersCorrect": 0.2,
+              "stateAccuracy": 0.575,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.56,
+            "missingFieldRequests": 11,
+            "resolvedFieldRequests": 0,
+            "resolvedAfterRequest": 5,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          }
+        }
+      },
+      "checklist": {
+        "episodes": 60,
+        "sourceFamilies": 12,
+        "meanTotal": 532.976469568812,
+        "meanRequestCost": 89.46008333333334,
+        "meanInteractions": 1.5833333333333333,
+        "falseHandoffs": 0,
+        "holds": 50,
+        "initialParameters": {
+          "parameterAccuracy": 0.4625,
+          "stateAccuracy": 0.4625,
+          "typeAccuracy": 1.0
+        },
+        "finalParameters": {
+          "parameterAccuracy": 0.575,
+          "allParametersCorrect": 0.11666666666666667,
+          "stateAccuracy": 0.5166666666666667,
+          "typeAccuracy": 1.0
+        },
+        "finalEvidenceAccuracy": 0.5211267605633803,
+        "missingFieldRequests": 50,
+        "resolvedFieldRequests": 45,
+        "resolvedAfterRequest": 28,
+        "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+        "rawHash": "8322779009a35a5b65df4bb6a8ee45a163782976182d4239c7391eae54f57039",
+        "scenarios": {
+          "sufficient": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 563.6395349423955,
+            "meanRequestCost": 87.10799,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.275,
+              "stateAccuracy": 0.275,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.55,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.55,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.55,
+            "missingFieldRequests": 0,
+            "resolvedFieldRequests": 15,
+            "resolvedAfterRequest": 0,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "missing_contract": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 411.12317257934444,
+            "meanRequestCost": 68.72524999999999,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 6,
+            "initialParameters": {
+              "parameterAccuracy": 0.7,
+              "stateAccuracy": 0.7,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.725,
+              "allParametersCorrect": 0.2,
+              "stateAccuracy": 0.5,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.6451612903225806,
+            "missingFieldRequests": 15,
+            "resolvedFieldRequests": 0,
+            "resolvedAfterRequest": 6,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "missing_demand": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 357.69201,
+            "meanRequestCost": 43.09806,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10,
+            "initialParameters": {
+              "parameterAccuracy": 0.275,
+              "stateAccuracy": 0.275,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.45,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.45,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.45,
+            "missingFieldRequests": 0,
+            "resolvedFieldRequests": 15,
+            "resolvedAfterRequest": 0,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "unset_preference": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 599.641163365133,
+            "meanRequestCost": 106.30165000000002,
+            "meanInteractions": 2.0,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.5,
+              "stateAccuracy": 0.5,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.65,
+              "allParametersCorrect": 0.1,
+              "stateAccuracy": 0.625,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.6410256410256411,
+            "missingFieldRequests": 10,
+            "resolvedFieldRequests": 10,
+            "resolvedAfterRequest": 9,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "conflicting": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 778.2914499999999,
+            "meanRequestCost": 104.14975000000001,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 10,
+            "initialParameters": {
+              "parameterAccuracy": 0.3,
+              "stateAccuracy": 0.3,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.35,
+              "allParametersCorrect": 0.0,
+              "stateAccuracy": 0.35,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.1875,
+            "missingFieldRequests": 10,
+            "resolvedFieldRequests": 5,
+            "resolvedAfterRequest": 2,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          },
+          "unavailable": {
+            "episodes": 10,
+            "sourceFamilies": 2,
+            "meanTotal": 487.47148652599924,
+            "meanRequestCost": 127.37780000000001,
+            "meanInteractions": 1.5,
+            "falseHandoffs": 0,
+            "holds": 8,
+            "initialParameters": {
+              "parameterAccuracy": 0.725,
+              "stateAccuracy": 0.725,
+              "typeAccuracy": 1.0
+            },
+            "finalParameters": {
+              "parameterAccuracy": 0.725,
+              "allParametersCorrect": 0.2,
+              "stateAccuracy": 0.625,
+              "typeAccuracy": 1.0
+            },
+            "finalEvidenceAccuracy": 0.6451612903225806,
+            "missingFieldRequests": 15,
+            "resolvedFieldRequests": 0,
+            "resolvedAfterRequest": 11,
+            "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task."
+          }
+        }
+      }
+    },
+    "seconds": 221.67408117407467,
+    "sourceHash": "0cbc020152b1bdf71e2461f328605c7aa5bfc08359603d01a91d415f6ed3d399",
+    "reportHash": "bc5cb03303dcc8ee0f0be34d6ace62d32b8ea36389938d0e982665fc1976f751",
+    "comparison": "Same checkpoint, CPU and inputs; shared memory/response copying and observed-only masks now enabled. Retraining is measured separately."
+  },
+  "constructionGeneratedDev": {
+    "learned": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 147.6812873023908,
+      "meanRequestCost": 20.800383333333333,
+      "meanInteractions": 0.35,
+      "falseHandoffs": 0,
+      "holds": 11,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "missingFieldRequests": 21,
+      "resolvedFieldRequests": 0,
+      "resolvedAfterRequest": 10,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "c3cd0ca6fdeaa975958ff1197c43325672fb27d0f4fb2736d3e7ff4d05ae0451"
+    },
+    "checklist": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 181.67582129739634,
+      "meanRequestCost": 61.33535833333334,
+      "meanInteractions": 1.0,
+      "falseHandoffs": 0,
+      "holds": 11,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9583333333333334,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "missingFieldRequests": 60,
+      "resolvedFieldRequests": 0,
+      "resolvedAfterRequest": 35,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "95c310fcd4518bd4723fb0acd5a6b4cee5e09593ca119e78649e91cbfaa7b01f"
+    }
+  },
+  "finalGeneratedDev": {
+    "learned": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 147.6812873023908,
+      "meanRequestCost": 20.800383333333333,
+      "meanInteractions": 0.35,
+      "falseHandoffs": 0,
+      "holds": 11,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "missingFieldRequests": 21,
+      "resolvedFieldRequests": 0,
+      "resolvedAfterRequest": 10,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "70ed13347b05f2adb231ee945814f9bbffdc7fa1f7530491b972f6771d7287db"
+    },
+    "checklist": {
+      "episodes": 60,
+      "sourceFamilies": 12,
+      "meanTotal": 181.67582129739634,
+      "meanRequestCost": 61.33535833333334,
+      "meanInteractions": 1.0,
+      "falseHandoffs": 0,
+      "holds": 11,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9583333333333334,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "missingFieldRequests": 60,
+      "resolvedFieldRequests": 0,
+      "resolvedAfterRequest": 35,
+      "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+      "rawHash": "fefbef342629f8cb1f13db4a96ec19f22f12d9798c14d7e73b022fdaaf3f2ef1"
+    }
+  },
+  "finalRetailDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "fdbdf1ad4122e2c8a5236ab28d64decde5f8cde8bdf146ff99db57baa9530bcf"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "ec6b5f314db40329acfd30aaef1f5bf9aa3d41bf8636b2eee4a7b2ae8dd7c87e"
+    }
+  },
+  "documentsDev": {
+    "contractnli": {
+      "actionAccuracy": 1.0,
+      "stateAccuracy": 0.6111111111111112,
+      "evidenceF1": 0.4305555555555556,
+      "groundedScore": 0.3333333333333333
+    },
+    "cuad": {
+      "actionAccuracy": 0.7666666666666667,
+      "answerabilityAccuracy": 0.7666666666666667,
+      "evidenceF1": 0.6222222222222222,
+      "groundedScore": 0.6
+    },
+    "orsharc": {
+      "actionAccuracy": 0.6458333333333334,
+      "decisionAccuracy": 0.3125,
+      "followupReferenceF1": 0.0,
+      "ruleRecallAt5": 0.7916666666666666
+    },
+    "tatqa": {
+      "actionAccuracy": 1.0,
+      "scaleAccuracy": 0.9583333333333334,
+      "answerExact": 0.3333333333333333,
+      "answerF1": 0.4017210144927536,
+      "answerRoundedExact": 0.4583333333333333
+    }
+  },
+  "interpretation": [
+    "The constructor and reply-memory recovery improved on the original generated Dev; score 147.6813 is not a protected Test result.",
+    "All policy checkpoints were rejected by the predefined normalized Dev selector; the inherited value head was retained. The new value-training phase adds no measured improvement.",
+    "The 44.3274 linked-retail economic mean still covers five unique fully observed periods times seven controlled conditions.",
+    "Public document outcomes remain mixed; TAT-QA strict 16/48, rounded diagnostic 22/48, ContractNLI state 44/72.",
+    "The previous demand checkpoint remains fixed; no demand calibration improvement is implied."
+  ],
+  "artifacts": {
+    "report.json": {
+      "path": "results/l40s-research-replay-v1/base/42/report.json",
+      "sha256": "2ab9278b374831f9c9353c6324c114745f88305c878e815731b21593437491ef"
+    },
+    "manifest.json": {
+      "path": "results/l40s-research-replay-v1/base/42/manifest.json",
+      "sha256": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c"
+    },
+    "language-cases.json": {
+      "path": "results/l40s-research-replay-v1/base/42/language-cases.json",
+      "sha256": "8f2f220701b59703d92664341aa5de44395eb125bd02326d9efa6c1d932aab45"
+    },
+    "construction-generated-dev-learned.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/construction-generated-dev-learned.jsonl",
+      "sha256": "c3cd0ca6fdeaa975958ff1197c43325672fb27d0f4fb2736d3e7ff4d05ae0451"
+    },
+    "construction-generated-dev-checklist.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/construction-generated-dev-checklist.jsonl",
+      "sha256": "95c310fcd4518bd4723fb0acd5a6b4cee5e09593ca119e78649e91cbfaa7b01f"
+    },
+    "final-generated-dev-learned.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/final-generated-dev-learned.jsonl",
+      "sha256": "70ed13347b05f2adb231ee945814f9bbffdc7fa1f7530491b972f6771d7287db"
+    },
+    "final-generated-dev-checklist.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/final-generated-dev-checklist.jsonl",
+      "sha256": "fefbef342629f8cb1f13db4a96ec19f22f12d9798c14d7e73b022fdaaf3f2ef1"
+    },
+    "documents-dev.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/documents-dev.jsonl",
+      "sha256": "ecd3fc8506790539bde84f59e5ae40cbc22a77402f449fe1215dfdb44177b8a7"
+    },
+    "final-dev-learned.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/final-dev-learned.jsonl",
+      "sha256": "fdbdf1ad4122e2c8a5236ab28d64decde5f8cde8bdf146ff99db57baa9530bcf"
+    },
+    "final-dev-checklist.jsonl": {
+      "path": "results/l40s-research-replay-v1/base/42/final-dev-checklist.jsonl",
+      "sha256": "ec6b5f314db40329acfd30aaef1f5bf9aa3d41bf8636b2eee4a7b2ae8dd7c87e"
+    },
+    "model.pt": {
+      "path": "results/l40s-research-replay-v1/base/42/model.pt",
+      "sha256": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b"
+    },
+    "common.pt": {
+      "path": "results/l40s-research-replay-v1/base/42/common.pt",
+      "sha256": "52c0c8aebc6829241c2fe2a9462ade503c4e002a9c5e342c669fd2bc0879337a"
+    },
+    "source.tar.gz": {
+      "path": "results/l40s-research-replay-v1/base/42/source.tar.gz",
+      "sha256": "b80e796c7f378bf6d70bf8fa61761a28e5b3dadc901179eea049ffa4614e6e36"
+    }
+  },
+  "pairedNoValueEvidence": "docs/evidence/research-replay-no-value-results.json"
+}

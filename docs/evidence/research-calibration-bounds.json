@@ -1,0 +1,325 @@
+{
+  "scope": "Frozen public retail Dev forecasts, retaining all stockout lower bounds; no fitting or Test use",
+  "testUsed": false,
+  "method": "For a censored lower bound above an interval upper endpoint coverage is impossible; otherwise its membership is unknown. Average identified [0,1] outcomes by source family.",
+  "models": {
+    "gru": {
+      "1": {
+        "interval80": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.518939393939394,
+            0.8106060606060607
+          ],
+          "predictedMass": 0.8135418841786415,
+          "familyResampledOuter95": [
+            0.41287878787878785,
+            0.8674242424242425
+          ],
+          "predictedMinusCoverageBounds": [
+            0.00293582357258082,
+            0.29460249023924745
+          ]
+        },
+        "cdf0.1": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.11363636363636363,
+            0.16666666666666666
+          ],
+          "predictedMass": 0.10889860662824834,
+          "familyResampledOuter95": [
+            0.056818181818181816,
+            0.23484848484848486
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.05776806003841832,
+            -0.004737757008115295
+          ]
+        },
+        "cdf0.5": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.3143939393939394,
+            0.4696969696969697
+          ],
+          "predictedMass": 0.5036191411640947,
+          "familyResampledOuter95": [
+            0.22727272727272724,
+            0.5984848484848485
+          ],
+          "predictedMinusCoverageBounds": [
+            0.03392217146712495,
+            0.18922520177015528
+          ]
+        },
+        "cdf0.9": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.6325757575757576,
+            0.9242424242424243
+          ],
+          "predictedMass": 0.9069285889682677,
+          "familyResampledOuter95": [
+            0.5378787878787878,
+            0.9734848484848485
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.01731383527415664,
+            0.2743528313925101
+          ]
+        }
+      },
+      "7": {
+        "interval80": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.03787878787878787,
+            0.9204545454545454
+          ],
+          "predictedMass": 0.811780639606709,
+          "familyResampledOuter95": [
+            0.011363636363636364,
+            0.9772727272727273
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.10867390584783643,
+            0.7739018517279211
+          ]
+        },
+        "cdf0.1": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.07575757575757576,
+            0.4734848484848485
+          ],
+          "predictedMass": 0.11016352966187656,
+          "familyResampledOuter95": [
+            0.022727272727272728,
+            0.6440340909090896
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.3633213188229719,
+            0.034405953904300804
+          ]
+        },
+        "cdf0.5": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.10606060606060606,
+            0.9053030303030303
+          ],
+          "predictedMass": 0.5004426833189483,
+          "familyResampledOuter95": [
+            0.045454545454545456,
+            0.9848484848484849
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.404860346984082,
+            0.3943820772583422
+          ]
+        },
+        "cdf0.9": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.11363636363636365,
+            0.9962121212121212
+          ],
+          "predictedMass": 0.9063330031223027,
+          "familyResampledOuter95": [
+            0.05303030303030304,
+            1.0
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.08987911808981852,
+            0.792696639485939
+          ]
+        }
+      }
+    },
+    "constant": {
+      "1": {
+        "interval80": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.5606060606060607,
+            0.8863636363636364
+          ],
+          "predictedMass": 0.8205506883724043,
+          "familyResampledOuter95": [
+            0.45833333333333337,
+            0.9431818181818182
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.06581294799123205,
+            0.25994462776634364
+          ]
+        },
+        "cdf0.1": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.10984848484848483,
+            0.1628787878787879
+          ],
+          "predictedMass": 0.10203886932831187,
+          "familyResampledOuter95": [
+            0.05681818181818181,
+            0.20454545454545456
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.06083991855047603,
+            -0.007809615520172966
+          ]
+        },
+        "cdf0.5": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.43939393939393934,
+            0.6363636363636364
+          ],
+          "predictedMass": 0.5045731692845856,
+          "familyResampledOuter95": [
+            0.3409090909090909,
+            0.734848484848485
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.13179046707905073,
+            0.06517922989064628
+          ]
+        },
+        "cdf0.9": {
+          "periods": 264,
+          "families": 8,
+          "complete": 177,
+          "coverageBounds": [
+            0.6704545454545455,
+            0.9962121212121212
+          ],
+          "predictedMass": 0.9071074692408595,
+          "familyResampledOuter95": [
+            0.5984848484848484,
+            1.0
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.08910465197126172,
+            0.23665292378631397
+          ]
+        }
+      },
+      "7": {
+        "interval80": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.01893939393939394,
+            0.9053030303030303
+          ],
+          "predictedMass": 0.8124999918750005,
+          "familyResampledOuter95": [
+            0.003787878787878788,
+            0.9659090909090909
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.09280303842802973,
+            0.7935605979356066
+          ]
+        },
+        "cdf0.1": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.09469696969696971,
+            0.6818181818181819
+          ],
+          "predictedMass": 0.10937500890624997,
+          "familyResampledOuter95": [
+            0.03409090909090909,
+            0.8484848484848485
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.5724431729119319,
+            0.014678039209280264
+          ]
+        },
+        "cdf0.5": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.11363636363636365,
+            1.0
+          ],
+          "predictedMass": 0.5000000050000003,
+          "familyResampledOuter95": [
+            0.05303030303030304,
+            1.0
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.4999999949999997,
+            0.38636364136363666
+          ]
+        },
+        "cdf0.9": {
+          "periods": 264,
+          "families": 8,
+          "complete": 30,
+          "coverageBounds": [
+            0.11363636363636365,
+            1.0
+          ],
+          "predictedMass": 0.9062500009375006,
+          "familyResampledOuter95": [
+            0.05303030303030304,
+            1.0
+          ],
+          "predictedMinusCoverageBounds": [
+            -0.09374999906249937,
+            0.792613637301137
+          ]
+        }
+      }
+    }
+  },
+  "rawSources": {
+    "gru": {
+      "path": "results/research-checks/demand-dev-v3/raw.jsonl",
+      "hash": "0eef0dfc676d0b758583524976bbf795f86b28b6cfd5592aa9689e5a9d92feb2"
+    },
+    "constant": {
+      "path": "results/research-checks/demand-baseline/dev.jsonl",
+      "hash": "9de65645c060bdf62946aa4feaa4e76630587944307bee141b1429d7cb198735"
+    }
+  },
+  "rawHash": "550b6bbb5a088e766af9b8f17bae62c7a9dda90936d6ef233fcdd0f4b0cefc67",
+  "scriptHash": "b2a4709a3f8c85adf4cd67d942adf27311825150dade48ac79de0055fbddf9c2",
+  "limitations": [
+    "Bounds do not identify unknown latent demand or assume it equals sales.",
+    "Only eight source families; resampled bands are descriptive.",
+    "Rolling windows overlap and are grouped by source family.",
+    "Intervals use the actual discrete F supplied to the optimizer; predicted mass can differ slightly from the nominal 80%."
+  ]
+}
