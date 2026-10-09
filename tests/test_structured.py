@@ -2199,6 +2199,7 @@ def test_document_and_research_mixture_preserves_every_case_without_tools():
 @pytest.mark.parametrize("no_value", [False, True])
 def test_policy_fitting_updates_only_selected_head(tokenizer, settings, model, tmp_path, monkeypatch, no_value):
     from newsvendor import structured_critic, structured_policy
+    from newsvendor.structured_progress import Progress
 
     config = variant(read("configs/l40s-tools-v4.json"), "base")
     config.update(encoder=settings, output=str(tmp_path), noValue=no_value)
@@ -2210,11 +2211,32 @@ def test_policy_fitting_updates_only_selected_head(tokenizer, settings, model, t
     monkeypatch.setattr(structured_policy, "public_validation", lambda *args: {"abcd": {"toolExact": .8}})
     monkeypatch.setattr(structured_critic, "rollout", lambda *args: {"total": next(costs)})
     initial = {k: v.clone() for k, v in model.state_dict().items()}
-    reports = structured_policy.fit(model, tokenizer, config, chosen)
+    progress = Progress(config, {}, "cpu", None)
+    reports = structured_policy.fit(model, tokenizer, config, chosen, progress)
     assert reports[0]["devActualTotalLoss"] == 3 and reports[0]["frozenWeightsUnchanged"]
     name = "recovery" if no_value else "value"
     assert all(torch.equal(v, model.state_dict()[k]) for k, v in initial.items() if not k.startswith(f"heads.{name}."))
     assert any(not torch.equal(v, model.state_dict()[k]) for k, v in initial.items() if k.startswith(f"heads.{name}."))
+    candidate = torch.load(tmp_path / "policy-candidate-0-1.pt", weights_only=True)
+    base_path = tmp_path / candidate["state"]["base"]["path"]
+    assert candidate["state"]["format"] == "policy-head-v1"
+    assert digest(base_path.read_bytes()) == candidate["state"]["base"]["hash"]
+    base = torch.load(base_path, weights_only=True)
+    restored = dict(base["weights"])
+    restored.update({f"heads.{name}.{k}": v for k, v in candidate["weights"].items()})
+    assert all(torch.equal(v, restored[k]) for k, v in model.state_dict().items())
+    assert set(candidate["weights"]) == set(model.heads[name].state_dict())
+    assert candidate["optimizer"]["state"]
+    assert reports[0]["checkpointBase"] == candidate["state"]["base"]
+    original_base_hash = digest(base_path.read_bytes())
+    torch.rand(7)  # Continuing work changes RNG and the selected head, not the fixed base.
+    costs = iter([3., 2., 1.])
+    structured_policy.fit(model, tokenizer, config, chosen, progress)
+    assert digest(base_path.read_bytes()) == original_base_hash
+    continued = torch.load(tmp_path / "policy-candidate-0-1.pt", weights_only=True)
+    restored = dict(base["weights"])
+    restored.update({f"heads.{name}.{k}": v for k, v in continued["weights"].items()})
+    assert all(torch.equal(v, restored[k]) for k, v in model.state_dict().items())
     if no_value:
         assert "no economic targets" in reports[0]["target"]
         from newsvendor.io import lines
@@ -2770,3 +2792,38 @@ def test_value_costs_shared_by_forward_cached_training_and_decoder(tokenizer, se
     assert "valueCosts" not in legacy
     plain = torch.ones((2, 2))
     assert constrain(plain) is plain
+
+
+
+def test_generated_cost_rejects_pointer_to_selling_price(tokenizer, settings, model, monkeypatch):
+    from newsvendor import structured_rollout
+    from newsvendor.construction import candidates
+
+    episode = next(e for e in corpus.generate(read("configs/full.json"))
+                   if e["split"] == "train" and e["scenario"] == "sufficient")
+    value = episode["input"]
+    price = next(e for e in candidates(value, "p") if e["doc"]["id"] == "price" and e["op"] == "copy")
+    loc = {"kind": "document", "id": price["doc"]["id"], "start": price["args"][0]["span"][0],
+           "end": price["args"][0]["span"][1]}
+    fields = [{"name": s, "field": s, "state": "verified", "type": "fact", "value": price["value"],
+               "expression": {"op": "copy", "operands": [loc]}} for s in ("c", "p")]
+    monkeypatch.setattr(structured_rollout, "extract", lambda *args: fields)
+    router = structured_rollout.ResearchRouter(model, tokenizer, settings)
+    state = router.construct(value)
+    assert "c" not in state["values"] and state["values"]["p"] == price["value"]
+    assert "invalid-expression-c" in state["errors"] and not state["valid"]
+
+
+def test_generated_retrieval_requires_unread_chunks(tokenizer, settings, model, monkeypatch):
+    from newsvendor import structured_rollout
+
+    value = next(e["input"] for e in corpus.generate(read("configs/full.json"))
+                 if e["split"] == "train" and e["scenario"] == "sufficient")
+    fields = [{"name": s, "field": s, "state": "unconfirmed", "type": "fact", "value": None} for s in ("c", "p", "v", "b", "F")]
+    monkeypatch.setattr(structured_rollout, "extract", lambda *args: fields)
+    router = structured_rollout.ResearchRouter(model, tokenizer, {**settings, "chunks": 1000})
+    state = router.construct(value)
+    assert state["retrieval"]["unreadChunks"] == 0
+    assert "retrieve" not in router.allowed(value, state)
+    state["retrieval"]["unreadChunks"] = 2
+    assert "retrieve" in router.allowed(value, state)

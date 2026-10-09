@@ -1,0 +1,1442 @@
+{
+  "scope": "Dev comparison across all registered seeds; expansion also changes batch size and device",
+  "testUsed": false,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "perSeed": {
+    "candidate": {
+      "42": {
+        "path": "results/l40s-demand-expanded-v2/42",
+        "reportHash": "71c137df46e599be831d637a474ba2e4529dd225ad52cede726ec703252abc9e",
+        "seconds": 130.07048503297847,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 256,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "f6cceda589dbed21223ea339f402372cd7b16094884b10397d649337b61ac31b",
+        "samples": {
+          "train": {
+            "forecasts": 35772,
+            "families": 537
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "5dcf6398a2d34be512bb00ac05958551d0c334f038ac5c68dd0cc29697f0c815",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.48657544736113195,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.1819672661754351,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.26664596777907484,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.8248587570621468,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.2546570366149851,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.4277983283574092,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.6859875511922219,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.1322660567491262,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.1793425827080374,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.28407786875056046,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.941094765604927,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.20904098749950206,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.37454485436597396,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.6821106847876439,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 2.893102981049971,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.6968342794893134,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.23333333333333334,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 3.6730575733257615,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 4.8528600371497586,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 6.055655308100643,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "truncated_normal": 168,
+              "lognormal": 82,
+              "weibull": 14
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7790236514045904,
+                "lognormal": 0.8162138667944188,
+                "weibull": 0.7639683830935908
+              },
+              "oracleFamilyNLL": 0.6509903139753088,
+              "selectedFamilyNLL": 0.7970748282824301
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.0453497818497213,
+                "lognormal": 0.7784742861790462,
+                "weibull": 0.9688565342427143
+              },
+              "oracleFamilyNLL": 0.7371219817517879,
+              "selectedFamilyNLL": 0.8490380419180033
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "lognormal": 80,
+              "truncated_normal": 111,
+              "weibull": 73
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 2.880093414584796,
+                "lognormal": 3.190134114337464,
+                "weibull": 2.356071762740612
+              },
+              "oracleFamilyNLL": 2.133632800790171,
+              "selectedFamilyNLL": 2.889609755575657
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7071602662694608,
+                "lognormal": 0.4847983045541867,
+                "weibull": 0.6858012712213338
+              },
+              "oracleFamilyNLL": 0.45770766124648316,
+              "selectedFamilyNLL": 0.5014560525491044
+            }
+          }
+        }
+      },
+      "43": {
+        "path": "results/l40s-demand-expanded-v2/43",
+        "reportHash": "7a8c730403f219ad64a70fb80bdcb9453f249ff8a7ce5e8e8360e45d2f025b34",
+        "seconds": 129.7330061669927,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 256,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "83c3b76edf26ee5f00a3a39b2db60f0e2bd5fa54fdbdddc1db1c9f865a82ab68",
+        "samples": {
+          "train": {
+            "forecasts": 35772,
+            "families": 537
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "5dcf6398a2d34be512bb00ac05958551d0c334f038ac5c68dd0cc29697f0c815",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.47149247803175676,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.17138173361419778,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.2542914771895201,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.8192090395480226,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.2414098511810633,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.399964868583213,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.6324034090842126,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.1619505768906626,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.22706658876985122,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.3720004498492343,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.6932109853754946,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.18939948201371481,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.15940180485804353,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.07477231809327549,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 2.8883469402065356,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 4.222578237965151,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.2,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 3.916865020364083,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.642789015243679,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 7.385488737428198,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "weibull": 104,
+              "truncated_normal": 29,
+              "lognormal": 131
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7072576761435149,
+                "lognormal": 0.74654321495633,
+                "weibull": 0.7048741441146381
+              },
+              "oracleFamilyNLL": 0.5700641832982669,
+              "selectedFamilyNLL": 0.7141452507394771
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.2152195235997996,
+                "lognormal": 0.8883240257126236,
+                "weibull": 1.1897050683448847
+              },
+              "oracleFamilyNLL": 0.8342390928742605,
+              "selectedFamilyNLL": 0.9719878481941876
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "weibull": 68,
+              "lognormal": 148,
+              "truncated_normal": 48
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 2.143439610550801,
+                "lognormal": 2.1220407602687676,
+                "weibull": 1.9128413124630848
+              },
+              "oracleFamilyNLL": 1.7248218568662803,
+              "selectedFamilyNLL": 1.8417226783931255
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.4346958394728265,
+                "lognormal": 0.3729758921445032,
+                "weibull": 0.37867554475535425
+              },
+              "oracleFamilyNLL": 0.30576483478902305,
+              "selectedFamilyNLL": 0.3561368001788402
+            }
+          }
+        }
+      },
+      "44": {
+        "path": "results/l40s-demand-expanded-v2/44",
+        "reportHash": "67e76d7a198f175c534ed02221949f592d67bc12a579d79220e4fdcc8e19f84e",
+        "seconds": 144.12291395594366,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 256,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "bf592c85c2ef0bcd9e571cbdbfbf72f2479d906fef08066e4180a5249ed8f539",
+        "samples": {
+          "train": {
+            "forecasts": 35772,
+            "families": 537
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "5dcf6398a2d34be512bb00ac05958551d0c334f038ac5c68dd0cc29697f0c815",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.49336173330259125,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.19543410243245982,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.3071581697618054,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.7909604519774012,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.2739219738463766,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.4846894800344755,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.7433676642547294,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.12941903237187632,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.16824513537646363,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.29713238376786205,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.749255450774254,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0797796956533292,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.08028182925954849,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.08349850142153271,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 5.5451986480266635,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 7.1133107371329,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.1,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 6.972325222651116,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 9.016445916375343,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 11.076634565139797,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "weibull": 193,
+              "truncated_normal": 37,
+              "lognormal": 34
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7952369173178396,
+                "lognormal": 0.8317426230263828,
+                "weibull": 0.7815564390966447
+              },
+              "oracleFamilyNLL": 0.6575480805720482,
+              "selectedFamilyNLL": 0.7973994399699788
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.9683653471145736,
+                "lognormal": 0.7407253139515825,
+                "weibull": 0.8688471603084185
+              },
+              "oracleFamilyNLL": 0.7019718595995867,
+              "selectedFamilyNLL": 0.8689704765886839
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "lognormal": 106,
+              "weibull": 113,
+              "truncated_normal": 45
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 4.61732383047541,
+                "lognormal": 4.417383053215842,
+                "weibull": 3.461084559870263
+              },
+              "oracleFamilyNLL": 3.2445602901279926,
+              "selectedFamilyNLL": 3.5040049257998667
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.24259894508291355,
+                "lognormal": 0.2097768500901181,
+                "weibull": 0.21232745681780402
+              },
+              "oracleFamilyNLL": 0.18678167428671205,
+              "selectedFamilyNLL": 0.20625335215624788
+            }
+          }
+        }
+      }
+    },
+    "reference": {
+      "42": {
+        "path": "results/research-checks/demand-weight-study",
+        "reportHash": "e382e2bad89970c8d41b37db5f37438e31fd1a17eba879238f738f7ae17a164d",
+        "seconds": 440.57170044397935,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "f6cceda589dbed21223ea339f402372cd7b16094884b10397d649337b61ac31b",
+        "samples": {
+          "train": {
+            "forecasts": 1980,
+            "families": 25
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.6652187960407165,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.19239221849304927,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.2806668308521143,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.7909604519774012,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.27110928818231894,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.4392523105150549,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.6829559429328546,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.1854612477817057,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.26848647766093864,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.3434830387919099,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.4862703283742404,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.025238162100650777,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0015590399896628089,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 2.374276691055281,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 4.314766017152867,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.6,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 3.32128448776547,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 6.322433836102904,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 10.080716437483863,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "lognormal": 221,
+              "truncated_normal": 38,
+              "weibull": 5
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7887049452691092,
+                "lognormal": 0.8856682122913899,
+                "weibull": 0.7885160921194122
+              },
+              "oracleFamilyNLL": 0.6445739410967581,
+              "selectedFamilyNLL": 0.8619315600309436
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.3716036554896969,
+                "lognormal": 0.9172484935288071,
+                "weibull": 1.228809331211893
+              },
+              "oracleFamilyNLL": 0.8385669077537825,
+              "selectedFamilyNLL": 1.2591783258523364
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "lognormal": 234,
+              "truncated_normal": 24,
+              "weibull": 6
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.014535094300906,
+                "lognormal": 1.037896638115247,
+                "weibull": 1.1059191286563874
+              },
+              "oracleFamilyNLL": 0.9614598641792933,
+              "selectedFamilyNLL": 1.033412538965543
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.2597669197214592,
+                "lognormal": 0.22194244072704902,
+                "weibull": 0.22938646827466214
+              },
+              "oracleFamilyNLL": 0.21256935806710145,
+              "selectedFamilyNLL": 0.22629479633775565
+            }
+          }
+        }
+      },
+      "43": {
+        "path": "results/research-checks/demand-weight-seeds/43",
+        "reportHash": "1a789b908593ed168a9c20be121e4f7e62078d3b17a134aca843ac61e081dec9",
+        "seconds": 418.3483300389489,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "83c3b76edf26ee5f00a3a39b2db60f0e2bd5fa54fdbdddc1db1c9f865a82ab68",
+        "samples": {
+          "train": {
+            "forecasts": 1980,
+            "families": 25
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.6982248513214248,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.1824711857480865,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.26453973413209914,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.7175141242937854,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.26538471424071275,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.41813354547684556,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.5612777000273662,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.20102212404202102,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.33606456602102414,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.5207782835080356,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.4859247848009299,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.02241305360636731,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 2.204575338546141,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.5065720319426017,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.6,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 3.374442964903383,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.50026472322273,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 7.469868469843254,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "lognormal": 109,
+              "weibull": 155
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.8631483835462839,
+                "lognormal": 0.8923036468690156,
+                "weibull": 0.7953653281007362
+              },
+              "oracleFamilyNLL": 0.6446135066571977,
+              "selectedFamilyNLL": 0.8160527052836608
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 2.0106901791289276,
+                "lognormal": 1.2354117982027966,
+                "weibull": 1.5676365757532331
+              },
+              "oracleFamilyNLL": 1.1754873879963061,
+              "selectedFamilyNLL": 1.4526743541883798
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "weibull": 261,
+              "lognormal": 3
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.7400846235454083,
+                "lognormal": 0.5925911174466213,
+                "weibull": 1.1336611424883207
+              },
+              "oracleFamilyNLL": 0.5659897901117802,
+              "selectedFamilyNLL": 1.1336611424883207
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.331169511931829,
+                "lognormal": 0.34872226285525304,
+                "weibull": 0.2120747179684476
+              },
+              "oracleFamilyNLL": 0.21022004349770135,
+              "selectedFamilyNLL": 0.21305257065269428
+            }
+          }
+        }
+      },
+      "44": {
+        "path": "results/research-checks/demand-weight-seeds/44",
+        "reportHash": "8f725bbd131a0c7776f2f5564d28992c33a842ce4dc65aaf1f88068e4e1afdd1",
+        "seconds": 417.6966577670537,
+        "settings": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 1.0,
+          "minHistory": 28
+        },
+        "initialHash": "bf592c85c2ef0bcd9e571cbdbfbf72f2479d906fef08066e4180a5249ed8f539",
+        "samples": {
+          "train": {
+            "forecasts": 1980,
+            "families": 25
+          },
+          "dev": {
+            "forecasts": 528,
+            "families": 8
+          }
+        },
+        "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+        "metrics": {
+          "1": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.6391231773874578,
+              "count": 264
+            },
+            "uncensoredCRPS": {
+              "mean": 0.20575907439432028,
+              "count": 177
+            },
+            "uncensoredTotalMAE": {
+              "mean": 0.3135108206440706,
+              "count": 177
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.7796610169491526,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 0.2802489651693056,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 0.4859179267269014,
+              "count": 177
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 0.7990283701308253,
+              "count": 177
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13796830360184761,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.20005467818261205,
+              "count": 87
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.2514997847289465,
+              "count": 87
+            }
+          },
+          "7": {
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 264
+            },
+            "observationNLL": {
+              "mean": 0.46582837031016894,
+              "count": 264
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0011527848116138068,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "count": 234
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 234
+            },
+            "uncensoredCRPS": {
+              "mean": 3.905539873272779,
+              "count": 30
+            },
+            "uncensoredTotalMAE": {
+              "mean": 6.222048635271552,
+              "count": 30
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.16666666666666666,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 5.678533771801086,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 8.869223861241222,
+              "count": 30
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 12.23068844476907,
+              "count": 30
+            }
+          }
+        },
+        "diagnosis": {
+          "1": {
+            "familyCounts": {
+              "lognormal": 191,
+              "weibull": 73
+            },
+            "complete": {
+              "origins": 177,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.858694320933967,
+                "lognormal": 1.003946516589172,
+                "weibull": 0.8257090070621652
+              },
+              "oracleFamilyNLL": 0.7436082256447503,
+              "selectedFamilyNLL": 0.950553424477493
+            },
+            "censored": {
+              "origins": 87,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.1928466621829175,
+                "lognormal": 0.6840200437093689,
+                "weibull": 1.1690029963347848
+              },
+              "oracleFamilyNLL": 0.6657671923320955,
+              "selectedFamilyNLL": 0.9996919924040036
+            }
+          },
+          "7": {
+            "familyCounts": {
+              "lognormal": 127,
+              "weibull": 137
+            },
+            "complete": {
+              "origins": 30,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 1.7628587822119395,
+                "lognormal": 1.8911004602909087,
+                "weibull": 1.6908301889896393
+              },
+              "oracleFamilyNLL": 1.6614181399345398,
+              "selectedFamilyNLL": 1.7362031102180482
+            },
+            "censored": {
+              "origins": 234,
+              "meanNormalizedFamilyNLL": {
+                "truncated_normal": 0.12643036355352044,
+                "lognormal": 0.09954281124529134,
+                "weibull": 0.12521493363265807
+              },
+              "oracleFamilyNLL": 0.09888978778786607,
+              "selectedFamilyNLL": 0.11313071938004726
+            }
+          }
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "reference": {
+      "1": {
+        "observationNLL": {
+          "mean": -0.18371238868470632,
+          "familyBootstrap95": [
+            -0.36574329342286976,
+            -0.06495988860223988
+          ],
+          "uniqueOrigins": 264,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.1786433486795845,
+            "43": -0.226732373289668,
+            "44": -0.1457614440848665
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredCRPS": {
+          "mean": -0.010613125471121107,
+          "familyBootstrap95": [
+            -0.026475395116621562,
+            0.00249269736188362
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.01042495231761415,
+            "43": -0.01108945213388873,
+            "44": -0.010324971961860432
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": -0.01558470198330408,
+          "familyBootstrap95": [
+            -0.036468957300649266,
+            0.001490496129147014
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.016452251567333816,
+            "43": -0.023974863059649496,
+            "44": -0.0063269913229289316
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": -0.01028370191456802,
+          "familyBootstrap95": [
+            -0.08295951718529997,
+            0.05725200480679331
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.011453982157645684,
+            "43": -0.01816867689363248,
+            "44": -0.0012284466924258864
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 0.006165537146706035,
+          "familyBootstrap95": [
+            -0.11233703715695968,
+            0.14640157117985445
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": 0.0030316082593674,
+            "43": 0.07112570905684636,
+            "44": -0.055660705876095666
+          },
+          "improvingSeeds": 1
+        }
+      },
+      "7": {
+        "observationNLL": {
+          "mean": 0.3151792394231121,
+          "familyBootstrap95": [
+            0.09260258056782392,
+            0.5950447983331708
+          ],
+          "uniqueOrigins": 264,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": 0.4548244372306866,
+            "43": 0.2072862005745647,
+            "44": 0.2834270804640851
+          },
+          "improvingSeeds": 0
+        },
+        "uncensoredCRPS": {
+          "mean": 0.9474188888029893,
+          "familyBootstrap95": [
+            -1.3625906779507873,
+            2.4438498519216516
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": 0.5188262899946899,
+            "43": 0.6837716016603947,
+            "44": 1.639658774753883
+          },
+          "improvingSeeds": 0
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 0.7293288639570068,
+          "familyBootstrap95": [
+            -2.2468081567421248,
+            2.670914947239925
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": 0.3517730855602916,
+            "43": 0.5424220554606991,
+            "44": 1.2937914508500288
+          },
+          "improvingSeeds": 0
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": -0.39327581726602645,
+          "familyBootstrap95": [
+            -4.3030949188064085,
+            2.201578796760687
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": -1.4695737989531463,
+            "43": 0.1425242920209477,
+            "44": 0.14722205513411848
+          },
+          "improvingSeeds": 1
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": -1.7544982471425183,
+          "familyBootstrap95": [
+            -6.7327380369056335,
+            1.5176053283474524
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": -4.025061129383223,
+            "43": -0.0843797324150584,
+            "44": -1.1540538796292732
+          },
+          "improvingSeeds": 3
+        }
+      }
+    },
+    "deployed": {
+      "1": {
+        "observationNLL": {
+          "mean": -0.1399199146261402,
+          "familyBootstrap95": [
+            -0.23823497824657633,
+            -0.05463295315193027
+          ],
+          "uniqueOrigins": 264,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.13715435349683489,
+            "43": -0.15223732282621016,
+            "44": -0.1303680675553756
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredCRPS": {
+          "mean": -0.028149989277840768,
+          "familyBootstrap95": [
+            -0.06418211316723159,
+            0.0003100157833324168
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.029110423843103216,
+            "43": -0.039695956404340565,
+            "44": -0.015643587586078516
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": -0.04070376261110466,
+          "familyBootstrap95": [
+            -0.09146910951666914,
+            0.0030086049776594224
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.04270967987692786,
+            "43": -0.05595686531084972,
+            "44": -0.023444742645536396
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": -0.0704993599138536,
+          "familyBootstrap95": [
+            -0.2115374070855263,
+            0.0385836907838936
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.08018525721481029,
+            "43": -0.10801871698900649,
+            "44": -0.023294105537743998
+          },
+          "improvingSeeds": 3
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": -0.12580881989006246,
+          "familyBootstrap95": [
+            -0.3403018567042082,
+            0.043623224535494304
+          ],
+          "uniqueOrigins": 177,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": -0.1270741435415619,
+            "43": -0.1806582856495712,
+            "44": -0.06969403047905433
+          },
+          "improvingSeeds": 3
+        }
+      },
+      "7": {
+        "observationNLL": {
+          "mean": 0.2504626835397494,
+          "familyBootstrap95": [
+            0.0627414752239189,
+            0.4708734552772045
+          ],
+          "uniqueOrigins": 264,
+          "sourceFamilies": 8,
+          "seedMeanDifferences": {
+            "42": 0.39703704855978456,
+            "43": 0.14915326833035214,
+            "44": 0.20519773372911154
+          },
+          "improvingSeeds": 0
+        },
+        "uncensoredCRPS": {
+          "mean": 1.002366999889083,
+          "familyBootstrap95": [
+            -1.2050443994805615,
+            2.7560681629928565
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": 0.119920457844664,
+            "43": 0.11516441700122873,
+            "44": 2.7720161248213557
+          },
+          "improvingSeeds": 0
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 1.0147771407315271,
+          "familyBootstrap95": [
+            -1.7845776768718278,
+            3.2394638695627846
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": -0.1662478913896977,
+            "43": 0.07755955564862307,
+            "44": 3.1330197579356556
+          },
+          "improvingSeeds": 1
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": -0.013151053602882,
+          "familyBootstrap95": [
+            -3.720662898571954,
+            2.639652085487476
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": -1.6643226727093827,
+            "43": -0.8743936946154631,
+            "44": 2.499263206516199
+          },
+          "improvingSeeds": 2
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": -1.92078852300498,
+          "familyBootstrap95": [
+            -6.640732676069316,
+            1.4450204149580368
+          ],
+          "uniqueOrigins": 30,
+          "sourceFamilies": 6,
+          "seedMeanDifferences": {
+            "42": -4.037726085127217,
+            "43": -2.707892655799662,
+            "44": 0.9832531719119382
+          },
+          "improvingSeeds": 2
+        }
+      }
+    }
+  },
+  "deployed": {
+    "path": "results/research-checks/demand-dev-v3/raw.jsonl",
+    "hash": "0eef0dfc676d0b758583524976bbf795f86b28b6cfd5592aa9689e5a9d92feb2"
+  },
+  "limitations": [
+    "Losses are averaged across seeds; this is not an ensemble forecast.",
+    "Overlapping origins and repeated seeds are not additional independent observations.",
+    "Exact losses on uncensored origins do not establish full latent-demand calibration.",
+    "Oracle family losses use outcomes for diagnosis only, never for predictions or model inputs.",
+    "No new full manager-request rollout is measured here."
+  ],
+  "scriptHash": "7d4c6f778b6aa1e0247be66c008daa64f98ab5163eb31f5eb207f8e69005b5a1",
+  "decision": "Retain prior demand checkpoint: all expanded repeats worsen weekly NLL and CRPS; some cost ratios improve but intervals include zero."
+}

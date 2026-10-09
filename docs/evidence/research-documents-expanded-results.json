@@ -1,0 +1,455 @@
+{
+  "status": "document continuation complete; original generated recovery and final Test incomplete",
+  "testUsed": false,
+  "run": "results/l40s-research-documents-v1/base/42",
+  "reportHash": "edc21c13c4744c52c1638f9aa9896306a36ed18ea7239d36966f745985f420a4",
+  "sourceHash": "890b4a6a3ae3ba89d08278d1f98b2e24fefeb7a26a9acfe90ea64149e02632d5",
+  "parent": {
+    "mode": "warm_start",
+    "checkpoint": "results/l40s-research-paired-v2/base/42/common.pt",
+    "fileHash": "56b008c06af250f79132a6f655db8f74e1ae69b113dbbdcdaa42fe3b444602f7",
+    "encoder": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "coreWeightsHash": "35fbf1fe802e674a45ee929858e57c201581446f0f63eb55a39fda7a03462445",
+    "sharedHeadsHash": "7f8b1bea85e8d383b30775e902a77e052dcfd88d75a35969dee77756de7ec111",
+    "demandWeightsHash": "3c07b4f758b8b6bbc4f67775db693999183071c5b12bc63b9ab13374edc022e8",
+    "removedAuxiliaryParameters": 0
+  },
+  "parameters": 151848374,
+  "seconds": 1697.8598340080353,
+  "peakGpuBytes": 34036366336,
+  "selectedLanguageEpoch": 1,
+  "language": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "trainLoss": 2.104176646323469,
+        "devLoss": 0.6357962802048742,
+        "supervisedHeads": {
+          "type": 4575,
+          "state": 4575,
+          "evidence": 15345,
+          "relation": 9101,
+          "operand1": 9101,
+          "mode": 14933,
+          "operand2": 9101,
+          "scale": 13095,
+          "recovery": 13806,
+          "spans": 5880,
+          "decision": 351
+        },
+        "headLosses": {
+          "type": 7.524989994993524e-05,
+          "state": 0.0018614240701532512,
+          "evidence": 0.01678086509757695,
+          "relation": 0.14819638742375452,
+          "operand1": 0.4141671475806736,
+          "mode": 0.08929518894324903,
+          "operand2": 0.49162078662251607,
+          "scale": 0.565996344552833,
+          "recovery": 0.03239974358415583,
+          "spans": 3.306831254114929,
+          "decision": 0.7469386005206325
+        },
+        "workload": {
+          "tokens": 17606628,
+          "retrievals": 81
+        }
+      },
+      {
+        "epoch": 2,
+        "trainLoss": 1.1273519471563784,
+        "devLoss": 0.642185311704894,
+        "supervisedHeads": {
+          "scale": 13095,
+          "spans": 5881,
+          "mode": 14933,
+          "evidence": 15345,
+          "recovery": 13806,
+          "relation": 9101,
+          "operand1": 9101,
+          "operand2": 9101,
+          "type": 4575,
+          "state": 4575,
+          "decision": 351
+        },
+        "headLosses": {
+          "scale": 0.22552799285099134,
+          "spans": 1.9092336486855483,
+          "mode": 0.049565173800800534,
+          "evidence": 0.01199020094740898,
+          "recovery": 0.02867847195374576,
+          "relation": 0.06863143262220317,
+          "operand1": 0.22625003023793613,
+          "operand2": 0.2659175139172462,
+          "type": 3.011972056974926e-06,
+          "state": 3.872592131669418e-05,
+          "decision": 0.6923520666337506
+        },
+        "workload": {
+          "tokens": 17636675,
+          "retrievals": 81
+        }
+      },
+      {
+        "epoch": 3,
+        "trainLoss": 0.7557294772500541,
+        "devLoss": 0.6727934419465381,
+        "supervisedHeads": {
+          "scale": 13095,
+          "relation": 9101,
+          "operand1": 9101,
+          "operand2": 9101,
+          "mode": 14933,
+          "evidence": 15345,
+          "recovery": 13806,
+          "spans": 5885,
+          "type": 4575,
+          "state": 4575,
+          "decision": 351
+        },
+        "headLosses": {
+          "scale": 0.15472685533147923,
+          "relation": 0.05323296555253994,
+          "operand1": 0.1455947965936775,
+          "operand2": 0.17265181406667537,
+          "mode": 0.037755312017893505,
+          "evidence": 0.009645487336287804,
+          "recovery": 0.02471915921856821,
+          "spans": 1.2411724627066645,
+          "type": 1.134563614777023e-06,
+          "state": 0.0034193125897927826,
+          "decision": 0.6348988244315328
+        },
+        "workload": {
+          "tokens": 17625241,
+          "retrievals": 81
+        }
+      }
+    ],
+    "selectedEpoch": 1,
+    "checks": [],
+    "earlyStopped": false
+  },
+  "publicDev": {
+    "contractnli": {
+      "actionAccuracy": 1.0,
+      "stateAccuracy": 0.625,
+      "evidenceF1": 0.4487400376821847,
+      "groundedScore": 0.3792955932377403
+    },
+    "cuad": {
+      "actionAccuracy": 0.7666666666666667,
+      "answerabilityAccuracy": 0.7666666666666667,
+      "evidenceF1": 0.63331979970226,
+      "groundedScore": 0.5999864663689267
+    },
+    "orsharc": {
+      "actionAccuracy": 0.6458333333333334,
+      "decisionAccuracy": 0.3125,
+      "followupReferenceF1": 0.0,
+      "ruleRecallAt5": 0.7916666666666666
+    },
+    "tatqa": {
+      "actionAccuracy": 1.0,
+      "scaleAccuracy": 0.9583333333333334,
+      "answerExact": 0.22916666666666666,
+      "answerF1": 0.3269658119658119,
+      "answerRoundedExact": 0.2916666666666667
+    }
+  },
+  "finalDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "39ea3a606f14c8277650bc5ec3a794c2688c5ab35a4bddcf1ef8745730df5413"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "42d0c028d2cb74ba09c019d46c21eb28f44154eacf5458c5d0dc925f85af5113"
+    }
+  },
+  "policy": [
+    {
+      "iteration": 0,
+      "ownStateTargets": 231,
+      "trainRawHash": "443cdfbc925b1503d90249a7553392478f8a7063d1f3e0d21beb11e6d2eb9287",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.03677497338503599,
+          "devActualTotalLoss": 58.93607804839322,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.031141955172643065,
+          "devActualTotalLoss": 79.56326057732572,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.03063240135088563,
+          "devActualTotalLoss": 93.65969824282718,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.02773796208202839,
+          "devActualTotalLoss": 106.87268883311162,
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 9,
+        "economicLoss": 58.93607804839322
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "9e267f534641aeea0eeb4934b305a2626cacf9512cee1ec5b79e17690e2dc490",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "a6141c7b3a25a9ba63ac0e0b3dd59e0c74a6652a91893323ab0610f735cd79ba"
+      },
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "devActualTotalLoss": 58.93607804839322
+    },
+    {
+      "iteration": 1,
+      "ownStateTargets": 304,
+      "trainRawHash": "3b38887b985cb143ae426d79ee757c49948cd75cf8d989ee32745283164db93a",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.03226618282496929,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.031151647120714186,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.029926544055342674,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.03010639511048794,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 1,
+        "epoch": 9,
+        "economicLoss": 44.32742132570505
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "9e267f534641aeea0eeb4934b305a2626cacf9512cee1ec5b79e17690e2dc490",
+      "frozenWeightsUnchanged": true,
+      "checkpointBase": {
+        "path": "policy-base.pt",
+        "hash": "a6141c7b3a25a9ba63ac0e0b3dd59e0c74a6652a91893323ab0610f735cd79ba"
+      },
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "devActualTotalLoss": 44.32742132570505
+    }
+  ],
+  "limitations": [
+    "Core exact financial loss uses five unique complete Dev periods times seven controlled scenarios.",
+    "TAT-QA strict exact, separate two-decimal diagnostic, and scale scores are reported separately.",
+    "Original generated Dev remains poor after continuation: learned mean total loss 478.9947678967348, six false handoffs, and 47 holds out of 60 episodes. Both model measurements use pre-fix source.",
+    "No claim of real organizational effectiveness or final Test success."
+  ],
+  "rawHashes": {
+    "documents-dev.jsonl": "500cba7eb6d32d8f7d13e3cbf2ece313343685c1d00db09d23db34a0480a07ca",
+    "final-dev-learned.jsonl": "39ea3a606f14c8277650bc5ec3a794c2688c5ab35a4bddcf1ef8745730df5413",
+    "final-dev-checklist.jsonl": "42d0c028d2cb74ba09c019d46c21eb28f44154eacf5458c5d0dc925f85af5113"
+  },
+  "checkpointHash": "63e1d0cbfaacdee027dbb5e5810c40282d7b322590134e74b1af82f391ab9a50"
+}

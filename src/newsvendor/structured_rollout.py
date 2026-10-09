@@ -52,7 +52,7 @@ class ResearchRouter:
             and len(value["history"]) < value["task"]["deadline"]
             and (not state["valid"] or any(s not in state["values"] for s in SLOTS))
             and lookups < self.config.get("retrievals", 2)
-            and ("forecast" not in value["task"] or state.get("retrieval", {}).get("unreadChunks", 0) > 0)
+            and state.get("retrieval", {}).get("unreadChunks", 0) > 0
         ):
             allowed.append("retrieve")
         return allowed
@@ -98,7 +98,7 @@ class ResearchRouter:
                         if {"copy": "copy", "divide": "divide", "subtract": "subtract"}.get(e["op"])
                         == expression["op"]
                         and len(e["args"]) == len(expression["operands"])
-                        and ("forecast" not in value["task"] or structured_forecast.compatible(e, slot))
+                        and structured_forecast.compatible(e, slot)
                         and all(
                             a["span"] == [loc["start"], loc["end"]] and e["doc"]["id"] == loc["id"]
                             for a, loc in zip(e["args"], expression["operands"], strict=True)
@@ -121,14 +121,14 @@ class ResearchRouter:
             except (KeyError, TypeError, ValueError, OverflowError) as exception:
                 error = str(exception)
             result = structured_forecast.finish(value, record, forecast, error)
-            result["retrieval"] = {
-                "indexedChunks": view["indexedChunks"], "selectedChunks": view["selectedChunks"],
-                "unreadChunks": max(0, view["indexedChunks"] - view["selectedChunks"]),
-            }
         else:
             # Preserve the original generated benchmark and its loss definition.
             Fs = demand(value, record)
             result = finish(value, record, Fs)
+        result["retrieval"] = {
+            "indexedChunks": view["indexedChunks"], "selectedChunks": view["selectedChunks"],
+            "unreadChunks": max(0, view["indexedChunks"] - view["selectedChunks"]),
+        }
         if self.cache is not None:
             self.cache[key] = copy.deepcopy(result)
         return result
@@ -154,7 +154,7 @@ class ResearchRouter:
             state=summary,
             round=sum(h["action"] == "retrieve" for h in value["history"]),
         )
-        view["allowReread"] = "forecast" not in value["task"]
+        view["allowReread"] = False
         if self.config.get("exactActionCosts"):
             from .structured_value import known_costs
 

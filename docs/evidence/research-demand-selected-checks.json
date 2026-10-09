@@ -1,0 +1,28 @@
+{
+  "registeredAt": "2026-10-09T08:20:55.845601+00:00",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "configHash": "3de33ae3023910ffe58e24e55cd5f628169ce42e06e0ad34d8fdda0011fea7ae",
+  "sourceHash": "890b4a6a3ae3ba89d08278d1f98b2e24fefeb7a26a9acfe90ea64149e02632d5",
+  "scriptHash": "346002d8c640ebb0c1038927af474e9dcb13774dd5c37f9f442196b88f6362e8",
+  "smoke": {
+    "scriptHash": "346002d8c640ebb0c1038927af474e9dcb13774dd5c37f9f442196b88f6362e8",
+    "scope": "Numerical and source-exclusion smoke, not effectiveness evidence",
+    "outerHeldExcludedFromInnerSelection": true,
+    "devOutcomesDoNotAffectParameterFitsOrCrossfitTargets": true,
+    "frozenSelectorStateBackwardPassed": true,
+    "weightRoundTripExact": true,
+    "allFamiliesAndHorizons": true,
+    "selectedParameterEpoch": 2,
+    "selectedSelectorEpoch": 2
+  },
+  "testUsed": false,
+  "waitFor": {
+    "pid": 1462086,
+    "job": "results/l40s-research-documents-v1/base/42/job.json"
+  },
+  "selection": "Train inner source-group weekly mean NLL over all families selects parameter epochs; outer held outcomes are scored only after each fit. Dev selects family-score checkpoint. Seed 42 remains the fixed deployment candidate; include all seed failures and results."
+}

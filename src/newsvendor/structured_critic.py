@@ -43,6 +43,20 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
     def frozen():
         return weights_hash({k: v for k, v in model.state_dict().items() if not k.startswith(f"heads.{name}.")})
     frozen_hash = frozen()
+    checkpoint_base = None
+    if progress:
+        # Only this head changes during policy fitting. Preserve the full model
+        # once, then save each candidate with its optimizer and an exact base hash.
+        path = directory / "policy-base.pt"
+        if path.exists():
+            base = torch.load(path, map_location="cpu", weights_only=True)
+            require(base["identity"] == progress.identity, "Policy base identity changed")
+            require(weights_hash({k: v for k, v in base["weights"].items()
+                                  if not k.startswith(f"heads.{name}.")}) == frozen_hash,
+                    "Policy base frozen weights changed")
+        else:
+            progress.checkpoint("policy-base", model, {"config": config, "frozenWeightsHash": frozen_hash})
+        checkpoint_base = {"path": path.name, "hash": digest(path.read_bytes())}
     router = ResearchRouter(model, tokenizer, config["encoder"], no_value)
     train = [e for e in episodes if e["split"] == "train"]
     dev = [e for e in episodes if e["split"] == "dev"]
@@ -112,8 +126,10 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
                       "accepted": accepted, "retentionFailures": []}
             epochs.append(record)
             if progress:
-                progress.checkpoint(f"policy-candidate-{iteration}-{epoch}", model,
-                                    {"config": config, "iteration": iteration, "epoch": epoch, "dev": record}, optimizer)
+                progress.checkpoint(f"policy-candidate-{iteration}-{epoch}", head,
+                                    {"format": "policy-head-v1", "head": name, "base": checkpoint_base,
+                                     "frozenWeightsHash": frozen_hash, "config": config,
+                                     "iteration": iteration, "epoch": epoch, "dev": record}, optimizer)
                 progress.update("policy_dev", iteration=iteration + 1, **record)
             if stale >= policy.get("patience", 3):
                 break
@@ -124,6 +140,7 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
         reports.append({"iteration": iteration, "ownStateTargets": len(training), "trainRawHash": digest(raw),
                         "epochs": epochs, "selected": dict(selected), "publicDevBaseline": baseline,
                         "frozenWeightsHash": frozen_hash, "frozenWeightsUnchanged": True,
+                        "checkpointBase": checkpoint_base,
                         "trainable": f"heads.{name} only; encoder fine-tuned in preceding language stage",
                         "target": "Observed missing-parameter request/checklist, no economic targets" if no_value
                                   else "Measured terminal loss and request costs after forced first action",
