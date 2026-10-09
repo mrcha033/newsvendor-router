@@ -1655,6 +1655,7 @@ def test_training_stages_and_checkpoint_roundtrip(
     tokenizer, settings, model, tmp_path, monkeypatch
 ):
     from newsvendor import structured_train
+    from newsvendor.io import write
 
     episodes = corpus.generate(read("configs/full.json"))
     chosen = [
@@ -1663,6 +1664,9 @@ def test_training_stages_and_checkpoint_roundtrip(
     ]
     config = variant(read("configs/structured.json"), "base")
     config["encoder"] = settings
+    config["dataset"] = str(tmp_path / "dataset")
+    manifest = tmp_path / "dataset" / "manifest.json"
+    write(manifest, {"inputHash": digest([e["input"] for e in chosen])})
     config["expansion"] = None
     config["output"] = str(tmp_path)
     config["training"]["epochs"] = 1
@@ -1681,6 +1685,9 @@ def test_training_stages_and_checkpoint_roundtrip(
     loaded, _, saved, metadata = structured_train.load(path)
     assert saved == config and metadata == report
     assert all(torch.equal(v, loaded.state_dict()[k]) for k, v in model.state_dict().items())
+    write(manifest, {"inputHash": "changed"})
+    with pytest.raises(ValueError, match="Checkpoint data changed"):
+        structured_train.load(path)
 
 
 def test_tool_actions_modes_and_unannotated_state_are_constrained(tokenizer, settings, model):

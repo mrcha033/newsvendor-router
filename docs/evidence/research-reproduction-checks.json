@@ -1117,5 +1117,16 @@
       "endToEndOrderBenchmarkReady": false
     }
   },
-  "expansionAuditHash": "eda11ef124a16eda2ee232d1c8d42694045c06f3a26ee669abaa70a4d2360954"
+  "expansionAuditHash": "eda11ef124a16eda2ee232d1c8d42694045c06f3a26ee669abaa70a4d2360954",
+  "cleanUnitTests": {
+    "passed": 193,
+    "seconds": 24.67,
+    "processedDataPresentBeforeTests": false,
+    "workspace": "Clean committed source export plus self-contained checkpoint-test fix; shared installed Python environment",
+    "logHash": "21749f84abba274caa25ac72175a0725dcd80959ff11d75937c55db952a16893",
+    "fixedTest": "test_training_stages_and_checkpoint_roundtrip",
+    "regression": "Checkpoint round-trip creates its own data manifest and rejects subsequent manifest changes.",
+    "initialCiFailure": "https://github.com/mrcha033/newsvendor-router/actions/runs/37912997710",
+    "cause": "One unit test previously required a local untracked processed-data manifest."
+  }
 }
