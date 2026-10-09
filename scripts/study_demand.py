@@ -16,6 +16,7 @@ import torch
 from newsvendor import demand, observations, sequence
 from newsvendor.cli import provenance
 from newsvendor.io import digest, jsonl, lines, read, require, write
+from newsvendor.retail_expansion import owners
 from newsvendor.structured_tool_eval import weights_hash
 from newsvendor.structured_train import DEMAND_SCHEMA, dataset_hashes
 from newsvendor.suite import check
@@ -178,6 +179,66 @@ def control(config, number):
     }
 
 
+def attachment_audit(directory, reference, protected_selection):
+    """Allow only registered Train additions; preserve every reference row and family."""
+    directory, reference = Path(directory), Path(reference)
+    manifest = read(directory / "manifest.json")
+    attachment = manifest["trainAttachments"]
+    require(Path(attachment["baseDataset"]) == reference, "Wrong attachment parent")
+    for name, expected in attachment["baseHashes"].items():
+        require(digest((reference / name).read_bytes()) == expected, "Changed attachment parent")
+    old, current = lines(reference / "inputs.jsonl"), lines(directory / "inputs.jsonl")
+    old_labels, labels = lines(reference / "labels.jsonl"), lines(directory / "labels.jsonl")
+    require(
+        current[: len(old)] == old and labels[: len(old_labels)] == old_labels,
+        "Reference rows changed",
+    )
+    additions = current[len(old) :]
+    require(
+        additions and all(r["component"] == "retail" and r["split"] == "train" for r in additions),
+        "Only Train retail additions allowed",
+    )
+    require(
+        {r["family"] for r in current} == {r["family"] for r in old},
+        "Source family assignments changed",
+    )
+    current_owners = owners(current)
+    selection = read(directory / "selection.json")
+    require(digest(selection) == attachment["registrationHash"], "Changed attachment registration")
+    require(
+        digest(selection["selected"]) == attachment["selectedHash"], "Changed selected identities"
+    )
+    protected_selection = Path(protected_selection)
+    require(
+        digest(protected_selection.read_bytes())
+        == attachment["protectedSelectionHash"]
+        == selection["protectedSelectionHash"],
+        "Changed protected source registration",
+    )
+    protected_keys = {k for row in read(protected_selection)["selected"] for k in row["keys"]}
+    require(set(selection["protectedKeys"]) == protected_keys, "Changed protected identities")
+    require(
+        [r["id"] for r in additions]
+        == [f"retail:{r['store_id']}:{r['product_id']}" for r in selection["selected"]],
+        "Changed selected histories",
+    )
+    require(
+        not set(selection["protectedKeys"]) & set(current_owners),
+        "Protected evaluation identity entered dataset",
+    )
+    require(len(additions) == attachment["addedHistories"], "Changed attachment count")
+    return {
+        "baseManifestHash": digest(read(reference / "manifest.json")),
+        "expandedManifestHash": digest(manifest),
+        "registeredSelectionHash": attachment["registrationHash"],
+        "addedHistories": len(additions),
+        "allOriginalRowsAndLabelsUnchanged": True,
+        "familyAssignmentsUnchanged": True,
+        "crossFamilyIdentities": 0,
+        "protectedIdentities": 0,
+    }
+
+
 def main():
     os.chdir(ROOT)
     parser = argparse.ArgumentParser(description=__doc__)
@@ -255,9 +316,16 @@ def main():
         "scoreConcentration": concentration,
         "allocationFit": allocation_fit,
     }
+    if config.get("referenceDataset"):
+        report["attachmentAudit"] = attachment_audit(
+            config["dataset"], config["referenceDataset"], config["protectedSelection"]
+        )
     for number in config["seeds"]:
         reference = control(config, number)
-        require(reference["dataManifestHash"] == report["dataManifestHash"], "Control data changed")
+        expected = report.get("attachmentAudit", {}).get(
+            "baseManifestHash", report["dataManifestHash"]
+        )
+        require(reference["dataManifestHash"] == expected, "Control data changed")
         report["controls"][str(number)] = reference
     write(root / "registered.json", report)
     with tarfile.open(root / "source.tar.gz", "w:gz") as archive:
@@ -346,16 +414,17 @@ def main():
                 if k.startswith("demand.")
             }
         )
-        # The retained reference was measured on CPU. Preserve its inference
-        # device and thread count as well as its weights. seed() sets one CPU
-        # thread for training, but the historical reference used four.
+        # Preserve the historical inference device and thread count. Old
+        # studies used CPU/four threads; later selected-GRU references used CUDA.
+        reference_device = config.get("referenceDevice", "cpu")
+        require(reference_device in ("cpu", "cuda"), "Unknown reference device")
         torch.set_num_threads(config.get("referenceThreads", 4))
-        deployed = evaluate(model.to("cpu"), development, nodes, concentration)
+        deployed = evaluate(model.to(reference_device), development, nodes, concentration)
         check_reference(deployed, lines(config["deployedPredictions"]))
         jsonl(root / "deployed.jsonl", deployed)
         report["deployed"] = {
             "metrics": summarize(deployed),
-            "device": "cpu",
+            "device": reference_device,
             "threads": torch.get_num_threads(),
             "predictionsIdentical": True,
             "rawHash": digest((root / "deployed.jsonl").read_bytes()),
