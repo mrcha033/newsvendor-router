@@ -194,7 +194,7 @@ def cases(rows, episodes, split, limit=None):
     return [("public", r) for r in public] + [("research", e) for e in research]
 
 
-def research_cases(episodes):
+def research_cases(episodes, *, replay=()):
     """Initial inputs and actual replies, without hypothetical response-availability labels."""
     from . import structured_retail
     from .construction import demand as observed_demand
@@ -232,6 +232,13 @@ def research_cases(episodes):
                     {**episode, "id": episode["id"] + ":response-" + action, "input": value},
                 )
             )
+    if replay:
+        seen = {digest(research_input(row["input"])) for _, row in result}
+        for mode, row in replay_construction(replay, episodes):
+            key = digest(research_input(row["input"]))
+            if key not in seen:
+                result.append((mode, row))
+                seen.add(key)
     return result
 
 

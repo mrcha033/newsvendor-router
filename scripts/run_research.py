@@ -224,7 +224,9 @@ def main():
             )
     if args.stage == "train":
         training_cases, development_cases = [], []
-        for mode, episode in structured_train.research_cases(episodes + original):
+        for mode, episode in structured_train.research_cases(
+            episodes + original, replay=config.get("constructionReplay", ())
+        ):
             destination = training_cases if episode["split"] == "train" else development_cases
             destination.append((mode, episode))
         for row in documents:

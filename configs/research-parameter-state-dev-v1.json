@@ -1,0 +1,18 @@
+{
+  "split": "dev",
+  "testUsed": false,
+  "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "head": "results/l40s-parameter-state-v1/state-head.pt",
+  "studyReport": "results/l40s-parameter-state-v1/report.json",
+  "seed": 42,
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "59f9137ddc4b04ff01015c9bb8054fd74c89d086deec7b930b428a1f139813d7",
+  "output": "results/l40s-parameter-state-dev-v1",
+  "files": {
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/l40s-parameter-state-v1/state-head.pt": "cd59eba75f03c82876e7944e3c53045da39fbd4b31d164672524a4b4d5da2e03",
+    "results/l40s-parameter-state-v1/report.json": "b54ba8ed802c3ab4add4501e9921c797efcd3c10a13a24f10a555c304490d4c0",
+    "scripts/evaluate_parameter_state.py": "1dc6a1792b2731d33e17aea3431ef812a3556a962de3bbb9ac1bfbb1abb35655"
+  },
+  "acceptance": "Original Dev: preserve financial values, evidence, type accuracy and zero false handoffs; improve observed response state accuracy; do not worsen actual mean total loss in either generated or linked-retail benchmark. Public outputs must remain unchanged."
+}
