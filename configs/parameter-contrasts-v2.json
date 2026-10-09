@@ -1,0 +1,17 @@
+{
+  "sources": [
+    "results/l40s-research-replay-v1/base/42/inputs.jsonl",
+    "results/l40s-research-replay-v1/base/42/generated-inputs.jsonl"
+  ],
+  "files": {
+    "results/l40s-research-replay-v1/base/42/inputs.jsonl": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "results/l40s-research-replay-v1/base/42/generated-inputs.jsonl": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2"
+  },
+  "output": "results/parameter-contrasts-v2",
+  "seed": 113,
+  "splitSeed": 101,
+  "heldFraction": 0.2,
+  "testUsed": false,
+  "scope": "Train-only document contrasts with normal-format alternative SKU and period metadata; correct the easy-marker flaw of v1. This preparation alone is not evidence of model improvement.",
+  "version": 2
+}

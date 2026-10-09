@@ -21,6 +21,7 @@ jobs:
           scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py
           scripts/reproduce_retail_forecast.py
           scripts/study_parameter_state.py scripts/evaluate_parameter_state.py
+          scripts/prepare_parameter_contrasts.py scripts/evaluate_parameter_contrasts.py
       - run: >-
           uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
           scripts/check_observations.py scripts/study_demand.py
@@ -28,6 +29,7 @@ jobs:
           scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py
           scripts/reproduce_retail_forecast.py
           scripts/study_parameter_state.py scripts/evaluate_parameter_state.py
+          scripts/prepare_parameter_contrasts.py scripts/evaluate_parameter_contrasts.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval

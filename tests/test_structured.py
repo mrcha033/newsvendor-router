@@ -3080,6 +3080,71 @@ def test_tool_dev_plateau_stops_with_resumable_selected_weights(
     assert all(torch.equal(v, model.state_dict()[k]) for k, v in weights.items())
 
 
+@pytest.mark.parametrize("validation_every", [0, 1])
+def test_research_selection_preserves_values_and_evidence_when_state_score_improves(
+    tokenizer, settings, model, tmp_path, monkeypatch, validation_every
+):
+    from newsvendor import structured_train
+    from newsvendor.structured_progress import Progress
+
+    config = variant(read("configs/structured.json"), "base")
+    config.update(encoder=settings, output=str(tmp_path))
+    config["training"].update(
+        epochs=2,
+        accumulation=1,
+        caseBatch=1,
+        checkpointEvery=1,
+        selection="research",
+        validationEvery=validation_every,
+        validateInitial=True,
+        patience=100,
+    )
+    episodes = corpus.generate(read("configs/full.json"))
+    train = [("research", e) for e in episodes if e["split"] == "train"][:1]
+    dev = [("research", e) for e in episodes if e["split"] == "dev"][:1]
+    baseline = {
+        "parameterAccuracy": 1.0,
+        "rawStateAccuracy": 3156 / 3168,
+        "rawTypeAccuracy": 1.0,
+        "evidenceAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+    }
+    first = baseline | {"rawStateAccuracy": 3161 / 3168}
+    second = baseline | {
+        "parameterAccuracy": 3165 / 3168,
+        "rawStateAccuracy": 3164 / 3168,
+        "evidenceAccuracy": 0.9988847583643122,
+        "allParametersCorrect": 789 / 792,
+    }
+    assert structured_train.tool_selection_key(second, 0.1, config) > (
+        structured_train.tool_selection_key(first, 0.8, config)
+    )
+    metrics = iter([baseline, first, second])
+    weights = []
+
+    def measure(*args, **kwargs):
+        current = next(metrics)
+        weights.append({k: v.clone() for k, v in model.state_dict().items()})
+        return structured_train.tool_selection_key(current, 0.5, config), 0.5, current
+
+    monkeypatch.setattr(structured_train, "tool_selection", measure)
+    progress = Progress(config, {"snapshot": "fixture"}, "cpu", None)
+    report = structured_train.train_language(model, tokenizer, config, train, dev, {}, [], progress)
+    assert report["selectedEpoch"] == 1
+    rejected = report["checks"][-1] if validation_every else report["epochs"][-1]
+    assert not rejected["accepted"]
+    assert {r["metric"] for r in rejected["retentionFailures"]} == {
+        "parameterAccuracy",
+        "evidenceAccuracy",
+    }
+    assert all(torch.equal(v, model.state_dict()[k]) for k, v in weights[1].items())
+    restored = structured_train.train_language(
+        model, tokenizer, config, train, dev, {}, [], progress
+    )
+    assert restored == report
+    assert all(torch.equal(v, model.state_dict()[k]) for k, v in weights[1].items())
+
+
 @pytest.mark.parametrize("goal_stop", [False, True])
 def test_language_budget_and_goal_stopping(
     tokenizer, settings, model, tmp_path, monkeypatch, goal_stop

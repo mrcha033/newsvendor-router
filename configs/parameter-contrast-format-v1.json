@@ -1,0 +1,25 @@
+{
+  "models": {
+    "parent": {
+      "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt"
+    },
+    "candidate": {
+      "checkpoint": "results/l40s-research-parameter-contrasts-v1/base/42/common.pt"
+    }
+  },
+  "manifest": "results/parameter-contrast-format-v1/manifest.json",
+  "output": "results/l40s-parameter-contrast-format-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "6456b2dd9d43795c6b413cbf6d291e97fc14ebb6be6e1061a51569cdb31edc27",
+  "files": {
+    "results/l40s-research-parameter-contrasts-v1/base/42/common.pt": "effaf94376823fa448c8bf1dbefeca6e69055c8670f92638fd17272d5a49a638",
+    "results/parameter-contrast-format-v1/held.jsonl": "47c82e6bab3b9412e04fd4857151268e3d9031dacbd9841b139576ab61b3de39",
+    "results/parameter-contrast-format-v1/manifest.json": "252c7ed975062ff662af68f6c1be6f731c45a321e5cefda4cb2d3aeb2eee2c49",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/research-checks/parameter-contrast/format_probe.py": "cc5190a05b7fe9bc1a999494169c9bfa9ef56c3736b04a1ac8f57d0dde46a7de",
+    "scripts/evaluate_parameter_contrasts.py": "91c6fbabcc8674b921538f93f4ab9c162670d940b5de384624ce155059f3d6c5"
+  },
+  "testUsed": false,
+  "trainingPerformed": false,
+  "scope": "Follow-up diagnostic on the same held Train sources: same-format alternative SKU/date identifiers; no training, no Test, no new independent cohort"
+}

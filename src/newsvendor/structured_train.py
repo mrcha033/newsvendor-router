@@ -31,6 +31,7 @@ from .suite_score import score
 from .train import seed
 
 DEMAND_SCHEMA = "newsvendor-demand-gru-v1"
+RESEARCH_METRICS = ("parameterAccuracy", "rawStateAccuracy", "rawTypeAccuracy", "evidenceAccuracy")
 
 
 def variant(config, name, value=None):
@@ -496,6 +497,17 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             resumed[k] for k in ("report", "best", "selected", "saved")
         ]
     checks = resumed.get("checks", []) if resumed else []
+    best_metrics = resumed.get("bestMetrics") if resumed else None
+    if resumed and best_metrics is None and config["training"].get("selection") == "research":
+        # Older checkpoints did not store the selected metrics separately.
+        for row in [*report, *checks]:
+            if (
+                row.get("epoch") == selected
+                and row.get("accepted", True)
+                and row.get("tools")
+                and tool_selection_key(row["tools"], row["devLoss"], config) == best
+            ):
+                best_metrics = row["tools"]
     stale = resumed.get("stale", 0) if resumed else 0
     validation_every = config["training"].get("validationEvery", 0) if select_tools else 0
     maximum = config["training"].get("maxCases", 0)
@@ -515,6 +527,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             collection,
             Path(config["output"]) / "language-dev-initial.jsonl",
         )
+        best_metrics = tool_metrics
         saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
         checks.append(
             {
@@ -543,6 +556,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             collection,
             Path(config["output"]) / "language-dev-parent-revalidated.jsonl",
         )
+        best_metrics = tool_metrics
         model.load_state_dict(current)
         restore_rng(random_state)
         del current
@@ -678,11 +692,13 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     collection,
                     Path(config["output"]) / f"language-dev-{epoch + 1}-{processed}.jsonl",
                 )
-                meaningful = candidate_key[:3] > best[:3]
+                failures = selection_regressions(best_metrics, tool_metrics, config)
+                accepted = candidate_key > best and not failures
+                meaningful = accepted and candidate_key[:3] > best[:3]
                 stale = 0 if meaningful else stale + 1
-                accepted = candidate_key > best
                 if accepted:
                     best, selected = candidate_key, epoch + 1
+                    best_metrics = tool_metrics
                     saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
                 seen = epoch * len(train) + processed
                 budget_stop = bool(
@@ -721,6 +737,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                         "tools": tool_metrics,
                         "devLoss": dev_loss,
                         "accepted": accepted,
+                        "retentionFailures": failures,
                         "staleChecks": stale,
                         "earlyStopped": stopped,
                         "budgetStopped": budget_stop,
@@ -745,6 +762,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                         "details": dict(details),
                         "report": report,
                         "best": best,
+                        "bestMetrics": best_metrics,
                         "selected": selected,
                         "saved": saved,
                         "workload": workload,
@@ -774,7 +792,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                 "workload": workload,
             }
         )
-        candidate_key = None
+        candidate_key, failures = None, []
         if select_tools and not validation_every:
             candidate_key, _, tool_metrics = tool_selection(
                 model,
@@ -787,12 +805,18 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                 loss=dev_loss,
             )
             report[-1]["tools"] = tool_metrics
-        if (
-            (candidate_key is not None and candidate_key > best)
+            failures = selection_regressions(best_metrics, tool_metrics, config)
+            report[-1]["retentionFailures"] = failures
+        accepted = (
+            (candidate_key is not None and candidate_key > best and not failures)
             if select_tools
             else (dev_loss < best)
-        ):
+        )
+        if not validation_every:
+            report[-1]["accepted"] = accepted
+        if accepted:
             best, selected = candidate_key if select_tools else dev_loss, epoch + 1
+            best_metrics = tool_metrics if select_tools else None
             # CPU copies avoid doubling GPU memory during checkpoint selection.
             saved = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
         print(
@@ -812,6 +836,7 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     "details": {},
                     "report": report,
                     "best": best,
+                    "bestMetrics": best_metrics,
                     "selected": selected,
                     "saved": saved,
                     "workload": {"tokens": 0, "retrievals": 0},
@@ -897,17 +922,20 @@ def tool_selection(model, tokenizer, config, dev, labels, collection, path, *, l
     return tool_selection_key(metrics, loss, config), loss, metrics
 
 
+def selection_regressions(previous, candidate, config):
+    """Do not trade grounded parameter correctness for a better aggregate state score."""
+    if not previous or config["training"].get("selection") != "research":
+        return []
+    return [
+        {"metric": key, "before": previous[key], "after": candidate.get(key)}
+        for key in RESEARCH_METRICS
+        if candidate.get(key) is None or candidate[key] + 1e-12 < previous[key]
+    ]
+
+
 def tool_selection_key(metrics, loss, config):
     if config["training"].get("selection") == "research":
-        rates = [
-            metrics[k]
-            for k in (
-                "parameterAccuracy",
-                "rawStateAccuracy",
-                "rawTypeAccuracy",
-                "evidenceAccuracy",
-            )
-        ]
+        rates = [metrics[k] for k in RESEARCH_METRICS]
         return (min(rates), sum(rates), metrics["allParametersCorrect"], -loss)
     if config["training"].get("selection") == "goal":
         rates = [

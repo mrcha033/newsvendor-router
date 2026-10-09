@@ -1,0 +1,32 @@
+{
+  "models": {
+    "parent": {
+      "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt"
+    },
+    "selected": {
+      "checkpoint": "results/l40s-research-parameter-contrasts-v1/base/42/common.pt"
+    },
+    "last": {
+      "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+      "weights": "results/l40s-research-parameter-contrasts-v1/base/42/language-progress.pt"
+    }
+  },
+  "manifest": "results/parameter-contrasts-v1/manifest.json",
+  "output": "results/l40s-parameter-contrasts-held-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "8213238333f07368c3e7b5baacd5828ddf05968151f3b6d2edc4683dbcdb4f65",
+  "files": {
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/l40s-research-parameter-contrasts-v1/base/42/common.pt": "effaf94376823fa448c8bf1dbefeca6e69055c8670f92638fd17272d5a49a638",
+    "results/l40s-research-parameter-contrasts-v1/base/42/language-progress.pt": "c5ab36cb84ff4a4be28bb9e82d9e971d007bd060026371f5487839ac3c9bba09",
+    "results/l40s-research-parameter-contrasts-v1/registered.json": "556617d2e5936c79096aa2603439d80d5520bffb88e007cf35590b26ec7bb7f1",
+    "results/parameter-contrasts-v1/fit.jsonl": "4d6250b1645279c063b547200bd2272733b80bbe4e4ac03db5d4282ede71f785",
+    "results/parameter-contrasts-v1/held.jsonl": "669ff300162a307ad0b5ca0bdac3d8663e18cb6661ca0b9256cc27d99211101a",
+    "results/parameter-contrasts-v1/manifest.json": "3b15c05b236ea64afaa36a5e9b9c013a2a1fd0776a834f843a011a7e267c4aac",
+    "scripts/evaluate_parameter_contrasts.py": "91c6fbabcc8674b921538f93f4ab9c162670d940b5de384624ce155059f3d6c5"
+  },
+  "testUsed": false,
+  "devUsed": false,
+  "trainingPerformed": false,
+  "scope": "Held Train contrast augmentation diagnostic, after original Dev epoch selection; selected and final unselected epoch distinguished; no Test or independent-source effectiveness claim."
+}
