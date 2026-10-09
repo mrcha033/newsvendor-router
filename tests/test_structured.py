@@ -1195,6 +1195,69 @@ def test_core_rejects_stale_or_ungrounded_memory(model, tokenizer, settings, mon
     assert not after["valid"] and "v" in after["missing"]
 
 
+@pytest.mark.parametrize("change", ["newer_value", "newer_same_value", "same_version_conflict"])
+def test_core_rejects_newly_selected_stale_or_conflicting_evidence_and_requests_recovery(
+    model, tokenizer, settings, monkeypatch, change
+):
+    from newsvendor import structured_rollout
+
+    value = forecast_input()
+    value["task"]["costs"]["c"] = 1.0
+    predicted = observed_fields(value)
+    selected = next(f for f in predicted if f["name"] == "c")
+    source = next(
+        d for d in value["docs"] if d["id"] == selected["expression"]["operands"][0]["id"]
+    )
+    amount = selected["value"] + (change != "newer_same_value")
+    replacement = corpus.answer_doc(value, "c", amount, "updated-quote")
+    replacement["version"] = source["version"] + (change != "same_version_conflict")
+    value["docs"].append(replacement)
+    monkeypatch.setattr(structured_rollout, "extract", lambda *args: copy.deepcopy(predicted))
+    router = structured_rollout.ResearchRouter(model, tokenizer, settings)
+    state = router.construct(value)
+    assert "c" not in state["values"] and state["q"] is None and not state["valid"]
+    expected = "conflict" if change == "same_version_conflict" else "unconfirmed"
+    assert state["state"]["c"] == expected
+    assert "c" in router.allowed(value, state) and "handoff" not in router.allowed(value, state)
+    raw = next(f for f in state["rawFields"] if f["name"] == "c")
+    assert raw == selected  # Rejecting stale evidence is not an improved raw prediction.
+    final = next(f for f in state["fields"] if f["name"] == "c")
+    assert final["value"] is None and final["reason"].endswith("source-c")
+    # A later observed reply with current evidence can recover even if extraction stays stale.
+    answered = corpus.outcome(value, "c", amount)
+    reply = next(d for d in answered["docs"] if d["id"] == "response-c")
+    reply["version"] = replacement["version"] + 1
+    recovered = router.construct(answered)
+    assert recovered["values"]["c"] == amount and recovered["state"]["c"] == "verified"
+    assert recovered["links"]["c"] == "response-c" and "c" in recovered["copiedResponses"]
+    assert not any(e.endswith("-c") for e in recovered["errors"])
+
+
+def test_core_current_evidence_ignores_foreign_scope_and_other_parameter_versions(
+    model, tokenizer, settings, monkeypatch
+):
+    from newsvendor import structured_rollout
+
+    value = forecast_input()
+    predicted = observed_fields(value)
+    selected = next(f for f in predicted if f["name"] == "c")
+    source = next(
+        d for d in value["docs"] if d["id"] == selected["expression"]["operands"][0]["id"]
+    )
+    source["title"] = "Vendor document 17"
+    for key in ("sku", "period"):
+        foreign = corpus.answer_doc(value, "c", selected["value"] + 3, "foreign-" + key)
+        foreign["version"], foreign[key] = 100, "other-scope"
+        value["docs"].append(foreign)
+    for doc in value["docs"]:
+        if doc["title"] == "Sales price list":
+            doc["version"] = 200
+    monkeypatch.setattr(structured_rollout, "extract", lambda *args: copy.deepcopy(predicted))
+    state = structured_rollout.ResearchRouter(model, tokenizer, settings).construct(value)
+    assert state["values"]["c"] == selected["value"] and state["links"]["c"] == source["id"]
+    assert state["state"]["c"] == "verified" and state["valid"]
+
+
 def test_core_memory_does_not_turn_a_fact_into_a_manager_preference(
     model, tokenizer, settings, monkeypatch
 ):

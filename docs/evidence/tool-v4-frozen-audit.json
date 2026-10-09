@@ -1,0 +1,11 @@
+{
+  "changedParameters": [
+    "heads.value.layers.0.weight",
+    "heads.value.layers.0.bias",
+    "heads.value.layers.2.weight",
+    "heads.value.layers.2.bias"
+  ],
+  "frozenWeightsUnchanged": true,
+  "commonHash": "1cfc92695cfeeaaf44df431ff32672b4d966e9a0656facc980fa0ff48508d7c7",
+  "policyHash": "61cf765cf0076999d25954f7984875396d435821f366cb58b3eaf1c442c5064d"
+}

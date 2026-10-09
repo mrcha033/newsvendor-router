@@ -69,8 +69,8 @@ v3에서 확인한 퇴행을 수정한다. 이전 실패 결과는 [v3 결과](t
 
 ## 원시 결과와 재현
 
-- [학습·평가 결과](../results/l40s-tools-v4/base/42/training.json), [동일 가중치 비교](../results/l40s-tools-v4/base/42/tool-comparison.json)
-- [고정 가중치 검사](../results/l40s-tools-v4/base/42/frozen-audit.json), [검증 기록](evidence/tool-repair-checks.json)
+- [학습·평가 결과](evidence/tool-v4-training.json), [동일 가중치 비교](evidence/tool-v4-tool-comparison.json)
+- [고정 가중치 검사](evidence/tool-v4-frozen-audit.json), [검증 기록](evidence/tool-repair-checks.json)
 - 최종 모델: `results/l40s-tools-v4/base/42/model.pt`
 - 학습·평가 source hash: `46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4`
 - 원본 source archive, 모델 revision, 데이터 hash, source-family split, 각 후보 가중치, 행동별 실제 비용과 원시 예측을 실행 디렉터리에 보존했다.

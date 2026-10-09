@@ -1,0 +1,2231 @@
+{
+  "status": "complete",
+  "conditions": {
+    "decoder_fixed": {
+      "checkpoint": "results/l40s-policy-v2/base/42/model.pt",
+      "checkpointHash": "581ec15c55065b39dcaf3541c483826598344ee893322f570fb41150224333cf",
+      "weightsHash": "b6bd0d525e2b9e2e993b6bf6a629eecba93d4323d1f48fbe0ea4f1ab51a829d7",
+      "rerank": false,
+      "noValue": false,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.90625,
+          "cases": 96,
+          "familyMean": 0.90625,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.7692307692307693,
+          "cases": 26,
+          "familyMean": 0.7692307692307693,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.7391304347826086,
+          "cases": 23,
+          "familyMean": 0.7083333333333334,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.3020833333333333,
+          "cases": 96,
+          "familyMean": 0.3020833333333333,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.20833333333333334,
+          "cases": 96,
+          "familyMean": 0.20833333333333331,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.875,
+          "cases": 96,
+          "familyMean": 0.875,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8709677419354839,
+          "cases": 93,
+          "familyMean": 0.86875,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04317286112729645,
+          "cases": 70,
+          "familyMean": 0.04494529078200332,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 240.34888370094546,
+            "cases": 120,
+            "familyMean": 240.3488837009454,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 216.38474120094546,
+            "cases": 120,
+            "familyMean": 216.38474120094546,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 23.9641425,
+            "cases": 120,
+            "familyMean": 23.964142499999998,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.6083333333333333,
+            "cases": 120,
+            "familyMean": 0.6083333333333334,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.8583333333333336,
+            "cases": 120,
+            "familyMean": 0.8583333333333334,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.6166666666666667,
+            "cases": 120,
+            "familyMean": 0.6166666666666666,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.6416666666666667,
+            "cases": 120,
+            "familyMean": 0.6416666666666667,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.5916666666666667,
+            "cases": 120,
+            "familyMean": 0.5916666666666667,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.0,
+            "cases": 43,
+            "familyMean": 0.0,
+            "families": 9
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.07792207792207792,
+            "cases": 77,
+            "familyMean": 0.07058823529411766,
+            "families": 17
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 242.5726269520921,
+            "cases": 120,
+            "familyMean": 242.57262695209207,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 218.61681778542547,
+            "cases": 120,
+            "familyMean": 218.61681778542547,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 23.95580916666667,
+            "cases": 120,
+            "familyMean": 23.955809166666665,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.6,
+            "cases": 120,
+            "familyMean": 0.6,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.008333333333333333,
+            "cases": 120,
+            "familyMean": 0.008333333333333333,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.8583333333333336,
+            "cases": 120,
+            "familyMean": 0.8583333333333334,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.625,
+            "cases": 120,
+            "familyMean": 0.625,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.6416666666666667,
+            "cases": 120,
+            "familyMean": 0.6416666666666667,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.5833333333333334,
+            "cases": 120,
+            "familyMean": 0.5833333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.0,
+            "cases": 43,
+            "familyMean": 0.0,
+            "families": 9
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.09090909090909091,
+            "cases": 77,
+            "familyMean": 0.0823529411764706,
+            "families": 17
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 247.54086945209212,
+            "cases": 120,
+            "familyMean": 247.5408694520921,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 223.58506028542544,
+            "cases": 120,
+            "familyMean": 223.58506028542544,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 23.95580916666667,
+            "cases": 120,
+            "familyMean": 23.955809166666665,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.6,
+            "cases": 120,
+            "familyMean": 0.6,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.016666666666666666,
+            "cases": 120,
+            "familyMean": 0.016666666666666666,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.8583333333333336,
+            "cases": 120,
+            "familyMean": 0.8583333333333334,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.625,
+            "cases": 120,
+            "familyMean": 0.625,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.6416666666666667,
+            "cases": 120,
+            "familyMean": 0.6416666666666667,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.5833333333333334,
+            "cases": 120,
+            "familyMean": 0.5833333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.0,
+            "cases": 43,
+            "familyMean": 0.0,
+            "families": 9
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.09090909090909091,
+            "cases": 77,
+            "familyMean": 0.0823529411764706,
+            "families": 17
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/decoder_fixed/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/decoder_fixed/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/decoder_fixed/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/decoder_fixed/logged-conversations.jsonl"
+    },
+    "common_rerank_off": {
+      "checkpoint": "results/l40s-tools-v4/base/42/common.pt",
+      "checkpointHash": "6686c02c8c5f1c0d53ab42e883144a660f78da28c949a144e57a8e62e376d6d7",
+      "weightsHash": "1cfc92695cfeeaaf44df431ff32672b4d966e9a0656facc980fa0ff48508d7c7",
+      "rerank": false,
+      "noValue": false,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.7692307692307693,
+          "cases": 26,
+          "familyMean": 0.782051282051282,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.782608695652174,
+          "cases": 23,
+          "familyMean": 0.75,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.2604166666666667,
+          "cases": 96,
+          "familyMean": 0.26041666666666663,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.20833333333333334,
+          "cases": 96,
+          "familyMean": 0.20833333333333331,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8924731182795699,
+          "cases": 93,
+          "familyMean": 0.8895833333333334,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04849988704255766,
+          "cases": 70,
+          "familyMean": 0.05015898027878105,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/logged-conversations.jsonl"
+    },
+    "common_rerank_on": {
+      "checkpoint": "results/l40s-tools-v4/base/42/common.pt",
+      "checkpointHash": "6686c02c8c5f1c0d53ab42e883144a660f78da28c949a144e57a8e62e376d6d7",
+      "weightsHash": "1cfc92695cfeeaaf44df431ff32672b4d966e9a0656facc980fa0ff48508d7c7",
+      "rerank": true,
+      "noValue": false,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.8076923076923077,
+          "cases": 26,
+          "familyMean": 0.8076923076923077,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.782608695652174,
+          "cases": 23,
+          "familyMean": 0.75,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.3020833333333333,
+          "cases": 96,
+          "familyMean": 0.3020833333333333,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.21875,
+          "cases": 96,
+          "familyMean": 0.21875,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.875,
+          "cases": 96,
+          "familyMean": 0.875,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8709677419354839,
+          "cases": 93,
+          "familyMean": 0.86875,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04849988704255766,
+          "cases": 70,
+          "familyMean": 0.05015898027878105,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 610.4698709631273,
+            "cases": 120,
+            "familyMean": 610.4698709631274,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 577.347792629794,
+            "cases": 120,
+            "familyMean": 577.3477926297941,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 33.122078333333334,
+            "cases": 120,
+            "familyMean": 33.12207833333333,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.8083333333333333,
+            "cases": 120,
+            "familyMean": 0.8083333333333332,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.06666666666666667,
+            "cases": 120,
+            "familyMean": 0.06666666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3416666666666667,
+            "cases": 120,
+            "familyMean": 0.3416666666666666,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11403508771929824,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/common_rerank_off/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/common_rerank_on/logged-conversations.jsonl"
+    },
+    "policy_rerank_off": {
+      "checkpoint": "results/l40s-tools-v4/base/42/policy-done.pt",
+      "checkpointHash": "e458b0ce656e8c8180d80f3f84503f3a183c36186f246b0b92d2c2805befdda0",
+      "weightsHash": "61cf765cf0076999d25954f7984875396d435821f366cb58b3eaf1c442c5064d",
+      "rerank": false,
+      "noValue": false,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.7692307692307693,
+          "cases": 26,
+          "familyMean": 0.782051282051282,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.782608695652174,
+          "cases": 23,
+          "familyMean": 0.75,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.2604166666666667,
+          "cases": 96,
+          "familyMean": 0.26041666666666663,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.20833333333333334,
+          "cases": 96,
+          "familyMean": 0.20833333333333331,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8924731182795699,
+          "cases": 93,
+          "familyMean": 0.8895833333333334,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04849988704255766,
+          "cases": 70,
+          "familyMean": 0.05015898027878105,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 257.33818292828124,
+            "cases": 120,
+            "familyMean": 257.33818292828124,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 233.20502876161456,
+            "cases": 120,
+            "familyMean": 233.20502876161459,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.133154166666664,
+            "cases": 120,
+            "familyMean": 24.133154166666667,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7083333333333334,
+            "cases": 120,
+            "familyMean": 0.7083333333333334,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5833333333333334,
+            "cases": 120,
+            "familyMean": 0.5833333333333334,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 254.85855905359216,
+            "cases": 120,
+            "familyMean": 254.85855905359213,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 230.7337382202588,
+            "cases": 120,
+            "familyMean": 230.73373822025883,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.12482083333333,
+            "cases": 120,
+            "familyMean": 24.124820833333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7,
+            "cases": 120,
+            "familyMean": 0.6999999999999998,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5916666666666667,
+            "cases": 120,
+            "familyMean": 0.5916666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 257.5328863748699,
+            "cases": 120,
+            "familyMean": 257.53288637487,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 233.4080655415366,
+            "cases": 120,
+            "familyMean": 233.40806554153662,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.12482083333333,
+            "cases": 120,
+            "familyMean": 24.124820833333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7,
+            "cases": 120,
+            "familyMean": 0.6999999999999998,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.008333333333333333,
+            "cases": 120,
+            "familyMean": 0.008333333333333333,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5916666666666667,
+            "cases": 120,
+            "familyMean": 0.5916666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/logged-conversations.jsonl"
+    },
+    "policy_rerank_on": {
+      "checkpoint": "results/l40s-tools-v4/base/42/policy-done.pt",
+      "checkpointHash": "e458b0ce656e8c8180d80f3f84503f3a183c36186f246b0b92d2c2805befdda0",
+      "weightsHash": "61cf765cf0076999d25954f7984875396d435821f366cb58b3eaf1c442c5064d",
+      "rerank": true,
+      "noValue": false,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.8076923076923077,
+          "cases": 26,
+          "familyMean": 0.8076923076923077,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.782608695652174,
+          "cases": 23,
+          "familyMean": 0.75,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.3020833333333333,
+          "cases": 96,
+          "familyMean": 0.3020833333333333,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.21875,
+          "cases": 96,
+          "familyMean": 0.21875,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.875,
+          "cases": 96,
+          "familyMean": 0.875,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8709677419354839,
+          "cases": 93,
+          "familyMean": 0.86875,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04849988704255766,
+          "cases": 70,
+          "familyMean": 0.05015898027878105,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 257.33818292828124,
+            "cases": 120,
+            "familyMean": 257.33818292828124,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 233.20502876161456,
+            "cases": 120,
+            "familyMean": 233.20502876161459,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.133154166666664,
+            "cases": 120,
+            "familyMean": 24.133154166666667,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7083333333333334,
+            "cases": 120,
+            "familyMean": 0.7083333333333334,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5833333333333334,
+            "cases": 120,
+            "familyMean": 0.5833333333333334,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 254.85855905359216,
+            "cases": 120,
+            "familyMean": 254.85855905359213,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 230.7337382202588,
+            "cases": 120,
+            "familyMean": 230.73373822025883,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.12482083333333,
+            "cases": 120,
+            "familyMean": 24.124820833333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7,
+            "cases": 120,
+            "familyMean": 0.6999999999999998,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5916666666666667,
+            "cases": 120,
+            "familyMean": 0.5916666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 257.5328863748699,
+            "cases": 120,
+            "familyMean": 257.53288637487,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 233.4080655415366,
+            "cases": 120,
+            "familyMean": 233.40806554153662,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 24.12482083333333,
+            "cases": 120,
+            "familyMean": 24.124820833333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 0.7,
+            "cases": 120,
+            "familyMean": 0.6999999999999998,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.008333333333333333,
+            "cases": 120,
+            "familyMean": 0.008333333333333333,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.5916666666666667,
+            "cases": 120,
+            "familyMean": 0.5916666666666667,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.35833333333333334,
+            "cases": 120,
+            "familyMean": 0.3583333333333334,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.10465116279069768,
+            "cases": 86,
+            "familyMean": 0.11140350877192982,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.0,
+            "cases": 34,
+            "familyMean": 0.0,
+            "families": 11
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/policy_rerank_off/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/policy_rerank_on/logged-conversations.jsonl"
+    },
+    "policy_recovery_only": {
+      "checkpoint": "results/l40s-tools-v4/base/42/policy-done.pt",
+      "checkpointHash": "e458b0ce656e8c8180d80f3f84503f3a183c36186f246b0b92d2c2805befdda0",
+      "weightsHash": "61cf765cf0076999d25954f7984875396d435821f366cb58b3eaf1c442c5064d",
+      "rerank": true,
+      "noValue": true,
+      "public": {
+        "actionAccuracy": {
+          "mean": 0.8854166666666666,
+          "cases": 96,
+          "familyMean": 0.8854166666666667,
+          "families": 16
+        },
+        "toolExact": {
+          "mean": 0.8076923076923077,
+          "cases": 26,
+          "familyMean": 0.8076923076923077,
+          "families": 13
+        },
+        "observableToolAndArgumentsExact": {
+          "mean": 0.782608695652174,
+          "cases": 23,
+          "familyMean": 0.75,
+          "families": 12
+        },
+        "expectedCall": {
+          "mean": 0.2708333333333333,
+          "cases": 96,
+          "familyMean": 0.2708333333333333,
+          "families": 16
+        },
+        "predictedCall": {
+          "mean": 0.3020833333333333,
+          "cases": 96,
+          "familyMean": 0.3020833333333333,
+          "families": 16
+        },
+        "correctCall": {
+          "mean": 0.21875,
+          "cases": 96,
+          "familyMean": 0.21875,
+          "families": 16
+        },
+        "toolDecisionAccuracy": {
+          "mean": 0.875,
+          "cases": 96,
+          "familyMean": 0.875,
+          "families": 16
+        },
+        "argumentsDecisionAccuracy": {
+          "mean": 0.8709677419354839,
+          "cases": 93,
+          "familyMean": 0.86875,
+          "families": 16
+        },
+        "spokenReferenceF1": {
+          "mean": 0.04849988704255766,
+          "cases": 70,
+          "familyMean": 0.05015898027878105,
+          "families": 16
+        }
+      },
+      "research": {
+        "0.0": {
+          "total": {
+            "mean": 386.6775432708212,
+            "cases": 120,
+            "familyMean": 386.67754327082133,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 381.7871949374879,
+            "cases": 120,
+            "familyMean": 381.78719493748804,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 4.890348333333334,
+            "cases": 120,
+            "familyMean": 4.890348333333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 1.3833333333333333,
+            "cases": 120,
+            "familyMean": 1.3833333333333335,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.31666666666666665,
+            "cases": 120,
+            "familyMean": 0.31666666666666665,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3333333333333333,
+            "cases": 120,
+            "familyMean": 0.3333333333333333,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.09302325581395349,
+            "cases": 86,
+            "familyMean": 0.09210526315789473,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.1": {
+          "total": {
+            "mean": 386.6775432708212,
+            "cases": 120,
+            "familyMean": 386.67754327082133,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 381.7871949374879,
+            "cases": 120,
+            "familyMean": 381.78719493748804,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 4.890348333333334,
+            "cases": 120,
+            "familyMean": 4.890348333333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 1.3833333333333333,
+            "cases": 120,
+            "familyMean": 1.3833333333333335,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.31666666666666665,
+            "cases": 120,
+            "familyMean": 0.31666666666666665,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3333333333333333,
+            "cases": 120,
+            "familyMean": 0.3333333333333333,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.09302325581395349,
+            "cases": 86,
+            "familyMean": 0.09210526315789473,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        },
+        "0.2": {
+          "total": {
+            "mean": 386.6775432708212,
+            "cases": 120,
+            "familyMean": 386.67754327082133,
+            "families": 24
+          },
+          "terminalLoss": {
+            "mean": 381.7871949374879,
+            "cases": 120,
+            "familyMean": 381.78719493748804,
+            "families": 24
+          },
+          "requestCost": {
+            "mean": 4.890348333333334,
+            "cases": 120,
+            "familyMean": 4.890348333333334,
+            "families": 24
+          },
+          "interactions": {
+            "mean": 1.3833333333333333,
+            "cases": 120,
+            "familyMean": 1.3833333333333335,
+            "families": 24
+          },
+          "falseHandoff": {
+            "mean": 0.0,
+            "cases": 120,
+            "familyMean": 0.0,
+            "families": 24
+          },
+          "initialTypeAccuracy": {
+            "mean": 1.0,
+            "cases": 120,
+            "familyMean": 1.0,
+            "families": 24
+          },
+          "initialStateAccuracy": {
+            "mean": 0.9750000000000001,
+            "cases": 120,
+            "familyMean": 0.975,
+            "families": 24
+          },
+          "handoffRate": {
+            "mean": 0.31666666666666665,
+            "cases": 120,
+            "familyMean": 0.31666666666666665,
+            "families": 24
+          },
+          "initialConstructionError": {
+            "mean": 0.2833333333333333,
+            "cases": 120,
+            "familyMean": 0.2833333333333333,
+            "families": 24
+          },
+          "finalConstructionError": {
+            "mean": 0.3333333333333333,
+            "cases": 120,
+            "familyMean": 0.3333333333333333,
+            "families": 24
+          },
+          "errorAccumulationRate": {
+            "mean": 0.09302325581395349,
+            "cases": 86,
+            "familyMean": 0.09210526315789473,
+            "families": 19
+          },
+          "constructionRecoveryRate": {
+            "mean": 0.058823529411764705,
+            "cases": 34,
+            "familyMean": 0.09090909090909091,
+            "families": 11
+          }
+        }
+      },
+      "researchMeasurements": {
+        "0.0": "results/l40s-tools-v4/base/42/comparison/policy_recovery_only/research-noise-0.0.jsonl",
+        "0.1": "results/l40s-tools-v4/base/42/comparison/policy_recovery_only/research-noise-0.1.jsonl",
+        "0.2": "results/l40s-tools-v4/base/42/comparison/policy_recovery_only/research-noise-0.2.jsonl"
+      },
+      "publicMeasurements": "results/l40s-tools-v4/base/42/comparison/policy_rerank_on/logged-conversations.jsonl"
+    }
+  },
+  "pairedSourceFamilyDifferences": {
+    "common_rerank_on_minus_common_rerank_off": {
+      "actionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          -0.041666666666666664,
+          0.041666666666666664
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "argumentsDecisionAccuracy": {
+        "familyMeanDifference": -0.020833333333333332,
+        "ci95": [
+          -0.05208333333333333,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 93
+      },
+      "correctCall": {
+        "familyMeanDifference": 0.010416666666666666,
+        "ci95": [
+          0.0,
+          0.03125
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "expectedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "observableToolAndArgumentsExact": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 12,
+        "pairedCases": 23
+      },
+      "predictedCall": {
+        "familyMeanDifference": 0.041666666666666664,
+        "ci95": [
+          0.010416666666666666,
+          0.08333333333333333
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "spokenReferenceF1": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 70
+      },
+      "toolDecisionAccuracy": {
+        "familyMeanDifference": -0.010416666666666666,
+        "ci95": [
+          -0.041666666666666664,
+          0.020833333333333332
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "toolExact": {
+        "familyMeanDifference": 0.02564102564102564,
+        "ci95": [
+          0.0,
+          0.07692307692307693
+        ],
+        "families": 13,
+        "pairedCases": 26
+      }
+    },
+    "policy_rerank_on_minus_policy_rerank_off": {
+      "actionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          -0.041666666666666664,
+          0.041666666666666664
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "argumentsDecisionAccuracy": {
+        "familyMeanDifference": -0.020833333333333332,
+        "ci95": [
+          -0.05208333333333333,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 93
+      },
+      "correctCall": {
+        "familyMeanDifference": 0.010416666666666666,
+        "ci95": [
+          0.0,
+          0.03125
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "expectedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "observableToolAndArgumentsExact": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 12,
+        "pairedCases": 23
+      },
+      "predictedCall": {
+        "familyMeanDifference": 0.041666666666666664,
+        "ci95": [
+          0.010416666666666666,
+          0.08333333333333333
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "spokenReferenceF1": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 70
+      },
+      "toolDecisionAccuracy": {
+        "familyMeanDifference": -0.010416666666666666,
+        "ci95": [
+          -0.041666666666666664,
+          0.020833333333333332
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "toolExact": {
+        "familyMeanDifference": 0.02564102564102564,
+        "ci95": [
+          0.0,
+          0.07692307692307693
+        ],
+        "families": 13,
+        "pairedCases": 26
+      }
+    },
+    "policy_rerank_on_minus_common_rerank_on": {
+      "actionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "argumentsDecisionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 93
+      },
+      "correctCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "expectedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "observableToolAndArgumentsExact": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 12,
+        "pairedCases": 23
+      },
+      "predictedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "spokenReferenceF1": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 70
+      },
+      "toolDecisionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "toolExact": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 13,
+        "pairedCases": 26
+      }
+    },
+    "common_rerank_on_minus_decoder_fixed": {
+      "actionAccuracy": {
+        "familyMeanDifference": -0.020833333333333332,
+        "ci95": [
+          -0.0625,
+          0.020833333333333332
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "argumentsDecisionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          -0.05208333333333333,
+          0.05208333333333333
+        ],
+        "families": 16,
+        "pairedCases": 93
+      },
+      "correctCall": {
+        "familyMeanDifference": 0.010416666666666666,
+        "ci95": [
+          0.0,
+          0.03125
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "expectedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "observableToolAndArgumentsExact": {
+        "familyMeanDifference": 0.041666666666666664,
+        "ci95": [
+          0.0,
+          0.125
+        ],
+        "families": 12,
+        "pairedCases": 23
+      },
+      "predictedCall": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          -0.07291666666666666,
+          0.07291666666666666
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "spokenReferenceF1": {
+        "familyMeanDifference": 0.0052136894967777314,
+        "ci95": [
+          -0.0018103832442067738,
+          0.013422652714932119
+        ],
+        "families": 16,
+        "pairedCases": 70
+      },
+      "toolDecisionAccuracy": {
+        "familyMeanDifference": 0.0,
+        "ci95": [
+          -0.05208333333333333,
+          0.05208333333333333
+        ],
+        "families": 16,
+        "pairedCases": 96
+      },
+      "toolExact": {
+        "familyMeanDifference": 0.038461538461538464,
+        "ci95": [
+          0.0,
+          0.11538461538461539
+        ],
+        "families": 13,
+        "pairedCases": 26
+      }
+    }
+  },
+  "publicScope": "Fixed Test logged conversation prefixes with own predicted field memory; not interactive ABCD environment",
+  "researchScope": "Generated economic simulator with own predicted state, actual response failures and measured terminal loss; not real-work efficacy",
+  "lossDefinition": "Regret/hold plus requests; invalid handoff terminal loss floored at hold cost; raw economic loss and penalty stored separately",
+  "trainingProvenance": {
+    "configHash": "14aee325e825a5fa6f0f44e6c384f9ac520f2eb088e3425216738dab9bf455c1",
+    "sourceHash": "46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "3c03db77195ddfea8345843eb5be736a19c7bc35f585b74a81457f10a4516d9d",
+      "src/newsvendor/corpus.py": "ecf27ea83fae2b0af4a061d60e45eb07d5dfbd7cf5403582a2ca9b2e4f51cddf",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "25eeccfceba6de4f0d16e98ab913e8a1ecb36835e7c643519681f2c46d881fa5",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "ce430efb1cb5de1398916898ef34b1cacfdda659eed572992d7fc0abf8addac8",
+      "src/newsvendor/structured_critic.py": "c2c55fa3ccd05a6e60fff2b0cd975f78983bce015f645e1ab98a73bf611681bf",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_inputs.py": "a5f83e6c10e6b1277068cccfeacde11c46328a794649e5c8911d3672749ccd22",
+      "src/newsvendor/structured_labels.py": "221484ed8a931c2a7abc22223a4a9a82f62b8e140d73a87bcfa0a64abeda1c55",
+      "src/newsvendor/structured_metrics.py": "bf9e7dd70df8dab41b55419a6d6bf630409a032a73bf9fe31194d83b2856881f",
+      "src/newsvendor/structured_model.py": "7f293f4af0e963ea547efe0b0af36d9e5160235c14eb9b89ecda86436d765b96",
+      "src/newsvendor/structured_orders.py": "5265f0336ab6a8d8200024b1de255d324a7f593fd496b0f74f1d5e5945003ce8",
+      "src/newsvendor/structured_policy.py": "d87e9cebfaff339a732fa3f1815ea04563273113ea27b3b23e643e00ab5ca433",
+      "src/newsvendor/structured_procedures.py": "7e457c6d3a4437426a2d0f02e549686c5af33af1c97562d40c0cad7383d3d2d3",
+      "src/newsvendor/structured_progress.py": "a145b6d09712af78ea9638e88b3df66fb16772b21474e712465481fb5447a3c4",
+      "src/newsvendor/structured_rollout.py": "e9f778e23e1b3c1221056474d2e314e06ccbc686361f0c9dbd7037a422b1eae5",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "0ad9c62968ba8142b237ce3f2f1e16f34bfecfcd357d07049748ce8b0368419b",
+      "src/newsvendor/structured_tool_heads.py": "6c801a03456ced78a3bda8fecc1575716bee64abf29ad0537dd2d5fd431267f3",
+      "src/newsvendor/structured_tools.py": "15f93f198c894e68c577a7c1ac8e4f4aba3ab2f9b28ab7e629212874ce893aba",
+      "src/newsvendor/structured_train.py": "85037d2057d90559f86d90de673a85b8f48c773ba481d84c57096593fd5cd8a5",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "2f05f34b10b2f1ad83b83aefdda341b69ecc75ef",
+    "timestamp": "2026-10-08T15:19:45.195420+00:00"
+  },
+  "evaluationProvenance": {
+    "configHash": "14aee325e825a5fa6f0f44e6c384f9ac520f2eb088e3425216738dab9bf455c1",
+    "sourceHash": "46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "3c03db77195ddfea8345843eb5be736a19c7bc35f585b74a81457f10a4516d9d",
+      "src/newsvendor/corpus.py": "ecf27ea83fae2b0af4a061d60e45eb07d5dfbd7cf5403582a2ca9b2e4f51cddf",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "25eeccfceba6de4f0d16e98ab913e8a1ecb36835e7c643519681f2c46d881fa5",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "ce430efb1cb5de1398916898ef34b1cacfdda659eed572992d7fc0abf8addac8",
+      "src/newsvendor/structured_critic.py": "c2c55fa3ccd05a6e60fff2b0cd975f78983bce015f645e1ab98a73bf611681bf",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_inputs.py": "a5f83e6c10e6b1277068cccfeacde11c46328a794649e5c8911d3672749ccd22",
+      "src/newsvendor/structured_labels.py": "221484ed8a931c2a7abc22223a4a9a82f62b8e140d73a87bcfa0a64abeda1c55",
+      "src/newsvendor/structured_metrics.py": "bf9e7dd70df8dab41b55419a6d6bf630409a032a73bf9fe31194d83b2856881f",
+      "src/newsvendor/structured_model.py": "7f293f4af0e963ea547efe0b0af36d9e5160235c14eb9b89ecda86436d765b96",
+      "src/newsvendor/structured_orders.py": "5265f0336ab6a8d8200024b1de255d324a7f593fd496b0f74f1d5e5945003ce8",
+      "src/newsvendor/structured_policy.py": "d87e9cebfaff339a732fa3f1815ea04563273113ea27b3b23e643e00ab5ca433",
+      "src/newsvendor/structured_procedures.py": "7e457c6d3a4437426a2d0f02e549686c5af33af1c97562d40c0cad7383d3d2d3",
+      "src/newsvendor/structured_progress.py": "a145b6d09712af78ea9638e88b3df66fb16772b21474e712465481fb5447a3c4",
+      "src/newsvendor/structured_rollout.py": "e9f778e23e1b3c1221056474d2e314e06ccbc686361f0c9dbd7037a422b1eae5",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "0ad9c62968ba8142b237ce3f2f1e16f34bfecfcd357d07049748ce8b0368419b",
+      "src/newsvendor/structured_tool_heads.py": "6c801a03456ced78a3bda8fecc1575716bee64abf29ad0537dd2d5fd431267f3",
+      "src/newsvendor/structured_tools.py": "15f93f198c894e68c577a7c1ac8e4f4aba3ab2f9b28ab7e629212874ce893aba",
+      "src/newsvendor/structured_train.py": "85037d2057d90559f86d90de673a85b8f48c773ba481d84c57096593fd5cd8a5",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "2f05f34b10b2f1ad83b83aefdda341b69ecc75ef",
+    "timestamp": "2026-10-08T15:45:48.762744+00:00"
+  },
+  "evaluationSourceArchive": "results/l40s-tools-v4/base/42/evaluation-source-46adcf9b778b.tar.gz",
+  "evaluationSourceArchiveHash": "fa3e12e760a1c5e5cc0b8d266b7a74ddb542b326332cc9632114b89d16b38397",
+  "testIdsHash": "b4d3f1b3af0dacdbc2412d70d28fa88fd49ad90b8f9aa0ecb13dda3983e65ff4"
+}

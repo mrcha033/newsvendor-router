@@ -1,0 +1,40 @@
+{
+  "scope": "Exact copies of historical auxiliary ABCD v3/v4 reports to repair local-only documentation links; no new evaluation, selection, or training",
+  "files": {
+    "docs/evidence/tool-v4-training.json": {
+      "source": "results/l40s-tools-v4/base/42/training.json",
+      "sha256": "1db66ba38c24e29de25d1fe4dc90e84d3a0f6ec6d5bf4ff40691f92be616f6c0",
+      "bytes": 46119
+    },
+    "docs/evidence/tool-v4-tool-comparison.json": {
+      "source": "results/l40s-tools-v4/base/42/tool-comparison.json",
+      "sha256": "486aa2f529ee1c2d1f104882929fef84cbda657dbdfe0b1179052a8209c219a9",
+      "bytes": 72554
+    },
+    "docs/evidence/tool-v4-frozen-audit.json": {
+      "source": "results/l40s-tools-v4/base/42/frozen-audit.json",
+      "sha256": "77701011b196218b80996f909991ad1e2ae2e65d7f372fd2b7c25820cdd89b64",
+      "bytes": 370
+    },
+    "docs/evidence/tool-v3-tool-comparison.json": {
+      "source": "results/l40s-tools-v3/base/42/tool-comparison.json",
+      "sha256": "c81abda8ea0517081f994233df529874008c9395021eb3ac0d7d132c0c427944",
+      "bytes": 62455
+    },
+    "docs/evidence/tool-v3-memory-differences.json": {
+      "source": "results/l40s-tools-v3/base/42/memory-differences.json",
+      "sha256": "75d14e455988c732677ae1f995000f2fe7c61be1c5657ddc8f25bba5adb3e08e",
+      "bytes": 628746
+    },
+    "docs/evidence/tool-v3-policy-diagnostics.json": {
+      "source": "results/l40s-tools-v3/base/42/policy-diagnostics.json",
+      "sha256": "b2969f2394ee8602343bbd3ca9330e3ea8c602d0fdd250c00ac2ddc8e12901fe",
+      "bytes": 10392
+    },
+    "docs/evidence/tool-v3-training.json": {
+      "source": "results/l40s-tools-v3/base/42/training.json",
+      "sha256": "e913ca1ebf9b2498b03e3ba20f8eeff8cf9375c73265f5421f8c0580abe09dec",
+      "bytes": 214681
+    }
+  }
+}

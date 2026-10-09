@@ -25,6 +25,30 @@ def compatible(expression, slot):
     return role is None or role == slot
 
 
+def current_candidates(value, slot, selected=None):
+    """Current applicable expressions, including a selected source with an arbitrary title."""
+    pool = [
+        e
+        for e in candidates(value, slot)
+        if (e["id"] == selected or matches(e["doc"], slot)) and compatible(e, slot)
+    ]
+    version = max((e["doc"]["version"] for e in pool), default=0)
+    return [e for e in pool if e["doc"]["version"] == version]
+
+
+def source_issue(value, slot, expression):
+    """Validate our selected evidence without substituting another expression or value."""
+    current = current_candidates(value, slot, expression["id"])
+    if current and any(
+        not math.isclose(e["value"], current[0]["value"], rel_tol=1e-9, abs_tol=1e-8)
+        for e in current
+    ):
+        return "conflicting-source"
+    if all(e["id"] != expression["id"] for e in current):
+        return "superseded-source"
+    return None
+
+
 def task_key(value):
     return digest({k: value["task"].get(k) for k in ("sku", "period", "quantityUnit")})
 
@@ -73,16 +97,7 @@ def copy_memory(value, record):
             continue
         if type(item.get("value")) not in (int, float) or not math.isfinite(item["value"]):
             continue
-        # An already accepted, still grounded expression does not need a template title.
-        # Include titled competitors so newer or conflicting evidence still blocks copying.
-        pool = [
-            e
-            for e in candidates(value, slot)
-            if (e["id"] == item.get("expression") or matches(e["doc"], slot))
-            and compatible(e, slot)
-        ]
-        version = max((e["doc"]["version"] for e in pool), default=0)
-        current = [e for e in pool if e["doc"]["version"] == version]
+        current = current_candidates(value, slot, item.get("expression"))
         if any(
             not math.isclose(e["value"], item["value"], rel_tol=1e-9, abs_tol=1e-8) for e in current
         ):
@@ -135,11 +150,7 @@ def copy_responses(value, record):
     for slot, (index, answer) in latest.items():
         if type(answer) not in (int, float) or not math.isfinite(answer):
             continue
-        pool = [
-            e for e in candidates(value, slot) if matches(e["doc"], slot) and compatible(e, slot)
-        ]
-        version = max((e["doc"]["version"] for e in pool), default=0)
-        current = [e for e in pool if e["doc"]["version"] == version]
+        current = current_candidates(value, slot)
         if not current or any(
             not math.isclose(e["value"], answer, rel_tol=1e-9, abs_tol=1e-8) for e in current
         ):

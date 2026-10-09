@@ -112,6 +112,13 @@ class ResearchRouter:
                     None,
                 )
                 if match:
+                    issue = structured_forecast.source_issue(value, slot, match)
+                    if issue:
+                        record["errors"].append(issue + "-" + slot)
+                        record["state"][slot] = (
+                            "conflict" if issue == "conflicting-source" else "unconfirmed"
+                        )
+                        continue
                     record["values"][slot] = match["value"]
                     record["links"][slot] = match["doc"]["id"]
                     record["expressions"][slot] = match["id"]

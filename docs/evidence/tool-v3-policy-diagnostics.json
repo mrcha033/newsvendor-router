@@ -1,0 +1,390 @@
+{
+  "scope": "Dev diagnostics of all trained candidates; all rejected by prespecified public retention. No Test evaluation of rejected candidates.",
+  "selected": {
+    "iteration": null,
+    "epoch": null,
+    "economicLoss": 542.5509133333334,
+    "reason": "initial language/demand checkpoint"
+  },
+  "candidates": {
+    "policy-dev-0-0": {
+      "measurements": "results/l40s-tools-v3/base/42/policy-dev-0-0.jsonl",
+      "metrics": {
+        "total": {
+          "mean": 161.14186372422196,
+          "cases": 60,
+          "familyMean": 161.1418637242219,
+          "families": 12
+        },
+        "terminalLoss": {
+          "mean": 152.08508705755534,
+          "cases": 60,
+          "familyMean": 152.08508705755526,
+          "families": 12
+        },
+        "requestCost": {
+          "mean": 9.056776666666668,
+          "cases": 60,
+          "familyMean": 9.056776666666666,
+          "families": 12
+        },
+        "interactions": {
+          "mean": 0.3,
+          "cases": 60,
+          "familyMean": 0.3,
+          "families": 12
+        },
+        "falseHandoff": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "initialTypeAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "initialStateAccuracy": {
+          "mean": 0.9333333333333331,
+          "cases": 60,
+          "familyMean": 0.9333333333333335,
+          "families": 12
+        },
+        "handoffRate": {
+          "mean": 0.7166666666666667,
+          "cases": 60,
+          "familyMean": 0.7166666666666668,
+          "families": 12
+        },
+        "initialConstructionError": {
+          "mean": 0.3333333333333333,
+          "cases": 60,
+          "familyMean": 0.3333333333333333,
+          "families": 12
+        },
+        "finalConstructionError": {
+          "mean": 0.3333333333333333,
+          "cases": 60,
+          "familyMean": 0.3333333333333333,
+          "families": 12
+        },
+        "errorAccumulationRate": {
+          "mean": 0.0,
+          "cases": 40,
+          "familyMean": 0.0,
+          "families": 8
+        },
+        "constructionRecoveryRate": {
+          "mean": 0.0,
+          "cases": 20,
+          "familyMean": 0.0,
+          "families": 4
+        }
+      }
+    },
+    "policy-dev-0-1": {
+      "measurements": "results/l40s-tools-v3/base/42/policy-dev-0-1.jsonl",
+      "metrics": {
+        "total": {
+          "mean": 180.48518539088866,
+          "cases": 60,
+          "familyMean": 180.48518539088855,
+          "families": 12
+        },
+        "terminalLoss": {
+          "mean": 179.98518539088866,
+          "cases": 60,
+          "familyMean": 179.98518539088855,
+          "families": 12
+        },
+        "requestCost": {
+          "mean": 0.5,
+          "cases": 60,
+          "familyMean": 0.5,
+          "families": 12
+        },
+        "interactions": {
+          "mean": 0.5,
+          "cases": 60,
+          "familyMean": 0.5,
+          "families": 12
+        },
+        "falseHandoff": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "initialTypeAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "initialStateAccuracy": {
+          "mean": 0.9066666666666666,
+          "cases": 60,
+          "familyMean": 0.9066666666666666,
+          "families": 12
+        },
+        "handoffRate": {
+          "mean": 0.6666666666666666,
+          "cases": 60,
+          "familyMean": 0.6666666666666666,
+          "families": 12
+        },
+        "initialConstructionError": {
+          "mean": 0.3333333333333333,
+          "cases": 60,
+          "familyMean": 0.3333333333333333,
+          "families": 12
+        },
+        "finalConstructionError": {
+          "mean": 0.3333333333333333,
+          "cases": 60,
+          "familyMean": 0.3333333333333333,
+          "families": 12
+        },
+        "errorAccumulationRate": {
+          "mean": 0.0,
+          "cases": 40,
+          "familyMean": 0.0,
+          "families": 8
+        },
+        "constructionRecoveryRate": {
+          "mean": 0.0,
+          "cases": 20,
+          "familyMean": 0.0,
+          "families": 4
+        }
+      }
+    },
+    "policy-dev-1-0": {
+      "measurements": "results/l40s-tools-v3/base/42/policy-dev-1-0.jsonl",
+      "metrics": {
+        "total": {
+          "mean": 148.4048870575553,
+          "cases": 60,
+          "familyMean": 148.40488705755527,
+          "families": 12
+        },
+        "terminalLoss": {
+          "mean": 127.66075372422192,
+          "cases": 60,
+          "familyMean": 127.66075372422192,
+          "families": 12
+        },
+        "requestCost": {
+          "mean": 20.744133333333334,
+          "cases": 60,
+          "familyMean": 20.744133333333334,
+          "families": 12
+        },
+        "interactions": {
+          "mean": 0.38333333333333336,
+          "cases": 60,
+          "familyMean": 0.3833333333333333,
+          "families": 12
+        },
+        "falseHandoff": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "initialTypeAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "initialStateAccuracy": {
+          "mean": 0.8733333333333334,
+          "cases": 60,
+          "familyMean": 0.8733333333333332,
+          "families": 12
+        },
+        "handoffRate": {
+          "mean": 0.8166666666666667,
+          "cases": 60,
+          "familyMean": 0.8166666666666668,
+          "families": 12
+        },
+        "initialConstructionError": {
+          "mean": 0.38333333333333336,
+          "cases": 60,
+          "familyMean": 0.3833333333333333,
+          "families": 12
+        },
+        "finalConstructionError": {
+          "mean": 0.38333333333333336,
+          "cases": 60,
+          "familyMean": 0.3833333333333333,
+          "families": 12
+        },
+        "errorAccumulationRate": {
+          "mean": 0.0,
+          "cases": 37,
+          "familyMean": 0.0,
+          "families": 8
+        },
+        "constructionRecoveryRate": {
+          "mean": 0.0,
+          "cases": 23,
+          "familyMean": 0.0,
+          "families": 5
+        }
+      }
+    },
+    "policy-dev-1-1": {
+      "measurements": "results/l40s-tools-v3/base/42/policy-dev-1-1.jsonl",
+      "metrics": {
+        "total": {
+          "mean": 148.4548870575553,
+          "cases": 60,
+          "familyMean": 148.45488705755525,
+          "families": 12
+        },
+        "terminalLoss": {
+          "mean": 127.66075372422192,
+          "cases": 60,
+          "familyMean": 127.66075372422192,
+          "families": 12
+        },
+        "requestCost": {
+          "mean": 20.794133333333335,
+          "cases": 60,
+          "familyMean": 20.79413333333333,
+          "families": 12
+        },
+        "interactions": {
+          "mean": 0.43333333333333335,
+          "cases": 60,
+          "familyMean": 0.43333333333333335,
+          "families": 12
+        },
+        "falseHandoff": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "initialTypeAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "initialStateAccuracy": {
+          "mean": 0.8766666666666667,
+          "cases": 60,
+          "familyMean": 0.8766666666666666,
+          "families": 12
+        },
+        "handoffRate": {
+          "mean": 0.8166666666666667,
+          "cases": 60,
+          "familyMean": 0.8166666666666668,
+          "families": 12
+        },
+        "initialConstructionError": {
+          "mean": 0.36666666666666664,
+          "cases": 60,
+          "familyMean": 0.3666666666666667,
+          "families": 12
+        },
+        "finalConstructionError": {
+          "mean": 0.36666666666666664,
+          "cases": 60,
+          "familyMean": 0.3666666666666667,
+          "families": 12
+        },
+        "errorAccumulationRate": {
+          "mean": 0.0,
+          "cases": 38,
+          "familyMean": 0.0,
+          "families": 8
+        },
+        "constructionRecoveryRate": {
+          "mean": 0.0,
+          "cases": 22,
+          "familyMean": 0.0,
+          "families": 5
+        }
+      }
+    },
+    "policy-dev-initial": {
+      "measurements": "results/l40s-tools-v3/base/42/policy-dev-initial.jsonl",
+      "metrics": {
+        "total": {
+          "mean": 542.5509133333334,
+          "cases": 60,
+          "familyMean": 542.5509133333334,
+          "families": 12
+        },
+        "terminalLoss": {
+          "mean": 523.1451000000001,
+          "cases": 60,
+          "familyMean": 523.1450999999998,
+          "families": 12
+        },
+        "requestCost": {
+          "mean": 19.405813333333334,
+          "cases": 60,
+          "familyMean": 19.405813333333334,
+          "families": 12
+        },
+        "interactions": {
+          "mean": 0.4166666666666667,
+          "cases": 60,
+          "familyMean": 0.41666666666666674,
+          "families": 12
+        },
+        "falseHandoff": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "initialTypeAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "initialStateAccuracy": {
+          "mean": 1.0,
+          "cases": 60,
+          "familyMean": 1.0,
+          "families": 12
+        },
+        "handoffRate": {
+          "mean": 0.016666666666666666,
+          "cases": 60,
+          "familyMean": 0.016666666666666666,
+          "families": 12
+        },
+        "initialConstructionError": {
+          "mean": 0.0,
+          "cases": 60,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "finalConstructionError": {
+          "mean": 0.13333333333333333,
+          "cases": 60,
+          "familyMean": 0.13333333333333333,
+          "families": 12
+        },
+        "errorAccumulationRate": {
+          "mean": 0.13333333333333333,
+          "cases": 60,
+          "familyMean": 0.13333333333333333,
+          "families": 12
+        }
+      }
+    }
+  }
+}

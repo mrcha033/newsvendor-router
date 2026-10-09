@@ -2,7 +2,7 @@
 
 2026-10-08, L40S 한 장에서 구현·학습·고정 Test 비교를 완료했다. **새 구성을 기존 모델의 대체품으로 채택할 근거는 확보하지 못했다.** 도구 선택의 재현율은 높아졌지만 불필요한 호출, 인자 복사 오류, 경제적 행동 선택이 악화됐다. 재평가 head의 추가 효과도 확인되지 않았다.
 
-구현은 [변경 문서](tool-upgrade.md), 전체 비교와 원시 파일 경로는 [tool-comparison.json](../results/l40s-tools-v3/base/42/tool-comparison.json)에 있다. Test 결과를 보고 가중치나 학습 설정을 다시 선택하지 않았다.
+구현은 [변경 문서](tool-upgrade.md), 전체 비교와 원시 파일 경로는 [tool-comparison.json](evidence/tool-v3-tool-comparison.json)에 있다. Test 결과를 보고 가중치나 학습 설정을 다시 선택하지 않았다.
 
 ## 실행 범위
 
@@ -34,7 +34,7 @@ ABCD 추론 지연의 중앙값은 기존 53.94 ms, 새 구성 재평가 끔 75.
 
 새 모델을 각 prefix에 독립적으로 적용한 기본 진단에서는 도구 22/26, 인자 완전 일치 19/23이었다. 이전 자기 상태를 연결하면 각각 24/26, 14/23이 된다. 이 연결에는 memory와 이전 procedure ID가 모두 포함되므로 순수한 memory 단독 ablation은 아니다.
 
-인자 완전 일치는 기존 정답 6건이 오답으로 바뀌고 오답 1건이 정답으로 바뀌었다. 퇴행 6건은 모두 `entity` 복사 경로를 선택했다. 5건은 `pull-up-account`, 1건은 `verify-identity`였다. 실제 관측 원문의 span이라는 조건은 만족했지만 현재 필드에 맞는 값은 아니었다. 출처 일치 검증만으로 의미적 적합성을 보장할 수 없다는 결과다. [사후 오류 비교](../results/l40s-tools-v3/base/42/memory-differences.json)에 입력 ID, 예측, 정답, 원시 파일 hash를 보존했다.
+인자 완전 일치는 기존 정답 6건이 오답으로 바뀌고 오답 1건이 정답으로 바뀌었다. 퇴행 6건은 모두 `entity` 복사 경로를 선택했다. 5건은 `pull-up-account`, 1건은 `verify-identity`였다. 실제 관측 원문의 span이라는 조건은 만족했지만 현재 필드에 맞는 값은 아니었다. 출처 일치 검증만으로 의미적 적합성을 보장할 수 없다는 결과다. [사후 오류 비교](evidence/tool-v3-memory-differences.json)에 입력 ID, 예측, 정답, 원시 파일 hash를 보존했다.
 
 구현상 언어 학습의 자기 상태 보조 사례는 주로 같은 prefix의 추가 조회다. 서로 다른 turn 사이에서 잘못된 역할·값이 복사되는 상황을 충분히 학습하지 못했을 가능성이 있다. 이는 코드와 관측 오류에서 도출한 원인 후보이며, 별도 학습 ablation으로 확인한 결론은 아니다.
 
@@ -50,7 +50,7 @@ ABCD 추론 지연의 중앙값은 기존 53.94 ms, 새 구성 재평가 끔 75.
 | 두 번째 수집, epoch 1 | 148.40 | ABCD 행동·CUAD·OR-ShARC 정확도 하락 |
 | 두 번째 수집, epoch 2 | 148.45 | ABCD 도구·인자·행동 및 CUAD 정확도 하락 |
 
-생성 Dev 60개에서 손실 감소는 관측됐으나 네 후보 모두 사전에 설정한 공개 Dev 무퇴행 기준을 통과하지 못했다. 최종 선택은 추가 행동 가치 학습 전 체크포인트다. 탈락 후보의 Test 성능은 평가하지 않았다. 각 후보의 Dev rollout과 오류·회복 지표는 [policy-diagnostics.json](../results/l40s-tools-v3/base/42/policy-diagnostics.json)에 있다.
+생성 Dev 60개에서 손실 감소는 관측됐으나 네 후보 모두 사전에 설정한 공개 Dev 무퇴행 기준을 통과하지 못했다. 최종 선택은 추가 행동 가치 학습 전 체크포인트다. 탈락 후보의 Test 성능은 평가하지 않았다. 각 후보의 Dev rollout과 오류·회복 지표는 [policy-diagnostics.json](evidence/tool-v3-policy-diagnostics.json)에 있다.
 
 | 선택된 모델의 생성 Test 조건 | 응답 오류 0 | 응답 오류 0.1 | 응답 오류 0.2 |
 | --- | ---: | ---: | ---: |
@@ -66,7 +66,7 @@ ABCD 추론 지연의 중앙값은 기존 53.94 ms, 새 구성 재평가 끔 75.
 
 전체 59개 테스트, lint, source-group/보호 split 검사, 30개 수치 smoke를 통과했다. 원천 정답 인자를 그대로 넣는 Train 조립 검사에서는 기존 규칙이 거부하던 2,541건이 수정 후 0건이 됐다. 이는 모델의 추출 정확도와 구분되는 실행 가능성 검사다.
 
-- [학습 결과](../results/l40s-tools-v3/base/42/training.json), [비교 결과](../results/l40s-tools-v3/base/42/tool-comparison.json), [구현 검증](evidence/tool-upgrade-checks.json)
+- [학습 결과](evidence/tool-v3-training.json), [비교 결과](evidence/tool-v3-tool-comparison.json), [구현 검증](evidence/tool-upgrade-checks.json)
 - 학습 source hash: `95f919815e4c6e3c63de268e75edb2859d812dd286d0c5bb1c4ce0aa231a6d8b`
 - 평가 source hash: `a7d70d56b3049f5150648873ade4371710a5a0dc2aae9d28c8b2a0a9b18a6eee`
 - 학습 source archive와 평가 source archive를 따로 보존했다. 평가 변경은 대화별 상태 격리, 기존 모델의 입력 유지, provenance 기록에 해당하며 학습 가중치를 변경하지 않았다.

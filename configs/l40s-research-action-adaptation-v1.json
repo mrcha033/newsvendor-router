@@ -1,0 +1,126 @@
+{
+  "dataset": "data/processed/complementary",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-research-action-adaptation-v1/value/42",
+  "seed": 42,
+  "seeds": [
+    42
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25,
+    "scopePrefix": false
+  },
+  "training": {
+    "epochs": 2,
+    "encoderLr": 1e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 512,
+    "checkpointEvery": 16384,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "research",
+    "validateInitial": true,
+    "validationEvery": 0,
+    "patience": 0,
+    "mix": {
+      "research": 0.8,
+      "public": 0.2
+    }
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 30,
+    "noise": 0.0,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 2,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed",
+    "selection": "benchmark_normalized",
+    "responseSamples": 1
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": "results/l40s-research-scope-v1/control/42/model.pt",
+  "demandCheckpoint": null,
+  "documentComponents": [
+    "cuad",
+    "contractnli",
+    "orsharc",
+    "tatqa"
+  ],
+  "evaluateInitial": true,
+  "originalResearch": true,
+  "constructionReplay": [],
+  "actionAdaptationStudy": {
+    "scope": "Complete the action-value fitting phase after a fixed, newly fine-tuned constructor. Diagnose the 20 missed retail requests caused by changed shared representations with unchanged value-head weights. Public-document regressions of this constructor remain known and do not disappear after fitting a separate action head.",
+    "testUsed": false,
+    "parent": "results/l40s-research-scope-v1/control/42/model.pt",
+    "frozen": "encoder, constructor, demand and all heads except heads.value",
+    "target": "Fresh actual Train own-state forced-action rollouts, terminal loss and request costs; no planner response model",
+    "comparison": "same-constructor inherited value head, adapted value head, fixed checklist; no full-model promotion unless all prior adoption criteria also hold",
+    "selection": "Original Dev benchmark-normalized loss; preserve all candidates and evaluate complete retail Dev after fitting"
+  }
+}

@@ -1,0 +1,1255 @@
+{
+  "schema": "structured-router-v1",
+  "config": {
+    "dataset": "data/processed/complementary",
+    "expansion": "data/processed/structured-train",
+    "researchConfig": "configs/full.json",
+    "output": "results/l40s-tools-v4/base/42",
+    "seed": 42,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "maxRetrievals": 2,
+    "backbones": {
+      "base": {
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+      },
+      "large": {
+        "model": "answerdotai/ModernBERT-large",
+        "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+        "splitLongBatches": true
+      }
+    },
+    "encoder": {
+      "toolSchema": "configs/abcd-schema-v2.json",
+      "positionalTools": true,
+      "retrievalCost": 1.0,
+      "retrievals": 2,
+      "maxLength": 1024,
+      "queryTokens": 128,
+      "overlap": 32,
+      "chunks": 8,
+      "encoderBatch": 16,
+      "retrievalDocuments": 5,
+      "gradientCheckpointing": false,
+      "precision": "bf16",
+      "packedQueries": true,
+      "bucketLengths": true,
+      "checkpointTokenLimit": 65000,
+      "compileLayers": true,
+      "compileLimit": 64,
+      "attention": "sdpa",
+      "padMultiple": 128,
+      "splitLongBatches": true,
+      "packedSources": true,
+      "chunkTokens": 256,
+      "documentTokens": 1024,
+      "historyChunks": 1024,
+      "tableChunks": 4096,
+      "batchFusion": true,
+      "sharedQueries": true,
+      "structuredTools": true,
+      "rerank": false,
+      "procedureTokens": 96,
+      "copyAgreement": true,
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "training": {
+      "epochs": 6,
+      "encoderLr": 5e-06,
+      "headLr": 0.0001,
+      "weightDecay": 0.01,
+      "accumulation": 32,
+      "progressEvery": 128,
+      "checkpointEvery": 1024,
+      "caseBatch": {
+        "base": 32,
+        "large": 8,
+        "no_value": 32
+      },
+      "prefetchWorkers": 2,
+      "fusedOptimizer": true,
+      "retrievalTraining": "needed",
+      "patience": 3,
+      "selection": "calls",
+      "validationEvery": 2048,
+      "minCases": 4096,
+      "preserveCallPrior": true,
+      "conversationValidation": true,
+      "nextTurnTraining": true,
+      "validateInitial": true,
+      "maxCases": 16384,
+      "actionWeights": {
+        "record-reason": 0.9599786346152882,
+        "promo-code": 1.5828534929193363,
+        "search-faq": 0.7951490673673688,
+        "search-boots": 2.135386107401993,
+        "select-faq": 0.9371499169351319,
+        "update-order": 0.953449398301085,
+        "pull-up-account": 0.4622957613924009,
+        "verify-identity": 0.6373860936688847,
+        "update-account": 1.4475946434322267,
+        "ask-the-oracle": 0.9155392403810281,
+        "try-again": 1.4216964051091505,
+        "search-pricing": 1.9364648821687658,
+        "search-membership": 1.8073143786804173,
+        "offer-refund": 1.3304650899095207,
+        "validate-purchase": 0.779109721343597,
+        "shipping-status": 1.2470803320553967,
+        "enter-details": 0.8443493733289557,
+        "send-link": 1.3772385842712906,
+        "instructions": 1.939657736574675,
+        "notify-team": 1.6059620655328932,
+        "search-jacket": 2.2262939148527217,
+        "subscription-status": 1.5299665528422288,
+        "log-out-in": 1.2995546000080234,
+        "make-purchase": 1.7894576236552098,
+        "search-jeans": 2.1839740148589013,
+        "search-timing": 2.1748930024918,
+        "membership": 1.0134093989297033,
+        "search-policy": 1.9691225789739528,
+        "make-password": 2.0624290642902006,
+        "search-shirt": 2.341071887267174,
+        "speak": 1.0
+      }
+    },
+    "demand": {
+      "epochs": 20,
+      "selectorEpochs": 20,
+      "folds": 3,
+      "lr": 0.001,
+      "batchSize": 64,
+      "dailyWeight": 0.3,
+      "minHistory": 28
+    },
+    "policy": {
+      "trainable": "value",
+      "iterations": 2,
+      "epochs": 40,
+      "noise": 0.1,
+      "batchSize": 64,
+      "valueLr": 0.001,
+      "validationEvery": 10,
+      "patience": 3,
+      "rankWeight": 0.25,
+      "collectionPolicy": "mixed"
+    },
+    "warmStart": "results/l40s-tools-v3/base/42/common.pt",
+    "comparisonBaseline": "results/l40s-policy-v2/base/42/model.pt",
+    "variant": "base",
+    "noValue": false
+  },
+  "limitedCasesPerComponent": null,
+  "language": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "trainLoss": 1.9435656272343447,
+        "devLoss": 2.5379104101355523,
+        "supervisedHeads": {
+          "recovery": 16730,
+          "baseRecovery": 16580,
+          "procedure": 16580,
+          "stage": 16580,
+          "question": 1055,
+          "use": 4424,
+          "role": 1958,
+          "mode": 4290,
+          "choice": 1296,
+          "entity": 1397,
+          "evidence": 3070,
+          "spans": 2936,
+          "type": 53,
+          "state": 53,
+          "relation": 61,
+          "operand1": 61,
+          "operand2": 61,
+          "decision": 59,
+          "scale": 28
+        },
+        "headLosses": {
+          "recovery": 0.7409540407364192,
+          "baseRecovery": 0.7422691933687695,
+          "procedure": 0.23547676198704415,
+          "stage": 0.17202633486225677,
+          "question": 0.719753089164035,
+          "use": 2.5784529284856715e-08,
+          "role": 0.034386739902980634,
+          "mode": 0.22067037124497357,
+          "choice": 0.6624623860482806,
+          "entity": 0.08273383548454907,
+          "evidence": 0.01767107521729711,
+          "spans": 0.33198102261478696,
+          "type": 2.569850416961653e-05,
+          "state": 0.10611755945631918,
+          "relation": 0.07715423628077155,
+          "operand1": 0.06303908650289929,
+          "operand2": 0.08270117985827037,
+          "decision": 0.8923853029639034,
+          "scale": 0.7420329789498022
+        },
+        "workload": {
+          "tokens": 33988529,
+          "retrievals": 4495
+        }
+      }
+    ],
+    "selectedEpoch": 1,
+    "checks": [
+      {
+        "epoch": 0,
+        "processed": 0,
+        "tools": {
+          "actionAccuracy": 0.8958333333333334,
+          "toolExact": 0.75,
+          "observableToolAndArgumentsExact": 0.71875,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.3958333333333333,
+          "correctCall": 0.25,
+          "toolDecisionAccuracy": 0.8333333333333334,
+          "argumentsDecisionAccuracy": 0.8229166666666666,
+          "spokenReferenceF1": 0.058798730012691675
+        },
+        "devLoss": 2.5817602864750056,
+        "accepted": true,
+        "initial": true
+      },
+      {
+        "epoch": 1,
+        "processed": 2048,
+        "seenCases": 2048,
+        "tools": {
+          "actionAccuracy": 0.8645833333333334,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.28125,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.84375,
+          "argumentsDecisionAccuracy": 0.8333333333333334,
+          "spokenReferenceF1": 0.05938641056953732
+        },
+        "devLoss": 2.5688812154331715,
+        "accepted": true,
+        "staleChecks": 0,
+        "earlyStopped": false,
+        "budgetStopped": false
+      },
+      {
+        "epoch": 1,
+        "processed": 4096,
+        "seenCases": 4096,
+        "tools": {
+          "actionAccuracy": 0.84375,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.28125,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.8333333333333334,
+          "argumentsDecisionAccuracy": 0.8229166666666666,
+          "spokenReferenceF1": 0.05813641056953732
+        },
+        "devLoss": 2.574457100759022,
+        "accepted": false,
+        "staleChecks": 1,
+        "earlyStopped": false,
+        "budgetStopped": false
+      },
+      {
+        "epoch": 1,
+        "processed": 6144,
+        "seenCases": 6144,
+        "tools": {
+          "actionAccuracy": 0.8541666666666666,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.2708333333333333,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.84375,
+          "argumentsDecisionAccuracy": 0.84375,
+          "spokenReferenceF1": 0.059083380266507016
+        },
+        "devLoss": 2.5865974290395415,
+        "accepted": true,
+        "staleChecks": 0,
+        "earlyStopped": false,
+        "budgetStopped": false
+      },
+      {
+        "epoch": 1,
+        "processed": 8192,
+        "seenCases": 8192,
+        "tools": {
+          "actionAccuracy": 0.8541666666666666,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.2708333333333333,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.84375,
+          "argumentsDecisionAccuracy": 0.84375,
+          "spokenReferenceF1": 0.06345430727856305
+        },
+        "devLoss": 2.509009031443924,
+        "accepted": true,
+        "staleChecks": 1,
+        "earlyStopped": false,
+        "budgetStopped": false
+      },
+      {
+        "epoch": 1,
+        "processed": 10240,
+        "seenCases": 10240,
+        "tools": {
+          "actionAccuracy": 0.8333333333333334,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.2916666666666667,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.8229166666666666,
+          "argumentsDecisionAccuracy": 0.8229166666666666,
+          "spokenReferenceF1": 0.06127590561486728
+        },
+        "devLoss": 2.5082262483231976,
+        "accepted": false,
+        "staleChecks": 2,
+        "earlyStopped": false,
+        "budgetStopped": false
+      },
+      {
+        "epoch": 1,
+        "processed": 12288,
+        "seenCases": 12288,
+        "tools": {
+          "actionAccuracy": 0.84375,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.28125,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.8333333333333334,
+          "argumentsDecisionAccuracy": 0.8333333333333334,
+          "spokenReferenceF1": 0.06220430727856306
+        },
+        "devLoss": 2.5379104101355523,
+        "accepted": false,
+        "staleChecks": 3,
+        "earlyStopped": true,
+        "budgetStopped": false
+      }
+    ],
+    "earlyStopped": true
+  },
+  "demand": {
+    "folds": [
+      {
+        "fold": 0,
+        "fitFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "heldFamilies": [
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e"
+        ],
+        "losses": [
+          0.9198043727212482,
+          0.6162626246611277,
+          0.5972756644090017,
+          0.605485177702374,
+          0.6009779820839564,
+          0.6002713574303521,
+          0.6025899516211616,
+          0.5931580778625276,
+          0.581307503912184,
+          0.6017411202192307,
+          0.5902372482750151,
+          0.5677086942725711,
+          0.5590866688225005,
+          0.5556953930192523,
+          0.5288996944824854,
+          0.5480479117896822,
+          0.5584643168581856,
+          0.49974749485651654,
+          0.49833010964923435,
+          0.5372908214728037
+        ]
+      },
+      {
+        "fold": 1,
+        "fitFamilies": [
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e"
+        ],
+        "heldFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "losses": [
+          0.6563820825970691,
+          0.5001536504082058,
+          0.4923993841461513,
+          0.4942906576654185,
+          0.48969273981840716,
+          0.48859562692434894,
+          0.48103800545568054,
+          0.4862873593102331,
+          0.46771824489469116,
+          0.44387194514274597,
+          0.42593503775803937,
+          0.40751046007094177,
+          0.4109517744053965,
+          0.41034097969532013,
+          0.4100333827993144,
+          0.3961042839547862,
+          0.38329333844392194,
+          0.3777480125427246,
+          0.3765965654798176,
+          0.35289290029069653
+        ]
+      },
+      {
+        "fold": 2,
+        "fitFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "heldFamilies": [
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53"
+        ],
+        "losses": [
+          0.8284617296674035,
+          0.6093331941149451,
+          0.615743181922219,
+          0.6042129221287641,
+          0.6100353463129564,
+          0.6083818985657259,
+          0.5996733768419786,
+          0.594125973907384,
+          0.5889170305295424,
+          0.5901830724694512,
+          0.5691714991222728,
+          0.5462333871559664,
+          0.5401864742690866,
+          0.5274682695215399,
+          0.5096210363236341,
+          0.5134050250053406,
+          0.4918547651984475,
+          0.4880580536343835,
+          0.4950822645967657,
+          0.4807480397549542
+        ]
+      }
+    ],
+    "parameterLosses": [
+      0.7128409493354059,
+      0.5724510954272363,
+      0.5697514866628954,
+      0.571462252447682,
+      0.5675035532443754,
+      0.5626738292555655,
+      0.550744371068093,
+      0.5458842025649163,
+      0.5155836776379616,
+      0.5042816044822815,
+      0.4865821446141889,
+      0.4971111810976459,
+      0.4771740090462469,
+      0.4821353506657385,
+      0.46206140518188477,
+      0.46094867683226065,
+      0.44618127855562395,
+      0.42366180689104144,
+      0.41420286893844604,
+      0.3956259863991891
+    ],
+    "selectorLosses": [
+      0.5093642917852248,
+      0.4930452690009148,
+      0.4906812665923949,
+      0.48788976453004346,
+      0.48612273604639117,
+      0.49049559283641075,
+      0.48542690180963083,
+      0.489213845422191,
+      0.484153161606481,
+      0.49024511296902934,
+      0.4885273991573241,
+      0.48765476985323813,
+      0.4829598367214203,
+      0.48005674587142083,
+      0.48075197877422454,
+      0.4806236841024891,
+      0.47966775754767077,
+      0.4874756720758254,
+      0.4785501831962216,
+      0.4783175063710059
+    ],
+    "selectedEpoch": 11,
+    "devSelectedNLL": 0.37578955784159584,
+    "objective": "Train source-held-out family NLL regression; minimum predicted loss",
+    "targetHash": "5be936e4b7d8055277b3ba7befd675cfbe88a1f77cf17d3cff016f68f18bc967"
+  },
+  "policy": [
+    {
+      "iteration": 0,
+      "ownStateTargets": 718,
+      "trainRawHash": "b254046b94b53801ce01d26a2367ff0db4b4c2e5505764873553425222671429",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.029405250679701567,
+          "devActualTotalLoss": 183.38625827018598,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.027142901283999283,
+          "devActualTotalLoss": 184.18568993685264,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.025126740103587508,
+          "devActualTotalLoss": 180.12760760351932,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.02379075080777208,
+          "devActualTotalLoss": 180.12760760351932,
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 29,
+        "economicLoss": 180.12760760351932
+      },
+      "publicDevBaseline": {
+        "abcd": {
+          "actionAccuracy": 0.8541666666666666,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.2708333333333333,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.84375,
+          "argumentsDecisionAccuracy": 0.84375,
+          "spokenReferenceF1": 0.06345430727856305
+        },
+        "contractnli": {
+          "actionAccuracy": 1.0,
+          "stateAccuracy": 0.6388888888888888,
+          "evidenceF1": 0.4305555555555556,
+          "groundedScore": 0.25
+        },
+        "cuad": {
+          "actionAccuracy": 0.7777777777777778,
+          "answerabilityAccuracy": 0.7777777777777778,
+          "evidenceF1": 0.6222222222222222,
+          "groundedScore": 0.5666666666666667
+        },
+        "orsharc": {
+          "actionAccuracy": 0.6458333333333334,
+          "decisionAccuracy": 0.375,
+          "followupReferenceF1": 0.0,
+          "ruleRecallAt5": 0.7916666666666666
+        },
+        "tatqa": {
+          "actionAccuracy": 1.0,
+          "scaleAccuracy": 0.4791666666666667,
+          "answerExact": 0.0,
+          "answerF1": 0.052628968253968254
+        }
+      },
+      "frozenWeightsHash": "fd51a6243ec44e01f849972bb0f4ead92b4ce34a31c78e9f95be3d9f4b4455ff",
+      "frozenWeightsUnchanged": true,
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "devActualTotalLoss": 180.12760760351932
+    },
+    {
+      "iteration": 1,
+      "ownStateTargets": 609,
+      "trainRawHash": "a5af5964acd3599984b5d11de3258640347242781f3610a2abe11c98f4cb26de",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.02686520218849182,
+          "devActualTotalLoss": 163.47837151533912,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.025314107071608305,
+          "devActualTotalLoss": 168.22039984867249,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.024297614954411982,
+          "devActualTotalLoss": 158.35903151533913,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.022326353006064892,
+          "devActualTotalLoss": 149.9780231820058,
+          "accepted": true,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 1,
+        "epoch": 39,
+        "economicLoss": 149.9780231820058
+      },
+      "publicDevBaseline": {
+        "abcd": {
+          "actionAccuracy": 0.8541666666666666,
+          "toolExact": 0.65625,
+          "observableToolAndArgumentsExact": 0.65625,
+          "expectedCall": 0.3333333333333333,
+          "predictedCall": 0.2708333333333333,
+          "correctCall": 0.21875,
+          "toolDecisionAccuracy": 0.84375,
+          "argumentsDecisionAccuracy": 0.84375,
+          "spokenReferenceF1": 0.06345430727856305
+        },
+        "contractnli": {
+          "actionAccuracy": 1.0,
+          "stateAccuracy": 0.6388888888888888,
+          "evidenceF1": 0.4305555555555556,
+          "groundedScore": 0.25
+        },
+        "cuad": {
+          "actionAccuracy": 0.7777777777777778,
+          "answerabilityAccuracy": 0.7777777777777778,
+          "evidenceF1": 0.6222222222222222,
+          "groundedScore": 0.5666666666666667
+        },
+        "orsharc": {
+          "actionAccuracy": 0.6458333333333334,
+          "decisionAccuracy": 0.375,
+          "followupReferenceF1": 0.0,
+          "ruleRecallAt5": 0.7916666666666666
+        },
+        "tatqa": {
+          "actionAccuracy": 1.0,
+          "scaleAccuracy": 0.4791666666666667,
+          "answerExact": 0.0,
+          "answerF1": 0.052628968253968254
+        }
+      },
+      "frozenWeightsHash": "fd51a6243ec44e01f849972bb0f4ead92b4ce34a31c78e9f95be3d9f4b4455ff",
+      "frozenWeightsUnchanged": true,
+      "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+      "target": "Measured terminal loss and request costs after forced first action",
+      "devActualTotalLoss": 149.9780231820058
+    }
+  ],
+  "trainableParameters": 152113735,
+  "encoderParameters": 149014272,
+  "trainIdsHash": "2695219bbcbfee247767098b59da9b89c8e3967d1e8e83957826904f2936ffb1",
+  "developmentIdsHash": "e1a2d8a9fc9a3627598ff28c678dcaf55ae10c9528a102b6d988756aecadce3d",
+  "researchSplits": {
+    "counts": {
+      "test": 120,
+      "dev": 60,
+      "cal": 60,
+      "train": 360
+    },
+    "families": 120,
+    "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+  },
+  "provenance": {
+    "configHash": "14aee325e825a5fa6f0f44e6c384f9ac520f2eb088e3425216738dab9bf455c1",
+    "sourceHash": "46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "3c03db77195ddfea8345843eb5be736a19c7bc35f585b74a81457f10a4516d9d",
+      "src/newsvendor/corpus.py": "ecf27ea83fae2b0af4a061d60e45eb07d5dfbd7cf5403582a2ca9b2e4f51cddf",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "25eeccfceba6de4f0d16e98ab913e8a1ecb36835e7c643519681f2c46d881fa5",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/sequence.py": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "ce430efb1cb5de1398916898ef34b1cacfdda659eed572992d7fc0abf8addac8",
+      "src/newsvendor/structured_critic.py": "c2c55fa3ccd05a6e60fff2b0cd975f78983bce015f645e1ab98a73bf611681bf",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_inputs.py": "a5f83e6c10e6b1277068cccfeacde11c46328a794649e5c8911d3672749ccd22",
+      "src/newsvendor/structured_labels.py": "221484ed8a931c2a7abc22223a4a9a82f62b8e140d73a87bcfa0a64abeda1c55",
+      "src/newsvendor/structured_metrics.py": "bf9e7dd70df8dab41b55419a6d6bf630409a032a73bf9fe31194d83b2856881f",
+      "src/newsvendor/structured_model.py": "7f293f4af0e963ea547efe0b0af36d9e5160235c14eb9b89ecda86436d765b96",
+      "src/newsvendor/structured_orders.py": "5265f0336ab6a8d8200024b1de255d324a7f593fd496b0f74f1d5e5945003ce8",
+      "src/newsvendor/structured_policy.py": "d87e9cebfaff339a732fa3f1815ea04563273113ea27b3b23e643e00ab5ca433",
+      "src/newsvendor/structured_procedures.py": "7e457c6d3a4437426a2d0f02e549686c5af33af1c97562d40c0cad7383d3d2d3",
+      "src/newsvendor/structured_progress.py": "a145b6d09712af78ea9638e88b3df66fb16772b21474e712465481fb5447a3c4",
+      "src/newsvendor/structured_rollout.py": "e9f778e23e1b3c1221056474d2e314e06ccbc686361f0c9dbd7037a422b1eae5",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "0ad9c62968ba8142b237ce3f2f1e16f34bfecfcd357d07049748ce8b0368419b",
+      "src/newsvendor/structured_tool_heads.py": "6c801a03456ced78a3bda8fecc1575716bee64abf29ad0537dd2d5fd431267f3",
+      "src/newsvendor/structured_tools.py": "15f93f198c894e68c577a7c1ac8e4f4aba3ab2f9b28ab7e629212874ce893aba",
+      "src/newsvendor/structured_train.py": "85037d2057d90559f86d90de673a85b8f48c773ba481d84c57096593fd5cd8a5",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "2f05f34b10b2f1ad83b83aefdda341b69ecc75ef",
+    "timestamp": "2026-10-08T15:19:45.195420+00:00"
+  },
+  "continuation": null,
+  "hardware": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "sharedCommonTraining": {},
+  "toolWarmStart": {
+    "checkpoint": "results/l40s-tools-v3/base/42/common.pt",
+    "checkpointHash": "356d17e613b3269dd41ec8bf82e982f341537e00f47ff440c229366c0a53adb0",
+    "identity": {
+      "configHash": "90b88b8d250286761232a821a146e939493edeb9143439390b4a9d4cf3463998",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8"
+      },
+      "sourceHash": "95f919815e4c6e3c63de268e75edb2859d812dd286d0c5bb1c4ce0aa231a6d8b",
+      "limit": null
+    },
+    "config": {
+      "dataset": "data/processed/complementary",
+      "expansion": "data/processed/structured-train",
+      "researchConfig": "configs/full.json",
+      "output": "results/l40s-tools-v3/base/42",
+      "seed": 42,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "maxRetrievals": 2,
+      "backbones": {
+        "base": {
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+        },
+        "large": {
+          "model": "answerdotai/ModernBERT-large",
+          "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+          "splitLongBatches": true
+        }
+      },
+      "encoder": {
+        "toolSchema": "configs/abcd-schema-v2.json",
+        "positionalTools": true,
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 65000,
+        "compileLayers": true,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "structuredTools": true,
+        "rerank": true,
+        "procedureTokens": 96,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+      },
+      "training": {
+        "epochs": 6,
+        "encoderLr": 1e-05,
+        "headLr": 0.0002,
+        "weightDecay": 0.01,
+        "accumulation": 32,
+        "progressEvery": 128,
+        "checkpointEvery": 1024,
+        "caseBatch": {
+          "base": 32,
+          "large": 8,
+          "no_value": 32
+        },
+        "prefetchWorkers": 2,
+        "fusedOptimizer": true,
+        "retrievalTraining": "needed",
+        "patience": 3,
+        "selection": "tools",
+        "validationEvery": 8192,
+        "minCases": 16384,
+        "actionWeights": {
+          "speak": 0.38384543313966774,
+          "record-reason": 2.3911077737717634,
+          "promo-code": 3.9425599228861623,
+          "search-faq": 1.9805514911812852,
+          "search-boots": 4.606145197676012,
+          "select-faq": 2.3342461704589588,
+          "update-order": 2.3748447996338644,
+          "pull-up-account": 1.1514829070025034,
+          "verify-identity": 1.5875966282066833,
+          "update-account": 3.6056581681823574,
+          "ask-the-oracle": 2.2804184550893423,
+          "try-again": 3.5411510252644143,
+          "search-pricing": 4.606145197676012,
+          "search-membership": 4.501645458228419,
+          "offer-refund": 3.313912731494805,
+          "validate-purchase": 1.940600805217295,
+          "shipping-status": 3.1062185854693842,
+          "enter-details": 2.103099254032117,
+          "send-link": 3.430415809732289,
+          "instructions": 4.606145197676012,
+          "notify-team": 4.0001185868237075,
+          "search-jacket": 4.606145197676012,
+          "subscription-status": 3.81082951869852,
+          "log-out-in": 3.2369211089425143,
+          "make-purchase": 4.457167983193547,
+          "search-jeans": 4.606145197676012,
+          "search-timing": 4.606145197676012,
+          "membership": 2.524192731398934,
+          "search-policy": 4.606145197676012,
+          "make-password": 4.606145197676012,
+          "search-shirt": 4.606145197676012
+        }
+      },
+      "demand": {
+        "epochs": 20,
+        "selectorEpochs": 20,
+        "folds": 3,
+        "lr": 0.001,
+        "batchSize": 64,
+        "dailyWeight": 0.3,
+        "minHistory": 28
+      },
+      "policy": {
+        "iterations": 2,
+        "epochs": 2,
+        "noise": 0.1,
+        "batchSize": 8,
+        "replaySize": 8,
+        "replayWeight": 2.0,
+        "retentionTolerance": 0.0,
+        "distillWeight": 4.0,
+        "retainBest": true,
+        "collectionPolicy": "mixed"
+      },
+      "warmStart": "results/l40s-policy-v2/base/42/common.pt",
+      "variant": "base",
+      "noValue": false
+    },
+    "sourceArchiveHash": "bb97df9efa9be1ae95f88113e8024dbd2bd98ad3ac322ed8d001d33d4c384b5f",
+    "scope": "Tool-head continuation with full encoder fine-tuning; unchanged demand weights reused",
+    "initializedParameters": []
+  },
+  "trainingSeconds": 1528.7415757669369,
+  "trainingPeakGpuBytes": 41409224704,
+  "evaluation": {
+    "componentMetrics": {
+      "split": "test",
+      "inputHash": "df1490811ec7683c15fd039d6916abd4332de083982b784ff7b62cdc3fcce0ec",
+      "labelHash": "ec2b3984b6bce4f5d44e491186489fd21e255823020506ff1337f452fa806801",
+      "predictionHash": "b5853cf4aae6c477076a5fbdc0835493c14678ca6c453a0475f5e283ceb3f548",
+      "scorerHash": "18a128bf6b3eb4cccd7df0f39f0483f721810f48d367fb18beec875a53a7a240",
+      "components": {
+        "abcd": {
+          "cases": 96,
+          "provided": 96,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.90625,
+              "familyMean": 0.90625,
+              "cases": 96,
+              "families": 16
+            },
+            "observableToolAndArgumentsExact": {
+              "mean": 0.782608695652174,
+              "familyMean": 0.75,
+              "cases": 23,
+              "families": 12
+            },
+            "spokenReferenceF1": {
+              "mean": 0.049798588341258956,
+              "familyMean": 0.051579434824235604,
+              "cases": 70,
+              "families": 16
+            },
+            "toolExact": {
+              "mean": 0.7692307692307693,
+              "familyMean": 0.782051282051282,
+              "cases": 26,
+              "families": 13
+            }
+          }
+        },
+        "contractnli": {
+          "cases": 72,
+          "provided": 72,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 72,
+              "families": 12
+            },
+            "evidenceF1": {
+              "mean": 0.375,
+              "familyMean": 0.375,
+              "cases": 72,
+              "families": 12
+            },
+            "groundedScore": {
+              "mean": 0.25,
+              "familyMean": 0.25,
+              "cases": 72,
+              "families": 12
+            },
+            "stateAccuracy": {
+              "mean": 0.6805555555555556,
+              "familyMean": 0.6805555555555555,
+              "cases": 72,
+              "families": 12
+            }
+          }
+        },
+        "cuad": {
+          "cases": 90,
+          "provided": 90,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.7333333333333333,
+              "familyMean": 0.7333333333333333,
+              "cases": 90,
+              "families": 15
+            },
+            "answerabilityAccuracy": {
+              "mean": 0.7333333333333333,
+              "familyMean": 0.7333333333333333,
+              "cases": 90,
+              "families": 15
+            },
+            "evidenceF1": {
+              "mean": 0.6111111111111112,
+              "familyMean": 0.611111111111111,
+              "cases": 90,
+              "families": 15
+            },
+            "groundedScore": {
+              "mean": 0.5333333333333333,
+              "familyMean": 0.5333333333333333,
+              "cases": 90,
+              "families": 15
+            }
+          }
+        },
+        "orsharc": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 0.6666666666666666,
+              "familyMean": 0.6666666666666666,
+              "cases": 48,
+              "families": 12
+            },
+            "decisionAccuracy": {
+              "mean": 0.3958333333333333,
+              "familyMean": 0.3958333333333333,
+              "cases": 48,
+              "families": 12
+            },
+            "followupReferenceF1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 16,
+              "families": 11
+            },
+            "ruleRecallAt5": {
+              "mean": 0.8541666666666666,
+              "familyMean": 0.8541666666666666,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        },
+        "retail": {
+          "cases": 12,
+          "provided": 12,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "familyMean": 0.0,
+              "cases": 10,
+              "families": 8
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "observationNLL": {
+              "mean": 1.0385788489226824,
+              "familyMean": 1.2382266350268964,
+              "cases": 12,
+              "families": 10
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 12,
+              "families": 10
+            },
+            "uncensoredCRPS": {
+              "mean": 11.14074604080398,
+              "familyMean": 11.14074604080398,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.5,
+              "familyMean": 0.5,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 13.66500481731541,
+              "familyMean": 13.66500481731541,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 20.655426394054608,
+              "familyMean": 20.655426394054608,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 30.303844908690007,
+              "familyMean": 30.303844908690007,
+              "cases": 2,
+              "families": 2
+            },
+            "uncensoredTotalMAE": {
+              "mean": 15.760734891784114,
+              "familyMean": 15.760734891784114,
+              "cases": 2,
+              "families": 2
+            }
+          }
+        },
+        "tatqa": {
+          "cases": 48,
+          "provided": 48,
+          "coverage": 1.0,
+          "comparable": true,
+          "metrics": {
+            "actionAccuracy": {
+              "mean": 1.0,
+              "familyMean": 1.0,
+              "cases": 48,
+              "families": 12
+            },
+            "answerExact": {
+              "mean": 0.0625,
+              "familyMean": 0.0625,
+              "cases": 48,
+              "families": 12
+            },
+            "answerF1": {
+              "mean": 0.20860763763688653,
+              "familyMean": 0.20860763763688653,
+              "cases": 48,
+              "families": 12
+            },
+            "scaleAccuracy": {
+              "mean": 0.6458333333333334,
+              "familyMean": 0.6458333333333334,
+              "cases": 48,
+              "families": 12
+            }
+          }
+        }
+      },
+      "scope": "native component diagnostics, not an end-to-end order benchmark",
+      "pooledScore": null,
+      "notes": [
+        "Missing predictions remain in classification denominators.",
+        "Demand scores cover valid period distributions; incomplete coverage is not comparable.",
+        "Reference wording scores are lexical diagnostics, not action-value labels.",
+        "Stockout periods contribute survival NLL and order-loss lower bounds; exact CRPS and order loss use uncensored periods."
+      ]
+    },
+    "evaluatedCases": 366,
+    "researchTotalLoss": 257.33818292828124,
+    "researchInteractions": 0.7083333333333334,
+    "inferenceMs": {
+      "median": 20.689439494162798,
+      "p95": 92.55080544971861
+    },
+    "peakGpuBytes": 876158464,
+    "scope": "Public component diagnostics and generated controlled rollouts; no effectiveness claim on real organizational work"
+  }
+}
