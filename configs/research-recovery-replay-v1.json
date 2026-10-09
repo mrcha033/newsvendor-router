@@ -1,0 +1,47 @@
+{
+  "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "weightsHash": "736836c735ab9e61662ea14371b699139bd60f00d80a7fdfd40e6b7139b6137e",
+  "retailInputs": "results/l40s-research-replay-v1/base/42/inputs.jsonl",
+  "retailEnvironment": "results/l40s-research-replay-v1/base/42/environment.jsonl",
+  "rollouts": [
+    "results/l40s-research-replay-v1/base/42/rollout-train-0.jsonl",
+    "results/l40s-research-replay-v1/base/42/rollout-train-1.jsonl"
+  ],
+  "output": "/dev/shm/newsvendor-recovery-replay-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "scriptHash": "d5cb3a40a99baefa1509114b99ba43254101da39afd4ae4ab169ea6efdf7727c",
+  "files": {
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/l40s-research-replay-v1/base/42/inputs.jsonl": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "results/l40s-research-replay-v1/base/42/environment.jsonl": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "results/l40s-research-replay-v1/base/42/rollout-train-0.jsonl": "4914053bbf1531474c4a03b96e46ee6b4f6e9185ee5637b2a8790d7b0378879d",
+    "results/l40s-research-replay-v1/base/42/rollout-train-1.jsonl": "30bc52ed32eb3010dd5f48f63a95d90db602cd9d87f848840959178b29c9688f",
+    "configs/full.json": "54707509fc04433ae04700176350fc8d36d23496064650ba5b664196dbcc54bf",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "scripts/study_parameter_state.py": "fe1a0ba2b1c126672323205017639c6700ae3c05629e22e244b0f9da4c42f562"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "splitSeed": 73,
+  "heldFraction": 0.2,
+  "responseSeed": 127,
+  "responseSamples": 4,
+  "noise": {
+    "generated": 0.0,
+    "retail": 0.1
+  },
+  "epochs": 40,
+  "batchSize": 64,
+  "lr": 0.001,
+  "rankWeight": 0.25,
+  "testUsed": false,
+  "devUsed": false,
+  "selection": "Same inherited value head, same frozen constructor/GRU, same actual future response draws. Compare historical supervised starting states with all measured continuation states, selected only by observed identity. Both conditions use the same gradient-update budget and common source-held Train states; select epochs by equal-benchmark, equal-family sampled remaining-loss targets. The frozen encoder has previously seen these Train sources; this is an inner screening, not independent effectiveness.",
+  "gates": "All three continuation seeds must strictly improve common held-Train target loss over observed-only, not worsen either benchmark relative to the inherited head, and not increase expected false handoffs. Only then perform an independently sampled actual sequential Train check; full refit and fixed Dev evaluation follow only if that passes. No Test or frozen 27-source holdout inference.",
+  "arithmetic": "Use existing FP32 actionPrecision for exact cached-head consistency in both arms; encoder and other heads remain unchanged. Preserve original selected inference bundle and weights until all adoption gates pass.",
+  "interpretation": "Synthetic/controlled manager replies and documents; actual observed sales for retail loss. Sampled target loss with fixed parent continuation is not new-policy rollout loss or a true optimum."
+}

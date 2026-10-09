@@ -1,0 +1,30 @@
+{
+  "previous": "/dev/shm/newsvendor-recovery-replay-v1",
+  "output": "/dev/shm/newsvendor-recovery-numeric-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "scriptHash": "793d81b4fce74992d9c77bd622777dc598eda6da331459cee2c5d29b38392280",
+  "files": {
+    "/dev/shm/newsvendor-recovery-replay-v1/report.json": "e5e74b18b227503b603d0f9ad8d379a4869c5a5b10cfb92bb1b375d86c624da4",
+    "/dev/shm/newsvendor-recovery-replay-v1/features.pt": "01d1945a62669de20b52c505a5daea8e8dfd4511c8c43561221d443cb5e69049",
+    "/dev/shm/newsvendor-recovery-replay-v1/targets.jsonl": "7ba5762244eb842f55d020c9c066e78e3967594c139d21fdbec066815e8b2a84",
+    "scripts/study_recovery_replay.py": "d5cb3a40a99baefa1509114b99ba43254101da39afd4ae4ab169ea6efdf7727c",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "results/research-checks/response-replay/visibility.json": "19bd686244bea0c92c0ac0bebe2020f597862caca9bada176a30e04854a9e97c"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 40,
+  "batchSize": 64,
+  "lr": 0.001,
+  "rankWeight": 0.25,
+  "scope": "Same 1204 actual own-state Train states, same 11044 measured continuation rollouts, source split and optimizer update budget. Use the existing 94 numeric state features, with inherited first 256 head columns and zero new columns. Verify initial predictions on every state before training. No new environment samples or encoder training.",
+  "hypothesis": "Explicit availability updates leave selected text tokens unchanged in six retail failure states; numeric inputs preserve this distinction. This known input-path limitation does not alone establish causation; test it with the newly corrected observed states and measured continuation replay.",
+  "gates": "All three numeric continuation seeds must improve the encoded continuation target loss, be no worse than numeric observed-only on the common held-Train criterion, preserve each benchmark relative to the parent and not increase expected false handoffs. Only then perform an independently sampled sequential Train check before full refit and preregistered Dev validation. Otherwise retain forecast-v1 and stop this candidate.",
+  "testUsed": false,
+  "devUsed": false,
+  "interpretation": "Train inner screen under finite parent-continuation returns, not a true optimum or policy rollout performance. Controlled response environment and documents, not organizational efficacy."
+}
