@@ -1,0 +1,78 @@
+{
+  "status": "Isolated prototype verified on CPU. Not applied to main. L40S Train/Dev value-only comparison pending.",
+  "workspace": "/tmp/newsvendor-value-costs",
+  "sourceHash": "c8905187677ab6fc89ecd911e1af593e16bc99c9c8c3da0b1a6074ae8d125674",
+  "parentSourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28",
+  "configurationFlag": "encoder.exactActionCosts",
+  "changes": {
+    "src/newsvendor/structured_value.py": {
+      "parentHash": null,
+      "stagedHash": "b616bbce0d751ea941bd676d560bbb89994f72e1a13cebe370fc5508daba3fc1"
+    },
+    "src/newsvendor/structured_model.py": {
+      "parentHash": "14416d51c98000ac8cc0536a21a2278e25a0a7fbbf2ad8e5c3f8e3362fb87059",
+      "stagedHash": "6c703936c31365ff30159ae95c5657738fb9428b920bd0c7657986963dfbd03d"
+    },
+    "src/newsvendor/structured_rollout.py": {
+      "parentHash": "e9f778e23e1b3c1221056474d2e314e06ccbc686361f0c9dbd7037a422b1eae5",
+      "stagedHash": "584d8a1b36d73670935f829d9e02506a883418859f77295d5034b406a960c805"
+    },
+    "src/newsvendor/structured_critic.py": {
+      "parentHash": "c2c55fa3ccd05a6e60fff2b0cd975f78983bce015f645e1ab98a73bf611681bf",
+      "stagedHash": "3a76ade01775cb437ce080e7507e50e0dcc90dee2ff9c0ba48c596f684cebed6"
+    },
+    "tests/test_structured.py": {
+      "parentHash": "b285863409cedaff3b3bfe88ac84caf5d700cbc0e84fe29a72dbf0228870dd48",
+      "stagedHash": "c88e301bb331672f3564a50d805be69b5a7500733f6f6e61b2d3272c28f6e363"
+    },
+    "scripts/train_value_costs.py": {
+      "parentHash": null,
+      "stagedHash": "0066e67c244dd1a89e3c6f49bbbe0e0b2e5648db577fbbc12f98ddcbcc9fbfd1"
+    }
+  },
+  "archiveHash": "76d6ddad1d556febed92f83dddf7dedf06cc42f62c5ad56511fa0abd17f8de13",
+  "patchHash": "ef9400fd5534e31d2fa5e075ddacf05a73edefaadc2ac0cf2295e2c1e8d1feae",
+  "addedParameters": 0,
+  "additionalEncoderPasses": 0,
+  "tests": {
+    "passed": 110,
+    "seconds": 17.72,
+    "newCases": 5,
+    "setupCorrections": [
+      "Explicit prototype PYTHONPATH",
+      "Link unchanged pilot fixtures"
+    ]
+  },
+  "lintPassed": true,
+  "evidence": {
+    "train-cost-check.json": {
+      "path": "/home/yunmin/newsvendor-router/results/value-cost-prototype/train-cost-check.json",
+      "hash": "286b97f67cb2eafd3705c36a02885c8e678d43374044b2084e8f6fdc441264a7"
+    },
+    "source-group-check.json": {
+      "path": "/home/yunmin/newsvendor-router/results/value-cost-prototype/source-group-check.json",
+      "hash": "9d11852cb43bb0626676959c3bc02d7541523713bad76e9875f8f5d87d96911e"
+    },
+    "numerical-smoke.json": {
+      "path": "/home/yunmin/newsvendor-router/results/value-cost-prototype/numerical-smoke.json",
+      "hash": "5f6e82cba79cb8cb3e7589e9bdd57a40570ebd49dbfef2298f835e8c9b2a0593"
+    },
+    "warm-start-check.json": {
+      "path": "/home/yunmin/newsvendor-router/results/value-cost-prototype/warm-start-check.json",
+      "hash": "bdcbd75ba357017e3f78c0c1fcc0bfb79a3195bd573aa50d99fdd0910062ebb6"
+    }
+  },
+  "performanceEvidence": {
+    "newTrainRun": false,
+    "DevImprovement": false,
+    "TestGoalAchieved": false
+  },
+  "scope": "Use only known hold/immediate costs and public remaining budget/deadline. Predict unknown remaining losses/costs from actual Train rollouts. No response probability or hidden outcome in cost constraints.",
+  "queuedStudy": {
+    "status": "waiting_for_parent",
+    "parent": "/home/yunmin/newsvendor-router/results/l40s-tools-v16/base/42",
+    "parentPid": 402493,
+    "sourceHash": "c8905187677ab6fc89ecd911e1af593e16bc99c9c8c3da0b1a6074ae8d125674",
+    "scope": "After v16 trainer exits, fit only exact-cost value head on its selected common checkpoint; Train/Dev only. No Test or source mutation."
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "scope": "Train-only throughput measurements; not Test quality or organizational efficacy",
+  "caseIds": [
+    "abcd:2025:26",
+    "abcd:6717:5",
+    "abcd:6885:5",
+    "abcd:2982:4",
+    "abcd:315:2",
+    "abcd:3411:29",
+    "abcd:2960:20",
+    "abcd:5129:25"
+  ],
+  "effectiveBatch": 4,
+  "baseline": {
+    "variant": "base",
+    "checkpointing": true,
+    "encoderBatch": 8,
+    "caseBatch": 1,
+    "secondsPer4Cases": [
+      2.781349109020084,
+      2.118773533962667
+    ],
+    "casesPerSecond": 1.6326121982796586,
+    "peakGiB": 5.4688849449157715
+  },
+  "optimizedBase": {
+    "variant": "base",
+    "checkpointing": false,
+    "encoderBatch": 8,
+    "caseBatch": 2,
+    "secondsPer4Cases": [
+      1.2384193950565532,
+      1.448783854022622
+    ],
+    "casesPerSecond": 2.9770729113033645,
+    "peakGiB": 32.93021631240845
+  },
+  "throughputRatio": 1.8235027978110243,
+  "largeMeasurements": [
+    {
+      "variant": "large",
+      "checkpointing": false,
+      "encoderBatch": 8,
+      "caseBatch": 1,
+      "oom": true
+    },
+    {
+      "variant": "large",
+      "checkpointing": false,
+      "encoderBatch": 8,
+      "caseBatch": 2,
+      "oom": true
+    },
+    {
+      "variant": "large",
+      "checkpointing": true,
+      "encoderBatch": 8,
+      "caseBatch": 2,
+      "secondsPer4Cases": [
+        3.3853968929033726,
+        3.8983117840252817
+      ],
+      "casesPerSecond": 1.0983415667543401,
+      "peakGiB": 11.411529541015625
+    },
+    {
+      "variant": "large",
+      "checkpointing": true,
+      "encoderBatch": 8,
+      "caseBatch": 4,
+      "secondsPer4Cases": [
+        3.0880397929577157,
+        3.7585438559763134
+      ],
+      "casesPerSecond": 1.168465969337211,
+      "peakGiB": 15.478824615478516
+    },
+    {
+      "variant": "large",
+      "checkpointing": true,
+      "encoderBatch": 16,
+      "caseBatch": 4,
+      "secondsPer4Cases": [
+        4.063940841937438,
+        4.61367509199772
+      ],
+      "casesPerSecond": 0.9219122004137984,
+      "peakGiB": 15.6875581741333
+    }
+  ],
+  "partialCheckpointMeasurements": [
+    {
+      "variant": "large",
+      "checkpointing": "half",
+      "encoderBatch": 8,
+      "caseBatch": 2,
+      "secondsPer4Cases": [
+        3.841151918983087,
+        3.411143695935607
+      ],
+      "casesPerSecond": 1.1030989944126386,
+      "peakGiB": 39.60368347167969
+    },
+    {
+      "variant": "large",
+      "checkpointing": "quarter",
+      "encoderBatch": 8,
+      "caseBatch": 2,
+      "oom": true
+    },
+    {
+      "variant": "large",
+      "checkpointing": "half",
+      "encoderBatch": 8,
+      "caseBatch": 4,
+      "oom": true
+    }
+  ],
+  "parentCheckpoint": "results/l40s/base/42/language-progress-9000.pt",
+  "testsPassed": 36,
+  "inputAndObjectiveChanges": null,
+  "config": "configs/l40s-fast.json"
+}

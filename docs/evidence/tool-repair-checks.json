@@ -1,0 +1,99 @@
+{
+  "status": "complete; improvements and remaining regressions reported",
+  "run": "results/l40s-tools-v4/base/42/run.json",
+  "sourceHash": "46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 64,
+    "seconds": 12.83
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "scope": "Regression repairs; fixed Test was previously inspected, not a new blind evaluation.",
+  "releaseSourceHash": "84263e152e7e4ddcfe29803f3bd93c8b88083c148fc7b146752914e0462c0ac0",
+  "releaseArchive": "results/l40s-tools-v4/base/42/release-source-84263e152e7e.tar.gz",
+  "releaseArchiveHash": "63409eea3a0f43523be7295ae29320548f1497319a0ad93fd64ccdd2df3e0790",
+  "releaseChanges": "Shared Dev selection function, case-budget validation and progress reporting, runner defaults; configured selection and inference unchanged.",
+  "comparison": "results/l40s-tools-v4/base/42/tool-comparison.json",
+  "trainingSeconds": 1528.7415757669369,
+  "trainingPeakGpuBytes": 41409224704,
+  "evaluationSourceHash": "46adcf9b778bb6d6e4a476a5b6fe1a00db2b078288d01769ebfac2c51ca075b4",
+  "frozenAudit": {
+    "changedParameters": [
+      "heads.value.layers.0.weight",
+      "heads.value.layers.0.bias",
+      "heads.value.layers.2.weight",
+      "heads.value.layers.2.bias"
+    ],
+    "frozenWeightsUnchanged": true,
+    "commonHash": "1cfc92695cfeeaaf44df431ff32672b4d966e9a0656facc980fa0ff48508d7c7",
+    "policyHash": "61cf765cf0076999d25954f7984875396d435821f366cb58b3eaf1c442c5064d"
+  },
+  "job": {
+    "pid": 3202302,
+    "started": "2026-10-08T15:19:07.618263+00:00",
+    "stage": "complete",
+    "finished": "2026-10-08T15:49:10.427424+00:00"
+  },
+  "report": "docs/tool-repair.md",
+  "results": {
+    "decoder_fixed": {
+      "toolExact": 0.7692307692307693,
+      "argumentsExact": 0.7391304347826086,
+      "callPrecision": 0.6896551724137931,
+      "generatedTestLoss": 240.34888370094546
+    },
+    "common_rerank_off": {
+      "toolExact": 0.7692307692307693,
+      "argumentsExact": 0.782608695652174,
+      "callPrecision": 0.7999999999999999,
+      "generatedTestLoss": 610.4698709631273
+    },
+    "common_rerank_on": {
+      "toolExact": 0.8076923076923077,
+      "argumentsExact": 0.782608695652174,
+      "callPrecision": 0.7241379310344828,
+      "generatedTestLoss": 610.4698709631273
+    },
+    "policy_rerank_off": {
+      "toolExact": 0.7692307692307693,
+      "argumentsExact": 0.782608695652174,
+      "callPrecision": 0.7999999999999999,
+      "generatedTestLoss": 257.33818292828124
+    },
+    "policy_rerank_on": {
+      "toolExact": 0.8076923076923077,
+      "argumentsExact": 0.782608695652174,
+      "callPrecision": 0.7241379310344828,
+      "generatedTestLoss": 257.33818292828124
+    },
+    "policy_recovery_only": {
+      "toolExact": 0.8076923076923077,
+      "argumentsExact": 0.782608695652174,
+      "callPrecision": 0.7241379310344828,
+      "generatedTestLoss": 386.6775432708212
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "dataset": "data/processed/complementary",
+  "expansion": "data/processed/structured-train",
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-tools-v16",
+  "seed": 42,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "maxRetrievals": 2,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "toolSchema": "configs/abcd-schema-v2.json",
+    "positionalTools": true,
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 65000,
+    "compileLayers": true,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "structuredTools": true,
+    "rerank": true,
+    "procedureTokens": 96,
+    "copyAgreement": true,
+    "dialogueController": true,
+    "controllerLength": 3072,
+    "controllerPolicyTokens": 1536,
+    "controllerProcedures": 3,
+    "controllerResidual": true,
+    "controllerAuxiliary": true,
+    "procedureContext": true,
+    "paddingRatio": 1.25,
+    "rerankSupervision": true,
+    "workflowProgress": true,
+    "contextRerank": true,
+    "dialogueState": true,
+    "dialogueWorkflow": true
+  },
+  "training": {
+    "epochs": 2,
+    "encoderLr": 5e-06,
+    "headLr": 0.0001,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 128,
+    "checkpointEvery": 1024,
+    "caseBatch": {
+      "base": 32,
+      "large": 8,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "patience": 3,
+    "selection": "goal",
+    "validationEvery": 4096,
+    "minCases": 16384,
+    "preserveCallPrior": true,
+    "conversationValidation": true,
+    "nextTurnTraining": true,
+    "validateInitial": true,
+    "maxCases": 131072,
+    "mix": {
+      "tools": 0.75,
+      "research": 0.2,
+      "public": 0.05
+    },
+    "stopAtGoalChecks": 2,
+    "minGoalCases": 8192,
+    "sourceRoleSupervision": true
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "trainable": "value",
+    "iterations": 2,
+    "epochs": 40,
+    "noise": 0.1,
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 3,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed"
+  },
+  "warmStart": "results/l40s-tools-v12/base/42/common.pt",
+  "comparisonBaseline": "results/l40s-policy-v2/base/42/model.pt",
+  "constructionReplay": [
+    "results/l40s-tools-v4/base/42/value-targets-0.jsonl",
+    "results/l40s-tools-v4/base/42/value-targets-1.jsonl",
+    "results/l40s-tools-v12/base/42/value-targets-0.jsonl",
+    "results/l40s-tools-v12/base/42/value-targets-1.jsonl"
+  ],
+  "performanceGoal": {
+    "toolExact": 0.9,
+    "observableToolAndArgumentsExact": 0.9,
+    "callPrecision": 0.9,
+    "generatedTestTotalLossBelow": 240.35,
+    "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+  }
+}

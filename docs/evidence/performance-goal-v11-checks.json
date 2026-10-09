@@ -1,0 +1,146 @@
+{
+  "status": "Superseded at 107,520 cases by source-role supervision correction; performance goal not achieved.",
+  "sourceHash": "88487e42674d1b60a8afd3fe7b817b1ec4d43b2a523db1bc53c272ccb8fbd11b",
+  "configuredHash": "4908822827c2ea424a23bf4501b02f3ca5387e96fd9473bb99c7532fc41f8c4b",
+  "tests": {
+    "passed": 89,
+    "seconds": 16.18,
+    "command": "PYTHONPATH=src python -m pytest -q (staging; identical source)"
+  },
+  "lint": {
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "distinctFamilies": 30,
+    "falseHandoffs": 0
+  },
+  "workflowTargets": {
+    "path": "results/l40s-tools-v11/workflow-target-audit.json",
+    "hash": "d93b82d1a9d5ead23fbfd8f328a85736e55ebb8156304275d4fd4fb4dbd2fb31",
+    "counts": {
+      "mapped_node": 60145,
+      "unmapped_or_unavailable": 7571,
+      "no_further_logged_tool": 25287
+    }
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v11/benchmark.json",
+    "measurements": [
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.30361169599928,
+        "casesPerSecond": 4.47439439494158,
+        "loss": 6.336196574149653,
+        "encodedTokens": 242630,
+        "peakBytes": 41157975552,
+        "rerankGradients": [
+          105.25456108152866,
+          78.84514482878149
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          312.7660660147667,
+          370.4145939052105
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.478082219953649,
+        "casesPerSecond": 9.879467074818622,
+        "loss": 4.079939723247662,
+        "encodedTokens": 242765,
+        "peakBytes": 42372127232,
+        "rerankGradients": [
+          46.57457251474261,
+          44.3403862901032
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          382.1102562844753,
+          194.24690483510494
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39
+      }
+    ]
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v10/base/42/language-progress.pt",
+    "processed": 95232,
+    "weightsEqual": true,
+    "optimizerEqual": true,
+    "rngEqual": true,
+    "orderEqual": true,
+    "populatedOptimizerStates": 236,
+    "parentHash": "f5488771634ef1ccd1e72e683bd59746dcd2f3cfd2e4e943453cb6224f7c00d0",
+    "identity": {
+      "configHash": "d5a1f52e041f12adf003f77ca2029c5853208e29baf3df8464acfd032cd96cbc",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "constructionReplay": {
+          "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+          "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7"
+        }
+      },
+      "sourceHash": "88487e42674d1b60a8afd3fe7b817b1ec4d43b2a523db1bc53c272ccb8fbd11b",
+      "limit": null
+    }
+  },
+  "scope": "Train-only implementation and throughput checks, not effectiveness. Fixed Test untouched.",
+  "run": "results/l40s-tools-v11/base/42/run.json",
+  "configHash": "d5a1f52e041f12adf003f77ca2029c5853208e29baf3df8464acfd032cd96cbc",
+  "actualTrainingUpdate": {
+    "checkpoint": "results/l40s-tools-v11/base/42/language-progress.pt",
+    "processed": 96256,
+    "parameterMaxChanges": {
+      "tools.stage.layers.0.weight": 0.02169235795736313,
+      "tools.stage.layers.0.bias": 0.0251125767827034,
+      "tools.stage.layers.2.weight": 0.03898763284087181,
+      "tools.stage.layers.2.bias": 0.02263280376791954,
+      "tools.rerank.0.weight": 0.01785987615585327,
+      "tools.rerank.0.bias": 0.004768040031194687,
+      "tools.rerank.2.weight": 0.005270409397780895,
+      "tools.rerank.2.bias": 0.001211770810186863
+    },
+    "optimizerStates": 236
+  },
+  "firstDevelopment": {
+    "processed": 98304,
+    "toolExact": 0.625,
+    "observableToolAndArgumentsExact": 0.5625,
+    "callPrecision": 0.8,
+    "missedCalls": 11,
+    "wrongTools": 1,
+    "falseCalls": 4,
+    "accepted": false,
+    "raw": "results/l40s-tools-v11/dev-diagnosis-98304.json"
+  },
+  "lastDevelopment": {
+    "processed": 106496,
+    "toolExact": 0.5625,
+    "observableToolAndArgumentsExact": 0.5625,
+    "callPrecision": 0.8181818181818182,
+    "missedCalls": 12,
+    "wrongTools": 2,
+    "falseCalls": 2,
+    "accepted": false,
+    "raw": "results/l40s-tools-v11/dev-diagnosis-106496.json"
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "status": "paired no_value complete; final Test still pending",
+  "testUsed": false,
+  "run": "results/l40s-research-paired-v2/no_value/42",
+  "sourceHash": "5dcf6398a2d34be512bb00ac05958551d0c334f038ac5c68dd0cc29697f0c815",
+  "parentCommon": "results/l40s-research-paired-v2/base/42/common.pt",
+  "hashes": {
+    "files": {
+      "common": "56b008c06af250f79132a6f655db8f74e1ae69b113dbbdcdaa42fe3b444602f7",
+      "base": "763ec6965e7072b93210587f75ada3519f3271e789999270757eb8176ee2ea64",
+      "no_value": "9cafba2d23d3ab0197bfff51ebfd7069fe38804da42515f59a44794ccbae28a3"
+    },
+    "constructorAndDemand": {
+      "common": "275c7abc0486e11a5301f22f1ac6b4401e7742fe7d2df4005bfd27a967b64cb8",
+      "base": "275c7abc0486e11a5301f22f1ac6b4401e7742fe7d2df4005bfd27a967b64cb8",
+      "no_value": "275c7abc0486e11a5301f22f1ac6b4401e7742fe7d2df4005bfd27a967b64cb8"
+    },
+    "value": {
+      "common": "c541c54baea4ece5961ada41a4141898b76a19e14c80084f9b93bc7647bf684b",
+      "base": "90bd1c53090cc0f6a06e79f08ac00639984e522a4430b3f87a7e3052b86bfce6",
+      "no_value": "c541c54baea4ece5961ada41a4141898b76a19e14c80084f9b93bc7647bf684b"
+    },
+    "recovery": {
+      "common": "3a4274795d1c400e6f7e2d7ac7fa205d0ac27ebe00d7caa34cb567bc6b391e3e",
+      "base": "3a4274795d1c400e6f7e2d7ac7fa205d0ac27ebe00d7caa34cb567bc6b391e3e",
+      "no_value": "b464ec51e3f9bb1be659f278e9a789ebc759595023aa5a2c923b3eeac34e7bbf"
+    }
+  },
+  "sameConstructorAndDemand": true,
+  "valueWeightsUnchanged": true,
+  "valueDisabledAtInference": true,
+  "sameManifest": true,
+  "policy": [
+    {
+      "iteration": 0,
+      "ownStateTargets": 274,
+      "trainRawHash": "5ffe8270e230f1b77739faa7a0187f724b68c3b49bcab6896d070f2e2914e094",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.023628930561244488,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": true,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.005854484159499407,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.0047024526633322235,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 40,
+          "trainLoss": 0.0020535227144137026,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 9,
+        "economicLoss": 44.32742132570505
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "bcf27052c7d86cdebdbabcf39a817a97ea742aeffa1f6f2ad17752c78a801b6b",
+      "frozenWeightsUnchanged": true,
+      "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+      "target": "Observed missing-parameter request/checklist, no economic targets",
+      "devActualTotalLoss": 44.32742132570505
+    },
+    {
+      "iteration": 1,
+      "ownStateTargets": 308,
+      "trainRawHash": "b9e5eb635bd0d5b247d6a4c710de990f422a847e3a0e63fe47a3984c1852ea5b",
+      "epochs": [
+        {
+          "epoch": 10,
+          "trainLoss": 0.001737268571741879,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 20,
+          "trainLoss": 0.0004526197968516499,
+          "devActualTotalLoss": 44.32742132570505,
+          "accepted": false,
+          "retentionFailures": []
+        },
+        {
+          "epoch": 30,
+          "trainLoss": 0.00021882047294639052,
+          "devActualTotalLoss": 44.666754659038396,
+          "accepted": false,
+          "retentionFailures": []
+        }
+      ],
+      "selected": {
+        "iteration": 0,
+        "epoch": 9,
+        "economicLoss": 44.32742132570505
+      },
+      "publicDevBaseline": {},
+      "frozenWeightsHash": "bcf27052c7d86cdebdbabcf39a817a97ea742aeffa1f6f2ad17752c78a801b6b",
+      "frozenWeightsUnchanged": true,
+      "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+      "target": "Observed missing-parameter request/checklist, no economic targets",
+      "devActualTotalLoss": 44.32742132570505
+    }
+  ],
+  "seconds": 133.21606419503223,
+  "peakGpuBytes": 1265516544,
+  "finalDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 0.9955357142857143,
+        "stateAccuracy": 0.9955357142857143,
+        "rawStateAccuracy": 0.9962797619047619,
+        "rawParameterAccuracy": 0.9955357142857143,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "5131acb75d21b5b39ad666e93c47e9d26cad5b805842cf3b739d0a68fe7d5817"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 0.9955357142857143,
+        "stateAccuracy": 0.9955357142857143,
+        "rawStateAccuracy": 0.9962797619047619,
+        "rawParameterAccuracy": 0.9955357142857143,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "cae00e4dcb52a3a1a213334c983de7ab62549c75cfc21f69fb3cd95b40fbb1f0"
+    }
+  },
+  "limitations": [
+    "Exact economic mean uses 5 unique fully observed periods under 7 controlled conditions.",
+    "Base value policy made 3 unnecessary requests outside the exact economic subset; no_value and checklist made 0.",
+    "Source differs from original paired run only in the recorded fixes; the changed memory filter is identical on all 3837 saved memory items.",
+    "Generated financial conditions are not real organizational effectiveness."
+  ]
+}

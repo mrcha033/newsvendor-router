@@ -1,0 +1,583 @@
+{
+  "status": "complete",
+  "testUsed": false,
+  "seconds": 135.79467018693686,
+  "sourceHash": "1d8097d8e5e03e4d75254a4465063bb283994dd0c96c0142239baf073ed25c90",
+  "models": {
+    "value": {
+      "path": "results/l40s-research-v4/base/42/model.pt",
+      "hash": "208a8e58cac3d54a96b80ddb969a66e94a230180db376c004378b328198528ea"
+    },
+    "no_value": {
+      "path": "results/l40s-research-v4/no_value/42/model.pt",
+      "hash": "94c8801b32d8038748d454d096d6277f8c02e90c75b2a5328057eaf3ee579279"
+    }
+  },
+  "results": {
+    "value-0.1": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9821428571428571,
+        "rawStateAccuracy": 0.9821428571428571,
+        "rawParameterAccuracy": 0.9895833333333334,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 87.9985933694414,
+      "meanCensoredOrderLossLowerBound": 0.2799414703588807,
+      "falseHandoffs": 0,
+      "handoffs": 309,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 309,
+      "unresolvedAfterRequest": 27,
+      "missingParametersAtStop": 27,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "58389af4afc503651693e2a1dba459595dfa6d048fbcc00062bacf1678113712"
+    },
+    "checklist-0.1": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9813988095238095,
+        "rawStateAccuracy": 0.9813988095238095,
+        "rawParameterAccuracy": 0.9895833333333334,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 73.14501284679709,
+      "meanCensoredOrderLossLowerBound": 0.3130749049112274,
+      "falseHandoffs": 0,
+      "handoffs": 308,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 308,
+      "unresolvedAfterRequest": 28,
+      "missingParametersAtStop": 28,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "0f2f74ed9fe0710949c76c452f91558942d6a4cf5c7e2c2c35f84cdf4708f544"
+    },
+    "value-0.2": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9627976190476191,
+        "rawStateAccuracy": 0.9620535714285714,
+        "rawParameterAccuracy": 0.9784226190476191,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 171.1302113216932,
+      "meanCensoredOrderLossLowerBound": 0.3029054190992576,
+      "falseHandoffs": 0,
+      "handoffs": 282,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 282,
+      "unresolvedAfterRequest": 54,
+      "missingParametersAtStop": 54,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "93d566f498a9c2219ce9acaffb2993f9294ce5b4bf6c37a7390d217f68f554f7"
+    },
+    "checklist-0.2": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9635416666666666,
+        "rawStateAccuracy": 0.9627976190476191,
+        "rawParameterAccuracy": 0.9791666666666666,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 145.3230971682774,
+      "meanCensoredOrderLossLowerBound": 0.33631093301010756,
+      "falseHandoffs": 0,
+      "handoffs": 284,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 283,
+      "unresolvedAfterRequest": 53,
+      "missingParametersAtStop": 53,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "6d7ee9ece8bbb7f9454321e5f8bd7a9e9eb801b811f62d9299adb03e4c651707"
+    },
+    "no_value-0.1": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9813988095238095,
+        "rawStateAccuracy": 0.9813988095238095,
+        "rawParameterAccuracy": 0.9895833333333334,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 73.14501284679709,
+      "meanCensoredOrderLossLowerBound": 0.3130749049112274,
+      "falseHandoffs": 0,
+      "handoffs": 308,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 308,
+      "unresolvedAfterRequest": 28,
+      "missingParametersAtStop": 28,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "4388c629118a128387cc49827852eb11d9376ba1d0e0bd5d1bd81aeb402a55cf"
+    },
+    "no_value-0.2": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 0.9635416666666666,
+        "rawStateAccuracy": 0.9627976190476191,
+        "rawParameterAccuracy": 0.9791666666666666,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 145.3230971682774,
+      "meanCensoredOrderLossLowerBound": 0.33631093301010756,
+      "falseHandoffs": 0,
+      "handoffs": 284,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 283,
+      "unresolvedAfterRequest": 53,
+      "missingParametersAtStop": 53,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "90642f551eb3de032f55dc553ead37e5390cd311907b3f2a19354a5e0d1729ed"
+    }
+  },
+  "paired": {
+    "0.1": {
+      "sameRequestSetEpisodes": 336,
+      "differentRequestOrderEpisodes": 35,
+      "valueMinusNoValueObservedTotal": 14.853580522644311,
+      "familyBootstrap95": [
+        0.0,
+        55.70092695991617
+      ],
+      "familiesWithCompleteOutcomes": 4,
+      "scenarioEpisodesWithCompleteOutcomes": 35
+    },
+    "0.2": {
+      "sameRequestSetEpisodes": 336,
+      "differentRequestOrderEpisodes": 35,
+      "valueMinusNoValueObservedTotal": 25.807114153415814,
+      "familyBootstrap95": [
+        0.0,
+        55.70092695991617
+      ],
+      "familiesWithCompleteOutcomes": 4,
+      "scenarioEpisodesWithCompleteOutcomes": 35
+    }
+  },
+  "analyticExpectedTotal": {
+    "0.1": 89.92623713030537,
+    "0.2": 134.20334812897525
+  },
+  "analyticAssumptions": "All required questions are attempted once, identical order on success, constant per-question costs, independent missing replies at the declared rate. Uses exact complete-period outcomes only.",
+  "interpretation": "All policies ask the same sets. Under these response assumptions they have identical expected losses; fixed hashed response draws differ when query positions change.",
+  "rawPairHash": "8023e1d4b02c56e4504eec5f38b0bc712a04c42f58c0428d78dfafd8b0f92c60",
+  "limitations": [
+    "Five unique complete Dev periods; source-family intervals cannot compensate for this small sample.",
+    "Controlled manager-response model, not measured human behavior.",
+    "No new policy selection or Test use in this sensitivity check."
+  ],
+  "successfulQuantitiesMatchNoiseFreeRun": 1775
+}

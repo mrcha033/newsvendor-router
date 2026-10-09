@@ -1,0 +1,31 @@
+{
+  "stage": "applied and verified",
+  "files": {
+    "src/newsvendor/structured_forecast.py": "d77b80eed279c2dde71c5acc288b7975d6055225e4943cc9228956702fbaf7b8",
+    "src/newsvendor/structured_labels.py": "23a3eccb1abc7a28127c7aadfd22a60c9c0b9c57c5eada0c19fca94938a5a79a",
+    "tests/test_structured.py": "6f4ebf5dd45c21916f9e9dca71843523e8903cacae6f61ac16445ef198a861c9"
+  },
+  "patchHash": "08b685aa3f55fe390bc6718b19e6b5e52e18a50d78efc947272fd34a1fcd3133",
+  "baseRunSourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+  "stagedRegression": "multi-answer regression failed before fix; exact scalar repeats remain valid",
+  "stagedFullTests": {
+    "passed": 180,
+    "failed": 3,
+    "reason": "Staging copy lacked pilot fixtures and the dataset manifest; rerun in complete workspace"
+  },
+  "stagedInitialCollectionError": "Missing copied scripts; fixed before full test run",
+  "largeRunFinishedBeforeMutation": true,
+  "sourceHash": "5dcf6398a2d34be512bb00ac05958551d0c334f038ac5c68dd0cc29697f0c815",
+  "workspaceTests": {
+    "passed": 183,
+    "seconds": 23.66,
+    "logHash": "881c4b69bf63d8f9b3c690946baf939c03f4dc6320e5bc39ed5b129c3ed5c75c"
+  },
+  "ruff": "passed",
+  "numericalReport": "results/research-checks/core-fixes-numerical.json",
+  "priorPairedTraceMemory": {
+    "testedPools": 3837,
+    "unchanged": true,
+    "scope": "For every saved base/large Dev memory item, the changed candidate filter yields the identical pool; no performance is rescored or increased"
+  }
+}

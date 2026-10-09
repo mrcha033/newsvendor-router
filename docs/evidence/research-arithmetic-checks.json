@@ -1,0 +1,95 @@
+{
+  "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+  "changes": [
+    "Resolve source-annotated percentage scale using the existing ordered-operand calculator and consistency with the rounded source answer.",
+    "Map annotated two-operand averages and percentage changes to existing operations.",
+    "Preserve negative accounting-cell values and their full evidence span; do not interpret prose footnotes or dashes as negative or zero.",
+    "Keep historical strict scores and add a separate two-decimal scalar diagnostic; optimizer precision is unchanged."
+  ],
+  "checks": {
+    "tests": 177,
+    "testSeconds": 22.85,
+    "ruff": "passed",
+    "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+    "samePairedManifest": true,
+    "sourceOverlaps": 0,
+    "smokeScenarios": 30,
+    "falseHandoffs": 0,
+    "corpusSplit": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "configs": {
+      "base": "6842f1b8fb4ecbdbd492478ff71f545151d54f873e5c104b87b1912d1e8dbfa7",
+      "large": "5968e542883e5edb910827c7c151195a6994f37938ddbce51230a7c3867c289c"
+    },
+    "annotationAudit": "results/research-checks/document-targets-v3/report.json",
+    "frozenPredictionRescore": "results/research-checks/document-rescore-v2/report.json"
+  },
+  "annotationCounts": {
+    "train:span": 64,
+    "train:arithmetic": 61,
+    "train:supervisedArithmetic": 51,
+    "train:op:subtract": 23,
+    "train:inconsistentArithmetic": 0,
+    "train:requiresRounding": 18,
+    "dev:span": 20,
+    "dev:arithmetic": 18,
+    "dev:supervisedArithmetic": 13,
+    "dev:op:change": 4,
+    "dev:inconsistentArithmetic": 0,
+    "dev:requiresRounding": 6,
+    "dev:maskedArithmetic": 5,
+    "train:multi-span": 17,
+    "train:op:change": 12,
+    "dev:multi-span": 7,
+    "train:count": 2,
+    "train:maskedArithmetic": 10,
+    "train:op:percent": 6,
+    "train:op:add": 4,
+    "train:op:divide": 2,
+    "dev:op:subtract": 6,
+    "dev:op:percent": 2,
+    "train:op:average": 4,
+    "dev:op:add": 1,
+    "dev:count": 3
+  },
+  "rescoredFrozenPredictions": {
+    "before": {
+      "rawSource": "results/l40s-research-v4/documents-dev/before.jsonl",
+      "rawSourceHash": "953189f85d9e9ee2b9d1fece429d2c87a2ffae8378d4d46fce33fe1ebe101bc7",
+      "cases": 48,
+      "strictCorrect": 5.0,
+      "roundedCorrect": 5.0
+    },
+    "core": {
+      "rawSource": "results/l40s-research-v4/documents-dev/core.jsonl",
+      "rawSourceHash": "a6f14052dbe688c55c524ce2f6b86ff9e5d649ffad9c9a2a9520768c2d7dce09",
+      "cases": 48,
+      "strictCorrect": 4.0,
+      "roundedCorrect": 4.0
+    },
+    "no_value": {
+      "rawSource": "results/l40s-research-v4/documents-dev/no_value.jsonl",
+      "rawSourceHash": "0efba1b66e2ca90ffc1c90e8b8a7965ccaedc4269a6822757be2ad1037815dcf",
+      "cases": 48,
+      "strictCorrect": 4.0,
+      "roundedCorrect": 4.0
+    }
+  },
+  "officialReference": "https://github.com/NExTplusplus/TAT-QA/blob/870accc41953dcde885aabeb963d94aabdc0fbc3/tatqa_metric.py",
+  "metricCaveat": "The project diagnostic borrows only the two-decimal arithmetic convention. It is not an implementation of the complete official TAT-QA scorer.",
+  "scope": "Training-target and input-sign correctness. Not effectiveness evidence; no model performance gain claimed.",
+  "interruptedRun": "results/l40s-research-paired/base/42",
+  "replacementConfigurations": [
+    "configs/l40s-research-paired-v2-base.json",
+    "configs/l40s-research-paired-v2-large.json"
+  ],
+  "testUsed": false
+}

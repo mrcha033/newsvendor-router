@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-09",
+  "status": "v2_integration_verified_training_in_progress",
+  "sourceHash": "ae62a55dbefe55b1302b8dd087d1a7fce67e262c1a171af199e6471059716a3e",
+  "sourceFiles": {
+    "src/newsvendor/structured_forecast.py": "e2f6a073c08aaf8c785e7bfb491b442b0a0e5b40a5d1df453ddc7636eb3773b5",
+    "src/newsvendor/structured_retail.py": "d78742c28f91b9c127b2ffed81d8a4f4916b05d97cf9fa57672201e76634a87a",
+    "src/newsvendor/structured_value.py": "fdcdd1cf554e7af992aeb4b33956a0f146d4cbcf2b7cfdbe4883d0d72f121251",
+    "src/newsvendor/structured_rollout.py": "794b0a5fcd73d7253d2a9033eac677442976786488c8a9609ccb5e344f2efba3",
+    "src/newsvendor/structured_train.py": "2ec101af64328a146b9439ddd4c78f3c2d52f5390dc285cb3c974938f0380d94",
+    "src/newsvendor/construction.py": "d60434d865222ccba666ca8b25a4463d03424aae3f847bae14a7fb7f37d0d363",
+    "src/newsvendor/corpus.py": "78b70e99cc69f4c6004e2cd18eaa28879e2de068ac98f9e52e16ea171c6de54b"
+  },
+  "runnerHash": "146a6a407f9e72cada8aae3805832e9a0e6fd3293291889c1a40a96b10638580",
+  "configHash": "60b5ec154cc41bd22538f0174d5c126ba7c4fea6d08f425554a311baf5b35163",
+  "tests": {
+    "command": ".venv/bin/pytest -q",
+    "passed": 129,
+    "seconds": 19.68,
+    "coverage": [
+      "learned demand-head changes affect optimizer quantity",
+      "manager response updates own state and provenance",
+      "future dates/SKU/unit/horizon mismatch rejected",
+      "hidden distribution and response-model perturbation does not alter core input/state/actions",
+      "cached forecast invalidates on numeric history changes",
+      "future-label changes preserve constructed inputs",
+      "actual output quantity is scored",
+      "censored targets cannot supervise exact economic value",
+      "exact public action costs agree in forward, decoder and cached critic",
+      "pack quantity cannot be copied as money; expected purchase cost is independent arithmetic",
+      "generated numeric annotations checked independently of parser before use",
+      "all c/p/v/b responses replace only their matching source",
+      "encoder backward without auxiliary tool modules"
+    ],
+    "additionalRegression": {
+      "command": ".venv/bin/pytest tests/test_structured.py -q -k research_backward_without",
+      "passed": 1,
+      "seconds": 2.8
+    }
+  },
+  "sourceSplitCheck": {
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "manifestHash": "3ca5c90aa17e0944909515293f93ada5417b8d6a348a231d3a6f364605b6013b"
+  },
+  "data": {
+    "train": {
+      "episodes": 1260,
+      "sourceFamilies": 25,
+      "completeOutcomeEpisodes": 154
+    },
+    "dev": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completeOutcomeEpisodes": 35
+    }
+  },
+  "run": "results/l40s-research-v2/base/42",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "pid": 711493,
+  "limitations": [
+    "Generated financial documents and manager responses are experimental conditions, not actual retail contracts.",
+    "Exact 7-day economic labels cover 22 Train and 5 Dev observed periods; seven conditions share each period.",
+    "No Test evaluation or achieved-performance claim.",
+    "Demand model is reused from the recorded parent, without untrained language conditioning."
+  ],
+  "priorRun": {
+    "path": "results/l40s-research/base/42",
+    "status": "failed",
+    "initialEvaluationValid": false,
+    "errors": [
+      "correct per-pack division rejected because units per pack was classified as a price",
+      "None retrieval flag crashed non-tool training before its first optimizer step"
+    ],
+    "rawMeasurementsPreserved": true
+  },
+  "developmentConstruction": [
+    {
+      "epoch": 1,
+      "states": 672,
+      "rawHash": "10e6979c06398010575f172ea382750d02770224c205cc9dda297f5161f09ee4",
+      "parameterAccuracy": 0.9981398809523809,
+      "allParametersCorrect": 0.9925595238095238,
+      "stateAccuracy": 1.0,
+      "typeAccuracy": 1.0,
+      "evidenceAccuracy": 0.9978298611111112
+    },
+    {
+      "epoch": 2,
+      "states": 672,
+      "rawHash": "dd95fa627e93ef15ab50643055fceaae3047afa9f24441d859ad14a8979d462b",
+      "parameterAccuracy": 0.9895833333333334,
+      "allParametersCorrect": 0.9583333333333334,
+      "stateAccuracy": 1.0,
+      "typeAccuracy": 1.0,
+      "evidenceAccuracy": 0.9878472222222222
+    }
+  ],
+  "encoderUpdate": {
+    "checkpoint": "results/l40s-research-v2/base/42/language-progress.pt",
+    "checkpointIdentity": {
+      "configHash": "c0c513dc782645b50323115fa3491cc40a6b0325b73b89a533bbaae6546f8b3f",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "linkedManifest": "3ca5c90aa17e0944909515293f93ada5417b8d6a348a231d3a6f364605b6013b"
+      },
+      "sourceHash": "ae62a55dbefe55b1302b8dd087d1a7fce67e262c1a171af199e6471059716a3e",
+      "limit": null
+    },
+    "embeddingChanged": true,
+    "embeddingMeanAbsoluteUpdate": 3.959012701670872e-06,
+    "parentFileHash": "447072c25faace0f9c663735fc7fe0469e228810ec7f58c32a5536c1105cf739",
+    "epoch": 1,
+    "offset": 2048,
+    "optimizerMaxStep": 143.0
+  },
+  "lastObservedProgress": {
+    "timestamp": "2026-10-09T05:12:10.884714+00:00",
+    "stage": "language",
+    "elapsedSeconds": 311.81535556702875,
+    "epoch": 2,
+    "processed": 2432,
+    "total": 2520,
+    "casesPerSecond": 43.777260863554524,
+    "remainingEpochSeconds": 2.0101760197898044,
+    "remainingBudgetSeconds": null,
+    "meanLoss": 0.0006221499489512146,
+    "encoderBatch": {
+      "cases": 32,
+      "tokens": 19482,
+      "sequences": 33,
+      "sharedSequences": 31,
+      "checkpointing": false,
+      "encoderCalls": 3,
+      "paddedTokens": 22656,
+      "tokenLimit": 55000.0
+    },
+    "plannedCases": 32,
+    "backwardBatches": 1,
+    "encodedTokens": 1487644,
+    "retrievalExamples": 0
+  }
+}

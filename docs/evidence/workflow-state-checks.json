@@ -1,0 +1,262 @@
+{
+  "status": "Applied after paired L40S check; v16 continuation launched.",
+  "workspace": "/tmp/newsvendor-workflow-state",
+  "sourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28",
+  "parentSourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+  "archive": "results/workflow-state-prototype/staged-source.tar.gz",
+  "archiveHash": "33d58d2ff16f8763ee7156e56f57402871095c0cdd3c25db35fcd95364611e44",
+  "patch": "results/workflow-state-prototype/staged.patch",
+  "patchHash": "ecddbaf0d1bbb2c9e4ed8a87d38e98197592440bd09c953a7803aa54d2a689f0",
+  "changedFiles": {
+    "src/newsvendor/structured_inputs.py": {
+      "parentHash": "6514a9b6772798adab165b346d3e05c7d1b5e85b69253bc462811b2bcdfa5f31",
+      "stagedHash": "3e9c39c27d4226b4229ece2970e83287e4c8f5c3da26aaee59a4c0ae5fdddfee"
+    },
+    "src/newsvendor/structured_model.py": {
+      "parentHash": "4e1bce4610ea3a5148201bef19fdb899d3fa20f5dadb1a17e5ff64e7d60887d3",
+      "stagedHash": "14416d51c98000ac8cc0536a21a2278e25a0a7fbbf2ad8e5c3f8e3362fb87059"
+    },
+    "src/newsvendor/structured_control.py": {
+      "parentHash": "9618a124adfc7043b4fa03c1990a21680e010775e3500ba14faec582bb4d32b1",
+      "stagedHash": "4d4bee45c06abc0f40578d9c91d6467cee3edd1adbb087fdf302b6c324b166a4"
+    },
+    "src/newsvendor/structured_tool_heads.py": {
+      "parentHash": "374ab7c8d48c9d6d8b8a0888d5cd0c894374dc2a9ee43a2b88cd812078bd7152",
+      "stagedHash": "cb25b8227f07ef6cf8aa4f5d7ce87d34c5d1c29eeaf3f1966938f1080c8bd2ce"
+    },
+    "src/newsvendor/structured_progress.py": {
+      "parentHash": "663fecc4b870ccc9bc52f34e96fa2be18ea259fb6c8f37d9c6bc4bada579464f",
+      "stagedHash": "2e21cc7e962b4945e54e62e524960e1845f8aa22b905209c13355331c352aa4c"
+    },
+    "scripts/bench_control.py": {
+      "parentHash": "85c93fea90adc6c4467a9bf2e84aad71913baba22057c58accbb6df8434a0b01",
+      "stagedHash": "b726075e601a589f792cdd604b3ef06eecdcbecea4102e3b8dc1433d59b83d63"
+    },
+    "tests/test_structured.py": {
+      "parentHash": "187e0e28d7ecfa685a2c3e0b682b631549ba8616e6a306fcd37109042273b353",
+      "stagedHash": "b285863409cedaff3b3bfe88ac84caf5d700cbc0e84fe29a72dbf0228870dd48"
+    }
+  },
+  "configurationFlag": "encoder.dialogueWorkflow",
+  "changes": [
+    "Compute the existing recurrent dialogue state once before procedure/progress heads.",
+    "Route the same learned state to procedure retrieval, workflow progress, controller, and contextual candidate reranking.",
+    "Allow a declared continuation preserving optimizer, RNG, case order and parameter shapes; revalidate saved best weights under the new graph."
+  ],
+  "addedParameters": 0,
+  "additionalEncoderPasses": 0,
+  "tests": {
+    "passed": 105,
+    "seconds": 19.12,
+    "newCases": 3,
+    "scope": [
+      "Zero state correction preserves prior outputs and tokens",
+      "Workflow-only supervision reaches state projection, recurrent state, recognizer and encoder",
+      "State computed exactly once with reranking both enabled and disabled",
+      "Declared continuation preserves optimizer/order and revalidates parent"
+    ]
+  },
+  "lintPassed": true,
+  "sameDatasetIdentitiesAsV15": true,
+  "sourceGroups": {
+    "reusedAudit": "results/dialogue-state-prototype/annotation-check.json",
+    "hash": "d1dfb6b12dc17297360bed2cfc7ae8decd1fc43eca1a6eeac51e610e383aebb8",
+    "rationale": "Dataset identities unchanged; data construction and annotation loader bytes unchanged."
+  },
+  "numericalSmoke": {
+    "path": "results/workflow-state-prototype/numerical-smoke.json",
+    "hash": "6d9a26bf2bbbf91b678387e9d349d3396a6faa2b3ce0ba9a51790956124cbcfc",
+    "cases": 30,
+    "distinctFamilies": 30,
+    "falseHandoffs": 0
+  },
+  "configuration": {
+    "dataset": "data/processed/complementary",
+    "expansion": "data/processed/structured-train",
+    "researchConfig": "configs/full.json",
+    "output": "results/workflow-state-prototype/probe",
+    "seed": 42,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "maxRetrievals": 2,
+    "backbones": {
+      "base": {
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+      },
+      "large": {
+        "model": "answerdotai/ModernBERT-large",
+        "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+        "splitLongBatches": true
+      }
+    },
+    "encoder": {
+      "toolSchema": "configs/abcd-schema-v2.json",
+      "positionalTools": true,
+      "retrievalCost": 1.0,
+      "retrievals": 2,
+      "maxLength": 1024,
+      "queryTokens": 128,
+      "overlap": 32,
+      "chunks": 8,
+      "encoderBatch": 16,
+      "retrievalDocuments": 5,
+      "gradientCheckpointing": false,
+      "precision": "bf16",
+      "packedQueries": true,
+      "bucketLengths": true,
+      "checkpointTokenLimit": 65000,
+      "compileLayers": true,
+      "compileLimit": 64,
+      "attention": "sdpa",
+      "padMultiple": 128,
+      "splitLongBatches": true,
+      "packedSources": true,
+      "chunkTokens": 256,
+      "documentTokens": 1024,
+      "historyChunks": 1024,
+      "tableChunks": 4096,
+      "batchFusion": true,
+      "sharedQueries": true,
+      "structuredTools": true,
+      "rerank": true,
+      "procedureTokens": 96,
+      "copyAgreement": true,
+      "dialogueController": true,
+      "controllerLength": 3072,
+      "controllerPolicyTokens": 1536,
+      "controllerProcedures": 3,
+      "controllerResidual": true,
+      "controllerAuxiliary": true,
+      "procedureContext": true,
+      "paddingRatio": 1.25,
+      "rerankSupervision": true,
+      "workflowProgress": true,
+      "contextRerank": true,
+      "dialogueState": true,
+      "dialogueWorkflow": true
+    },
+    "training": {
+      "epochs": 2,
+      "encoderLr": 5e-06,
+      "headLr": 0.0001,
+      "weightDecay": 0.01,
+      "accumulation": 32,
+      "progressEvery": 128,
+      "checkpointEvery": 1024,
+      "caseBatch": {
+        "base": 32,
+        "large": 8,
+        "no_value": 32
+      },
+      "prefetchWorkers": 2,
+      "fusedOptimizer": true,
+      "retrievalTraining": "needed",
+      "patience": 3,
+      "selection": "goal",
+      "validationEvery": 4096,
+      "minCases": 16384,
+      "preserveCallPrior": true,
+      "conversationValidation": true,
+      "nextTurnTraining": true,
+      "validateInitial": true,
+      "maxCases": 131072,
+      "mix": {
+        "tools": 0.75,
+        "research": 0.2,
+        "public": 0.05
+      },
+      "stopAtGoalChecks": 2,
+      "minGoalCases": 8192,
+      "sourceRoleSupervision": true
+    },
+    "demand": {
+      "epochs": 20,
+      "selectorEpochs": 20,
+      "folds": 3,
+      "lr": 0.001,
+      "batchSize": 64,
+      "dailyWeight": 0.3,
+      "minHistory": 28
+    },
+    "policy": {
+      "trainable": "value",
+      "iterations": 2,
+      "epochs": 40,
+      "noise": 0.1,
+      "batchSize": 64,
+      "valueLr": 0.001,
+      "validationEvery": 10,
+      "patience": 3,
+      "rankWeight": 0.25,
+      "collectionPolicy": "mixed"
+    },
+    "warmStart": "results/l40s-tools-v15/base/42/language-sample-8192.pt",
+    "comparisonBaseline": "results/l40s-policy-v2/base/42/model.pt",
+    "constructionReplay": [
+      "results/l40s-tools-v4/base/42/value-targets-0.jsonl",
+      "results/l40s-tools-v4/base/42/value-targets-1.jsonl",
+      "results/l40s-tools-v12/base/42/value-targets-0.jsonl",
+      "results/l40s-tools-v12/base/42/value-targets-1.jsonl"
+    ],
+    "performanceGoal": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    }
+  },
+  "liveSourceUnchanged": true,
+  "performanceEvidence": {
+    "newTrainRun": false,
+    "DevImprovement": false,
+    "TestGoalAchieved": false
+  },
+  "warmStart": {
+    "path": "results/workflow-state-prototype/warm-start-check.json",
+    "hash": "407cfdfe5c539e3603ce58c61a9372b4f4fd5c512ac338725474f57497081bb4",
+    "parameters": 152473626,
+    "newParameterKeys": [],
+    "weightsEqual": true
+  },
+  "appliedToMain": true,
+  "gpuBenchmark": {
+    "path": "results/workflow-state-prototype/benchmark.json",
+    "hash": "95bd7014ef91683e29c6eecdd555d6146ab4d469d551269c4524a2be6702da32",
+    "status": "complete",
+    "warmMeasurements": [
+      {
+        "dialogueWorkflow": false,
+        "seconds": 6.923942691995762,
+        "casesPerSecond": 9.243288520279851,
+        "encodedTokens": 242278,
+        "peakBytes": 42522445824,
+        "historyUpdated": {
+          "tool": true,
+          "sequence": true,
+          "project": true
+        }
+      },
+      {
+        "dialogueWorkflow": true,
+        "seconds": 6.929777204990387,
+        "casesPerSecond": 9.23550615074771,
+        "encodedTokens": 242278,
+        "peakBytes": 42522461184,
+        "historyUpdated": {
+          "tool": true,
+          "sequence": true,
+          "project": true
+        }
+      }
+    ],
+    "scope": "One warm repeat per arm from identical trained parent weights and Train cases; self-predicted follow-up token counts may differ. Numerical/runtime check, not effectiveness or a speedup claim."
+  },
+  "trainingRun": "results/l40s-tools-v16"
+}

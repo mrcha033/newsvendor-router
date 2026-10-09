@@ -4,6 +4,7 @@ import itertools
 import math
 import re
 from collections import Counter
+from functools import lru_cache
 
 from .io import digest, require
 from .suite import canonical, public_input, retrieve
@@ -57,10 +58,16 @@ def fragments(documents, width=500):
     return result
 
 
+@lru_cache(maxsize=128)
+def rank_index(texts):
+    counts = [Counter(canonical(text).split()) for text in texts]
+    df = Counter(w for c in counts for w in c)
+    return counts, df
+
+
 def rank(items, query, limit):
     words = set(canonical(query).split())
-    counts = [Counter(canonical(x["text"]).split()) for x in items]
-    df = Counter(w for c in counts for w in c)
+    counts, df = rank_index(tuple(x["text"] for x in items))
     scored = []
     for i, (item, counts_i) in enumerate(zip(items, counts, strict=True)):
         score = sum(

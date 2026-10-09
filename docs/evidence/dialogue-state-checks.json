@@ -1,0 +1,136 @@
+{
+  "status": "Applied and L40S v15 training active after CPU tests and paired GPU checks. Effectiveness not yet established.",
+  "workspace": "/tmp/newsvendor-dialogue-state",
+  "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+  "parentSourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888",
+  "archive": "results/dialogue-state-prototype/staged-source.tar.gz",
+  "archiveHash": "7645044ab6ec790248b08ad20c42abdc75c3fcb69fb88dea952a01cf37d3a37b",
+  "patchHash": "f13c3e39511d2fbc4e4373ff8ffd64a56b856f849369d9d14e20ca21249e2a14",
+  "changedFiles": {
+    "src/newsvendor/structured_control.py": {
+      "parentHash": "fd9f8131d339478aaf7ffb177c0802d64f2b4c11414571a2744e657742aaa9f9",
+      "stagedHash": "9618a124adfc7043b4fa03c1990a21680e010775e3500ba14faec582bb4d32b1"
+    },
+    "src/newsvendor/structured_inputs.py": {
+      "parentHash": "22e4ce831e2059fa8081b711f15e58eef97d94a1515fe698dc8c4ccea96443dc",
+      "stagedHash": "6514a9b6772798adab165b346d3e05c7d1b5e85b69253bc462811b2bcdfa5f31"
+    },
+    "src/newsvendor/structured_model.py": {
+      "parentHash": "e900abd152635a994855951a20cf9d2c58c5501d0a77adb179546a56e0dcf177",
+      "stagedHash": "4e1bce4610ea3a5148201bef19fdb899d3fa20f5dadb1a17e5ff64e7d60887d3"
+    },
+    "src/newsvendor/structured_labels.py": {
+      "parentHash": "2b11326164a0fd2baffe5ceb405ccaecda77c384e547f6b89f2879fdfba0ff30",
+      "stagedHash": "9f20c796b4411783337754bbe02766b89431dd20d71d3da50558b5fdc02208bd"
+    },
+    "src/newsvendor/structured_procedures.py": {
+      "parentHash": "4993db58e0a1eb781b388c82437084e238882d56699a47d4c1bf989804a7d9c8",
+      "stagedHash": "cc9d26a1570b6786a4a0c23737614088faa68a0fda071089e2ffe589efff1ba5"
+    },
+    "src/newsvendor/structured_train.py": {
+      "parentHash": "c1b2240780a5011a2ba52630199907379a86ecc95558e6d6510a6590d6abb7a8",
+      "stagedHash": "bdacee0b23a97c2ff06f7903f9a0f640b4030dc9d44cd42907fd9ff3fdf52822"
+    },
+    "src/newsvendor/structured_tool_eval.py": {
+      "parentHash": "07ac587bd450381f2a517935f0d940d30615c539d46f6a23202dd96ff78b5188",
+      "stagedHash": "ae5439e9fb833d0a6e4db6e4727ff80e487c7ce2cce78de6f2236798cd5f2939"
+    },
+    "scripts/bench_control.py": {
+      "parentHash": "9c84e0e57031e2e9f5f95045e06e64b8bd58a740ee57b0790daf2419ea13dbb7",
+      "stagedHash": "85c93fea90adc6c4467a9bf2e84aad71913baba22057c58accbb6df8434a0b01"
+    },
+    "tests/test_structured.py": {
+      "parentHash": "750d59a52b5d0b7b0bed8173fd76e876272bf55458ae333822fc924c88659327",
+      "stagedHash": "187e0e28d7ecfa685a2c3e0b682b631549ba8616e6a306fcd37109042273b353"
+    }
+  },
+  "configurationFlag": "encoder.dialogueState",
+  "tests": {
+    "passed": 102,
+    "newCases": 3,
+    "scope": [
+      "Same encoder tokens and original locations with ordered/truncated turn spans",
+      "No current/future or official non-Train annotations in past-tool targets",
+      "Hidden target changes cannot alter model inputs or predicted past tool states",
+      "Zero-initialized state projection preserves parent outputs",
+      "Encoder, recognizer, recurrent state and projection gradients through actual own-state next-turn backward"
+    ],
+    "seconds": 16.43,
+    "raw": "results/dialogue-state-prototype/tests.log",
+    "rawHash": "e7c3d574a83eb2f6a4dac3cf166efa6e0b30db5656abc2e4144110d999972b65"
+  },
+  "lint": {
+    "passed": true
+  },
+  "annotations": {
+    "path": "results/dialogue-state-prototype/annotation-check.json",
+    "hash": "d1dfb6b12dc17297360bed2cfc7ae8decd1fc43eca1a6eeac51e610e383aebb8",
+    "cases": 70446,
+    "targets": 188138
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "warmStart": {
+    "path": "results/dialogue-state-prototype/warm-start-check.json",
+    "hash": "8b17d876519e4a323005b4466d1f2c45ece4b9b61c277762fabdc31d0a1afed6",
+    "parameters": 152473626,
+    "addedParameters": 293712,
+    "parentWeightsEqual": true,
+    "initialMaxDifferences": {
+      "controlRecovery": 0.0,
+      "callGate": 0.0,
+      "recovery": 0.0,
+      "start": 0.0,
+      "end": 0.0,
+      "mode": 0.0,
+      "value": 0.0
+    }
+  },
+  "numericalSmoke": {
+    "path": "results/dialogue-state-prototype/numerical-smoke.json",
+    "hash": "9b409a223a53889d24532f297720ac0eae7346756c435468d05ad00b0e5956cb",
+    "cases": 30,
+    "distinctFamilies": 30,
+    "falseHandoffs": 0,
+    "scope": "Reference-rule numerical smoke, not neural efficacy"
+  },
+  "liveSourceUnchanged": true,
+  "performanceEvidence": {
+    "newTrainRun": true,
+    "DevImprovement": false,
+    "TestGoalAchieved": false
+  },
+  "gpuBenchmark": {
+    "path": "results/dialogue-state-prototype/benchmark.json",
+    "hash": "aff8afe5975b8b8ec2fb45692bd7bb153dc395d90f1641dc5567430e629c7d03",
+    "status": "complete",
+    "warmMeasurements": [
+      {
+        "dialogueState": false,
+        "seconds": 6.638352698064409,
+        "casesPerSecond": 9.640946016420749,
+        "encodedTokens": 242859,
+        "peakBytes": 42518724608
+      },
+      {
+        "dialogueState": true,
+        "seconds": 6.645157722989097,
+        "casesPerSecond": 9.631073131430774,
+        "encodedTokens": 242559,
+        "peakBytes": 42522445824,
+        "historyUpdated": {
+          "tool": true,
+          "sequence": true,
+          "project": true
+        },
+        "pastToolTargets": 84
+      }
+    ],
+    "scope": "One warm repeat per arm, identical initial weights and Train source cases; own-state follow-up token counts differ. Numerical/performance check, not effectiveness or a speedup claim."
+  },
+  "appliedToMain": true,
+  "training": "results/l40s-tools-v15"
+}

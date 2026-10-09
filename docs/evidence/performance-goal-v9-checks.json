@@ -1,0 +1,119 @@
+{
+  "status": "Checks passed; v9 preserved for v10 reranker-supervision correction; performance goal not achieved.",
+  "run": "results/l40s-tools-v9/base/42/run.json",
+  "sourceHash": "795bf5f5d23c1bc9ae888c19aa7662d33c20c74990650a2d6d9547e49e5f6758",
+  "configHash": "22b63bc74e46ef62e2de8389fe0e61681cf43dd331799ea4339eaca34708e75a",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 82,
+    "seconds": 17.94
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v8/padding-benchmark.json",
+    "measurements": [
+      {
+        "paddingRatio": null,
+        "tokenLimit": 65000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 16.56218330503907,
+        "casesPerSecond": 3.864224832032133,
+        "loss": 4.481662175734527,
+        "encodedTokens": 249358,
+        "peakBytes": 39912995328
+      },
+      {
+        "paddingRatio": null,
+        "tokenLimit": 65000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 7.803404700011015,
+        "casesPerSecond": 8.201548229314527,
+        "loss": 3.0059926379472017,
+        "encodedTokens": 248986,
+        "peakBytes": 41126066176
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 5.928634171956219,
+        "casesPerSecond": 10.795066476311607,
+        "loss": 4.48050313978456,
+        "encodedTokens": 242649,
+        "peakBytes": 41159277568
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.052376635023393,
+        "casesPerSecond": 10.574358447828592,
+        "loss": 3.003807362751104,
+        "encodedTokens": 242277,
+        "peakBytes": 42372348416
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 70000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 6.112354220007546,
+        "casesPerSecond": 10.470597366642961,
+        "loss": 4.48050313978456,
+        "encodedTokens": 242649,
+        "peakBytes": 41159277568
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 70000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 5.8250593319535255,
+        "casesPerSecond": 10.987012552632075,
+        "loss": 3.003807362751104,
+        "encodedTokens": 242277,
+        "peakBytes": 42372348416
+      }
+    ],
+    "sourceArchive": "results/l40s-tools-v8/padding-benchmark-source.tar.gz"
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v8/base/42/language-progress.pt",
+    "checkpointHash": "94c176fd01580179f13f8fe31638aa8b02140ea4a83acfe041f79e77b0777f85",
+    "processed": 62464,
+    "actualWeightsAndMomentsEqualAtImport": true,
+    "populatedOptimizerStates": 232,
+    "runtimeChange": {
+      "paddingRatio": 1.25
+    },
+    "objectiveAndInputsUnchanged": true
+  },
+  "scope": "Runtime throughput probe; no effectiveness claim. Fixed Test remains unchanged. Generated examples do not establish real organizational effectiveness."
+}

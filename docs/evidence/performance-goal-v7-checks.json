@@ -1,0 +1,67 @@
+{
+  "status": "Checks passed; v7 stopped and preserved for v8 input-correction continuation; performance goal not achieved.",
+  "run": "results/l40s-tools-v7/base/42/run.json",
+  "sourceHash": "f07f17e21406e1152a6bffc9163306ed97bfe9ddbadf061b64ce7bae9e97dab8",
+  "configHash": "1f4a17b64a9745211ce19603d49819d91a34970b86d543381536271fe04fb577",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 77,
+    "seconds": 18.54
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v7/benchmark.json",
+    "scope": "Train-only numerical and throughput check, not effectiveness",
+    "measurements": [
+      {
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.544381284969859,
+        "casesPerSecond": 4.400324685254057,
+        "loss": 4.457993891905062,
+        "encodedTokens": 209419,
+        "peakBytes": 34295467520
+      },
+      {
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 5.5852852440439165,
+        "casesPerSecond": 11.458680658834544,
+        "loss": 2.970891942153685,
+        "encodedTokens": 209438,
+        "peakBytes": 35508538368
+      }
+    ]
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v6/base/42/language-progress.pt",
+    "checkpointHash": "1bf387846d0ebc29d8792f3be489fafb994bac04c14d87cd2a5d2adb461f14e5",
+    "processed": 33792,
+    "controllerAuxiliaryUpgrade": true,
+    "optimizerPreserved": true
+  },
+  "scope": "Train/Dev development only. Fixed Test is an already inspected regression set, not new blind evidence. Generated scenarios do not establish real organizational effectiveness."
+}

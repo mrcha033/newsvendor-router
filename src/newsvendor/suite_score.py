@@ -44,6 +44,16 @@ def exact(a, b):
     return normalized(a) == normalized(b)
 
 
+def rounded_numeric_exact(a, b):
+    """Two-decimal scalar diagnostic; not the full official TAT-QA scorer.
+
+    Keep this separate from historical strict scores and optimizer precision.
+    Callers must still check the declared output scale and action.
+    """
+    x, y = number(a), number(b)
+    return x is not None and y is not None and round(x, 2) == round(y, 2)
+
+
 def text_f1(a, b):
     if not isinstance(a, (str, int, float, list)):
         return 0.0
@@ -151,10 +161,12 @@ def metrics(row, target, prediction):
             result["spokenReferenceF1"] = correct_action * text_f1(answer, target["answer"])
     elif component == "tatqa":
         scale = float(prediction.get("scale", "") == target["scale"])
+        rounded = rounded_numeric_exact if target.get("answerType") in ("arithmetic", "count") else exact
         result.update(
             scaleAccuracy=scale,
             answerExact=correct_action * scale * float(exact(answer, target["answer"])),
             answerF1=correct_action * scale * text_f1(answer, target["answer"]),
+            answerRoundedExact=correct_action * scale * float(rounded(answer, target["answer"])),
         )
     elif component == "retail":
         result.update(demand.metrics(row["input"], target, prediction))
@@ -237,6 +249,7 @@ def score(directory, predictions, split="test", output="results/complementary"):
             "Missing predictions remain in classification denominators.",
             "Demand scores cover valid period distributions; incomplete coverage is not comparable.",
             "Reference wording scores are lexical diagnostics, not action-value labels.",
+            "TAT-QA answerRoundedExact permits two-decimal scalar arithmetic/count answers; strict answerExact remains unchanged. Neither is the full official scorer.",
             "Stockout periods contribute survival NLL and order-loss lower bounds; exact CRPS and order loss use uncensored periods.",
         ],
     }

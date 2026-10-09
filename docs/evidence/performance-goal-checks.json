@@ -1,0 +1,64 @@
+{
+  "status": "checks passed; v5 superseded after failed first Dev; continuation in v6",
+  "run": "results/l40s-tools-v5/base/42/run.json",
+  "sourceHash": "ebcb78bd208891ef0c3d05cb91d759e7c3b54c66dd2297c77fbc6822a82cdfa1",
+  "configHash": "7427052fec4b873851343e59db67bc8d428db2fdff7d7df307882b9035a76fb0",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 71,
+    "seconds": 15.36
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "constructionReplay": 361,
+  "uniqueTrainCases": 94498,
+  "mixedTrainCases": 124005,
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0,
+    "path": "results/l40s-tools-v5/checks-smoke.json"
+  },
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v5/benchmark-final.json",
+    "scope": "Train-only numerical and throughput check, not effectiveness",
+    "measurements": [
+      {
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 13.09328807098791,
+        "casesPerSecond": 4.888000604050797,
+        "loss": 3.8293280110228807,
+        "encodedTokens": 209502,
+        "peakBytes": 34295452160
+      },
+      {
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 5.266502098995261,
+        "casesPerSecond": 12.15227845674074,
+        "loss": 2.645683705515694,
+        "encodedTokens": 209355,
+        "peakBytes": 35508523008
+      }
+    ]
+  },
+  "scope": "Fixed previously inspected Test regression; Train/Dev selection only. Generated scenarios do not establish effectiveness in real organizational work."
+}

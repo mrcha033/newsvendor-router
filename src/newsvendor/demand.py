@@ -383,18 +383,25 @@ def metrics(value, target, prediction):
         require(prediction["action"] == "answer", "Invalid forecast action")
         family = distribution["family"]
         require(family in FAMILIES, "Invalid family")
-        scores = distribution["familyProbabilities"]
-        require(set(scores) == set(FAMILIES), "Missing family probabilities")
-        probabilities = np.asarray([scores[f] for f in FAMILIES], dtype=float)
-        require(
-            np.isfinite(probabilities).all()
-            and (probabilities >= 0).all()
-            and abs(probabilities.sum() - 1) < 1e-8,
-            "Invalid family probabilities",
-        )
-        require(
-            FAMILIES[int(probabilities.argmax())] == family, "Selected family disagrees with head"
-        )
+        if "familyScores" in distribution:
+            scores = distribution["familyScores"]
+            require(set(scores) == set(FAMILIES), "Missing family loss scores")
+            values = np.asarray([scores[f] for f in FAMILIES], dtype=float)
+            require(np.isfinite(values).all(), "Invalid family loss scores")
+            require(FAMILIES[int(values.argmin())] == family,
+                    "Selected family disagrees with loss scores")
+        else:
+            scores = distribution["familyProbabilities"]
+            require(set(scores) == set(FAMILIES), "Missing family probabilities")
+            probabilities = np.asarray([scores[f] for f in FAMILIES], dtype=float)
+            require(
+                np.isfinite(probabilities).all()
+                and (probabilities >= 0).all()
+                and abs(probabilities.sum() - 1) < 1e-8,
+                "Invalid family probabilities",
+            )
+            require(FAMILIES[int(probabilities.argmax())] == family,
+                    "Selected family disagrees with head")
         params = distribution["parameters"]
         require(set(params) == {"zeroProbability", *PARAMETERS[family]}, "Wrong family parameters")
         zero = params["zeroProbability"]

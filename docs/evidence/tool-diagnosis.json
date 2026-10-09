@@ -1,0 +1,279 @@
+{
+  "sourceHash": "e410d55e61909a131ea805a64b3115fffa82605232f20a97862440253e00103e",
+  "auditScriptHash": "07b909266d41518b2cf5879bd750b758ea8d3bfb443b76440b4688062b683d74",
+  "scope": "Stage diagnostics rerun only on Train/Dev. Test statistics use immutable saved predictions, never Test-conditioned model inputs. No training or changed model/evaluation artifacts.",
+  "pairedDev": {
+    "base": {
+      "cases": 32,
+      "beforeExact": 20.0,
+      "afterExact": 2.0,
+      "lostCorrectCalls": [
+        "abcd:10265:11",
+        "abcd:10265:8",
+        "abcd:10472:10",
+        "abcd:2741:6",
+        "abcd:3148:11",
+        "abcd:3148:7",
+        "abcd:3401:10",
+        "abcd:3401:19",
+        "abcd:3401:7",
+        "abcd:4687:3",
+        "abcd:4687:4",
+        "abcd:5192:7",
+        "abcd:6211:6",
+        "abcd:6890:6",
+        "abcd:7554:12",
+        "abcd:7554:7",
+        "abcd:8275:5",
+        "abcd:8471:4"
+      ],
+      "gainedCorrectCalls": [],
+      "identicalInputCases": 494
+    },
+    "large": {
+      "cases": 32,
+      "beforeExact": 11.0,
+      "afterExact": 7.0,
+      "lostCorrectCalls": [
+        "abcd:10265:8",
+        "abcd:10472:10",
+        "abcd:3148:11",
+        "abcd:7554:7"
+      ],
+      "gainedCorrectCalls": [],
+      "identicalInputCases": 494
+    },
+    "no_value": {
+      "cases": 32,
+      "beforeExact": 20.0,
+      "afterExact": 1.0,
+      "lostCorrectCalls": [
+        "abcd:10265:11",
+        "abcd:10265:8",
+        "abcd:10472:10",
+        "abcd:2741:6",
+        "abcd:3148:11",
+        "abcd:3148:7",
+        "abcd:3401:10",
+        "abcd:3401:19",
+        "abcd:3401:7",
+        "abcd:4687:3",
+        "abcd:4687:4",
+        "abcd:5192:7",
+        "abcd:5195:10",
+        "abcd:6211:6",
+        "abcd:6890:6",
+        "abcd:7554:12",
+        "abcd:7554:7",
+        "abcd:8275:5",
+        "abcd:8471:4"
+      ],
+      "gainedCorrectCalls": [],
+      "identicalInputCases": 494
+    }
+  },
+  "policySchedule": {
+    "base": {
+      "totalPolicyUpdates": 3330,
+      "selectedPolicyIteration": 0,
+      "selectedPolicyUpdates": 1670,
+      "languageEffectiveBatch": 16,
+      "policyEffectiveBatch": 1,
+      "languageAndPolicyEncoderLr": 2e-05,
+      "languageAndPolicyHeadLr": 0.0003,
+      "policyValidation": "Generated economic Dev total loss only; no public-component retention criterion."
+    },
+    "large": {
+      "totalPolicyUpdates": 3820,
+      "selectedPolicyIteration": 0,
+      "selectedPolicyUpdates": 1910,
+      "languageEffectiveBatch": 16,
+      "policyEffectiveBatch": 1,
+      "languageAndPolicyEncoderLr": 2e-05,
+      "languageAndPolicyHeadLr": 0.0003,
+      "policyValidation": "Generated economic Dev total loss only; no public-component retention criterion."
+    },
+    "no_value": {
+      "totalPolicyUpdates": 3518,
+      "selectedPolicyIteration": 1,
+      "selectedPolicyUpdates": 3518,
+      "languageEffectiveBatch": 16,
+      "policyEffectiveBatch": 1,
+      "languageAndPolicyEncoderLr": 2e-05,
+      "languageAndPolicyHeadLr": 0.0003,
+      "policyValidation": "Generated economic Dev total loss only; no public-component retention criterion."
+    }
+  },
+  "fixedTest": {
+    "base": {
+      "cases": 96,
+      "callCases": 26,
+      "observableCallCases": 23,
+      "predictedActions": {
+        "speak": 93,
+        "call_tool": 3
+      },
+      "actionsOnGoldCalls": {
+        "speak": 23,
+        "call_tool": 3
+      },
+      "toolCorrect": 1.0,
+      "toolCorrectObservable": 1.0,
+      "toolAndArgumentsCorrect": 0.0,
+      "correctTools": {
+        "pull-up-account": 1
+      },
+      "fieldCases": 14,
+      "fieldModes": {
+        "choice": 2,
+        "compute": 8,
+        "missing": 2,
+        "span": 2
+      },
+      "fieldStates": {
+        "unconfirmed": 1,
+        "verified": 11,
+        "unavailable": 2
+      },
+      "fieldValuesCorrect": 4,
+      "fieldsWithoutValues": 3,
+      "correctByArity": {}
+    },
+    "no_value": {
+      "cases": 96,
+      "callCases": 26,
+      "observableCallCases": 23,
+      "predictedActions": {
+        "call_tool": 31,
+        "speak": 65
+      },
+      "actionsOnGoldCalls": {
+        "speak": 19,
+        "call_tool": 7
+      },
+      "toolCorrect": 1.0,
+      "toolCorrectObservable": 1.0,
+      "toolAndArgumentsCorrect": 1.0,
+      "correctTools": {
+        "search-boots": 1
+      },
+      "fieldCases": 14,
+      "fieldModes": {
+        "compute": 14
+      },
+      "fieldStates": {
+        "verified": 14
+      },
+      "fieldValuesCorrect": 0,
+      "fieldsWithoutValues": 1,
+      "correctByArity": {
+        "0": 1
+      }
+    },
+    "large": {
+      "cases": 96,
+      "callCases": 26,
+      "observableCallCases": 23,
+      "predictedActions": {
+        "speak": 57,
+        "answer": 17,
+        "call_tool": 18,
+        "hold": 4
+      },
+      "actionsOnGoldCalls": {
+        "answer": 8,
+        "call_tool": 13,
+        "speak": 3,
+        "hold": 2
+      },
+      "toolCorrect": 7.0,
+      "toolCorrectObservable": 7.0,
+      "toolAndArgumentsCorrect": 7.0,
+      "correctTools": {
+        "pull-up-account": 7
+      },
+      "fieldCases": 14,
+      "fieldModes": {
+        "choice": 3,
+        "span": 11
+      },
+      "fieldStates": {
+        "unavailable": 4,
+        "verified": 10
+      },
+      "fieldValuesCorrect": 10,
+      "fieldsWithoutValues": 4,
+      "correctByArity": {
+        "1": 7
+      }
+    }
+  },
+  "argumentCoverage": {
+    "train": {
+      "calls": 71,
+      "arguments": 59,
+      "visibleArguments": 56,
+      "invisibleArguments": 3,
+      "unsupportedCases": 0
+    },
+    "dev": {
+      "calls": 32,
+      "arguments": 26,
+      "visibleArguments": 24,
+      "invisibleArguments": 2,
+      "unsupportedCases": 0
+    }
+  },
+  "weightDeltasArtifact": "results/l40s-efficient/tool-audit/weight-deltas.json",
+  "trainingMix": {
+    "abcd": 93003,
+    "contractnli": 216,
+    "cuad": 270,
+    "orsharc": 144,
+    "tatqa": 144,
+    "research": 360
+  },
+  "findings": [
+    {
+      "finding": "Public tool skill regresses during research-only policy fine-tuning.",
+      "evidence": "Identical 494 inputs and fixed pretrained revisions; base native Dev exact drops 20/32 to 2/32, large 11/32 to 7/32, no_value 20/32 to 1/32. Native and expanded Train also regress. Non-demand weights between language and final are updated only in policy training.",
+      "code": "src/newsvendor/structured_train.py:345"
+    },
+    {
+      "finding": "Research extraction labels overwrite shared mode/state/recovery behavior.",
+      "evidence": "Base Dev observable argument modes change from span 21/choice 5 to compute 11/missing 8/span 6/choice 1. no_value changes to compute 21/missing 5. Span/choice/use weights remain exactly unchanged while shared encoder/fusion and mode/state/recovery change.",
+      "code": "src/newsvendor/structured_labels.py:151"
+    },
+    {
+      "finding": "An unsupervised tool parameter state gates otherwise observable argument values.",
+      "evidence": "ABCD loss adapters supervise use/mode/pointers/choices but not parameter state. Policy final base blocks eight of 26 observable Dev fields as unavailable; large blocks nine. Bypassing the state gate raises latent value matches from 3 to 5 in base and 15 to 19 in large, but tool-and-arguments exact remains 2/32 and 7/32 because selection is still wrong.",
+      "code": "src/newsvendor/structured_model.py:381"
+    },
+    {
+      "finding": "Compound Test exact accuracy primarily reflects failed tool selection and concentration on one tool.",
+      "evidence": "Large selects seven correct tools out of 26 calls, all pull-up-account. All seven observable correct tool outputs have correct arguments. Base selects one correct tool and fails its arguments. no_value has one success with zero arguments.",
+      "code": "src/newsvendor/suite_score.py:143"
+    },
+    {
+      "finding": "Generic action candidates include actions outside the requested tool interaction.",
+      "evidence": "Large saved Test calls include eight answer and two hold outputs. The ABCD request permits a spoken response or a tool call. Removing answer/hold in label-independent Dev probes alone does not improve full exact accuracy.",
+      "code": "src/newsvendor/structured_inputs.py:285"
+    },
+    {
+      "finding": "Initial retrieval budget hides a small number of annotated defaults.",
+      "evidence": "Native Dev has 24/26 observable arguments available as spans or enums in round zero; both absent arguments are n/a in the same verify-identity case and exist elsewhere in public policy. This cannot explain the 20-to-2 stage regression with identical inputs.",
+      "artifact": "results/l40s-efficient/tool-audit/argument-coverage.json"
+    }
+  ],
+  "repairPriority": [
+    "Protect public-language capability during policy learning with balanced replay of source-annotated public tasks and structured field examples; retain encoder learning under those mixed objectives.",
+    "Select policy checkpoints with both economic Dev loss and per-component Dev retention, and report before/after checkpoints. Use the preserved common language checkpoints rather than repeating unaffected training.",
+    "Constrain actions and extraction modes by public task/tool schema. Do not gate tool values with a state head whose corresponding tool states were never supervised; retain explicit missing/conflict and confirmation behavior.",
+    "Report tool recall, tool selection, argument accuracy conditional on correct tool, arity-stratified exact match, and macro results by tool; preserve existing final Test artifacts."
+  ],
+  "artifacts": {
+    "rawStages": "results/l40s-efficient/tool-audit/report.json",
+    "pairedPredictions": "results/l40s-efficient/tool-audit",
+    "originalComparison": "results/l40s-efficient/comparison-42.json"
+  }
+}

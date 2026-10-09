@@ -1,0 +1,200 @@
+{
+  "status": "complete",
+  "testUsed": false,
+  "seconds": 810.0217321289238,
+  "peakGpuBytes": 17695070208,
+  "trainableParameters": 151848374,
+  "sourceHash": "ae62a55dbefe55b1302b8dd087d1a7fce67e262c1a171af199e6471059716a3e",
+  "selectedLanguageEpoch": 1,
+  "encoderUpdate": {
+    "checkpoint": "results/l40s-research-v2/base/42/language-progress.pt",
+    "checkpointIdentity": {
+      "configHash": "c0c513dc782645b50323115fa3491cc40a6b0325b73b89a533bbaae6546f8b3f",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "linkedManifest": "3ca5c90aa17e0944909515293f93ada5417b8d6a348a231d3a6f364605b6013b"
+      },
+      "sourceHash": "ae62a55dbefe55b1302b8dd087d1a7fce67e262c1a171af199e6471059716a3e",
+      "limit": null
+    },
+    "embeddingChanged": true,
+    "embeddingMeanAbsoluteUpdate": 3.959012701670872e-06,
+    "parentFileHash": "447072c25faace0f9c663735fc7fe0469e228810ec7f58c32a5536c1105cf739",
+    "epoch": 1,
+    "offset": 2048,
+    "optimizerMaxStep": 143.0
+  },
+  "finalDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 0.9962797619047619,
+        "allParametersCorrect": 0.9851190476190477,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 0.996276991809382,
+      "meanTotalOnCompletePeriods": 66.3952229022566,
+      "meanCensoredOrderLossLowerBound": 0.3176087597710239,
+      "falseHandoffs": 1,
+      "handoffs": 331,
+      "meanInteractions": 1.1130952380952381,
+      "meanRequestCost": 9.961664115646258,
+      "necessaryRequests": 335,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 335,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 1,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "77966ec2b67ec35bafd7f1e225e08beaf503a48d6b53c783c511bab17b489f28"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 0.9985119047619048,
+        "allParametersCorrect": 0.9940476190476191,
+        "stateAccuracy": 1.0,
+        "typeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 0.9985119047619048,
+      "meanTotalOnCompletePeriods": 44.89884989713363,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 2,
+      "handoffs": 336,
+      "meanInteractions": 1.5714285714285714,
+      "meanRequestCost": 10.440384353741496,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 334,
+      "unresolvedAfterRequest": 2,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "1f8d377805b065735c66911dd4973d3a3ac9562446e22709f543ff9e908344ee"
+    }
+  },
+  "modelFileHash": "70e61d446fcc14fdb760e9824df4d5d0cf124bb12428dac1ad1be3c429a4dc7d",
+  "limitations": [
+    "Generated financial conditions, not actual retail contracts",
+    "Exact order losses cover 5 unique Dev periods with 7 conditions each",
+    "Repeated all-read retrieval and loss of typed replies are corrected in v3; this result is preserved as the prior pipeline."
+  ]
+}

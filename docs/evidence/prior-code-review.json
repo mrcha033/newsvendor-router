@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-08",
+  "scope": "Source inspection plus isolated metric-function probes; no full model training or benchmark reproduction.",
+  "sources": {
+    "guided": {
+      "url": "https://github.com/xywen97/GuidedTOD",
+      "revision": "b3c79e8b08baf882089610a900be6b496e344a42",
+      "reviewed_files": {
+        "src/metrics.py": "3448ae117a7de5fbc992c5059bef3d739e3ac3777a87947d8597b297a664d9c6",
+        "src/data/abcd_utils.py": "4d899546cc4c444e53c618d9ccb815a6d3cbaf0dcb9c0c26dd76a01471dc6564",
+        "chainPrior/new_chainPrior/chainedPriorSubflow.py": "e32872e474d7c7927f5382708f5cc7e985dc63f6e4d41e8ccc5181a656d9dc58",
+        "train.py": "5d7b568bebc9ee423e07bff40687ad58e382b8803fe691f6e5f59b39f88b8b2a"
+      }
+    },
+    "workflow": {
+      "url": "https://github.com/ServiceNow/workflow-discovery",
+      "revision": "3a7ca0ba576eea66dd5968fe5a00e006325300e5",
+      "reviewed_files": {
+        "src/metrics.py": "685bc3aa7d57bc25f55595944effabb35157b1ae2a28a3c7b027b7cc78bbc2c4",
+        "src/data/abcd_utils.py": "56458ee85f99263a22b9ea70dd2bb076eb8282a1456105a574429adc902468f2"
+      }
+    },
+    "anytod": {
+      "url": "https://github.com/google-research/task-oriented-dialogue",
+      "revision": "34339b9f320086fe3b8eeca057cb03c97eaddcd0",
+      "reviewed_files": {
+        "end2end/anytod/README.md": "f86da9bf535b6249a7fd183ecb7c16fb38a9531b1a52216b329b0cb034da0d73",
+        "end2end/anytod/create_sgd_anytod_data.py": "33911ccf3b78ebe0760802d4c8619a2ab2ac93c052ef7c69c3839807daf117a1",
+        "end2end/anytod/create_starv2_anytod_data.py": "15129ca5bea53ec2f2dd5d3f56013e02e680485ecb94d4cede2b7b2a4d827514",
+        "end2end/anytod/starv2_lib.py": "9f5f6202e3b25435dd372b9bd495fc0be7d229a3cfc3d26439e6d971f79e7d27"
+      }
+    },
+    "trippy": {
+      "url": "https://gitlab.cs.uni-duesseldorf.de/general/dsml/trippy-public",
+      "revision": "8eba540a0878416187387ef223d275eae1b2310f",
+      "reviewed_files": {
+        "modeling_dst.py": "742ff42c54c3c3298731f464bec5e7fc27d756798402b5f2e17aa6007396ea24",
+        "run_dst.py": "f84f68058c6b2b3b27da59403a5c3d9555730f6723620351e2f06b8eb0641b8b"
+      }
+    },
+    "sgd": {
+      "url": "https://github.com/google-research/google-research/tree/master/schema_guided_dst",
+      "reviewed_files": {
+        "schema_guided_dst/baseline/pred_utils.py": {
+          "git_blob": "827274e179dad6bf187b1b07eb99e84f4f6fbd01",
+          "sha256": "33b8e411edad8fcfac91028ba6f3c47bab4c108e585de01941d4c8973d9be66d",
+          "url": "https://github.com/google-research/google-research/blob/master/schema_guided_dst/baseline/pred_utils.py"
+        },
+        "schema_guided_dst/baseline/train_and_predict.py": {
+          "git_blob": "ca9a57729cc124296c5b2167e259834dff3cc086",
+          "sha256": "99e62b737ea2b8092f811ac75f4aee7082c606d2d20290bb131101ab33d526b1",
+          "url": "https://github.com/google-research/google-research/blob/master/schema_guided_dst/baseline/train_and_predict.py"
+        }
+      }
+    }
+  },
+  "findings": [
+    {
+      "source": "guided",
+      "file": "src/metrics.py",
+      "lines": [
+        2813,
+        2872,
+        3641
+      ],
+      "finding": "Active AST metric path reranks beams using transition scores, then appends the current gold action to previous_actions for the next turn. This is gold-history evaluation, not autonomous rollout; no claim that current target action is used for the current ranking."
+    },
+    {
+      "source": "guided",
+      "file": "src/data/abcd_utils.py",
+      "lines": [
+        579,
+        625,
+        632
+      ],
+      "finding": "An optional data-construction branch selects Possible Actions using scenario.flow metadata. Applicability depends on preprocessing branch; do not use hidden evaluation flow labels in our features."
+    },
+    {
+      "source": "workflow",
+      "file": "src/metrics.py",
+      "lines": [
+        430,
+        459
+      ],
+      "finding": "AST metric expands targets per value, sorts value lists, and filters overlong predicted value lists using target membership. Joint accuracy is not strict whole-call exact match."
+    },
+    {
+      "source": "anytod",
+      "finding": "Reviewed public AnyTOD directory provides STARv2/SGD data construction and policy functions. A complete ABCD training/evaluation reproduction pipeline was not found in this checkout."
+    },
+    {
+      "source": "trippy",
+      "file": "modeling_dst.py",
+      "lines": [
+        106,
+        109,
+        201,
+        211,
+        248
+      ],
+      "finding": "PyTorch encoder with separate class/span/refer heads per slot and masked supervised losses. Triple-copy mechanism is reusable, but existing heads are slot-specific, not a shared arbitrary-schema field extractor."
+    },
+    {
+      "source": "sgd",
+      "file": "schema_guided_dst/baseline/train_and_predict.py",
+      "lines": [
+        216,
+        569,
+        597,
+        622
+      ],
+      "finding": "TensorFlow implementation separates categorical candidate scoring and noncategorical token-span extraction. Schema embeddings are precomputed and loaded from file."
+    },
+    {
+      "source": "kads",
+      "finding": "Paper and author/venue pages checked; official public implementation not located. Method recommendation remains paper-based."
+    }
+  ],
+  "metric_probes": [
+    {
+      "case": "extra_argument",
+      "prediction": "verify identity [alice, EXTRA]",
+      "label": "verify identity [alice]",
+      "official_metrics": {
+        "action": 1.0,
+        "value": 1.0,
+        "joint": 1.0
+      },
+      "strict_call_exact": false
+    },
+    {
+      "case": "one_of_two_correct",
+      "prediction": "enter details [alice, wrong]",
+      "label": "enter details [alice, bob]",
+      "official_metrics": {
+        "action": 1.0,
+        "value": 0.5,
+        "joint": 0.5
+      },
+      "strict_call_exact": false
+    }
+  ],
+  "probes_limit": "Synthetic inputs verify metric semantics only; they do not measure benchmark or organizational effectiveness."
+}

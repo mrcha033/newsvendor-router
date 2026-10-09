@@ -1,0 +1,364 @@
+{
+  "status": "complete",
+  "testUsed": false,
+  "cases": 258,
+  "seconds": 34.990507697919384,
+  "sourceHash": "1d8097d8e5e03e4d75254a4465063bb283994dd0c96c0142239baf073ed25c90",
+  "observedInputHash": "a987c547d1a0857ca301f5aa5baea14958818072e12dee158a5a2ebcfd109958",
+  "models": {
+    "before": {
+      "checkpoint": "results/l40s-tools-v16/base/42/model.pt",
+      "checkpointHash": "447072c25faace0f9c663735fc7fe0469e228810ec7f58c32a5536c1105cf739",
+      "parameters": 151848374,
+      "encoder": {
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 55000,
+        "compileLayers": false,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+        "exactActionCosts": true,
+        "paddingRatio": 1.25
+      },
+      "metrics": {
+        "contractnli": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 72
+          },
+          "stateAccuracy": {
+            "mean": 0.6666666666666666,
+            "count": 72
+          },
+          "evidenceF1": {
+            "mean": 0.46569200734818295,
+            "count": 72
+          },
+          "groundedScore": {
+            "mean": 0.3962475629037385,
+            "count": 72
+          }
+        },
+        "cuad": {
+          "actionAccuracy": {
+            "mean": 0.7888888888888889,
+            "count": 90
+          },
+          "answerabilityAccuracy": {
+            "mean": 0.7888888888888889,
+            "count": 90
+          },
+          "evidenceF1": {
+            "mean": 0.6222222222222222,
+            "count": 90
+          },
+          "groundedScore": {
+            "mean": 0.5666666666666667,
+            "count": 90
+          }
+        },
+        "orsharc": {
+          "actionAccuracy": {
+            "mean": 0.6458333333333334,
+            "count": 48
+          },
+          "decisionAccuracy": {
+            "mean": 0.3541666666666667,
+            "count": 48
+          },
+          "followupReferenceF1": {
+            "mean": 0.0,
+            "count": 17
+          },
+          "ruleRecallAt5": {
+            "mean": 0.7916666666666666,
+            "count": 48
+          }
+        },
+        "tatqa": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 48
+          },
+          "scaleAccuracy": {
+            "mean": 0.7291666666666666,
+            "count": 48
+          },
+          "answerExact": {
+            "mean": 0.10416666666666667,
+            "count": 48
+          },
+          "answerF1": {
+            "mean": 0.17192460317460315,
+            "count": 48
+          }
+        }
+      },
+      "latencyMs": {
+        "median": 31.211721478030086,
+        "p95": 48.61529308254825
+      },
+      "peakGpuBytes": 1128815616,
+      "rawHash": "953189f85d9e9ee2b9d1fece429d2c87a2ffae8378d4d46fce33fe1ebe101bc7"
+    },
+    "core": {
+      "checkpoint": "results/l40s-research-v4/base/42/model.pt",
+      "checkpointHash": "208a8e58cac3d54a96b80ddb969a66e94a230180db376c004378b328198528ea",
+      "parameters": 151848374,
+      "encoder": {
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 55000,
+        "compileLayers": false,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+        "exactActionCosts": true,
+        "paddingRatio": 1.25
+      },
+      "metrics": {
+        "contractnli": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 72
+          },
+          "stateAccuracy": {
+            "mean": 0.7083333333333334,
+            "count": 72
+          },
+          "evidenceF1": {
+            "mean": 0.4440810723514212,
+            "count": 72
+          },
+          "groundedScore": {
+            "mean": 0.3746366279069767,
+            "count": 72
+          }
+        },
+        "cuad": {
+          "actionAccuracy": {
+            "mean": 0.7666666666666667,
+            "count": 90
+          },
+          "answerabilityAccuracy": {
+            "mean": 0.7666666666666667,
+            "count": 90
+          },
+          "evidenceF1": {
+            "mean": 0.6421625810017455,
+            "count": 90
+          },
+          "groundedScore": {
+            "mean": 0.5866070254461899,
+            "count": 90
+          }
+        },
+        "orsharc": {
+          "actionAccuracy": {
+            "mean": 0.6458333333333334,
+            "count": 48
+          },
+          "decisionAccuracy": {
+            "mean": 0.3333333333333333,
+            "count": 48
+          },
+          "followupReferenceF1": {
+            "mean": 0.0,
+            "count": 17
+          },
+          "ruleRecallAt5": {
+            "mean": 0.7916666666666666,
+            "count": 48
+          }
+        },
+        "tatqa": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 48
+          },
+          "scaleAccuracy": {
+            "mean": 0.5625,
+            "count": 48
+          },
+          "answerExact": {
+            "mean": 0.08333333333333333,
+            "count": 48
+          },
+          "answerF1": {
+            "mean": 0.12400793650793651,
+            "count": 48
+          }
+        }
+      },
+      "latencyMs": {
+        "median": 31.66761453030631,
+        "p95": 66.05569578241523
+      },
+      "peakGpuBytes": 1128815616,
+      "rawHash": "a6f14052dbe688c55c524ce2f6b86ff9e5d649ffad9c9a2a9520768c2d7dce09"
+    },
+    "no_value": {
+      "checkpoint": "results/l40s-research-v4/no_value/42/model.pt",
+      "checkpointHash": "94c8801b32d8038748d454d096d6277f8c02e90c75b2a5328057eaf3ee579279",
+      "parameters": 151848374,
+      "encoder": {
+        "retrievalCost": 1.0,
+        "retrievals": 2,
+        "maxLength": 1024,
+        "queryTokens": 128,
+        "overlap": 32,
+        "chunks": 8,
+        "encoderBatch": 16,
+        "retrievalDocuments": 5,
+        "gradientCheckpointing": false,
+        "precision": "bf16",
+        "packedQueries": true,
+        "bucketLengths": true,
+        "checkpointTokenLimit": 55000,
+        "compileLayers": false,
+        "compileLimit": 64,
+        "attention": "sdpa",
+        "padMultiple": 128,
+        "splitLongBatches": true,
+        "packedSources": true,
+        "chunkTokens": 256,
+        "documentTokens": 1024,
+        "historyChunks": 1024,
+        "tableChunks": 4096,
+        "batchFusion": true,
+        "sharedQueries": true,
+        "model": "answerdotai/ModernBERT-base",
+        "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+        "exactActionCosts": true,
+        "paddingRatio": 1.25
+      },
+      "metrics": {
+        "contractnli": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 72
+          },
+          "stateAccuracy": {
+            "mean": 0.7083333333333334,
+            "count": 72
+          },
+          "evidenceF1": {
+            "mean": 0.4440810723514212,
+            "count": 72
+          },
+          "groundedScore": {
+            "mean": 0.3746366279069767,
+            "count": 72
+          }
+        },
+        "cuad": {
+          "actionAccuracy": {
+            "mean": 0.7333333333333333,
+            "count": 90
+          },
+          "answerabilityAccuracy": {
+            "mean": 0.7333333333333333,
+            "count": 90
+          },
+          "evidenceF1": {
+            "mean": 0.6503738930890266,
+            "count": 90
+          },
+          "groundedScore": {
+            "mean": 0.6059294486445822,
+            "count": 90
+          }
+        },
+        "orsharc": {
+          "actionAccuracy": {
+            "mean": 0.6458333333333334,
+            "count": 48
+          },
+          "decisionAccuracy": {
+            "mean": 0.3333333333333333,
+            "count": 48
+          },
+          "followupReferenceF1": {
+            "mean": 0.0,
+            "count": 17
+          },
+          "ruleRecallAt5": {
+            "mean": 0.7916666666666666,
+            "count": 48
+          }
+        },
+        "tatqa": {
+          "actionAccuracy": {
+            "mean": 1.0,
+            "count": 48
+          },
+          "scaleAccuracy": {
+            "mean": 0.5625,
+            "count": 48
+          },
+          "answerExact": {
+            "mean": 0.08333333333333333,
+            "count": 48
+          },
+          "answerF1": {
+            "mean": 0.12400793650793651,
+            "count": 48
+          }
+        }
+      },
+      "latencyMs": {
+        "median": 31.775943061802536,
+        "p95": 62.16577979503196
+      },
+      "peakGpuBytes": 1128815616,
+      "rawHash": "0efba1b66e2ca90ffc1c90e8b8a7965ccaedc4269a6822757be2ad1037815dcf"
+    }
+  },
+  "interpretation": "Controlled retail-document fine-tuning does not uniformly retain public document capabilities; mixed public/research training is needed for the matched encoder comparison.",
+  "limitations": [
+    "Component tasks are not linked retail contracts.",
+    "TAT-QA and OR-ShARC full-task scores include capabilities outside the minimal Newsvendor workflow.",
+    "These are Dev comparisons, not final protected Test results."
+  ]
+}

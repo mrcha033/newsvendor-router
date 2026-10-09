@@ -1,0 +1,404 @@
+{
+  "status": "Training and final fixed-Test comparison complete; all four performance targets missed. Further Train/Dev work required.",
+  "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+  "configuredHash": "78ad705f1499cfaa1860415cd70605cfec8f105dbd1a3ca14f50f0ae2e24166b",
+  "tests": {
+    "passed": 92,
+    "seconds": 17.82
+  },
+  "lint": {
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "roleTargets": {
+    "hash": "136c8df15f8278ae8d1cf449b0afeb0e155b1c4730e50c6c4f6df0131f063414",
+    "counts": {
+      "sourceMatchedArguments": 19905,
+      "newlySupervisable": 16587
+    }
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "distinctFamilies": 30,
+    "falseHandoffs": 0
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v12/benchmark.json",
+    "measurements": [
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.359134634025395,
+        "casesPerSecond": 4.457093107013959,
+        "loss": 6.549588535446674,
+        "encodedTokens": 242630,
+        "peakBytes": 41157361152,
+        "rerankGradients": [
+          105.25456108152866,
+          79.12057794630527
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          312.7660660147667,
+          369.7344877421856
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          242.25640869140625,
+          90.70564270019531
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.586357872001827,
+        "casesPerSecond": 9.717054743116796,
+        "loss": 4.179164227680303,
+        "encodedTokens": 242765,
+        "peakBytes": 42371512832,
+        "rerankGradients": [
+          46.657952116802335,
+          43.96134941652417
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          382.11228370666504,
+          192.53075450658798
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          120.74720764160156,
+          43.86809539794922
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      }
+    ]
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v11/base/42/language-progress.pt",
+    "processed": 107520,
+    "weightsEqual": true,
+    "optimizerEqual": true,
+    "rngEqual": true,
+    "orderEqual": true,
+    "populatedOptimizerStates": 236,
+    "parentHash": "17b44024f035f099184a10614b7f00993494d6208eb5ec0e3365ee10ddc21d4c",
+    "identity": {
+      "configHash": "05d4e614fa5f031c3ae7f2451a879f57664f09c8c86c8b87d196da72fc42ad3c",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "constructionReplay": {
+          "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+          "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7"
+        }
+      },
+      "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+      "limit": null
+    }
+  },
+  "scope": "Named source slots supply official Train loss labels only. Fixed Test unchanged; implementation checks are not efficacy evidence.",
+  "run": "results/l40s-tools-v12/base/42/run.json",
+  "configHash": "05d4e614fa5f031c3ae7f2451a879f57664f09c8c86c8b87d196da72fc42ad3c",
+  "actualTrainingUpdate": {
+    "checkpoint": "results/l40s-tools-v12/base/42/language-progress.pt",
+    "processed": 108544,
+    "roleWeightMaxChange": 0.027464762330055237,
+    "roleLossCases": 191,
+    "roleLossMean": 0.6706272742301173,
+    "optimizerStates": 236,
+    "targetHashMatchesAudit": true
+  },
+  "firstDevelopment": {
+    "processed": 114688,
+    "toolExact": 0.6875,
+    "observableToolAndArgumentsExact": 0.6875,
+    "callPrecision": 0.8461538461538461,
+    "missedCalls": 8,
+    "wrongTools": 2,
+    "falseCalls": 2,
+    "accepted": true,
+    "raw": "results/l40s-tools-v12/dev-diagnosis-114688.json"
+  },
+  "finalEvaluationRunner": {
+    "path": "scripts/finalize_tools.py",
+    "plan": "results/l40s-tools-v12/final-evaluation-plan.json",
+    "pid": 2208075,
+    "state": "Completed; PID exited.",
+    "tests": {
+      "fullSuite": 95,
+      "targetedAfterFinalChange": 4,
+      "fullSuiteAfterFinalChange": {
+        "passed": 96,
+        "seconds": 16.37
+      }
+    },
+    "sourceHashUnchanged": true,
+    "freeze": "results/l40s-tools-v12/base/42/final-evaluation-freeze.json"
+  },
+  "latestDevelopment": {
+    "epoch": 2,
+    "processed": 24576,
+    "seenCases": 148581,
+    "toolExact": 0.625,
+    "observableToolAndArgumentsExact": 0.59375,
+    "callPrecision": 0.7142857142857143,
+    "missedCalls": 10,
+    "wrongTools": 2,
+    "falseCalls": 6,
+    "accepted": false,
+    "staleChecks": 5,
+    "earlyStopped": true,
+    "bestSelectedProcessed": 114688,
+    "raw": "results/l40s-tools-v12/dev-diagnosis-148581.json"
+  },
+  "supervisionExposure": {
+    "path": "results/l40s-tools-v12/supervision-exposure-132197.json",
+    "seenCases": 132197,
+    "sourceRoleSupervision": {
+      "startSeenCases": 107520,
+      "primaryCasesSinceChange": 24677,
+      "primaryToolVisits": 18594,
+      "uniquePrimaryToolCases": 17754,
+      "uniqueToolCoverage": 0.1908970678365214,
+      "workflowNodeCasesSeen": 16307,
+      "sourceRoleCasesSeen": 2393
+    },
+    "trainingMinCasesIncludesParents": true,
+    "extraRetrievalAndNextTurnExcluded": true
+  },
+  "procedureDiagnostics": {
+    "path": "results/l40s-tools-v12/procedure-diagnosis.json",
+    "scope": "Post-hoc scoring of saved Dev outputs only. Source subflow annotations were read after prediction and are never provided to model input or training. Node agreement is diagnostic, not actual call performance.",
+    "conditions": {
+      "114688": {
+        "cases": 96,
+        "procedureTop1": 81,
+        "procedureTop3": 96,
+        "calls": 32,
+        "callProcedureTop1": 27,
+        "callProcedureTop3": 32,
+        "toolCorrect": 22,
+        "topNodeToolCorrect": 24,
+        "toolErrors": 10,
+        "toolErrorsWithCorrectProcedure": 9,
+        "toolErrorsWithCorrectNodeTool": 4,
+        "missedCallWithCorrectNodeTool": 4
+      },
+      "132197": {
+        "cases": 96,
+        "procedureTop1": 78,
+        "procedureTop3": 95,
+        "calls": 32,
+        "callProcedureTop1": 26,
+        "callProcedureTop3": 32,
+        "toolCorrect": 18,
+        "topNodeToolCorrect": 25,
+        "toolErrors": 14,
+        "toolErrorsWithCorrectProcedure": 11,
+        "toolErrorsWithCorrectNodeTool": 9,
+        "missedCallWithCorrectNodeTool": 9
+      },
+      "140389": {
+        "cases": 96,
+        "procedureTop1": 89,
+        "procedureTop3": 96,
+        "calls": 32,
+        "callProcedureTop1": 32,
+        "callProcedureTop3": 32,
+        "toolCorrect": 19,
+        "topNodeToolCorrect": 27,
+        "toolErrors": 13,
+        "toolErrorsWithCorrectProcedure": 13,
+        "toolErrorsWithCorrectNodeTool": 8,
+        "missedCallWithCorrectNodeTool": 7
+      }
+    }
+  },
+  "rerankScoreDiagnostics": {
+    "path": "results/l40s-tools-v12/rerank-score-diagnosis.json",
+    "scope": "Saved-state score diagnostics only. Subtracting the rerank delta does not replay changed decisions or conversation memory and is not an ablation performance result.",
+    "conditions": {
+      "114688": {
+        "counts": {
+          "cases": 96,
+          "baseWinnerChanged": 2,
+          "calls": 32,
+          "baseConditionalCorrect": 26,
+          "rerankedConditionalCorrect": 26,
+          "controllerConditionalCorrect": 25,
+          "controllerMinusDeltaConditionalCorrect": 25,
+          "baseConditionalWinnerChanged": 0,
+          "controllerConditionalWinnerChanged": 0
+        },
+        "absoluteDeltaMean": 0.234054194215466,
+        "absoluteDeltaMax": 1.421875,
+        "callControllerMarginMedian": 8.2138671875
+      },
+      "132197": {
+        "counts": {
+          "cases": 96,
+          "baseWinnerChanged": 1,
+          "calls": 32,
+          "baseConditionalCorrect": 26,
+          "rerankedConditionalCorrect": 26,
+          "controllerConditionalCorrect": 25,
+          "controllerMinusDeltaConditionalCorrect": 25,
+          "baseConditionalWinnerChanged": 0,
+          "controllerConditionalWinnerChanged": 0
+        },
+        "absoluteDeltaMean": 0.32187185392660256,
+        "absoluteDeltaMax": 2.078125,
+        "callControllerMarginMedian": 8.18359375
+      },
+      "140389": {
+        "counts": {
+          "cases": 96,
+          "baseWinnerChanged": 0,
+          "calls": 32,
+          "baseConditionalCorrect": 24,
+          "rerankedConditionalCorrect": 24,
+          "controllerConditionalCorrect": 24,
+          "controllerMinusDeltaConditionalCorrect": 24,
+          "baseConditionalWinnerChanged": 0,
+          "controllerConditionalWinnerChanged": 0
+        },
+        "absoluteDeltaMean": 0.8194995697806863,
+        "absoluteDeltaMax": 4.1875,
+        "callControllerMarginMedian": 8.142578125
+      }
+    }
+  },
+  "languageSelectionRestored": {
+    "selectedSeenCases": 114688,
+    "stoppedSeenCases": 148581,
+    "selectedWeightsHash": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea",
+    "restoredCheckpointHashes": {
+      "language-done.pt": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea",
+      "common.pt": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea"
+    },
+    "restoredExactly": true,
+    "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+    "scope": "Selected language weights, not rejected terminal-step weights, restored before economic fitting. No Test evaluation."
+  },
+  "economicDevelopmentInitial": {
+    "path": "results/l40s-tools-v12/base/42/policy-dev-initial.jsonl",
+    "rawHash": "f0ffa88fe8c030ce1f5808795a3424816058d8c233f978f76fce2f27c388dd1a",
+    "cases": 60,
+    "meanTotalLoss": 399.37421126798273,
+    "scope": "Generated Dev before critic fitting; not Test"
+  },
+  "policyRetention": {
+    "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+    "changedParameters": [
+      "heads.value.layers.0.weight",
+      "heads.value.layers.0.bias",
+      "heads.value.layers.2.weight",
+      "heads.value.layers.2.bias"
+    ],
+    "frozenConstructorExactlyEqual": true,
+    "finalModelExactlyEqualsSelectedPolicy": true,
+    "commonWeightsHash": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea",
+    "policyWeightsHash": "bc181cef4c09eefc12055259ee42c331d65ed1ce0d43ac4688bc0bdcf73b2e22",
+    "policyIterations": [
+      {
+        "iteration": 0,
+        "ownStateTargets": 752,
+        "selected": {
+          "iteration": 0,
+          "epoch": 9,
+          "economicLoss": 140.128998724222
+        },
+        "frozenWeightsUnchanged": true,
+        "devActualTotalLoss": 140.128998724222
+      },
+      {
+        "iteration": 1,
+        "ownStateTargets": 613,
+        "selected": {
+          "iteration": 0,
+          "epoch": 9,
+          "economicLoss": 140.128998724222
+        },
+        "frozenWeightsUnchanged": true,
+        "devActualTotalLoss": 140.128998724222
+      }
+    ],
+    "publicDevelopment": {
+      "actionAccuracy": 0.8958333333333334,
+      "toolExact": 0.6875,
+      "observableToolAndArgumentsExact": 0.6875,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.2708333333333333,
+      "correctCall": 0.22916666666666666,
+      "toolDecisionAccuracy": 0.875,
+      "argumentsDecisionAccuracy": 0.875,
+      "spokenReferenceF1": 0.07460643317768972
+    },
+    "scope": "Actual own-state critic fitting and frozen constructor verification; final Test pending."
+  },
+  "finalTestAudit": {
+    "status": "goal_not_met",
+    "selectedCondition": "policy_rerank_on",
+    "publicCounts": {
+      "decisions": 96,
+      "expectedCalls": 26.0,
+      "predictedCalls": 28.0,
+      "correctCalls": 20.0,
+      "toolCases": 26,
+      "toolCorrect": 20.0,
+      "observableArgumentCases": 23,
+      "toolAndArgumentsCorrect": 18.0
+    },
+    "generatedCases": 120,
+    "falseHandoffs": 0,
+    "generatedTotalLoss": 248.05248473557538,
+    "goal": {
+      "passed": false,
+      "failures": [
+        "toolExact",
+        "observableToolAndArgumentsExact",
+        "callPrecision",
+        "generatedTotalLoss"
+      ],
+      "observed": {
+        "toolExact": 0.7692307692307693,
+        "observableToolAndArgumentsExact": 0.782608695652174,
+        "callPrecision": 0.7142857142857143,
+        "generatedTotalLoss": 248.05248473557538
+      },
+      "required": {
+        "toolExact": 0.9,
+        "observableToolAndArgumentsExact": 0.9,
+        "callPrecision": 0.9,
+        "generatedTestTotalLossBelow": 240.35,
+        "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+      }
+    },
+    "rawScoresRecomputed": true,
+    "fixedCaseIdsAndFamiliesMatch": true,
+    "pairedRerankWeightsIdentical": true,
+    "freezeHash": "4df91aad8fe19dc5a950454adb886c141aa3c2fb50cb17ff396f5adf9a2284f1",
+    "weightsHash": "bc181cef4c09eefc12055259ee42c331d65ed1ce0d43ac4688bc0bdcf73b2e22",
+    "rawHashes": {
+      "public": "d18243224c815a567cb2361a5852addb5e9eddf6320c5d3342f247bac034ecef",
+      "research": "1970e5a39878b41fc35e231874dfc31c67532671603f58f91887c2118732641f"
+    },
+    "scope": "Frozen protected Test regression; not fresh blind evidence or real-work efficacy"
+  }
+}

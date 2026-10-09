@@ -1,0 +1,205 @@
+{
+  "scope": "Train-only runtime selection and numerical checks; full Test comparison pending",
+  "sourceHash": "b5d507711d59f91b2408c50852af616fd93418f91c644d71f997d0b4392e1465",
+  "config": "configs/l40s-opt.json",
+  "unit": "newsvendor-l40s-opt-42.service",
+  "testsPassed": 38,
+  "sourceOverlaps": 0,
+  "inputOverlaps": 0,
+  "publicCases": 94535,
+  "languageTrainCases": 94137,
+  "languageEpochs": 3,
+  "effectiveGradientBatch": 4,
+  "preparationEquivalence": {
+    "split": "train",
+    "caseIds": [
+      "abcd:9412:7",
+      "abcd:9509:16",
+      "abcd:1587:24",
+      "abcd:4725:17",
+      "abcd:1861:15",
+      "abcd:5380:9",
+      "abcd:2693:16",
+      "abcd:10246:13",
+      "abcd:7266:16",
+      "abcd:653:19",
+      "abcd:287:13",
+      "abcd:9270:9",
+      "abcd:7433:8",
+      "abcd:8948:23",
+      "abcd:8366:8",
+      "abcd:383:10",
+      "abcd:1227:5",
+      "abcd:840:16",
+      "abcd:3575:23",
+      "abcd:10457:17",
+      "abcd:8555:10",
+      "abcd:9556:6",
+      "abcd:2483:13",
+      "abcd:7389:7",
+      "abcd:10151:8",
+      "abcd:2038:3",
+      "abcd:4153:13",
+      "abcd:5953:2",
+      "abcd:3042:10",
+      "abcd:8351:3",
+      "abcd:2354:9",
+      "abcd:1169:16",
+      "abcd:8065:14",
+      "abcd:1800:31",
+      "abcd:6289:11",
+      "abcd:8459:2",
+      "abcd:1413:7",
+      "abcd:9271:19",
+      "abcd:3893:20",
+      "abcd:8658:5",
+      "abcd:873:11",
+      "abcd:9663:29",
+      "abcd:6280:6",
+      "abcd:3172:2",
+      "abcd:8539:6",
+      "abcd:3184:6",
+      "abcd:4047:20",
+      "abcd:10053:6",
+      "abcd:8746:8",
+      "abcd:8757:4",
+      "abcd:2431:16",
+      "abcd:1063:13",
+      "abcd:2779:10",
+      "abcd:4620:7",
+      "abcd:635:13",
+      "abcd:2806:18",
+      "abcd:9863:10",
+      "abcd:1453:15",
+      "abcd:8459:12",
+      "abcd:5769:18",
+      "abcd:584:21",
+      "abcd:3821:6",
+      "abcd:9059:12",
+      "abcd:8859:18"
+    ],
+    "cases": 64,
+    "equal": true,
+    "seconds": {
+      "old": 5.784233856014907,
+      "new": 1.7725690344814211
+    },
+    "speedup": 3.2631924305882563
+  },
+  "gpuBenchmarks": [
+    {
+      "artifact": "results/l40s/bench-sdpa-opt-v2",
+      "cases": 64,
+      "sourceHash": "10392937eb4d57a1c422f972bb837e6eff92b35a209248b9df6927614f71d60e",
+      "casesPerSecond": 2.8677256868249006,
+      "peakBytes": 36041905152,
+      "timingScope": "second pass through identical prepared Train inputs, including backward and optimizer; excludes CPU preparation"
+    },
+    {
+      "artifact": "results/l40s/bench-base-adaptive",
+      "cases": 64,
+      "sourceHash": "b5d507711d59f91b2408c50852af616fd93418f91c644d71f997d0b4392e1465",
+      "casesPerSecond": 3.388761638081487,
+      "peakBytes": 36190034944,
+      "timingScope": "second pass through identical prepared Train inputs, including backward and optimizer; excludes CPU preparation"
+    },
+    {
+      "artifact": "results/l40s/bench-large-opt",
+      "cases": 32,
+      "sourceHash": "3f8fff3c0b918ca5e5f049917eef496e8d5d83fef8509a62d5d8567ca549e676",
+      "casesPerSecond": 1.35819730569583,
+      "peakBytes": 14780418560,
+      "timingScope": "second pass through identical prepared Train inputs, including backward and optimizer; excludes CPU preparation"
+    },
+    {
+      "artifact": "results/l40s/bench-large-adaptive",
+      "cases": 32,
+      "sourceHash": "19a96329f41f52baac0fe8b99e3c4f49947b2f8f3d1911cea8d9a6c2bd455353",
+      "casesPerSecond": 1.1585465480377606,
+      "peakBytes": 31889984000,
+      "timingScope": "second pass through identical prepared Train inputs, including backward and optimizer; excludes CPU preparation"
+    }
+  ],
+  "continuation": "results/l40s-opt/base/42/continuation.json",
+  "checkpoint": "results/l40s-fast/base/42/language-progress-11000.pt",
+  "fullRun": "results/l40s-opt",
+  "selection": {
+    "attention": "sdpa",
+    "compileLayers": true,
+    "compileLimit": 64,
+    "encoderBatch": 8,
+    "padMultiple": 128,
+    "fusedOptimizer": true,
+    "baseSplitLongBatches": true,
+    "largeSplitLongBatches": false
+  },
+  "controlledSmoke": {
+    "episodes": 600,
+    "distinctScenarios": 30,
+    "falseHandoffs": 0
+  },
+  "numerical": [
+    {
+      "artifact": "results/l40s/bench-base-adaptive/numerical.json",
+      "encoderGradient": 193.7667236328125,
+      "demandGradient": 167.28486166149378,
+      "horizons": [
+        1,
+        7
+      ],
+      "inferencePassed": true
+    },
+    {
+      "artifact": "results/l40s/bench-large-numerical/numerical.json",
+      "encoderGradient": 213.27024841308594,
+      "demandGradient": 167.28486166149378,
+      "horizons": [
+        1,
+        7
+      ],
+      "inferencePassed": true
+    }
+  ],
+  "observedFullRun": {
+    "timestamp": "2026-10-07T11:54:14.032360+00:00",
+    "stage": "language",
+    "elapsedSeconds": 462.2084858539747,
+    "epoch": 1,
+    "processed": 12300,
+    "total": 94137,
+    "casesPerSecond": 3.1074852510593987,
+    "remainingEpochSeconds": 26335.442773895797,
+    "meanLoss": 2.5862256848940066,
+    "encoderBatch": {
+      "cases": 2,
+      "paddedTokens": 25344,
+      "checkpointing": false,
+      "tokenLimit": 55000.0
+    },
+    "plannedCases": 2,
+    "backwardBatches": 1
+  },
+  "initialBaseCasesPerSecond": 1.63762731769787,
+  "observedSpeedup": 1.8975533795001742,
+  "savedCheckpoint": {
+    "offset": 12000,
+    "epoch": 1,
+    "identity": {
+      "configHash": "abce4de9a3ae78c38052f27ced51cce1ecfb3523ee169aa05fcace2928137c1c",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "061b1ef8f7000f7aef64bb72462981a5d5bcccf5f40908605a6f6f6cb0bbe76f",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8"
+      },
+      "sourceHash": "b5d507711d59f91b2408c50852af616fd93418f91c644d71f997d0b4392e1465",
+      "limit": null
+    },
+    "weightsFinite": true,
+    "optimizerFused": true,
+    "orderPreserved": true,
+    "rngPreserved": true,
+    "previousLossesPreserved": true,
+    "checkpointHash": "63f9cf4a275eda97bbced26dba2625fce605e3ff84992412b70501271f82afba"
+  }
+}

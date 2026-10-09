@@ -1,0 +1,210 @@
+{
+  "status": "complete",
+  "testUsed": false,
+  "seconds": 212.05197617202066,
+  "peakGpuBytes": 1265518592,
+  "sourceHash": "93328758cda39765678e73992a804ed3da7788ddc8529a794fd648bdc0e9ba49",
+  "parent": {
+    "checkpoint": "results/l40s-research-v2/base/42/model.pt",
+    "fileHash": "70e61d446fcc14fdb760e9824df4d5d0cf124bb12428dac1ad1be3c429a4dc7d",
+    "coreWeightsHash": "929b88a0ca10a0d7ea35573c6214b49c11be8c57daf0c7ac158cc050c75b1a99",
+    "removedAuxiliaryParameters": 0
+  },
+  "modelFileHash": "c878ea63d26565f9cc3ea836381e7536e4e573c24f73ebb0278aff0989b1023b",
+  "finalDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 0.9962797619047619,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.800811801895534,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0148809523809523,
+      "meanRequestCost": 9.994124433106576,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 5,
+      "recoveredAfterRequest": 341,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "3520c1b8cff1ea731ea8c265b8c447aa65a6dfe8c57926413045fd419e1e8c68"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 0.9962797619047619,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.800811801895534,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0148809523809523,
+      "meanRequestCost": 9.994124433106576,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 5,
+      "recoveredAfterRequest": 341,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "cab02721820365ae143729d6ae485212eaeee7680438d74acddd84746e886523"
+    }
+  },
+  "selectedPolicy": [
+    {
+      "iteration": null,
+      "epoch": null,
+      "economicLoss": 44.80081180189553
+    },
+    {
+      "iteration": null,
+      "epoch": null,
+      "economicLoss": 44.80081180189553
+    }
+  ],
+  "interpretation": "Value-head updates did not beat the initial checkpoint; learned and checklist policies tie.",
+  "limitations": [
+    "Financial documents and replies are generated controlled conditions.",
+    "Exact economic comparison covers five unique Dev periods, with seven conditions each.",
+    "Five unnecessary v requests after c replies remain; fixed in the following source revision."
+  ]
+}

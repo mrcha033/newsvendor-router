@@ -1,0 +1,261 @@
+{
+  "status": "Applied and verified on L40S; v14 training active. Initial Dev matches parent; effectiveness improvement unverified.",
+  "workspace": "/tmp/newsvendor-context-rerank",
+  "sourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888",
+  "parentSourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+  "archive": "results/context-rerank-prototype/staged-source.tar.gz",
+  "archiveHash": "83a85a2ab0fea711a9668462dc1200e01fa5bf81d2879e3151d5329cf8ca6acf",
+  "patch": "results/context-rerank-prototype/staged.patch",
+  "patchHash": "c0bcdf23c098510681be62ad593eec8c34011bf0e410c55f7707cf0d4eeec894",
+  "changedFiles": {
+    "src/newsvendor/structured_inputs.py": {
+      "parentHash": "36fe275268698240dabaee6821032d5242a560f4fc29e2f6fac1994835f4645b",
+      "stagedHash": "22e4ce831e2059fa8081b711f15e58eef97d94a1515fe698dc8c4ccea96443dc"
+    },
+    "src/newsvendor/structured_labels.py": {
+      "parentHash": "5b714a4d5f583ce9e55db9db9addcf0fe2ffe322c8d744c759f37644fdd31688",
+      "stagedHash": "2b11326164a0fd2baffe5ceb405ccaecda77c384e547f6b89f2879fdfba0ff30"
+    },
+    "src/newsvendor/structured_model.py": {
+      "parentHash": "1e6792668b61bd4992d5d95a475eca3a18f73a9dc44e70af29072b7e196c3e94",
+      "stagedHash": "e900abd152635a994855951a20cf9d2c58c5501d0a77adb179546a56e0dcf177"
+    },
+    "src/newsvendor/structured_tool_heads.py": {
+      "parentHash": "ca17c31745a1c161cf466b91f9985907b17078f9326ec2d52b4f44aa5e132307",
+      "stagedHash": "374ab7c8d48c9d6d8b8a0888d5cd0c894374dc2a9ee43a2b88cd812078bd7152"
+    },
+    "tests/test_structured.py": {
+      "parentHash": "ca7b632f5ddebccf23c9c5618f81134fcd92ddc31ba90cf3db313e33f3cbd991",
+      "stagedHash": "750d59a52b5d0b7b0bed8173fd76e876272bf55458ae333822fc924c88659327"
+    },
+    "scripts/bench_control.py": {
+      "parentHash": "cdb41afa0cb7e7b3a375ea35add73347b4d033eb455af893a29dc48eb854b708",
+      "stagedHash": "9c84e0e57031e2e9f5f95045e06e64b8bd58a740ee57b0790daf2419ea13dbb7"
+    }
+  },
+  "configurationFlag": "encoder.contextRerank",
+  "changes": [
+    "Combine existing fused action states with contextual controller candidate states for the existing shared reranker.",
+    "Rerank a joint call/tool distribution so candidate corrections affect both the call gate and conditional tool order.",
+    "Supervise the final candidate distribution and preserve base/controller auxiliary objectives independently of inference rerank on/off."
+  ],
+  "tests": {
+    "passed": 99,
+    "seconds": 16.95,
+    "newCases": 3,
+    "scope": [
+      "zero correction preserves parent call probability and choice",
+      "same weights correction can change both call decision and tool choice",
+      "forbidden candidates stay masked",
+      "gradients reach contextual candidates, encoder, controller and reranker",
+      "loss and rerank supervision invariant to inference ablation",
+      "with and without public procedure documents",
+      "hidden target changes cannot alter encoded inputs",
+      "decode candidate score traces in both rerank modes",
+      "actual own-state next-turn forward/backward with and without policy documents"
+    ]
+  },
+  "lint": {
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "researchSplitAudit": {
+    "counts": {
+      "test": 120,
+      "dev": 60,
+      "cal": 60,
+      "train": 360
+    },
+    "families": 120,
+    "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "distinctFamilies": 30,
+    "falseHandoffs": 0,
+    "scope": "Reference-rule optimizer/sequential smoke, not neural effectiveness evaluation"
+  },
+  "staticArchitecture": {
+    "addedTrainableParameters": 0,
+    "additionalEncoderSequences": 0,
+    "additionalEncoderPasses": 0,
+    "scope": "Code-path inspection; no measured L40S speedup claim"
+  },
+  "liveSourceUnchanged": true,
+  "performanceEvidence": {
+    "newTrainRun": true,
+    "newDevInference": true,
+    "newTestInference": false,
+    "targetAchieved": false,
+    "developmentScope": "Initial v14 Dev only; no trained checkpoint gain yet",
+    "run": "results/l40s-tools-v14/base/42"
+  },
+  "nextChecks": [
+    "Wait for both v13 trainer and finalizer to release the L40S.",
+    "Run pinned-backbone BF16 forward/backward and throughput comparison, preserving source/config/data/weights hashes.",
+    "Train and select on Train/Dev, then compare rerank on/off using the same selected base weights. Freeze before protected Test."
+  ],
+  "previousRevision": {
+    "archive": "results/context-rerank-prototype/pre-trace-fix-staged-source.tar.gz",
+    "checks": "results/context-rerank-prototype/pre-trace-fix-checks.json"
+  },
+  "actualCheckpointLoad": {
+    "path": "results/context-rerank-prototype/warm-start-check.json",
+    "hash": "f2e3069cd9027d6eae3110b0a0a1eaef232ad5dedfd4b810dd1246a49d7ab7cf",
+    "trainableParameters": 152179914,
+    "encoderParameters": 149014272,
+    "weightsExactlyPreserved": true,
+    "device": "cpu",
+    "scope": "Checkpoint compatibility; no model forward or effectiveness evaluation.",
+    "sourceHashAtCheck": "c563651c2a5d32d364c3dd41b6d9f541c522d7df3ca9d5cf691513bda8e4ecff"
+  },
+  "benchmarkPreparation": {
+    "script": "scripts/bench_control.py",
+    "stagedScriptHash": "9c84e0e57031e2e9f5f95045e06e64b8bd58a740ee57b0790daf2419ea13dbb7",
+    "flag": "--context-rerank-compare",
+    "checks": [
+      "CLI help",
+      "ruff"
+    ],
+    "gpuExecuted": true,
+    "scope": "Same parent weights, Train source cases, seed, action weights and initial inputs. Own-state follow-up workload can differ and token counts are reported. Full GPU validation pending.",
+    "config": "results/context-rerank-prototype/benchmark-config.json",
+    "configFileHash": "de7514ac4ff50eacd75df7487a1154a8c3326f542c6c28db1d3333cbfe7ea9a3",
+    "parentScope": "Pinned v12 selected pre-policy checkpoint for numerical/throughput comparison only; not a v14 training selection."
+  },
+  "benchmarkAttempt1": {
+    "path": "results/context-rerank-prototype/benchmark-attempt-1.json",
+    "status": "failed during contextual own-state decoding; corrected; second attempt completed"
+  },
+  "appliedToMain": true,
+  "benchmark": {
+    "path": "results/context-rerank-prototype/benchmark.json",
+    "hash": "cd2d54307e10241524fe9c718f2afd3211b1d95af9a274b537f46c22fd59c56b",
+    "sourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888",
+    "scope": "Train-only numerical and throughput check, not effectiveness",
+    "measurements": [
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "contextRerank": false,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.811179016949609,
+        "casesPerSecond": 4.321060458911456,
+        "loss": 2.0668249787177047,
+        "encodedTokens": 242656,
+        "peakBytes": 41303328768,
+        "rerankGradients": [
+          35.02343225572258,
+          27.976701432373375
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          160.8866310417652,
+          148.33682064712048
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          20.062551498413086,
+          5.497285842895508
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "contextRerank": false,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.6192794780945405,
+        "casesPerSecond": 9.668726061771208,
+        "loss": 1.6146122064155861,
+        "encodedTokens": 242859,
+        "peakBytes": 42517480448,
+        "rerankGradients": [
+          27.71732798125595,
+          24.020337738562375
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          113.50839219987392,
+          114.93146170675755
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          12.768782615661621,
+          4.276721954345703
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "contextRerank": true,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 6.713873906061053,
+        "casesPerSecond": 9.532499551745083,
+        "loss": 2.041332456310556,
+        "encodedTokens": 242803,
+        "peakBytes": 41303397888,
+        "rerankGradients": [
+          19.478232105262578,
+          15.304130705306306
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          160.81899669766426,
+          150.2640939205885
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          20.062551498413086,
+          5.569978713989258
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "contextRerank": true,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.679718297091313,
+        "casesPerSecond": 9.58124237482722,
+        "loss": 1.5411678597010905,
+        "encodedTokens": 242859,
+        "peakBytes": 42517549568,
+        "rerankGradients": [
+          15.963677105028182,
+          11.933183348737657
+        ],
+        "rerankUpdated": true,
+        "workflowGradients": [
+          115.9894447773695,
+          115.69792797416449
+        ],
+        "workflowUpdated": true,
+        "workflowTargets": 39,
+        "roleGradients": [
+          13.268487930297852,
+          4.387889385223389
+        ],
+        "roleUpdated": true,
+        "addedRoleTargets": 10
+      }
+    ],
+    "trainableParameters": 152179914,
+    "warmStartMissingKeys": []
+  }
+}

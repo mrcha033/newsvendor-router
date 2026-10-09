@@ -1,0 +1,25 @@
+{
+  "scope": "Train-only runtime optimization; no Test efficacy result",
+  "testsPassed": 36,
+  "initialBaseCasesPerSecond": 1.63762731769787,
+  "observedContinuedProgress": {
+    "timestamp": "2026-10-07T11:08:01.120508+00:00",
+    "stage": "language",
+    "elapsedSeconds": 688.4919514190406,
+    "epoch": 1,
+    "processed": 10300,
+    "total": 94137,
+    "casesPerSecond": 2.015303991873219,
+    "remainingEpochSeconds": 41600.17562515408,
+    "meanLoss": 2.6473543318181108,
+    "encoderBatch": {
+      "cases": 2,
+      "paddedTokens": 42020,
+      "checkpointing": false,
+      "tokenLimit": 45000.0
+    }
+  },
+  "oldCheckpoint": "results/l40s/base/42/language-progress-9000.pt",
+  "config": "configs/l40s-fast.json",
+  "output": "results/l40s-fast"
+}

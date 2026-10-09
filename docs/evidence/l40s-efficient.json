@@ -1,0 +1,254 @@
+{
+  "timestamp": "2026-10-07T14:12:57.690919+00:00",
+  "scope": "Runtime, coverage, numerical checks and completed seed 42 Test comparison; generated controlled rollouts do not establish real organizational effectiveness.",
+  "config": "configs/l40s-efficient.json",
+  "unit": "newsvendor-l40s-efficient-42.service",
+  "languageTrainCases": 94137,
+  "languageEpochs": 3,
+  "effectiveGradientBatch": 16,
+  "caseBatch": {
+    "base": 16,
+    "large": 8,
+    "no_value": 16
+  },
+  "encoderFrozen": false,
+  "crossStepEmbeddingCache": false,
+  "testsPassed": 41,
+  "numericalSmokeEpisodes": 30,
+  "falseHandoffs": 0,
+  "sourceOverlaps": 0,
+  "protectedSnapshotUnchanged": true,
+  "benchmarks": [
+    {
+      "variant": "base",
+      "artifact": "results/l40s/bench-shared-base16",
+      "sourceHash": "da17247cd3dac397e3e9a9166c6eb7ecfb6b79db1fe2a36715477abf8334a2d1",
+      "casesPerSecond": 34.1636171847729,
+      "peakBytes": 22053253120,
+      "cases": 64,
+      "timingScope": "Second pass over prepared Train inputs; includes forward, backward, clipping and optimizer; excludes primary CPU preparation.",
+      "encoderGradientPositive": true,
+      "demandGradientPositive": true
+    },
+    {
+      "variant": "large",
+      "artifact": "results/l40s/bench-shared-large",
+      "sourceHash": "da17247cd3dac397e3e9a9166c6eb7ecfb6b79db1fe2a36715477abf8334a2d1",
+      "casesPerSecond": 14.587409446998846,
+      "peakBytes": 29748400640,
+      "cases": 64,
+      "timingScope": "Second pass over prepared Train inputs; includes forward, backward, clipping and optimizer; excludes primary CPU preparation.",
+      "encoderGradientPositive": true,
+      "demandGradientPositive": true
+    }
+  ],
+  "coverageArtifact": "results/l40s/input-coverage-final.json",
+  "coverageSummary": {
+    "abcd": {
+      "cases": 270,
+      "oldMeanTokens": 11881.314814814816,
+      "newMeanTokens": 3914.4074074074074,
+      "oldMissingSupport": 0,
+      "newInitialMissingSupport": 1,
+      "newFinalMissingSupport": 0,
+      "oldArgumentValues": 70,
+      "newArgumentValues": 68,
+      "newFinalArgumentValues": 70
+    },
+    "contractnli": {
+      "cases": 216,
+      "oldMeanTokens": 2298.949074074074,
+      "newMeanTokens": 1193.0277777777778,
+      "oldMissingSupport": 0,
+      "newInitialMissingSupport": 28,
+      "newFinalMissingSupport": 0,
+      "oldArgumentValues": 0,
+      "newArgumentValues": 0,
+      "newFinalArgumentValues": 0
+    },
+    "cuad": {
+      "cases": 270,
+      "oldMeanTokens": 6658.2962962962965,
+      "newMeanTokens": 1392.7851851851851,
+      "oldMissingSupport": 14,
+      "newInitialMissingSupport": 53,
+      "newFinalMissingSupport": 5,
+      "oldArgumentValues": 0,
+      "newArgumentValues": 0,
+      "newFinalArgumentValues": 0
+    },
+    "orsharc": {
+      "cases": 144,
+      "oldMeanTokens": 884.625,
+      "newMeanTokens": 503.9583333333333,
+      "oldMissingSupport": 0,
+      "newInitialMissingSupport": 0,
+      "newFinalMissingSupport": 0,
+      "oldArgumentValues": 0,
+      "newArgumentValues": 0,
+      "newFinalArgumentValues": 0
+    },
+    "tatqa": {
+      "cases": 144,
+      "oldMeanTokens": 2853.625,
+      "newMeanTokens": 1173.3402777777778,
+      "oldMissingSupport": 0,
+      "newInitialMissingSupport": 0,
+      "newFinalMissingSupport": 0,
+      "oldArgumentValues": 0,
+      "newArgumentValues": 0,
+      "newFinalArgumentValues": 0
+    }
+  },
+  "controlledTrainOperandLosses": [],
+  "previousRun": "results/l40s-opt",
+  "previousCheckpointOffset": 29000,
+  "previousCheckpoint": "results/l40s-opt/base/42/language-progress-before-reconfigure.pt",
+  "initialization": "Both backbones start at pinned pretrained revisions for the changed input layout and effective gradient batch.",
+  "sourceHash": "e410d55e61909a131ea805a64b3115fffa82605232f20a97862440253e00103e",
+  "pipelineCheck": {
+    "artifact": "results/l40s-efficient-ready",
+    "variants": [
+      "base",
+      "no_value",
+      "large"
+    ],
+    "split": "dev",
+    "limit": 1,
+    "status": "complete",
+    "scope": "End-to-end code validation only; not a model performance comparison."
+  },
+  "fullRunCheck": {
+    "timestamp": "2026-10-07T14:17:09.560565+00:00",
+    "checkpoint": "results/l40s-efficient/base/42/language-progress-initial.pt",
+    "offset": 3072,
+    "epoch": 0,
+    "orderCases": 94137,
+    "finiteWeights": true,
+    "finiteOptimizerMoments": true,
+    "optimizerSteps": [
+      4,
+      7,
+      14,
+      124,
+      138,
+      167,
+      172,
+      185,
+      187,
+      192
+    ],
+    "identity": {
+      "configHash": "21ab0233b66bf750611a5caba4a047850ea15693c32e5195b07bdd44e1c8d966",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "061b1ef8f7000f7aef64bb72462981a5d5bcccf5f40908605a6f6f6cb0bbe76f",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8"
+      },
+      "sourceHash": "e410d55e61909a131ea805a64b3115fffa82605232f20a97862440253e00103e",
+      "limit": null
+    },
+    "progress": {
+      "timestamp": "2026-10-07T14:17:03.069958+00:00",
+      "stage": "language",
+      "elapsedSeconds": 174.8141389230732,
+      "epoch": 1,
+      "processed": 3200,
+      "total": 94137,
+      "casesPerSecond": 23.233313630810162,
+      "remainingEpochSeconds": 3914.077924700617,
+      "meanLoss": 2.85268738063518,
+      "encoderBatch": {
+        "cases": 16,
+        "tokens": 25378,
+        "sequences": 35,
+        "sharedSequences": 45,
+        "checkpointing": false,
+        "paddedTokens": 32256,
+        "tokenLimit": 55000.0
+      },
+      "plannedCases": 16,
+      "backwardBatches": 1,
+      "encodedTokens": 5244164,
+      "retrievalExamples": 8
+    },
+    "baseWholeLoopCasesPerSecond": 24.51599505006349,
+    "timingRange": [
+      1024,
+      3200
+    ],
+    "encodedTokensPerCase": 1638.80125,
+    "scope": "Training execution and numerical validation only; Test comparison pending."
+  },
+  "estimatedTotalHours": [
+    9,
+    12
+  ],
+  "estimateScope": "Seed 42: both full backbones, shared common training for no_value, demand, policy and evaluation. Large estimate uses prepared GPU measurements; revised after the first full large epoch.",
+  "completion": {
+    "status": "complete",
+    "seed": 42,
+    "started": "2026-10-07T14:14:08.253860+00:00",
+    "finished": "2026-10-08T00:23:12.120318+00:00",
+    "wallSeconds": 36543.866458,
+    "comparison": "results/l40s-efficient/comparison-42.json",
+    "report": "results/l40s-efficient/comparison-42.md",
+    "sourceHash": "e410d55e61909a131ea805a64b3115fffa82605232f20a97862440253e00103e",
+    "variants": [
+      "base",
+      "no_value",
+      "large"
+    ],
+    "evaluationSplit": "test",
+    "casesPerVariant": 366,
+    "limitedCasesPerComponent": null,
+    "results": {
+      "base": {
+        "toolAndArgumentsExact": {
+          "mean": 0.0,
+          "cases": 23,
+          "familyMean": 0.0,
+          "families": 12
+        },
+        "generatedControlledTotalLoss": {
+          "mean": 181.13274971176935,
+          "cases": 120,
+          "familyMean": 181.13274971176938,
+          "families": 24
+        },
+        "trainingSeconds": 12283.044470402063
+      },
+      "no_value": {
+        "toolAndArgumentsExact": {
+          "mean": 0.043478260869565216,
+          "cases": 23,
+          "familyMean": 0.041666666666666664,
+          "families": 12
+        },
+        "generatedControlledTotalLoss": {
+          "mean": 275.23012528664344,
+          "cases": 120,
+          "familyMean": 275.2301252866434,
+          "families": 24
+        },
+        "trainingSeconds": 363.8256046830211
+      },
+      "large": {
+        "toolAndArgumentsExact": {
+          "mean": 0.30434782608695654,
+          "cases": 23,
+          "familyMean": 0.2777777777777778,
+          "families": 12
+        },
+        "generatedControlledTotalLoss": {
+          "mean": 282.43160079606696,
+          "cases": 120,
+          "familyMean": 282.43160079606696,
+          "families": 24
+        },
+        "trainingSeconds": 23676.121814084006
+      }
+    }
+  }
+}

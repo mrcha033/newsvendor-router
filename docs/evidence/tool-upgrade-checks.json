@@ -1,0 +1,71 @@
+{
+  "status": "Implementation, L40S training, and fixed Test comparisons complete; new full configuration not recommended",
+  "sourceHash": "95f919815e4c6e3c63de268e75edb2859d812dd286d0c5bb1c4ce0aa231a6d8b",
+  "run": "results/l40s-tools-v3/base/42/run.json",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 59,
+    "seconds": 12.6
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "entrypoint": "structured_data.load -> suite.check + structured_data.audit",
+    "passed": true,
+    "overlaps": 0,
+    "protectedDevTestUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "gpuSmoke": [
+    "results/l40s-tools-bench.json",
+    "results/l40s-tools-bench32.json"
+  ],
+  "gpu": "NVIDIA L40S",
+  "progress": {
+    "stage": "complete",
+    "finished": "2026-10-08T08:32:23.378578+00:00",
+    "languageSeenCases": 102329,
+    "selectedLanguageCases": 81920,
+    "earlyStopped": true,
+    "policyCandidates": 4,
+    "acceptedPolicyCandidates": 0,
+    "parameters": 152113735,
+    "trainingSeconds": 12659.126177376136,
+    "trainingPeakGpuBytes": 41933848576
+  },
+  "failedAttempts": [
+    "results/l40s-tools-v3/failed-batch32-80000"
+  ],
+  "continuation": "results/l40s-tools-v3/base/42/continuation.json",
+  "scope": "Implementation and numerical checks, not task effectiveness evidence",
+  "assemblyAudit": {
+    "split": "train",
+    "calls": 27866,
+    "observableCalls": 25677,
+    "previousRejected": 2541,
+    "correctedRejected": 0,
+    "remainingReasons": {},
+    "unknownPolicySteps": [],
+    "inputSnapshotHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+    "expansionHash": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+    "scriptHash": "c175bac7a70e2b8b73efefd962dc7b727aa6eff0fbf34f8b16d4d85bf29cee06",
+    "scope": "Train annotation assembly feasibility audit; assumes perfect extraction, not model accuracy"
+  },
+  "sourceHashScope": "Training source archive. Evaluation-only changes have separate provenance and archive in tool-comparison.json.",
+  "verifiedAt": "2026-10-08T08:43:02.596812+00:00",
+  "evaluationSourceHash": "a7d70d56b3049f5150648873ade4371710a5a0dc2aae9d28c8b2a0a9b18a6eee",
+  "report": "docs/tool-upgrade-results.md",
+  "comparison": "results/l40s-tools-v3/base/42/tool-comparison.json",
+  "findings": {
+    "assemblyFixed": true,
+    "crossTurnStateRegressionObserved": true,
+    "rerankImprovementObserved": false,
+    "additionalPolicyWeightsAdopted": false,
+    "rejectedPolicyCandidatesEvaluatedOnTest": false
+  }
+}

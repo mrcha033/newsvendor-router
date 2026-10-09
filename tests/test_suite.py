@@ -11,6 +11,23 @@ from newsvendor.suite import SCHEMA, abcd, check, cuad, partition, payload, publ
 from newsvendor.suite_score import score
 
 
+def test_rounded_arithmetic_is_separate_from_strict_score_and_requires_scale():
+    from newsvendor.suite_score import exact, metrics, rounded_numeric_exact
+
+    target = {"action": "answer", "answerType": "arithmetic", "answer": .45, "scale": "percent"}
+    prediction = {"action": "answer", "answer": 100 * 2010 / 442262, "scale": "percent"}
+    row = {"component": "tatqa"}
+    values = metrics(row, target, prediction)
+    assert values["answerExact"] == 0 and values["answerRoundedExact"] == 1
+    assert not exact(prediction["answer"], target["answer"])
+    assert metrics(row, target, {**prediction, "scale": ""})["answerRoundedExact"] == 0
+    assert metrics(row, target, {**prediction, "action": "ask"})["answerRoundedExact"] == 0
+    assert metrics(row, target, {**prediction, "answer": 2010 / 442262})["answerRoundedExact"] == 0
+    for invalid in (None, True, float("nan"), float("inf"), [.45], "0.45 or 12"):
+        assert not rounded_numeric_exact(invalid, .45)
+    assert not rounded_numeric_exact(.456, .45)
+
+
 def test_public_inputs_exclude_annotations_and_future_dialogue():
     stream = io.BytesIO()
     contract = {

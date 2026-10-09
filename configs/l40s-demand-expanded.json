@@ -1,0 +1,127 @@
+{
+  "dataset": "data/processed/core-retail-train-v1",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-demand-expanded",
+  "seed": 42,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25
+  },
+  "training": {
+    "epochs": 5,
+    "encoderLr": 2e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 128,
+    "checkpointEvery": 2048,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "loss",
+    "validateInitial": false,
+    "validationEvery": 0,
+    "patience": 0,
+    "mix": {
+      "research": 0.5,
+      "public": 0.5
+    }
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 256,
+    "dailyWeight": 1.0,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 40,
+    "noise": 0.1,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 3,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed"
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": null,
+  "demandCheckpoint": "results/l40s-research-v4/base/42/model.pt",
+  "documentComponents": [
+    "cuad",
+    "contractnli",
+    "orsharc",
+    "tatqa"
+  ],
+  "evaluateInitial": false,
+  "demandStudy": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "primaryHorizon": 7,
+    "testUsed": false,
+    "selection": "Use all seeds to assess stability; seed 42 is the fixed deployment candidate, not the best seed",
+    "comparison": "Compare every seed with the saved same-seed dailyWeight=1 small-cohort result; batch size changes from 64 to 256 are recorded, so this is not a data-size-only ablation"
+  }
+}

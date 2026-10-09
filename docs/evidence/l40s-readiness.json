@@ -1,0 +1,94 @@
+{
+  "scope": "Runtime and numerical readiness only; no performance or real-work efficacy claim",
+  "sourceHash": "089b21577414172b2bf803d4dd4bb9600e43689ec21c1e2a7d8529d2df8a6b21",
+  "evaluationSplit": "dev",
+  "limitedCasesPerComponent": 1,
+  "testsPassed": 33,
+  "sourceOverlaps": 0,
+  "inputOverlaps": 0,
+  "expandedCases": 92733,
+  "variants": [
+    {
+      "variant": "base",
+      "parameters": 151848374,
+      "hardware": {
+        "device": "cuda:0",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "trainCases": 11,
+      "evaluatedDevCases": 6,
+      "trainingSeconds": 23.637155588017777,
+      "artifact": "results/l40s-ready/base/42/training.json",
+      "artifactHash": "f076024a35a3831564d4571a8f46c0fff8c2d4f8339b2625179cbf99cf16e54e",
+      "languageEpochs": 1,
+      "policyIterations": 1,
+      "sharedCommonTraining": {}
+    },
+    {
+      "variant": "large",
+      "parameters": 397681334,
+      "hardware": {
+        "device": "cuda:0",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "trainCases": 11,
+      "evaluatedDevCases": 6,
+      "trainingSeconds": 43.32762482401449,
+      "artifact": "results/l40s-ready/large/42/training.json",
+      "artifactHash": "e023ffecd23111e745ba1b07f4be8c984349f65002d32685d80a906a5ef92f32",
+      "languageEpochs": 1,
+      "policyIterations": 1,
+      "sharedCommonTraining": {}
+    },
+    {
+      "variant": "no_value",
+      "parameters": 151848374,
+      "hardware": {
+        "device": "cuda:0",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "trainCases": 11,
+      "evaluatedDevCases": 6,
+      "trainingSeconds": 10.01325361803174,
+      "artifact": "results/l40s-ready/no_value/42/training.json",
+      "artifactHash": "1c55ddeefde887d6f1abd1dc333e58fc830e135b74449795432a15b50ee69561",
+      "languageEpochs": 1,
+      "policyIterations": 1,
+      "sharedCommonTraining": {
+        "reusedCommon": "results/l40s-ready/base/42/common.pt",
+        "commonHash": "893be792aeda22d0b388e17778e646a302afd1b27e6a899403d8e2dd35095a21"
+      }
+    }
+  ],
+  "comparisonArtifact": "results/l40s-ready/comparison-42.json",
+  "fullRun": {
+    "unit": "newsvendor-l40s-42.service",
+    "output": "results/l40s",
+    "seed": 42,
+    "languageEpochs": 3,
+    "trainingCaseCount": 94137,
+    "limitedCasesPerComponent": null,
+    "status": "started"
+  }
+}

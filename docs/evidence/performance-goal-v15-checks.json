@@ -1,0 +1,587 @@
+{
+  "status": "Completed with Dev goal unmet. No language checkpoint selected beyond initialization. No v15 fixed Test run.",
+  "preflight": {
+    "timestamp": "2026-10-09T03:00:21.504001+00:00",
+    "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+    "sourceConfigHash": "a2892539f2b09be52d36ad4e5a7a864394a45675c5082e6956bd1727ce2805c8",
+    "configFileHash": "c13096a087b4da50e76ad35ce8ff5ad704ec3c1aece1dbf809a31ad8903e4dc8",
+    "datasetHashes": {
+      "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+      "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+      "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "constructionReplay": {
+        "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+        "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+        "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+        "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+      }
+    },
+    "sameDatasetIdentitiesAsV14": true,
+    "warmStart": "results/l40s-tools-v12/base/42/common.pt",
+    "warmStartReason": "v14 selected no new language weights. Use the preserved v12 pre-policy parent with only the new dialogue-state module initialized.",
+    "warmStartFileHash": "504faa27c8bda88d47f378fc913c9dc615e52a58f775c355524bcf6fa66a8045",
+    "architecture": "Observed turn representations, predicted past tool types, speaker embeddings, GRU128, zero-initialized residual projection. Past-tool labels are official-Train loss targets only.",
+    "addedParameters": 293712,
+    "parameters": 152473626,
+    "trainTargetAudit": "results/dialogue-state-prototype/annotation-check.json",
+    "verification": "docs/evidence/dialogue-state-checks.json",
+    "optimization": {
+      "encoderLr": 5e-06,
+      "headLr": 0.0001,
+      "minCases": 16384,
+      "maxCases": 131072,
+      "validationEvery": 4096,
+      "patience": 3
+    },
+    "fixedTargets": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    },
+    "testPlan": "Train/Dev selection only; run_tools evaluates fixed Test only if all Dev gates pass. If Dev fails, preserve outputs and continue improvement without another Test pass. Same-weights rerank and dialogue-state off comparisons are predefined; never select toggles from Test."
+  },
+  "launch": {
+    "pid": 183947,
+    "started": "2026-10-09T03:00:22.163633+00:00",
+    "argv": [
+      "/home/yunmin/.cache/uv/environments-v2/run-l40s-cff30979426844d4/bin/python",
+      "-u",
+      "scripts/run_tools.py",
+      "--config",
+      "configs/l40s-tools-v15.json"
+    ],
+    "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+    "sourceConfigHash": "a2892539f2b09be52d36ad4e5a7a864394a45675c5082e6956bd1727ce2805c8"
+  },
+  "goalAchieved": false,
+  "runIdentity": {
+    "configHash": "2305fbc8a4eaea0e43a839b9a56d52488a06cad110e2cccd3ab27af2cdb4ee8b",
+    "datasetHashes": {
+      "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+      "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+      "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "constructionReplay": {
+        "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+        "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+        "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+        "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+      }
+    },
+    "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+    "limit": null
+  },
+  "annotationCheck": {
+    "path": "results/l40s-tools-v15/base/42/procedure-targets.json",
+    "hash": "35751dbe736a805074aaa60010f728f4be43a2c25c04b2bfb6399f46cfa3cd4f",
+    "matchesAuditedTargets": true,
+    "pastToolCases": 70446,
+    "pastToolTargets": 188138
+  },
+  "warmStart": {
+    "path": "results/l40s-tools-v15/base/42/tools-parent.json",
+    "hash": "7f8b051e61d6a503d51a87a28e08a3896a4b12dc898c96476499af0ba2c285d2",
+    "initializedParameters": [
+      "control.history.project.weight",
+      "control.history.role.weight",
+      "control.history.sequence.bias_hh_l0",
+      "control.history.sequence.bias_ih_l0",
+      "control.history.sequence.weight_hh_l0",
+      "control.history.sequence.weight_ih_l0",
+      "control.history.tool.weight",
+      "control.history.value.weight"
+    ]
+  },
+  "developmentChecks": [
+    {
+      "timestamp": "2026-10-09T03:01:39.572160+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 32.37289119302295,
+      "epoch": 0,
+      "processed": 0,
+      "tools": {
+        "actionAccuracy": 0.8958333333333334,
+        "toolExact": 0.6875,
+        "observableToolAndArgumentsExact": 0.6875,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.22916666666666666,
+        "toolDecisionAccuracy": 0.875,
+        "argumentsDecisionAccuracy": 0.875,
+        "spokenReferenceF1": 0.07460643317768972
+      },
+      "devLoss": 3.6404993487727277,
+      "accepted": true,
+      "initial": true
+    },
+    {
+      "timestamp": "2026-10-09T03:10:41.819102+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 574.6198201089865,
+      "epoch": 1,
+      "processed": 4096,
+      "seenCases": 4096,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.8541666666666666,
+        "argumentsDecisionAccuracy": 0.8541666666666666,
+        "spokenReferenceF1": 0.06402952467659828
+      },
+      "devLoss": 3.967340120961807,
+      "accepted": false,
+      "staleChecks": 1,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T03:19:25.223045+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1098.023763909936,
+      "epoch": 1,
+      "processed": 8192,
+      "seenCases": 8192,
+      "tools": {
+        "actionAccuracy": 0.84375,
+        "toolExact": 0.65625,
+        "observableToolAndArgumentsExact": 0.625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.28125,
+        "correctCall": 0.21875,
+        "toolDecisionAccuracy": 0.8333333333333334,
+        "argumentsDecisionAccuracy": 0.8229166666666666,
+        "spokenReferenceF1": 0.06669944899954557
+      },
+      "devLoss": 3.874030371680753,
+      "accepted": false,
+      "staleChecks": 2,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T03:28:45.291332+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1658.0920529189752,
+      "epoch": 1,
+      "processed": 12288,
+      "seenCases": 12288,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.8541666666666666,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.07255670199489403
+      },
+      "devLoss": 3.888205404949019,
+      "accepted": false,
+      "staleChecks": 3,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T03:37:38.325223+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 2191.125940958038,
+      "epoch": 1,
+      "processed": 16384,
+      "seenCases": 16384,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.8541666666666666,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.06265891064151058
+      },
+      "devLoss": 3.993726972144045,
+      "accepted": false,
+      "staleChecks": 4,
+      "earlyStopped": true,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    }
+  ],
+  "initialDevelopment": {
+    "timestamp": "2026-10-09T03:01:39.572160+00:00",
+    "stage": "language_dev",
+    "elapsedSeconds": 32.37289119302295,
+    "epoch": 0,
+    "processed": 0,
+    "tools": {
+      "actionAccuracy": 0.8958333333333334,
+      "toolExact": 0.6875,
+      "observableToolAndArgumentsExact": 0.6875,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.2708333333333333,
+      "correctCall": 0.22916666666666666,
+      "toolDecisionAccuracy": 0.875,
+      "argumentsDecisionAccuracy": 0.875,
+      "spokenReferenceF1": 0.07460643317768972
+    },
+    "devLoss": 3.6404993487727277,
+    "accepted": true,
+    "initial": true,
+    "raw": "results/l40s-tools-v15/base/42/language-dev-initial.jsonl",
+    "rawHash": "0b52e8c707bbbb1cf5b32d7495821bfbf29b9a3ae107db136ecf7055728f976d"
+  },
+  "actualWarmStart": {
+    "scope": "Actual optimizer checkpoint identity and update audit; Train loss trend is not Dev effectiveness",
+    "checkpoint": "results/l40s-tools-v15/base/42/warm-start-sample.pt",
+    "checkpointHash": "b54bf0dbd8edb51c8cef75cb0534b5d4bdba44fe2c1f1af25148fa76383743ef",
+    "processed": 1024,
+    "epoch": 1,
+    "initialParentWeightsEqual": true,
+    "initializedParameters": [
+      "control.history.project.weight",
+      "control.history.role.weight",
+      "control.history.sequence.bias_hh_l0",
+      "control.history.sequence.bias_ih_l0",
+      "control.history.sequence.weight_hh_l0",
+      "control.history.sequence.weight_ih_l0",
+      "control.history.tool.weight",
+      "control.history.value.weight"
+    ],
+    "actualParameterMaxChanges": {
+      "control.history.project.weight": 0.0023493184708058834,
+      "control.history.role.weight": 0.001327812671661377,
+      "control.history.sequence.bias_hh_l0": 0.0015446320176124573,
+      "control.history.sequence.bias_ih_l0": 0.0015423521399497986,
+      "control.history.sequence.weight_hh_l0": 0.0024285390973091125,
+      "control.history.sequence.weight_ih_l0": 0.0024583153426647186,
+      "control.history.tool.weight": 0.003073936328291893,
+      "control.history.value.weight": 0.0023110024631023407,
+      "encoder.embeddings.tok_embeddings.weight": 0.00015006214380264282,
+      "control.call.layers.0.weight": 0.0021476484835147858,
+      "control.action.layers.0.weight": 0.002133987843990326,
+      "tools.rerank.0.weight": 0.002437679097056389
+    },
+    "optimizerStates": 244,
+    "largestOptimizerStep": 32.0,
+    "learningRates": [
+      5e-06,
+      0.0001
+    ],
+    "path": "results/l40s-tools-v15/warm-start-check.json",
+    "hash": "8a24c236cad5f9683772b066a59641057961290d37741faae29e008be4fe3245",
+    "pastToolLoss": {
+      "count": 750,
+      "mean": 2.048334474341478,
+      "first128Mean": 3.1002782247960567,
+      "last128Mean": 1.2966192618341665
+    }
+  },
+  "initialPastToolRecognition": {
+    "path": "results/l40s-tools-v15/history-diagnosis-initial.json",
+    "hash": "a511bf8eb6e439967043bd89cb360f5c0e53f059ac28a712f0e864803fc45cc4",
+    "counts": {
+      "cases": 96,
+      "casesWithPastTools": 74,
+      "observedPastTools": 176,
+      "predictedPastTools": 176,
+      "representedPastTools": 176,
+      "correctPastTools": 11,
+      "lastPastTools": 74,
+      "lastPastToolsCorrect": 7,
+      "uniqueObservedToolEvents": 57
+    },
+    "accuracyOnObserved": 0.0625,
+    "scope": "Pre-training randomly initialized recognizer on saved Dev outputs; not a trained performance result. Repeated source events occur across prefixes."
+  },
+  "latestDevelopment": {
+    "timestamp": "2026-10-09T03:37:38.325223+00:00",
+    "stage": "language_dev",
+    "elapsedSeconds": 2191.125940958038,
+    "epoch": 1,
+    "processed": 16384,
+    "seenCases": 16384,
+    "tools": {
+      "actionAccuracy": 0.8645833333333334,
+      "toolExact": 0.625,
+      "observableToolAndArgumentsExact": 0.59375,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.23958333333333334,
+      "correctCall": 0.20833333333333334,
+      "toolDecisionAccuracy": 0.8541666666666666,
+      "argumentsDecisionAccuracy": 0.84375,
+      "spokenReferenceF1": 0.06265891064151058
+    },
+    "devLoss": 3.993726972144045,
+    "accepted": false,
+    "staleChecks": 4,
+    "earlyStopped": true,
+    "budgetStopped": false,
+    "languageGoalPassed": false,
+    "goalStopped": false,
+    "raw": "results/l40s-tools-v15/base/42/language-dev-1-16384.jsonl",
+    "rawHash": "dc93ac28268944391306dfd5f1c4a6514fad8dfd95dadb5d7284c8f2fc3821c3",
+    "diagnosis": "results/l40s-tools-v15/dev-diagnosis-16384.json"
+  },
+  "pastToolRecognition4096": {
+    "path": "results/l40s-tools-v15/history-diagnosis-4096.json",
+    "hash": "02f20d1afdfea66c3f9f04b608e3025ee289c2909839946486e70c386632c33a",
+    "counts": {
+      "cases": 96,
+      "casesWithPastTools": 74,
+      "observedPastTools": 176,
+      "predictedPastTools": 176,
+      "representedPastTools": 176,
+      "correctPastTools": 150,
+      "lastPastTools": 74,
+      "lastPastToolsCorrect": 65,
+      "uniqueObservedToolEvents": 57
+    },
+    "accuracyOnObserved": 0.8522727272727273,
+    "lastPastToolAccuracy": 0.8783783783783784,
+    "scope": "Fixed-Dev recognition improved relative to untrained initialization. This is not the next-action or tool-call goal metric."
+  },
+  "requestCostVisibilityAudit": {
+    "path": "results/l40s-tools-v15/value-input-audit.json",
+    "hash": "ebfd31d6f20a0e91cbb21e30c8c375ace59690bfec2a15cad1e5c21e934f09b3",
+    "summary": {
+      "trainStates": 1365,
+      "truncatedQueryPrefixes": 1365,
+      "statesWithAllRequestCostsVisible": 1365,
+      "perturbedStates": 64,
+      "changedEncoderInputs": 64
+    },
+    "conclusion": "Request-cost visibility loss from prefix truncation was not supported: the separate request source retained every audited cost token. This verifies input sensitivity, not learned value sensitivity or effectiveness."
+  },
+  "pastToolRecognition8192": {
+    "path": "results/l40s-tools-v15/history-diagnosis-8192.json",
+    "hash": "bc45ff68b0a874b7050cb4c2fdd51bfff739cf566990e31e5fade08f743b89bd",
+    "counts": {
+      "cases": 96,
+      "casesWithPastTools": 74,
+      "observedPastTools": 176,
+      "predictedPastTools": 176,
+      "representedPastTools": 176,
+      "correctPastTools": 166,
+      "lastPastTools": 74,
+      "lastPastToolsCorrect": 69,
+      "uniqueObservedToolEvents": 57
+    },
+    "accuracyOnObserved": 0.9431818181818182,
+    "lastPastToolAccuracy": 0.9324324324324325,
+    "scope": "Fixed-Dev past-tool recognition only; not the next-action/tool-call goal metric."
+  },
+  "pastToolRecognition12288": {
+    "path": "results/l40s-tools-v15/history-diagnosis-12288.json",
+    "hash": "9b61c2883cd2b3c089e29eef3374ccc73a3706ca1ff6633374e110069633e806",
+    "counts": {
+      "cases": 96,
+      "casesWithPastTools": 74,
+      "observedPastTools": 176,
+      "predictedPastTools": 176,
+      "representedPastTools": 176,
+      "correctPastTools": 166,
+      "lastPastTools": 74,
+      "lastPastToolsCorrect": 71,
+      "uniqueObservedToolEvents": 57
+    },
+    "accuracyOnObserved": 0.9431818181818182,
+    "lastPastToolAccuracy": 0.9594594594594594,
+    "scope": "Fixed-Dev past-tool recognition only; not the next-action/tool-call goal metric."
+  },
+  "historyWorkflowGradientAudit": {
+    "path": "results/l40s-tools-v15/history-workflow-gradient-audit.json",
+    "hash": "eeeeb57b613d5239001d90c0c39e3b955e3d3ad83b9e46b5820f4b523b5f0c5c",
+    "gradients": {
+      "workflow": {
+        "history": 0,
+        "stage": 1001.2191787958145,
+        "encoder": 139.8483535819687
+      },
+      "control": {
+        "history": 333.43574717757264,
+        "stage": 0.0,
+        "encoder": 249.2251466421876
+      }
+    },
+    "conclusion": "Procedure/progress loss has no direct gradient path into the new recurrent dialogue state. The control loss does. The encoder remains shared, so this does not claim complete independence."
+  },
+  "historyAblation8192": {
+    "path": "results/l40s-tools-v15/history-ablation-8192/report.json",
+    "hash": "9b76b6b2ebd4f52ec8da2e1fd5cac748d14d0cde29faf5f400c05d726c35feb0",
+    "status": "complete",
+    "pairedDiagnosis": "results/l40s-tools-v15/history-ablation-8192/paired-diagnosis.json",
+    "pairedDiagnosisHash": "c806ae0da54ef77495a345fe35a80be5a3517bc7203fd8a097f37567bd0c9638",
+    "scope": "CPU FP32 same-weight full own-memory Dev replay; baseline decisions match original GPU Dev in 96/96 cases. Does not replace original goal measurements.",
+    "checkpoint": "results/l40s-tools-v15/base/42/language-sample-8192.pt",
+    "weightsHash": "f00a120578e496b926544426d9852cdad69c44112133cc5a03d26ee5383a80f4",
+    "changedDecisions": [],
+    "meanAbsoluteCallProbabilityDifference": 0.0008862170828554857,
+    "maxAbsoluteCallProbabilityDifference": 0.00574338436126709,
+    "cases": 96,
+    "conditions": {
+      "baseline": {
+        "toolExact": 0.65625,
+        "argumentsExact": 0.625,
+        "callPrecision": 0.7777777777777778,
+        "rawHash": "84c13e539560600bbbe48fc9dfb481190eea521149de348d760718b48c4ff8d4"
+      },
+      "dialogue_state_off": {
+        "toolExact": 0.65625,
+        "argumentsExact": 0.625,
+        "callPrecision": 0.7777777777777778,
+        "rawHash": "8ac3aee75b1117d42962a190d7a32c65fab7e744a2ac9b2fc82d345cd3e826cc"
+      }
+    }
+  },
+  "continuationSnapshots": [
+    {
+      "path": "results/l40s-tools-v15/base/42/language-sample-15360.pt",
+      "hash": "1a38a794b35d6fbe87a1da178c71af4735904371c96a0cf6b2c113605ff05e5e",
+      "identity": {
+        "configHash": "2305fbc8a4eaea0e43a839b9a56d52488a06cad110e2cccd3ab27af2cdb4ee8b",
+        "datasetHashes": {
+          "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+          "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+          "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+          "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+          "constructionReplay": {
+            "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+            "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+            "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+            "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+          }
+        },
+        "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+        "limit": null
+      },
+      "epoch": 0,
+      "offset": 15360,
+      "scope": "Unselected optimizer/weights/order/RNG snapshot for reviewable continuation; not a chosen production model."
+    },
+    {
+      "path": "results/l40s-tools-v15/base/42/language-sample-16384.pt",
+      "hash": "1e2a283406edf052a6e66402b6d28ec7b8630f1238493df71af7b2611c352919",
+      "identity": {
+        "configHash": "2305fbc8a4eaea0e43a839b9a56d52488a06cad110e2cccd3ab27af2cdb4ee8b",
+        "datasetHashes": {
+          "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+          "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+          "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+          "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+          "constructionReplay": {
+            "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+            "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+            "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+            "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+          }
+        },
+        "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+        "limit": null
+      },
+      "epoch": 0,
+      "offset": 16384,
+      "scope": "Unselected optimizer/weights/order/RNG snapshot for reviewable continuation; not a chosen production model."
+    }
+  ],
+  "finalDevelopmentAudit": {
+    "path": "results/l40s-tools-v15/final-development-audit.json",
+    "hash": "7b754ce04a3acfa4478022a11bf7ff2d50caa610499405836924cfc38e801fea",
+    "scope": "Finished v15 checkpoint and Dev gate audit. No v15 fixed Test was run.",
+    "selectedLanguageEpoch": 0,
+    "initialLanguageWeightsRestored": true,
+    "commonWeightsHash": "6c19768bb4b442d4e8de1b3c1a83e6e9d052a935f30d1757103923aef6fac457",
+    "policyWeightsHash": "4ac493545eff46349e06ea9cbb19207f400c5caea902a0dc250c7758de42ed39",
+    "policyChangedParameters": [
+      "heads.value.layers.0.weight",
+      "heads.value.layers.0.bias",
+      "heads.value.layers.2.weight",
+      "heads.value.layers.2.bias"
+    ],
+    "policySelection": {
+      "iteration": 0,
+      "epoch": 9,
+      "economicLoss": 140.128998724222
+    },
+    "goalDevelopment": {
+      "passed": false,
+      "failures": [
+        "toolExact",
+        "observableToolAndArgumentsExact",
+        "callPrecision"
+      ],
+      "observed": {
+        "toolExact": 0.6875,
+        "observableToolAndArgumentsExact": 0.6875,
+        "callPrecision": 0.8461538461538461,
+        "generatedTotalLoss": 140.128998724222
+      },
+      "required": {
+        "toolExact": 0.9,
+        "observableToolAndArgumentsExact": 0.9,
+        "callPrecision": 0.9,
+        "generatedTestTotalLossBelow": 240.35,
+        "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+      }
+    },
+    "job": {
+      "pid": 183947,
+      "started": "2026-10-09T03:00:24.966199+00:00",
+      "stage": "dev_goal_not_met",
+      "development": {
+        "passed": false,
+        "failures": [
+          "toolExact",
+          "observableToolAndArgumentsExact",
+          "callPrecision"
+        ],
+        "observed": {
+          "toolExact": 0.6875,
+          "observableToolAndArgumentsExact": 0.6875,
+          "callPrecision": 0.8461538461538461,
+          "generatedTotalLoss": 140.128998724222
+        },
+        "required": {
+          "toolExact": 0.9,
+          "observableToolAndArgumentsExact": 0.9,
+          "callPrecision": 0.9,
+          "generatedTestTotalLossBelow": 240.35,
+          "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+        }
+      },
+      "finished": "2026-10-09T03:42:47.354754+00:00"
+    },
+    "rawTrainingHash": "b6f5a140c869efe6b4f42538ead746b60a3e5bfe3c99dc57f6f93570726c667d"
+  },
+  "pastToolRecognition16384": {
+    "path": "results/l40s-tools-v15/history-diagnosis-16384.json",
+    "hash": "8cfb5266f918717317683dc7985386afcd6e7bd5c5e3f18358ea3a23b2575815",
+    "counts": {
+      "cases": 96,
+      "casesWithPastTools": 74,
+      "observedPastTools": 176,
+      "predictedPastTools": 176,
+      "representedPastTools": 176,
+      "correctPastTools": 171,
+      "lastPastTools": 74,
+      "lastPastToolsCorrect": 71,
+      "uniqueObservedToolEvents": 57
+    },
+    "accuracyOnObserved": 0.9715909090909091,
+    "scope": "Unselected 16384-case Dev snapshot; auxiliary recognition only."
+  }
+}

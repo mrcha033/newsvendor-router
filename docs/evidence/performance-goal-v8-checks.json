@@ -1,0 +1,81 @@
+{
+  "status": "Checks passed; v8 preserved and continued as v9 with measured runtime batching improvement; performance goal not achieved.",
+  "run": "results/l40s-tools-v8/base/42/run.json",
+  "sourceHash": "abd29787c6dc9235e533d4decabe0f985a8ac16beb583b42ef16a99259af011b",
+  "configHash": "ae83f912a32b069f2d9b31ad15890c760a76347f1439a370e3d8d30785e51180",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 80,
+    "seconds": 15.65
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v8/benchmark.json",
+    "scope": "Train-only numerical and throughput check, not effectiveness",
+    "measurements": [
+      {
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 15.54899858601857,
+        "casesPerSecond": 4.116020697149453,
+        "loss": 4.481662175734527,
+        "encodedTokens": 249358,
+        "peakBytes": 39912995328
+      },
+      {
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 7.651682940078899,
+        "casesPerSecond": 8.36417301934626,
+        "loss": 3.0059926379472017,
+        "encodedTokens": 248986,
+        "peakBytes": 41126066176
+      }
+    ]
+  },
+  "inputCoverage": {
+    "scope": "Observed Train/Dev input coverage only; no label file or Test rows used. No efficacy claim.",
+    "configHash": "c2e1cc8d9af1d500fb40e3890ce7d891a9b73d9ccec6a54762ccf81c850b3d6f",
+    "procedures": 55,
+    "actions": 255,
+    "withSubtext": 209,
+    "topThreePolicyTokenUpperBound": 1353,
+    "cases": 352,
+    "maxControllerTokens": 2100,
+    "historyTruncated": 0
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v7/base/42/language-progress.pt",
+    "checkpointHash": "988a55eba4a9317581c7a22db80baf930df35698488e8e9be7d5e401054704c6",
+    "processed": 58368,
+    "procedureContextUpgrade": true,
+    "optimizerPreserved": true,
+    "populatedOptimizerStates": 232,
+    "actualWeightsAndMomentsEqualAtImport": true
+  },
+  "scope": "Train/Dev development. Protected fixed Test already inspected in previous experiments; not fresh blind evidence. No real-work efficacy claim from generated scenarios.",
+  "configuredHash": "9905e93eef231695db556cd8ab2488536baf25225228981a90f6fe6568a4fe0f",
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  }
+}

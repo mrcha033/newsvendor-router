@@ -1,0 +1,77 @@
+{
+  "status": "checks passed; v6 superseded after no joint Dev improvement through 32768 cases; continuation in v7",
+  "run": "results/l40s-tools-v6/base/42/run.json",
+  "sourceHash": "39de6376c970f4bdeb79d630a315aa5730bde52076cb642de02a6009a376472b",
+  "configHash": "4d8523e91b22214e7963e70512107dc83bf1ffdbc20ef341221b954a62baa557",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 74,
+    "seconds": 17.42
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v6/benchmark.json",
+    "measurements": [
+      {
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.986354892025702,
+        "casesPerSecond": 4.270551475733078,
+        "loss": 2.3842705042334273,
+        "encodedTokens": 209502,
+        "peakBytes": 34295452160
+      },
+      {
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 5.644051740993746,
+        "casesPerSecond": 11.339371596322671,
+        "loss": 1.1994304591207765,
+        "encodedTokens": 209355,
+        "peakBytes": 35508523008
+      }
+    ],
+    "scope": "Train-only numerical and throughput check, not effectiveness"
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v5/base/42/language-progress.pt",
+    "checkpointHash": "68b8f067eb16fb145639ec59e9d47ef6fd46ada680318106e052436000e1cbdd",
+    "processed": 11264,
+    "controllerResidualUpgrade": true,
+    "optimizerPreserved": true
+  },
+  "parentRevalidation": {
+    "split": "dev",
+    "selectedWeightsAfterCases": 8192,
+    "toolCorrect": 19,
+    "expectedCalls": 32,
+    "predictedCalls": 22,
+    "observableToolAndArgumentsCorrect": 19,
+    "observableCalls": 32,
+    "path": "results/l40s-tools-v6/base/42/language-dev-parent-revalidated.jsonl"
+  },
+  "scope": "Train/Dev development; no new Test evaluation. Fixed Test is a previously inspected regression set. Generated scenarios do not establish real organizational effectiveness."
+}

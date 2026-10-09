@@ -2,75 +2,44 @@
 
 업무 문서의 **근거 연결·모수 상태·행동 가치**를 학습하는 Decision Router의 실험 저장소입니다. 연구 모형은 [프로포절](docs/proposal.docx)에 정리했습니다. 주 비교는 같은 원문과 도구를 사용하는 **고정 typed 파이프라인·학습형 router·agent**입니다.
 
-## 채택한 모델 설계와 구현 상태
+2026-10-09 주 연구를 **ModernBERT + 작은 수요 GRU + 모수·근거·상태 head + 소수의 정보 요청 행동**으로 집중했습니다. 문서와 판매 이력에서 Newsvendor 입력을 구성하고, 부족한 모수를 매니저에게 물어 갱신한 뒤 공통 optimizer로 발주량을 계산합니다. 주 실행은 `scripts/run_research.py`이며 범용 ABCD 도구·업무 절차 모듈은 포함하지 않습니다. 최신 결과·평가 분모·남은 과제는 [연구 범위와 검증 기록](docs/research-scope.md)을 기준으로 읽습니다. 아래의 범용 도구 확장·ABCD 결과는 보조 실험 이력으로 보존합니다.
 
-다음 모델은 **ModernBERT encoder와 구조화 head를 함께 학습**하며, 도구 인자 작성도 모델 내부에 포함합니다. 출력은 근거·모수 상태·도구와 인자·분포 종류와 모수·다음 행동입니다. 질문과 확인 요청은 선택한 필드·선택지를 템플릿으로 표현합니다.
+## 주 모델과 현재 검증
 
-| 구분 | 현재 구현·저장 결과 | 다음 구현 설계 |
-|---|---|---|
-| 자연어 표현 | 고정 MiniLM, 256-token 조각의 평균 벡터 | ModernBERT-base 전체 미세조정, 토큰별 표현 유지 |
-| 도구 인자 | CPU 정규식, GPU Qwen 보조 | 도구 스키마를 조건으로 한 내부 인자 head |
-| 연구 head | 통제 실험의 6개 연구 head와 공개 과제별 native-v3 head가 별도 경로 | 근거·종류·상태·계산 관계·행동 가치·복구를 공유 모형으로 연결 |
-| 수요 | 28개 통계 입력 → 종류·모수 4개 MLP | 판매 이력 encoder와 기간 조건부 종류·모수 head |
-| 실행 상태 | CPU 5개 seed 완료, 기존 GPU 비교 runner 제공 | GPU 학습·추론 코드와 새 가중치는 아직 구현 전 |
+모델은 문서에서 경제 모수 `c/p/v/b`와 근거를 구성하고, 판매 이력에서 수요분포 `F`를 추정합니다. 필요한 값이 없거나 충돌하거나 매니저의 선택이 필요하면 해당 항목을 질문합니다. 응답으로 상태를 갱신한 뒤 공통 optimizer가 발주량을 계산합니다. 문장 생성은 요구하지 않습니다.
 
-아래 CPU 결과와 실행 명령은 **현재 `native-router-v3` 구현**을 재현합니다. ModernBERT의 성능 결과로 읽지 않습니다.
+| 구성 | 역할 |
+| --- | --- |
+| 학습 가능한 ModernBERT | 원문 토큰·표 cell에서 값과 적용 조건 추출 |
+| 모수·근거·유형·상태 head | 사실·추정·선호를 구분하고 누락·충돌 및 출처 보존 |
+| 2층 GRU, hidden 128 | 판매·품절·달력 이력에서 1일/7일 수요분포의 종류·모수 추정 |
+| 정보 요청 head | 추가 근거 조회, 모수별 매니저 질문, 계산 진행 또는 보류 |
+| 계산기·optimizer | 선택된 식을 실행하고 실제 전달된 `F/c/p/v/b`로 발주량 계산 |
 
-### Encoder와 결합층
+행동 가치 head는 같은 구성기에서 단순 질문 정책 및 가치 학습을 제거한 `no_value`와 비교합니다. 현재 통제 Dev에서는 경제 가치 학습의 추가 이점이 확인되지 않았습니다. 범용 업무 절차·도구 후보 재평가·ABCD controller는 주 경로에 포함하지 않습니다.
 
-| 구성 | 채택 설정 | 처리 대상 |
-|---|---|---|
-| 자연어 encoder | [ModernBERT-base](https://huggingface.co/answerdotai/ModernBERT-base), 약 149M 파라미터, 8,192-token 문맥, 전체 미세조정 | 요청·대화·업무 문서·표·도구 스키마 |
-| 판매 이력 encoder | 은닉 크기 128, 2층 GRU | 과거 판매·품절·할인·달력과 관측 mask |
-| 결합층 | 256차원, 2층 attention | 스키마 필드 표현·근거 토큰·판매 이력 표현 |
-| 전체 크기 예산 | 약 152–155M 파라미터 | base encoder에 결합층·이력 encoder·공유 head를 포함한 구현 목표 |
-| 크기 비교 | [ModernBERT-large](https://huggingface.co/answerdotai/ModernBERT-large), 약 395M, 같은 8,192-token 문맥 | 동일 head·결합 차원·분할에서 encoder 크기의 효과 확인 |
+동일 head·자료·학습 횟수를 사용한 L40S base/large 비교는 종료됐습니다. 전체 크기는 151.85M/397.68M이며, 통제 Dev의 최종 모수·근거 정확도는 모두 100%, 완전 관측 기간의 평균 총손실은 모두 44.3274였습니다. 불필요한 질문은 base 3건, large 0건이었습니다. 정확한 손실은 **5개 고유 판매 기간 × 7개 통제 조건**에 한정하며, 문서와 매니저 응답의 통제 생성 조건을 실제 조직 효과로 해석하지 않습니다. 공개 문서 숫자 추출과 수요분포 품질에는 개선이 남아 있습니다. [비교 원시 결과와 지연·메모리](docs/evidence/research-paired-results.json)
 
-계획에 사용할 모델 revision과 라이선스는 [출처 문서](docs/sources.md)에 고정합니다.
+주 실행기는 [`scripts/run_research.py`](scripts/run_research.py)입니다. `check`는 자료·출처 분리를, `train`은 encoder와 모수 구성 및 순차 정책 학습을, `policy`는 고정 구성기에서 정책 학습을 실행합니다. 같은 출력 폴더에 기존 실행을 덮어쓰지 않습니다.
 
-문서는 겹치는 조각으로 나누고 원문 ID·토큰 위치·문자 offset을 보존합니다. 요청과 대화를 조건으로 근거를 조회·재순위화한 뒤 선택된 문서 조각을 함께 인코딩합니다. 근거 head와 인자 head는 토큰 표현을 사용하며, 문서 전체를 하나의 평균 벡터로 바꾸지 않습니다. 조회에서 정답 근거가 확보됐는지와 확보된 근거에서 head가 올바르게 판단했는지를 각각 측정합니다.
+```sh
+# 현재 작업 폴더의 보호된 Train/Dev 자료 점검
+PYTHONPATH=src python scripts/run_research.py \
+  --config configs/l40s-research-paired-v2-base.json \
+  --stage check --output results/research-data-check
 
-문서와 판매 이력이 실제로 함께 주어진 사례에서 두 표현을 결합합니다. 개별 공개 과제는 존재하는 입력 경로와 주석만 사용하고 나머지는 mask합니다. 서로 다른 출처의 계약과 시계열을 임의로 붙여 결합 학습의 정답 사례로 만들지 않습니다. 위 파라미터 수는 설계 예산이며, 구현 후 실제 trainable 수·GPU 메모리·지연을 기록합니다.
+# CUDA PyTorch 환경과 지정한 L40S에서 새 실행
+# config에 기록된 기존 수요 checkpoint가 필요합니다.
+CUDA_VISIBLE_DEVICES="$NEWSVENDOR_GPU_UUID" PYTHONPATH=src python scripts/run_research.py \
+  --config configs/l40s-research-paired-v2-base.json \
+  --stage train --output results/research-reproduction/base/42
+```
 
-### 공유 head와 구조화 출력
-
-과제별 adapter는 원천 입력과 주석을 아래 공유 head에 연결합니다. 원천 과제의 정답과 상태 label을 보존하고, 대응되는 공유 head만 감독합니다.
-
-| Head | 출력 |
-|---|---|
-| 근거 `evidence` | 필드별 원문 ID와 근거 span·표 cell |
-| 종류 `type` | 사실·추정·선호·가정; 수요의 분포 종류와 별도 |
-| 상태 `state` | 확인됨·후보·미확인·충돌·미확보와 대상 필드 |
-| 계산 관계 `relation` | 연산 종류, 피연산자 span·cell·필드 연결과 단위·scale |
-| 행동 가치 `value` | 상태·후보 행동별 예상 후속 손실과 행동 비용 |
-| 복구 `recovery` | 추가 조회·질문·충돌 해소·확인·진행·보류할 대상과 행동 |
-| 도구·인자 | 도구 선택, 스키마 필드별 값·근거·누락·충돌 |
-| 수요 종류 | 절단정규·로그정규·Weibull의 조건부 손실 점수 `familyScores`, 최소 점수의 `family` |
-| 수요 모수 | 종류별 0수요 확률과 위치·척도, 로그평균·로그표준편차 또는 형상·척도 |
-
-도구 인자는 필드마다 별도 거대 모형을 두지 않고, 스키마를 조건으로 같은 head를 공유합니다. 원문 값은 span pointer, 닫힌 선택지는 분류, 숫자·날짜·단위는 추출 후 결정적 정규화로 처리합니다. 산술은 선택한 피연산자와 연산을 executor가 계산합니다. JSON 직렬화·스키마 검사·확인 절차 검사와 Newsvendor 최적화도 executor가 담당합니다.
-
-다음 학습형 추론에는 Qwen 보조를 호출하지 않습니다. 모델이 종류·모수에서 만든 `F`를 solver에 전달하고, 필요한 질문은 필드와 선택지를 출력합니다. 비교군 typed·agent, 주문 과제의 사용자 simulator·judge는 별도 실행 역할로 유지합니다.
-
-### 학습 순서와 수요 종류 선택
-
-1. **근거·필드 학습:** 공개 원천 Train을 확장해 토큰 근거, 인자, 상태와 계산 관계를 먼저 학습합니다. ModernBERT도 함께 학습하며 encoder와 새 층의 학습률을 분리합니다. 없는 주석은 loss에서 mask하고, 알 수 없는 값을 임의의 상태 정답으로 만들지 않습니다.
-2. **판매 이력·수요 학습:** GRU와 같은 기간 조건부 수요 head로 1일 관측을 보조 학습하고, 7일 총수요를 주 학습·평가 대상으로 둡니다. 7일 분포는 총수요에 직접 맞추며 일별 분포를 독립으로 가정해 합치지 않습니다. 품절 기간은 관측 총판매에 대한 survival likelihood를 사용합니다.
-3. **행동 가치·복구 학습:** Train의 관측 상호작용과 통제 rollout에서 후속 손실·질문/조회 비용을 학습하고, 주석이 연결된 경로를 공동 미세조정합니다. 공유 head가 구성한 상태와 후보 행동으로 결정하며, 정답 상태를 추론 입력으로 공급하지 않습니다.
-
-수요 종류 head의 다음 학습은 **Train 내부 출처·시간 단위 cross-fit**을 사용합니다. 시간 경계에서는 겹치는 미래 관측 기간도 분리합니다. 종류별 모수 모형이 자신이 학습하지 않은 구간에서 만든 density·survival NLL을 표적으로, 종류 head가 조건부 기대 손실 또는 초과 손실 3개를 예측합니다. 선택은 최소 예측 손실의 단일 종류이며, `familyScores`는 그 손실 점수입니다. 분포 종류 정답 label을 새로 만들거나 혼합분포 likelihood로 학습한 뒤 단일 종류로 바꿔 출력하지 않습니다.
-
-최종 모수 모형은 Train 전체로 학습하고, Dev는 **실제로 선택된 종류와 해당 모수**의 성능으로 checkpoint·보정을 결정합니다. Test는 선택·보정·cross-fit에서 제외합니다. 현재 native-v3의 detached NLL 가중 목적식과 `familyProbabilities` 출력은 아래 구현 기록에 그대로 구분해 두었습니다.
-
-### 원천 확장과 최소 비교
-
-현재 snapshot의 ABCD는 대화 80개에서 462개 사례를 준비했고, Train의 도구 호출 사례는 85개입니다. 다음 인자 학습은 원천 [ABCD Train의 8,034개 대화](https://github.com/asappresearch/abcd)를 활용하도록 확장합니다. CUAD·ContractNLI·OR-ShARC·TAT-QA·FreshRetail도 과제별 Train의 근거·인자·관측 표적을 확대합니다. 기존 snapshot의 Dev/Test와 연결된 출처 묶음은 확장 Train에서 제외하고, 대화·계약·규칙·context·매장/상품·중복 입력 단위 분할을 유지합니다. 새로운 자연어·시계열 결합 사례는 실제 연결된 자료와 Train의 명시적 주석으로 추가합니다.
-
-최소 학습형 비교는 **base 전체 모형, large 전체 모형, base에서 value를 제거한 `no_value`** 세 가지입니다. 같은 원문·스키마·도구·분할·행동 상한의 typed·agent를 주 베이스라인으로 둡니다. base/large는 같은 구조화 head와 내부 인자 출력을 사용합니다. `no_value`는 value 손실과 예상 손실에 따른 선택을 제거하고, 같은 구성·인자 모듈과 Recovery의 관측 행동 주석 학습으로 다음 행동을 선택하도록 재학습합니다. 근거·필드 상태·정확한 도구와 전체 인자·필요한 질문·최종 목표 달성·발주 손실·호출 비용·지연·메모리를 채점합니다. 자유 문장의 표현 F1을 학습형의 필수 출력 요건으로 두지 않습니다.
+최신 수정·학습 상태·평가의 한계는 [연구 범위와 검증 기록](docs/research-scope.md)에 기록합니다. 이전 ABCD 90% 목표와 실패 결과, 구조화 도구 확장 및 L40S 최적화 실행은 [보조 실험 이력](docs/structured-history.md)에 보존합니다. 기존 생성 Test의 총손실 240.35 기준은 원래 분할과 손실 정의에만 적용하며, 위의 retail 손실과 직접 비교하지 않습니다.
 
 ## 다른 GPU 머신에서 바로 실행
 
-아래 runner는 저장된 native-v3 head와 Qwen 보조를 사용하는 **현재 구현의 비교**입니다. 다음 ModernBERT 구조의 GPU 학습 명령은 구현 후 별도로 연결합니다.
+아래 runner는 저장된 native-v3 head와 Qwen 보조를 사용하는 이전 비교를 재현합니다. ModernBERT의 GPU 학습·구조화 추론·동일 base 재평가 비교는 상단의 실행 명령과 [도구 학습 변경](docs/tool-upgrade.md)을 사용합니다.
 
 Python 3.12, [uv](https://docs.astral.sh/uv/getting-started/installation/), CUDA GPU를 사용합니다. GPU 메모리는 24GB 이상을 권장합니다.
 

@@ -1,0 +1,8 @@
+{
+  "scope": "Architecture counts from pinned config; large weights and training not evaluated",
+  "model": "answerdotai/ModernBERT-large",
+  "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+  "encoderParameters": 394781696,
+  "trainableParameters": 397681334,
+  "configHash": "4cf6e84ac9f7f356bd200946ddbc5de0c53d64308b0b89c60269773010846e64"
+}

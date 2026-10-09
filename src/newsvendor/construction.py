@@ -18,10 +18,12 @@ def atoms(doc):
         label, number = match.groups()
         unit = (
             "count"
-            if "pack size" in label.lower()
+            if re.search(r"\b(?:pack size|(?:units?|items?|pieces?) per (?:pack|carton|box|bundle))\b", label, re.I)
             else "currency/pack"
-            if "pack price" in label.lower()
+            if re.search(r"\b(?:pack|carton|box|bundle) price\b", label, re.I)
             else "currency/unit"
+            if re.search(r"\bper (?:unit|item|piece)\b|\bunit (?:price|cost|refund|fee)\b", label, re.I)
+            else "currency/unknown"
         )
         result.append(
             {
@@ -167,8 +169,8 @@ def finish(input, record, Fs):
     return {**record, "omega": omega, **fit, "valid": valid}
 
 
-def reference(input):
-    """Public-evidence rules; never reads hidden episode truth or future observations."""
+def parameter_record(input, *, legacy_availability=False):
+    """Document-only parameter annotations for the controlled contract templates."""
     record = {k: {} for k in ("values", "links", "state", "types", "expressions")}
     record["errors"] = []
     for slot in SLOTS:
@@ -185,7 +187,7 @@ def reference(input):
             record["state"][slot] = "conflict"
             record["errors"].append("conflict-" + slot)
         else:
-            unavailable = input["task"]["rho"].get(slot, 1) == 0 or any(
+            unavailable = (legacy_availability and input["task"]["rho"].get(slot, 1) == 0) or any(
                 h["action"] == slot and h["answer"] in (None, "no_response", "partial")
                 for h in input["history"]
             )
@@ -193,6 +195,12 @@ def reference(input):
             record["state"][slot] = (
                 "candidate" if partial else "unavailable" if unavailable else "unconfirmed"
             )
+    return record
+
+
+def reference(input):
+    """Legacy controlled reference, including its declared response availability."""
+    record = parameter_record(input, legacy_availability=True)
     return finish(input, record, demand(input, record))
 
 

@@ -1,0 +1,91 @@
+{
+  "dataset": "data/processed/complementary",
+  "expansion": "data/processed/structured-train",
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-policy-v2",
+  "seed": 42,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "toolSchema": "configs/abcd-fields.json",
+    "positionalTools": true,
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": true,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true
+  },
+  "training": {
+    "epochs": 3,
+    "encoderLr": 2e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 16,
+    "progressEvery": 128,
+    "checkpointEvery": 1024,
+    "caseBatch": {
+      "base": 16,
+      "large": 8,
+      "no_value": 16
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed"
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 2,
+    "noise": 0.1,
+    "batchSize": 8,
+    "replaySize": 8,
+    "replayWeight": 2.0,
+    "retentionTolerance": 0.0,
+    "distillWeight": 8.0
+  }
+}

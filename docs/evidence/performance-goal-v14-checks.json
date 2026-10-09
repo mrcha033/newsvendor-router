@@ -1,0 +1,385 @@
+{
+  "status": "Completed frozen fixed-Test comparison; all four performance targets unmet. No language checkpoint improved over parent.",
+  "configuration": "configs/l40s-tools-v14.json",
+  "sourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888",
+  "configHash": "e437fefa1978b8392d34e765be8a7a6b85135ac84ed26c689b120ad980cecda2",
+  "preflight": {
+    "timestamp": "2026-10-09T02:10:42.427919+00:00",
+    "sourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888",
+    "sourceConfigHash": "506adba9bc6355ef10c4ba054d0069c9b29367000fab2f2b09547cd0295ec773",
+    "configFileHash": "61f06b4a6cd511d0dc8ccb43ee46f8eaf6f1643dc6bd66c6f1fb1db9ed9cbe69",
+    "configuration": "configs/l40s-tools-v14.json",
+    "datasetHashes": {
+      "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+      "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+      "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "constructionReplay": {
+        "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+        "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+        "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+        "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+      }
+    },
+    "sameDatasetIdentitiesAsV13": true,
+    "replayTrainStates": 491,
+    "researchSplitAudit": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "warmStart": "results/l40s-tools-v12/base/42/common.pt",
+    "warmStartFileHash": "504faa27c8bda88d47f378fc913c9dc615e52a58f775c355524bcf6fa66a8045",
+    "warmStartReason": "V13 selected no new language weights. Reuse the preserved v12 selected pre-policy parent, not rejected last v13 weights.",
+    "architecture": "contextual reranking of the joint call and conditional tool distribution; same parameter shapes",
+    "optimization": {
+      "freshOptimizer": true,
+      "encoderLr": 5e-06,
+      "headLr": 0.0001,
+      "minCases": 16384,
+      "maxCases": 131072,
+      "validationEvery": 4096,
+      "patience": 3,
+      "rationale": "Prior nine-check no-gain continuation was stopped; assess new score composition early while retaining a larger budget if Dev improves."
+    },
+    "fixedTargets": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    },
+    "cpuAndGPUChecks": "docs/evidence/context-rerank-checks.json",
+    "scope": "Train/Dev selection followed by frozen fixed-Test comparison; no Test-dependent configuration selection. Prior Test has already been inspected historically."
+  },
+  "verification": "docs/evidence/context-rerank-checks.json",
+  "trainingPid": 3935303,
+  "finalEvaluationWaiterPid": 3954324,
+  "finalEvaluationPlan": "results/l40s-tools-v14/final-evaluation-plan.json",
+  "initialDevelopment": {
+    "timestamp": "2026-10-09T02:12:26.454230+00:00",
+    "stage": "language_dev",
+    "elapsedSeconds": 31.442021657014266,
+    "epoch": 0,
+    "processed": 0,
+    "tools": {
+      "actionAccuracy": 0.8958333333333334,
+      "toolExact": 0.6875,
+      "observableToolAndArgumentsExact": 0.6875,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.2708333333333333,
+      "correctCall": 0.22916666666666666,
+      "toolDecisionAccuracy": 0.875,
+      "argumentsDecisionAccuracy": 0.875,
+      "spokenReferenceF1": 0.07460643317768972
+    },
+    "devLoss": 3.6404993487727277,
+    "accepted": true,
+    "initial": true
+  },
+  "developmentChecks": [
+    {
+      "timestamp": "2026-10-09T02:12:26.454230+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 31.442021657014266,
+      "epoch": 0,
+      "processed": 0,
+      "tools": {
+        "actionAccuracy": 0.8958333333333334,
+        "toolExact": 0.6875,
+        "observableToolAndArgumentsExact": 0.6875,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.22916666666666666,
+        "toolDecisionAccuracy": 0.875,
+        "argumentsDecisionAccuracy": 0.875,
+        "spokenReferenceF1": 0.07460643317768972
+      },
+      "devLoss": 3.6404993487727277,
+      "accepted": true,
+      "initial": true
+    },
+    {
+      "timestamp": "2026-10-09T02:21:11.664456+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 556.652239884017,
+      "epoch": 1,
+      "processed": 4096,
+      "seenCases": 4096,
+      "tools": {
+        "actionAccuracy": 0.875,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.25,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.8541666666666666,
+        "argumentsDecisionAccuracy": 0.8541666666666666,
+        "spokenReferenceF1": 0.06265891064151058
+      },
+      "devLoss": 3.6950344512017166,
+      "accepted": false,
+      "staleChecks": 1,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T02:29:41.316103+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1066.3038882039255,
+      "epoch": 1,
+      "processed": 8192,
+      "seenCases": 8192,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.65625,
+        "observableToolAndArgumentsExact": 0.65625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.28125,
+        "correctCall": 0.21875,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.0677075135156746
+      },
+      "devLoss": 3.5723337680380833,
+      "accepted": false,
+      "staleChecks": 2,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T02:38:27.956920+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1592.9447036939673,
+      "epoch": 1,
+      "processed": 12288,
+      "seenCases": 12288,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.5625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.07259030414543166
+      },
+      "devLoss": 3.7365645501435525,
+      "accepted": false,
+      "staleChecks": 3,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T02:47:16.269258+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 2121.2570430419873,
+      "epoch": 1,
+      "processed": 16384,
+      "seenCases": 16384,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.5625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.22916666666666666,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.05987657872611414
+      },
+      "devLoss": 3.7749047659918262,
+      "accepted": false,
+      "staleChecks": 4,
+      "earlyStopped": true,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    }
+  ],
+  "warmStart": {
+    "path": "results/l40s-tools-v14/base/42/tools-parent.json",
+    "hash": "09f34683c3c5a56697c7c8764b525ac5ba864668059437874775efbffc0ec8e5",
+    "initializedParameters": [],
+    "scope": "Same parameter shapes and selected parent checkpoint. Actual 2048-case optimizer checkpoint audited separately below."
+  },
+  "selectedInference": "contextRerank=true, rerank=true; same-weights rerank off comparison preserved",
+  "goalAchieved": false,
+  "actualWarmStart": {
+    "path": "results/l40s-tools-v14/warm-start-check.json",
+    "hash": "01f0ee80c1a112204ee5e788a598512d898ef16c834effd570be3e451bbf22ff",
+    "processed": 2048,
+    "largestOptimizerStep": 64.0,
+    "actualParameterMaxChanges": {
+      "encoder.embeddings.tok_embeddings.weight": 0.0001921243965625763,
+      "tools.rerank.0.weight": 0.0039924317970871925,
+      "tools.rerank.2.weight": 0.00294926087372005,
+      "control.call.layers.0.weight": 0.0026497524231672287,
+      "control.action.layers.0.weight": 0.0031611062586307526,
+      "tools.stage.layers.0.weight": 0.004158236086368561,
+      "tools.role.weight": 0.0036296546459198
+    },
+    "rerankLossCount": 1932,
+    "rerankLossMean": 0.6619896403955738,
+    "sourceHash": "ccc1e3cf3664d2a08b3e7d778d95b5ff8f29ecad5fd38d9d700fcb5c3954a888"
+  },
+  "latestDevelopment": {
+    "timestamp": "2026-10-09T02:47:16.269258+00:00",
+    "stage": "language_dev",
+    "elapsedSeconds": 2121.2570430419873,
+    "epoch": 1,
+    "processed": 16384,
+    "seenCases": 16384,
+    "tools": {
+      "actionAccuracy": 0.8541666666666666,
+      "toolExact": 0.59375,
+      "observableToolAndArgumentsExact": 0.5625,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.22916666666666666,
+      "correctCall": 0.19791666666666666,
+      "toolDecisionAccuracy": 0.84375,
+      "argumentsDecisionAccuracy": 0.8333333333333334,
+      "spokenReferenceF1": 0.05987657872611414
+    },
+    "devLoss": 3.7749047659918262,
+    "accepted": false,
+    "staleChecks": 4,
+    "earlyStopped": true,
+    "budgetStopped": false,
+    "languageGoalPassed": false,
+    "goalStopped": false,
+    "raw": "results/l40s-tools-v14/base/42/language-dev-1-16384.jsonl",
+    "rawHash": "4fa4e3e4b3515a85aaa6964b92b119f9b1b37df04a994464ee43e1664845002e",
+    "diagnosis": "results/l40s-tools-v14/dev-diagnosis-16384.json"
+  },
+  "rerankDiagnosis": {
+    "path": "results/l40s-tools-v14/rerank-diagnosis-4096.json",
+    "hash": "4615387d08e1d11588c62740422d7874dbf1c827c6a8f9133728d64b0d9bb830",
+    "counts": {
+      "cases": 96,
+      "beforeCalls": 23,
+      "beforeCorrectTools": 20,
+      "beforeFalseCalls": 2,
+      "afterCalls": 24,
+      "afterCorrectTools": 20,
+      "afterFalseCalls": 2,
+      "changed": 1,
+      "call_added": 1
+    },
+    "scope": "Saved-state score-only Dev diagnosis. Joint probabilities were constructed before opening labels and match stored callProbability within 2e-6. Changing the rerank decision was not replayed through subsequent conversation memory or argument assembly; these counts are not counterfactual policy performance or goal metrics."
+  },
+  "historicalRankingReview": {
+    "path": "results/l40s-tools-v14/historical-ranking-review.json",
+    "hash": "4ebecf3cfc0ceef140ddaafd093cbea4e2dfafd3dfe2482c2afdfdf8bb76631e",
+    "counts": {
+      "cases": 96,
+      "calls": 32,
+      "predictedCalls": 43,
+      "actualToolCorrect": 25,
+      "conditionalTop1": 26,
+      "conditionalTop2": 30,
+      "conditionalTop3": 30,
+      "conditionalTop5": 30
+    },
+    "scope": "Historical v3 selected-language Dev ranking only. Different heads/inputs from v14; not a matched architecture comparison, model selection, or new Test result. Conditional ranking is a saved-state diagnostic, not counterfactual execution accuracy."
+  },
+  "observedToolAnnotationAudit": {
+    "path": "results/l40s-tools-v14/observed-tool-audit.json",
+    "hash": "fd8cee56de66bedddfd67c5a71388ca2b4750ef99ee9708496709f119810c4db",
+    "counts": {
+      "officialTrainCases": 92946,
+      "casesWithObservedTools": 70446,
+      "pastToolTargets": 188138,
+      "allowedTrainCases": 93003,
+      "excludedNonOfficialTrainCases": 57,
+      "uniquePastToolEvents": 28085,
+      "uniqueObservedTexts": 2397,
+      "textsWithMultipleToolLabels": 1,
+      "eventsInAmbiguousTexts": 1568
+    },
+    "scope": "Read-only official-Train annotation coverage audit. Every label refers to an already observed tool-result turn strictly before its Train prefix. No model features, training targets in active jobs, parameters, Dev or Test results changed. Exact-text ambiguity is a dataset property, not a measured model accuracy."
+  },
+  "languageSelection": {
+    "path": "results/l40s-tools-v14/language-selection-restored.json",
+    "hash": "2cc499885887e6273493156624ce3280ebd319429e053ce16ae3c4d9a9aab0f9"
+  },
+  "policyRetention": {
+    "path": "results/l40s-tools-v14/policy-retention-check.json",
+    "hash": "8746d4e0766b7f2c89151afd55cf4243311fac53fdf8937f0391e93f680c612c"
+  },
+  "policyDevelopment": {
+    "passed": false,
+    "failures": [
+      "toolExact",
+      "observableToolAndArgumentsExact",
+      "callPrecision"
+    ],
+    "observed": {
+      "toolExact": 0.6875,
+      "observableToolAndArgumentsExact": 0.6875,
+      "callPrecision": 0.8461538461538461,
+      "generatedTotalLoss": 140.128998724222
+    },
+    "required": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    }
+  },
+  "policySelection": {
+    "iteration": 0,
+    "epoch": 9,
+    "economicLoss": 140.128998724222
+  },
+  "finalEvaluation": {
+    "path": "results/l40s-tools-v14/base/42/final-evaluation.json",
+    "hash": "f871f70963a13eeb66e4ed2efd01bb26fa249c641e9492c131024ed0c3d8f319",
+    "status": "goal_not_met",
+    "selectedCondition": "policy_rerank_on",
+    "goalTest": {
+      "passed": false,
+      "failures": [
+        "toolExact",
+        "observableToolAndArgumentsExact",
+        "callPrecision",
+        "generatedTotalLoss"
+      ],
+      "observed": {
+        "toolExact": 0.7692307692307693,
+        "observableToolAndArgumentsExact": 0.782608695652174,
+        "callPrecision": 0.7142857142857143,
+        "generatedTotalLoss": 248.05248473557538
+      },
+      "required": {
+        "toolExact": 0.9,
+        "observableToolAndArgumentsExact": 0.9,
+        "callPrecision": 0.9,
+        "generatedTestTotalLossBelow": 240.35,
+        "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+      }
+    },
+    "freezeHash": "906f4365acbac3db7ee0576328c91eca0d97bd33c7a55c32485b1bee67e80ca2"
+  },
+  "comparison": {
+    "path": "results/l40s-tools-v14/base/42/tool-comparison.json",
+    "hash": "cc39d2b7d2b4812885712eeacac379318ae726401a74be7816c7ee308fb54717"
+  },
+  "finalAudit": {
+    "path": "results/l40s-tools-v14/final-audit.json",
+    "hash": "e391810c1575832534e90503ae4b084eddca8a9a3d3617ccaeb4e3d6b1e12ef3"
+  }
+}

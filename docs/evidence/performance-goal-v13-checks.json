@@ -1,0 +1,517 @@
+{
+  "status": "Stopped after nine consecutive Dev rejections to evaluate the contextual reranking correction. Recoverable checkpoint at 74752 preserved; selected parent unchanged. No v13 policy or Test evaluation.",
+  "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+  "configHash": "338319d1c93d41dafcc9f88d384d091ac829b47e1d29b61c37b35886c4f50207",
+  "configuration": "configs/l40s-tools-v13.json",
+  "preflight": {
+    "scope": "New fine-tuning stage from the selected pre-policy common weights. Fresh optimizer and case budget; old cumulative steps do not satisfy the new minimum. Only current Train response states added. No Test inputs or scores used in training.",
+    "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+    "configHash": "703587c57b6a1f3b101bf5a0fc9c3c2675fe66c9748cf394ea3d1c6f5d084760",
+    "parent": "results/l40s-tools-v12/base/42/common.pt",
+    "parentWeightsHash": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea",
+    "newStageEncoderLr": 5e-06,
+    "newStageHeadLr": 0.0001,
+    "minCasesFromNewStage": 131072,
+    "previousReplayStates": 361,
+    "allReplayStates": 491,
+    "addedStates": 130,
+    "addedStatesByScenario": {
+      "missing_contract": 21,
+      "missing_demand": 13,
+      "unset_preference": 26,
+      "conflicting": 37,
+      "unavailable": 33
+    },
+    "replayHashes": {
+      "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+      "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+      "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+      "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+    },
+    "researchSplitAudit": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "fixedTargets": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    }
+  },
+  "actualWarmStart": {
+    "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+    "identity": {
+      "configHash": "338319d1c93d41dafcc9f88d384d091ac829b47e1d29b61c37b35886c4f50207",
+      "datasetHashes": {
+        "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+        "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+        "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+        "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "constructionReplay": {
+          "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+          "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+          "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+          "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+        }
+      },
+      "sourceHash": "177780d1be4dc6f3d565d7c92528869dcd73edfb560c5e17f5ceec16f17fa8b8",
+      "limit": null
+    },
+    "processed": 1024,
+    "epoch": 0,
+    "startingSelectedWeightsHash": "ca8d1226bc45d63b01a8637136c2fb5c8a5735443d727192391ee78f0fd094ea",
+    "startingWeightsExactlyPreserved": true,
+    "optimizerLearningRates": [
+      5e-06,
+      0.0001
+    ],
+    "optimizerStateCount": 236,
+    "largestOptimizerStep": 32,
+    "freshOptimizerVerified": true,
+    "actualParameterMaxChanges": {
+      "tools.role.weight": 0.0022827759385108948,
+      "tools.stage.layers.0.weight": 0.002490423619747162,
+      "tools.rerank.0.weight": 0.0023248717188835144,
+      "encoder.embeddings.tok_embeddings.weight": 0.00012734625488519669
+    },
+    "scope": "Selected parent model reused exactly; new optimizer and stage counter verified; actual encoder, role, workflow and rerank updates observed."
+  },
+  "initializedParameters": [],
+  "unchangedDatasetIdentities": {
+    "snapshot": true,
+    "expansion": true,
+    "toolSchema": true,
+    "researchConfig": true
+  },
+  "sourceVerification": {
+    "reference": "docs/evidence/performance-goal-v12-checks.json",
+    "fullSuitePassed": 96,
+    "unchangedTrainingSource": true,
+    "lintPassed": true
+  },
+  "developmentPathDiagnosis": {
+    "path": "results/l40s-tools-v12/control-dev/report.json",
+    "status": "complete",
+    "conditions": 8,
+    "weightsHash": "bc181cef4c09eefc12055259ee42c331d65ed1ce0d43ac4688bc0bdcf73b2e22",
+    "scope": "Dev-only counterfactual scoring paths with full own-memory conversation replay; no new training or Test selection"
+  },
+  "initialDevelopment": {
+    "processed": 0,
+    "toolExact": 0.6875,
+    "observableToolAndArgumentsExact": 0.6875,
+    "callPrecision": 0.8461538461538461,
+    "devLoss": 3.595793156990622,
+    "scope": "Revalidated parent, not new training gain"
+  },
+  "trainingPid": 2571153,
+  "finalEvaluationWaiterPid": 2574909,
+  "finalEvaluationPlan": "results/l40s-tools-v13/final-evaluation-plan.json",
+  "latestDevelopment": {
+    "timestamp": "2026-10-09T01:55:24.057765+00:00",
+    "stage": "language_dev",
+    "elapsedSeconds": 9375.61687955202,
+    "epoch": 1,
+    "processed": 73728,
+    "seenCases": 73728,
+    "tools": {
+      "actionAccuracy": 0.84375,
+      "toolExact": 0.59375,
+      "observableToolAndArgumentsExact": 0.59375,
+      "expectedCall": 0.3333333333333333,
+      "predictedCall": 0.23958333333333334,
+      "correctCall": 0.19791666666666666,
+      "toolDecisionAccuracy": 0.8333333333333334,
+      "argumentsDecisionAccuracy": 0.8333333333333334,
+      "spokenReferenceF1": 0.0689760265158739
+    },
+    "devLoss": 4.270978892696706,
+    "accepted": false,
+    "staleChecks": 9,
+    "earlyStopped": false,
+    "budgetStopped": false,
+    "languageGoalPassed": false,
+    "goalStopped": false,
+    "raw": "results/l40s-tools-v13/base/42/language-dev-1-73728.jsonl",
+    "rawHash": "2d3b5c2f8b04c67f501b1b7e2a22eed06b900210b4f4e2b6f6ddb206c19afb8e",
+    "diagnosis": "results/l40s-tools-v13/dev-diagnosis-73728.json"
+  },
+  "controllerInputAudit": {
+    "path": "results/l40s-tools-v12/control-input-audit.json",
+    "hash": "e5581da55f4296551a8899179d15d7b00879db444dbd423eb309b2e183afd8a3",
+    "counts": {
+      "cases": 96,
+      "firstCovered": 88,
+      "finalCovered": 88,
+      "multiRound": 0,
+      "calls": 32,
+      "callFinalCovered": 30,
+      "toolErrors": 10,
+      "toolErrorsWithPolicy": 9
+    },
+    "scope": "Actual controller policy tokenization reconstructed from saved Dev own-state traces; no inference, training, or Test use. Labels opened only after input construction."
+  },
+  "gateWeightDiagnosis": {
+    "path": "results/l40s-tools-v12/gate-weight-diagnosis.json",
+    "hash": "640105175ada5101476e247fcbad6fbb277fecbf9069b2112a23eb373073e0a3",
+    "summary": {
+      "baseline": {
+        "correct": 22,
+        "predictedCalls": 26,
+        "wrongTool": 2,
+        "missedCalls": 8,
+        "falseCalls": 2,
+        "precision": 0.8461538461538461
+      },
+      "gate_only": {
+        "correct": 22,
+        "predictedCalls": 26,
+        "wrongTool": 2,
+        "missedCalls": 8,
+        "falseCalls": 2,
+        "precision": 0.8461538461538461
+      },
+      "gate_and_rank": {
+        "correct": 22,
+        "predictedCalls": 26,
+        "wrongTool": 2,
+        "missedCalls": 8,
+        "falseCalls": 2,
+        "precision": 0.8461538461538461
+      }
+    },
+    "scope": "Dev-only saved-score diagnostic for inverse Train class weighting; approximation, not full inference/replay or completion metrics. No weights/config changed. All scores constructed before opening Dev targets."
+  },
+  "developmentChecks": [
+    {
+      "timestamp": "2026-10-08T23:19:40.074136+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 31.633259880007245,
+      "epoch": 0,
+      "processed": 0,
+      "tools": {
+        "actionAccuracy": 0.8958333333333334,
+        "toolExact": 0.6875,
+        "observableToolAndArgumentsExact": 0.6875,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.22916666666666666,
+        "toolDecisionAccuracy": 0.875,
+        "argumentsDecisionAccuracy": 0.875,
+        "spokenReferenceF1": 0.07460643317768972
+      },
+      "devLoss": 3.595793156990622,
+      "accepted": true,
+      "initial": true
+    },
+    {
+      "timestamp": "2026-10-08T23:36:32.119683+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1043.6787941110088,
+      "epoch": 1,
+      "processed": 8192,
+      "seenCases": 8192,
+      "tools": {
+        "actionAccuracy": 0.875,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.25,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.06700571515278878
+      },
+      "devLoss": 3.5629745821351415,
+      "accepted": false,
+      "staleChecks": 1,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-08T23:53:38.864065+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 2070.4231788589386,
+      "epoch": 1,
+      "processed": 16384,
+      "seenCases": 16384,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.5625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.22916666666666666,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.056751578726114145
+      },
+      "devLoss": 3.7280260017933795,
+      "accepted": false,
+      "staleChecks": 2,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T00:10:52.310563+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 3103.8696765890345,
+      "epoch": 1,
+      "processed": 24576,
+      "seenCases": 24576,
+      "tools": {
+        "actionAccuracy": 0.8645833333333334,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.5625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.06820989748361583
+      },
+      "devLoss": 3.80214454352828,
+      "accepted": false,
+      "staleChecks": 3,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T00:28:01.860843+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 4133.419961579028,
+      "epoch": 1,
+      "processed": 32768,
+      "seenCases": 32768,
+      "tools": {
+        "actionAccuracy": 0.875,
+        "toolExact": 0.65625,
+        "observableToolAndArgumentsExact": 0.625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.21875,
+        "toolDecisionAccuracy": 0.8541666666666666,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.07160973229792433
+      },
+      "devLoss": 3.886080598329684,
+      "accepted": false,
+      "staleChecks": 4,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T00:45:16.286282+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 5167.845395150012,
+      "epoch": 1,
+      "processed": 40960,
+      "seenCases": 40960,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.25,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.06921796199974486
+      },
+      "devLoss": 3.9979032320872014,
+      "accepted": false,
+      "staleChecks": 5,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T01:02:52.003164+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 6223.562277480029,
+      "epoch": 1,
+      "processed": 49152,
+      "seenCases": 49152,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.22916666666666666,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.05987657872611414
+      },
+      "devLoss": 4.033766712640956,
+      "accepted": false,
+      "staleChecks": 6,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T01:19:59.746387+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 7251.3055003309855,
+      "epoch": 1,
+      "processed": 57344,
+      "seenCases": 57344,
+      "tools": {
+        "actionAccuracy": 0.8854166666666666,
+        "toolExact": 0.65625,
+        "observableToolAndArgumentsExact": 0.65625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2604166666666667,
+        "correctCall": 0.21875,
+        "toolDecisionAccuracy": 0.8645833333333334,
+        "argumentsDecisionAccuracy": 0.8645833333333334,
+        "spokenReferenceF1": 0.06492042379940531
+      },
+      "devLoss": 3.8794686387483623,
+      "accepted": false,
+      "staleChecks": 7,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T01:37:40.849081+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 8312.408195144963,
+      "epoch": 1,
+      "processed": 65536,
+      "seenCases": 65536,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.22916666666666666,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.06820989748361583
+      },
+      "devLoss": 4.116310250097582,
+      "accepted": false,
+      "staleChecks": 8,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T01:55:24.057765+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 9375.61687955202,
+      "epoch": 1,
+      "processed": 73728,
+      "seenCases": 73728,
+      "tools": {
+        "actionAccuracy": 0.84375,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.59375,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.23958333333333334,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.8333333333333334,
+        "argumentsDecisionAccuracy": 0.8333333333333334,
+        "spokenReferenceF1": 0.0689760265158739
+      },
+      "devLoss": 4.270978892696706,
+      "accepted": false,
+      "staleChecks": 9,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    }
+  ],
+  "historicalCapacityReview": {
+    "path": "results/l40s-tools-v13/historical-capacity-dev.json",
+    "scope": "Historical Dev records from the earlier architecture only. Not a current-head capacity ablation and not a Test-based model selection."
+  },
+  "gateGeneralizationDiagnosis": {
+    "path": "results/l40s-tools-v13/gate-generalization-41984.json",
+    "raw": "results/l40s-tools-v13/language-loss-41984.json",
+    "offset": 41984,
+    "scope": "Train logged head losses and post-hoc saved Dev call probabilities. Train includes own-state follow-ups; Dev uses complete selected conversation replay. These are not identically distributed loss samples. BCE probabilities clipped to [1e-7, 1-1e-7] due saved FP32 probability saturation. No inputs, parameters, or Test results changed. Conditional tool ranks and latent argument lists are saved-state diagnostics, not counterfactual replay performance. Either-correct is an oracle diagnostic of complementary head outputs, not a deployable selection rule or measured performance.",
+    "hash": "5064a88c94883e96375434cca2d58ba5da2ef318fbd405cb2deda758c56f33d8"
+  },
+  "procedureMaskDiagnosis": {
+    "path": "results/l40s-tools-v13/procedure-mask-diagnosis.json",
+    "hash": "445e80b84f1c174140a8a3d1bfff34bf80a32f0911f1ebf005b300bfe45cd104",
+    "scope": "Saved-state Dev-only conditional tool ranking under predicted procedure membership. Public policies and own procedure predictions alone construct candidates; labels loaded afterward. Does not change call gate, execute new arguments, or replay changed memory. Not final performance and not an adopted policy.",
+    "summaries": [
+      {
+        "calls": 32,
+        "baselineCorrect": 25,
+        "1": {
+          "conditionalTop1Correct": 26,
+          "goldInAllowed": 28
+        },
+        "3": {
+          "conditionalTop1Correct": 25,
+          "goldInAllowed": 28
+        }
+      },
+      {
+        "calls": 32,
+        "baselineCorrect": 25,
+        "1": {
+          "conditionalTop1Correct": 26,
+          "goldInAllowed": 28
+        },
+        "3": {
+          "conditionalTop1Correct": 25,
+          "goldInAllowed": 28
+        }
+      }
+    ]
+  },
+  "runtimeAudit": {
+    "path": "results/l40s-tools-v13/runtime-audit.json",
+    "status": "GPU metadata dispatch probe complete after stopping v13; six representative cases use EFFICIENT_ATTENTION. No speedup measured.",
+    "scriptLintPassed": true,
+    "hash": "d424a08054e70c73b8788ca16d864a7680556d6c6f26d841578bf5cc7d341f45"
+  },
+  "errorPersistenceDiagnosis": {
+    "path": "results/l40s-tools-v13/dev-persistence-65536.json",
+    "hash": "be97af7e06b569b73b5d339de42759972fbaf10c94493dc0190eb2f7eea26b19",
+    "scope": "Post-hoc error persistence across initial and eight Dev checkpoints; same Dev inputs but each checkpoint has its own predicted conversation memory. Diagnostic only; no checkpoint ensemble, policy modification, or Test use. Ever-correct is not an executable policy or measured accuracy.",
+    "summary": {
+      "callCases": 32,
+      "alwaysToolCorrect": 18,
+      "everToolCorrect": 22,
+      "neverToolCorrect": 10,
+      "neverCalled": 7
+    }
+  },
+  "stopDecision": {
+    "path": "results/l40s-tools-v13/stop-decision.json",
+    "hash": "c7727b5289c74d59228e724ead0aba57837e961fcec4c8b212d92871c8fea667",
+    "lastRecoverableProcessed": 74752,
+    "lastLoggedProcessed": 75136,
+    "selectedParentWeightsPreserved": true
+  }
+}

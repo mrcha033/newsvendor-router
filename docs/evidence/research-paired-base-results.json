@@ -1,0 +1,228 @@
+{
+  "status": "base complete; large in progress; not a completed size comparison",
+  "sourceHash": "4b7b5651b283be45c86e6fd074268e2214f877a07b6605de76ad558de0f76ea4",
+  "run": "results/l40s-research-paired-v2/base/42",
+  "reportHash": "383a5676240b7d793d83eeeabce9422fee63ee8317b6b780bd34f13faa4fc494",
+  "modelHash": "763ec6965e7072b93210587f75ada3519f3271e789999270757eb8176ee2ea64",
+  "parameters": 151848374,
+  "seconds": 1195.8897622539662,
+  "peakGpuBytes": 35083949056,
+  "sameInitialSharedHeads": true,
+  "sameDemandWeights": true,
+  "sameTrainingCases": true,
+  "sameManifest": true,
+  "sharedHeadsHash": "fd77f83d6039d571a7d2fc47e4c89d6831c826f5ece042339d086f0f20470fdb",
+  "demandWeightsHash": "3c07b4f758b8b6bbc4f67775db693999183071c5b12bc63b9ab13374edc022e8",
+  "finalDev": {
+    "learned": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 0.9955357142857143,
+        "stateAccuracy": 0.9955357142857143,
+        "rawStateAccuracy": 0.9962797619047619,
+        "rawParameterAccuracy": 0.9955357142857143,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0089285714285714,
+      "meanRequestCost": 9.975386479591837,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 3,
+      "recoveredAfterRequest": 339,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "5fc0a4ae689de7b8cf4ca1a6f27bd45666e065428f85bf6e9a8a0753147b33cd"
+    },
+    "checklist": {
+      "episodes": 336,
+      "sourceFamilies": 8,
+      "completePeriods": 35,
+      "censoredPeriods": 301,
+      "uniqueObservedPeriods": 48,
+      "completeUniquePeriods": 5,
+      "initialParameters": {
+        "parameterAccuracy": 0.9955357142857143,
+        "stateAccuracy": 0.9955357142857143,
+        "rawStateAccuracy": 0.9962797619047619,
+        "rawParameterAccuracy": 0.9955357142857143,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalParameters": {
+        "parameterAccuracy": 1.0,
+        "allParametersCorrect": 1.0,
+        "stateAccuracy": 1.0,
+        "rawStateAccuracy": 1.0,
+        "rawParameterAccuracy": 1.0,
+        "typeAccuracy": 1.0,
+        "rawTypeAccuracy": 1.0
+      },
+      "finalEvidenceAccuracy": 1.0,
+      "meanTotalOnCompletePeriods": 44.32742132570505,
+      "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+      "falseHandoffs": 0,
+      "handoffs": 336,
+      "meanInteractions": 1.0,
+      "meanRequestCost": 9.868955782312925,
+      "necessaryRequests": 336,
+      "unnecessaryRequests": 0,
+      "recoveredAfterRequest": 336,
+      "unresolvedAfterRequest": 0,
+      "missingParametersAtStop": 0,
+      "forecast": {
+        "censoredOrderLossLowerBound_u1": {
+          "mean": 0.13258348916604606,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u3": {
+          "mean": 0.12810672730654898,
+          "count": 301
+        },
+        "censoredOrderLossLowerBound_u9": {
+          "mean": 0.0,
+          "count": 301
+        },
+        "distributionValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "observationNLL": {
+          "mean": 0.5085259733941647,
+          "count": 336
+        },
+        "orderValid": {
+          "mean": 1.0,
+          "count": 336
+        },
+        "uncensoredCRPS": {
+          "mean": 2.0093434787946483,
+          "count": 35
+        },
+        "uncensoredInterval80Coverage": {
+          "mean": 0.4,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u1": {
+          "mean": 2.815752807475904,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u3": {
+          "mean": 5.690399745459264,
+          "count": 35
+        },
+        "uncensoredOrderLoss_u9": {
+          "mean": 9.251552947391962,
+          "count": 35
+        },
+        "uncensoredTotalMAE": {
+          "mean": 3.745209897999465,
+          "count": 35
+        }
+      },
+      "rawHash": "9e15e21cd23eaf160cc55bb9adc781e18c4fc8be5117cf0851c06d43e9cf2dbd"
+    }
+  },
+  "documentsDev": {
+    "contractnli": {
+      "actionAccuracy": 1.0,
+      "stateAccuracy": 0.6527777777777778,
+      "evidenceF1": 0.4305555555555556,
+      "groundedScore": 0.2916666666666667
+    },
+    "cuad": {
+      "actionAccuracy": 0.6666666666666666,
+      "answerabilityAccuracy": 0.6666666666666666,
+      "evidenceF1": 0.6222222222222222,
+      "groundedScore": 0.6222222222222222
+    },
+    "orsharc": {
+      "actionAccuracy": 0.6458333333333334,
+      "decisionAccuracy": 0.25,
+      "followupReferenceF1": 0.0,
+      "ruleRecallAt5": 0.7916666666666666
+    },
+    "tatqa": {
+      "actionAccuracy": 1.0,
+      "scaleAccuracy": 0.4375,
+      "answerExact": 0.0,
+      "answerF1": 0.03283969210174029,
+      "answerRoundedExact": 0.020833333333333332
+    }
+  },
+  "limitations": [
+    "Controlled financial documents; no actual organizational efficacy.",
+    "Exact economic mean uses five unique uncensored periods across four source families.",
+    "Learned policy made three unnecessary requests outside the completely observed economic subset.",
+    "Public document metrics did not consistently improve; this run is not automatically selected for deployment."
+  ],
+  "testUsed": false
+}

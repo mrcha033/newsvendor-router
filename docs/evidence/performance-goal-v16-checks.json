@@ -1,0 +1,244 @@
+{
+  "status": "Running; imported weights/optimizer/RNG/order verified exactly.",
+  "preflight": {
+    "timestamp": "2026-10-09T03:49:59.695827+00:00",
+    "sourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28",
+    "sourceConfigHash": "01993499592a6e0895880abd7fa6fc945303f57b62a1c9631c6f4aca9e7b8ee8",
+    "configFileHash": "61027bf5e66ef7513f8d74086806d76a91bddc4ead46adca35fede351c54f347",
+    "datasetHashes": {
+      "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+      "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+      "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "constructionReplay": {
+        "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+        "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+        "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+        "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+      }
+    },
+    "sameDatasetIdentitiesAsV15": true,
+    "continuation": {
+      "path": "results/l40s-tools-v15/base/42/language-sample-16384.pt",
+      "hash": "1e2a283406edf052a6e66402b6d28ec7b8630f1238493df71af7b2611c352919",
+      "identity": {
+        "configHash": "2305fbc8a4eaea0e43a839b9a56d52488a06cad110e2cccd3ab27af2cdb4ee8b",
+        "datasetHashes": {
+          "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+          "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+          "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+          "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+          "constructionReplay": {
+            "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+            "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+            "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+            "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+          }
+        },
+        "sourceHash": "704c6949699a1884fda61bfcb1a7fdfacdca25c88c52ec9acd23c08b1699b165",
+        "limit": null
+      },
+      "epoch": 0,
+      "offset": 16384,
+      "scope": "Unselected optimizer/weights/order/RNG snapshot for reviewable continuation; not a chosen production model."
+    },
+    "scope": "Explicit experimental continuation from unselected v15 optimizer/weights/order/RNG; saved best revalidated under new graph. No Test selection.",
+    "architecture": "Route one existing self-predicted recurrent state to procedure, progress, controller and contextual rerank heads.",
+    "addedParameters": 0,
+    "parameters": 152473626,
+    "verification": "docs/evidence/workflow-state-checks.json",
+    "fixedTargets": {
+      "toolExact": 0.9,
+      "observableToolAndArgumentsExact": 0.9,
+      "callPrecision": 0.9,
+      "generatedTestTotalLossBelow": 240.35,
+      "scope": "Fixed protected Test regression after Train/Dev selection; not fresh blind evidence."
+    },
+    "testPlan": "Train/Dev selection only. Fixed Test and predefined same-weight ablations only if Dev gates pass."
+  },
+  "launch": {
+    "pid": 402493,
+    "started": "2026-10-09T03:49:59.707910+00:00",
+    "argv": [
+      "/home/yunmin/.cache/uv/environments-v2/run-l40s-cff30979426844d4/bin/python",
+      "-u",
+      "scripts/run_tools.py",
+      "--config",
+      "configs/l40s-tools-v16.json",
+      "--continuation",
+      "results/l40s-tools-v15/base/42/language-sample-16384.pt"
+    ],
+    "sourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28",
+    "sourceConfigHash": "01993499592a6e0895880abd7fa6fc945303f57b62a1c9631c6f4aca9e7b8ee8"
+  },
+  "goalAchieved": false,
+  "runIdentity": {
+    "configHash": "b42ab02cab39527d0e6e96a190503edc9922a87e2e867deea09d6757d4d63db8",
+    "datasetHashes": {
+      "snapshot": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "expansion": "f07dc31c16724f45f822382110639ebd5fc1c5d4f224028f19af8eea40447999",
+      "toolSchema": "e3af728f61f437d16911547eec51109068254b1f93ddafe34cab1475d1a30838",
+      "researchConfig": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "constructionReplay": {
+        "results/l40s-tools-v4/base/42/value-targets-0.jsonl": "5b481dd2588b475c67e3022153522653f02f70a5d33f3b36fde4e900b31ef088",
+        "results/l40s-tools-v4/base/42/value-targets-1.jsonl": "341db88d5096251c7bd888204e2fa368248b6997f18bb7c0b29d5d70a32dd0e7",
+        "results/l40s-tools-v12/base/42/value-targets-0.jsonl": "d50139b0a2cf912020187443ba473cfb12be88f1c57225fa1b2e6db76b24c7d1",
+        "results/l40s-tools-v12/base/42/value-targets-1.jsonl": "1c862c4a6fdcaed87c5579e41e6b319372570286634832b799308dedd7c8b317"
+      }
+    },
+    "sourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28",
+    "limit": null
+  },
+  "continuationCheck": {
+    "path": "results/l40s-tools-v16/continuation-import-check.json",
+    "hash": "5bc814f33b7750d3fe44d00c033eca0a2d09ccb1b610b6bf7eaebf54e386d689"
+  },
+  "optimizerUpdateCheck": {
+    "path": "results/l40s-tools-v16/continuation-update-check.json",
+    "hash": "afb86f23d038153ab0673056e19b4b3584d4850f9ebd5d74bd4ee8243d423e22"
+  },
+  "developmentChecks": [
+    {
+      "timestamp": "2026-10-09T03:51:23.091537+00:00",
+      "stage": "language_dev_revalidated",
+      "elapsedSeconds": 38.72596520895604,
+      "epoch": 0,
+      "processed": 16384,
+      "tools": {
+        "actionAccuracy": 0.8958333333333334,
+        "toolExact": 0.6875,
+        "observableToolAndArgumentsExact": 0.6875,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.22916666666666666,
+        "toolDecisionAccuracy": 0.875,
+        "argumentsDecisionAccuracy": 0.875,
+        "spokenReferenceF1": 0.07460643317768972
+      },
+      "devLoss": 3.6404993487727277,
+      "accepted": true,
+      "revalidatedParent": true,
+      "sourceHash": "0917868a01a2fe4653420882048dfbdbaef944c064bf588e8fcddf6030d05d28"
+    },
+    {
+      "timestamp": "2026-10-09T04:00:18.407591+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 574.0420168669662,
+      "epoch": 1,
+      "processed": 20480,
+      "seenCases": 20480,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.625,
+        "observableToolAndArgumentsExact": 0.625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.25,
+        "correctCall": 0.20833333333333334,
+        "toolDecisionAccuracy": 0.84375,
+        "argumentsDecisionAccuracy": 0.84375,
+        "spokenReferenceF1": 0.06763075453611425
+      },
+      "devLoss": 4.1563209045700455,
+      "accepted": false,
+      "staleChecks": 1,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    },
+    {
+      "timestamp": "2026-10-09T04:09:39.219508+00:00",
+      "stage": "language_dev",
+      "elapsedSeconds": 1134.853935870924,
+      "epoch": 1,
+      "processed": 24576,
+      "seenCases": 24576,
+      "tools": {
+        "actionAccuracy": 0.8541666666666666,
+        "toolExact": 0.59375,
+        "observableToolAndArgumentsExact": 0.5625,
+        "expectedCall": 0.3333333333333333,
+        "predictedCall": 0.2708333333333333,
+        "correctCall": 0.19791666666666666,
+        "toolDecisionAccuracy": 0.8229166666666666,
+        "argumentsDecisionAccuracy": 0.8125,
+        "spokenReferenceF1": 0.06668378483914456
+      },
+      "devLoss": 4.071074193660253,
+      "accepted": false,
+      "staleChecks": 2,
+      "earlyStopped": false,
+      "budgetStopped": false,
+      "languageGoalPassed": false,
+      "goalStopped": false
+    }
+  ],
+  "knownCostAudit": {
+    "path": "results/l40s-tools-v16/value-cost-audit.json",
+    "scope": "Separate proposal only; no active source/config change."
+  },
+  "historyRecognition20480": {
+    "path": "results/l40s-tools-v16/history-diagnosis-20480.json",
+    "correct": 172,
+    "observed": 176
+  },
+  "historyAblation20480": {
+    "path": "results/l40s-tools-v16/history-ablation-20480",
+    "status": "CPU baseline complete; state-off replay running.",
+    "referenceAgreement": {
+      "cases": 96,
+      "matchingDecisions": 95,
+      "differences": [
+        {
+          "id": "abcd:3401:7",
+          "reference": {
+            "action": "call_tool",
+            "tool": "pull-up-account",
+            "arguments": [
+              "Alessandro Phoenix"
+            ]
+          },
+          "diagnostic": {
+            "action": "call_tool",
+            "tool": "pull-up-account",
+            "arguments": [
+              "Alessandro Phoenix DI80TS1CVZ"
+            ]
+          }
+        }
+      ]
+    },
+    "scope": "CPU FP32 baseline differs from original GPU BF16 in one argument span. Compare arms within CPU only; do not replace original GPU goal scores."
+  },
+  "trainLoss20480": {
+    "path": "results/l40s-tools-v16/train-loss-20480.json",
+    "scope": "Component training losses only, not execution metrics."
+  },
+  "inputAmbiguityAudit": {
+    "path": "results/l40s-tools-v16/action-ambiguity-audit.json",
+    "script": "results/l40s-tools-v16/audit-action-ambiguity.py",
+    "summary": {
+      "train": {
+        "cases": 93003,
+        "uniqueObservedInputs": 92996,
+        "callCases": 27866,
+        "contradictoryInputGroups": 0,
+        "minimumErrorsOnExactDuplicates": 0
+      },
+      "dev": {
+        "cases": 96,
+        "uniqueObservedInputs": 96,
+        "callCases": 32,
+        "contradictoryInputGroups": 0,
+        "minimumErrorsOnExactDuplicates": 0
+      }
+    }
+  },
+  "historyRecognition24576": {
+    "path": "results/l40s-tools-v16/history-diagnosis-24576.json",
+    "correct": 171,
+    "observed": 176,
+    "lastCorrect": 72,
+    "lastObserved": 74
+  }
+}

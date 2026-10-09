@@ -1,0 +1,103 @@
+{
+  "scope": "Code fixes, Train/Dev retention checks and policy-only retraining; original Test retained for regression comparison. Generated scenarios do not establish real organizational effectiveness.",
+  "sourceHash": "c260777dd0c7e0a7e6599f2b465871f276ddd55e49ce24a1d932b9da58050fd8",
+  "config": "configs/l40s-policy-v2.json",
+  "unit": "newsvendor-l40s-policy-v2-42.service",
+  "testsPassed": 46,
+  "pipelineCheck": {
+    "variants": [
+      "base",
+      "no_value",
+      "large"
+    ],
+    "split": "dev",
+    "limit": 1,
+    "artifact": "results/l40s-policy-v2-ready",
+    "status": "complete"
+  },
+  "sourceOverlaps": 0,
+  "protectedSnapshotUnchanged": true,
+  "numericalSmokeEpisodes": 30,
+  "falseHandoffs": 0,
+  "warmStart": "results/l40s-efficient/<backbone>/42/common.pt",
+  "fixes": [
+    "Public task action masks retain query layout and order.",
+    "Tool schema masks extraction modes and validates JSON string types.",
+    "Unannotated public states cannot gate values; explicit research states still apply.",
+    "Research 8 plus source-family balanced public Train replay 8 per policy update.",
+    "Frozen initial model predictions provide replay loss targets only; encoder stays trainable.",
+    "Economic Dev improvement and every protected public Dev metric required for checkpoint acceptance; otherwise initial checkpoint remains.",
+    "Explicit common imports validate data, scope, seed, backbone and original training inputs; parent config/source/archive/checkpoint hashes retained."
+  ],
+  "runStatus": "complete",
+  "supersededProbe": "results/l40s-policy",
+  "completion": {
+    "started": "2026-10-08T02:29:04.958332+00:00",
+    "finished": "2026-10-08T03:01:51.722550+00:00",
+    "wallSeconds": 1966.764218,
+    "results": {
+      "base": {
+        "beforeToolAndArgsCorrect": 0,
+        "afterToolAndArgsCorrect": 16,
+        "cases": 23,
+        "beforeToolCorrect": 1,
+        "afterToolCorrect": 19,
+        "toolCases": 26,
+        "beforeGeneratedLoss": 181.13274971176935,
+        "afterGeneratedLoss": 240.34888370094546,
+        "selection": {
+          "iteration": 0,
+          "epoch": 1,
+          "economicLoss": 166.3868653908886,
+          "reason": "economic improvement with public Dev retention"
+        },
+        "finiteWeights": true,
+        "trainAndDevIdsUnchanged": true,
+        "researchSplitsUnchanged": true,
+        "trainingSeconds": 472.05398405203596
+      },
+      "no_value": {
+        "beforeToolAndArgsCorrect": 1,
+        "afterToolAndArgsCorrect": 14,
+        "cases": 23,
+        "beforeToolCorrect": 1,
+        "afterToolCorrect": 16,
+        "toolCases": 26,
+        "beforeGeneratedLoss": 275.23012528664344,
+        "afterGeneratedLoss": 358.3657736416931,
+        "selection": {
+          "iteration": null,
+          "epoch": null,
+          "economicLoss": 267.73283608904086,
+          "reason": "initial language/demand checkpoint"
+        },
+        "finiteWeights": true,
+        "trainAndDevIdsUnchanged": true,
+        "researchSplitsUnchanged": true,
+        "trainingSeconds": 461.20530661707744
+      },
+      "large": {
+        "beforeToolAndArgsCorrect": 7,
+        "afterToolAndArgsCorrect": 9,
+        "cases": 23,
+        "beforeToolCorrect": 7,
+        "afterToolCorrect": 9,
+        "toolCases": 26,
+        "beforeGeneratedLoss": 282.43160079606696,
+        "afterGeneratedLoss": 143.09711196628822,
+        "selection": {
+          "iteration": 0,
+          "epoch": 1,
+          "economicLoss": 87.36769033586232,
+          "reason": "economic improvement with public Dev retention"
+        },
+        "finiteWeights": true,
+        "trainAndDevIdsUnchanged": true,
+        "researchSplitsUnchanged": true,
+        "trainingSeconds": 826.8526914840331
+      }
+    },
+    "artifact": "results/l40s-policy-v2/fix-verification.json",
+    "comparison": "results/l40s-policy-v2/comparison-42.json"
+  }
+}

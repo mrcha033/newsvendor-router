@@ -52,6 +52,8 @@ def route(policy, history, tools, model, encoder):
 
 
 def decide(arm, public, history, environment, generator, model, encoder):
+    if arm == "structured":
+        return model.decide(public, history, environment.confirmed)
     instructions = public["policy"] + "\n" + FORMAT
     if arm == "typed":
         instructions += (

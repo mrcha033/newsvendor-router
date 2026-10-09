@@ -98,7 +98,15 @@ def public_input(row):
         "documents": {"id", "title", "text"},
         "tables": {"id", "cells"},
         "history": {"role", "text"},
-        "tools": {"id", "kind", "description", "argumentSlots"},
+        "tools": {
+            "id",
+            "kind",
+            "description",
+            "argumentSlots",
+            "parameters",
+            "requiresConfirmation",
+            "argumentStyle",
+        },
         "observations": {
             "date",
             "sales",
@@ -303,6 +311,7 @@ def abcd(contents, config):
         "Complete retailer policies for all workflows",
         json.dumps(guidelines, ensure_ascii=False, indent=2),
     )
+    policy_text = canonical(policy["text"])
     tools = [
         {"id": name, "kind": kind, "description": name.replace("-", " "), "argumentSlots": slots}
         for kind, values in ontology["actions"].items()
@@ -346,9 +355,7 @@ def abcd(contents, config):
                 roles = {"customer": "user", "agent": "assistant", "action": "tool"}
                 history = [{"role": roles[role], "text": text} for role, text in prefix]
                 targets = turn["targets"]
-                observed_text = canonical(
-                    " ".join(text for _, text in prefix) + " " + policy["text"]
-                )
+                observed_text = canonical(" ".join(text for _, text in prefix)) + " " + policy_text
                 target = {
                     "action": "call_tool" if turn["speaker"] == "action" else "speak",
                     "tool": targets[2],

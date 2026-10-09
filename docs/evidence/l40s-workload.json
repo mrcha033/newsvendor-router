@@ -1,0 +1,65 @@
+{
+  "scope": "Train-only workload audit; not an effectiveness result",
+  "sampleCases": 64,
+  "sampleMeanTokensPerCase": 21273.078125,
+  "trainCases": 94137,
+  "epochs": 3,
+  "estimatedTokensPerBackbone": 6007751266.359375,
+  "observedBaseCasesPerSecond": 3.1332703163886233,
+  "observedProgress": {
+    "timestamp": "2026-10-07T12:39:55.325941+00:00",
+    "stage": "language",
+    "elapsedSeconds": 3203.5020622860175,
+    "epoch": 1,
+    "processed": 20900,
+    "total": 94137,
+    "casesPerSecond": 3.1332703163886233,
+    "remainingEpochSeconds": 23373.980730910014,
+    "meanLoss": 2.294547400538404,
+    "encoderBatch": {
+      "cases": 2,
+      "paddedTokens": 45312,
+      "checkpointing": false,
+      "tokenLimit": 55000.0
+    },
+    "plannedCases": 2,
+    "backwardBatches": 1
+  },
+  "publicTrainExample": [
+    {
+      "id": "abcd:10445:16",
+      "retrievalRound": 0,
+      "totalTokens": 11992,
+      "documentTokens": 6764,
+      "queryTokensIncludingContext": 2721,
+      "sourceSequences": 25
+    },
+    {
+      "id": "abcd:10445:16",
+      "retrievalRound": 1,
+      "totalTokens": 19856,
+      "documentTokens": 13412,
+      "queryTokensIncludingContext": 2721,
+      "sourceSequences": 33
+    },
+    {
+      "id": "abcd:10445:16",
+      "retrievalRound": 2,
+      "totalTokens": 27720,
+      "documentTokens": 19932,
+      "queryTokensIncludingContext": 2721,
+      "sourceSequences": 41
+    }
+  ],
+  "findings": [
+    "Language training samples retrieval rounds 0/1/2 independently of the predicted need to retrieve.",
+    "Selected document chunks increase from 8 to 16 to 24 per case.",
+    "Shared policies are freshly encoded for each conversation prefix with current trainable weights.",
+    "Repeated policy encoding is a major token cost; usefulness must be checked before reducing input."
+  ],
+  "constraints": [
+    "Keep the original corpus and protected Dev/Test groups.",
+    "Do not reuse stale trainable encoder states.",
+    "Do not choose inputs from hidden evaluation labels."
+  ]
+}

@@ -36,6 +36,12 @@ def document(input, id, title, text, role="system", version=1, complete=True):
 
 
 def answer_doc(input, slot, value, id="response"):
+    if slot in ("c", "p"):
+        title, label, role = {
+            "c": ("Purchase quotation", "Purchase cost per unit", "buyer"),
+            "p": ("Sales price list", "Selling price per unit", "sales"),
+        }[slot]
+        return document(input, id, title, f"{label} = {value:.12g}.", role, 3)
     if slot == "v":
         return document(
             input,
@@ -69,11 +75,15 @@ def outcome(input, action, value):
         return next
     if value == "partial":
         texts = {
+            "c": "Purchase terms received; the unit cost is incomplete.",
+            "p": "Sales terms received; the selling price is incomplete.",
             "v": "Return terms received; the refund and handling fee are incomplete.",
             "b": "Manager received the question but has not selected a cost policy.",
             "demand": "Analyst returned a partial history with unresolved stockouts.",
         }
         titles = {
+            "c": "Purchase quotation",
+            "p": "Sales price list",
             "v": "Current return contract",
             "b": "Manager decision",
             "demand": "Partial demand response",
@@ -104,7 +114,7 @@ def outcome(input, action, value):
             )
         next["observations"] = observations
     else:
-        title = "return" if action == "v" else "Manager decision"
+        title = {"c": "Purchase quotation", "p": "Sales price list", "v": "return", "b": "Manager decision"}[action]
         next["docs"] = [d for d in next["docs"] if title not in d["title"]]
         next["docs"].append(answer_doc(next, action, value, f"response-{action}"))
     return next

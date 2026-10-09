@@ -1,0 +1,95 @@
+{
+  "status": "Superseded at 95,232 cases by v11 workflow target correction; performance goal not achieved.",
+  "run": "results/l40s-tools-v10/base/42/run.json",
+  "sourceHash": "deb1f4d315f06570aac5ae18975030ccb4ec4989bc43bf100545d39ce2c9878f",
+  "configuredHash": "64a5893d512c8200f1b95d86ce8650f4f72156b7cd6a2c1925c4f9be2d46c3a9",
+  "tests": {
+    "command": "uv run pytest -q",
+    "passed": 84,
+    "seconds": 15.8
+  },
+  "lint": {
+    "command": "uv run ruff check src scripts tests",
+    "passed": true
+  },
+  "sourceGroups": {
+    "addedCases": 92733,
+    "sourceOverlaps": 0,
+    "protectedSnapshotUnchanged": true
+  },
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "benchmark": {
+    "path": "results/l40s-tools-v10/benchmark.json",
+    "measurements": [
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 0,
+        "cases": 64,
+        "seconds": 14.350562024046667,
+        "casesPerSecond": 4.459755645302097,
+        "loss": 4.508810447179712,
+        "encodedTokens": 242445,
+        "peakBytes": 41157929472,
+        "rerankGradients": [
+          105.83980429917574,
+          78.64294653385878
+        ],
+        "rerankUpdated": true
+      },
+      {
+        "paddingRatio": 1.25,
+        "tokenLimit": 65000,
+        "repeat": 1,
+        "cases": 64,
+        "seconds": 6.3859884979901835,
+        "casesPerSecond": 10.021941007275892,
+        "loss": 2.9668347618426196,
+        "encodedTokens": 242682,
+        "peakBytes": 42372081152,
+        "rerankGradients": [
+          46.75654651969671,
+          37.795469988137484
+        ],
+        "rerankUpdated": true
+      }
+    ]
+  },
+  "continuation": {
+    "parentCheckpoint": "results/l40s-tools-v9/base/42/language-progress.pt",
+    "checkpointHash": "a7102e403db1b66cae7cacef94335243cec226354351c18b80fd79aacc8cfc13",
+    "processed": 77824,
+    "rerankSupervisionUpgrade": true,
+    "rerankEnabled": true,
+    "actualWeightsAndMomentsEqualAtImport": true,
+    "populatedOptimizerStates": 232
+  },
+  "scope": "Train-only gradient/throughput checks, not evidence of efficacy. Protected fixed Test unchanged; no Test features or selection.",
+  "configHash": "8fdfb309818f4e92a00671d5c2a81c7278941d7b67c77a70e641b9774ed34ba9",
+  "gpu": {
+    "device": "cuda:0",
+    "cuda": "13.0",
+    "name": "NVIDIA L40S",
+    "totalBytes": 47667740672,
+    "capability": [
+      8,
+      9
+    ],
+    "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+  },
+  "actualTrainingUpdate": {
+    "checkpoint": "results/l40s-tools-v10/base/42/language-progress.pt",
+    "processed": 78848,
+    "rerankParameterMaxChanges": {
+      "tools.rerank.0.weight": 0.006682638078927994,
+      "tools.rerank.0.bias": 0.005925539880990982,
+      "tools.rerank.2.weight": 0.004217107314616442,
+      "tools.rerank.2.bias": 0.0026887664571404457
+    },
+    "optimizerStates": 236,
+    "parentOptimizerStates": 232
+  }
+}

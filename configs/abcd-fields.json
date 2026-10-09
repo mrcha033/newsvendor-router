@@ -1,0 +1,224 @@
+{
+  "source": "asappresearch/abcd/data/ontology.json",
+  "revision": "6b8700ce67c6b37b062dd7a60abc76d7ef832a97",
+  "sha256": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c",
+  "fields": {
+    "account_slotval": {
+      "type": "string",
+      "description": "account slotval",
+      "enum": [
+        "add service",
+        "extend subscription",
+        "remove service",
+        "renew subscription"
+      ]
+    },
+    "company_team": {
+      "type": "string",
+      "description": "company team",
+      "enum": [
+        "manager",
+        "website team",
+        "purchasing department"
+      ]
+    },
+    "details_slotval": {
+      "type": "string",
+      "description": "details slotval",
+      "enum": [
+        "troubleshoot"
+      ]
+    },
+    "membership_level": {
+      "type": "string",
+      "description": "membership level",
+      "enum": [
+        "guest",
+        "bronze",
+        "silver",
+        "gold"
+      ]
+    },
+    "change_option": {
+      "type": "string",
+      "description": "change option",
+      "enum": [
+        "change address",
+        "change date",
+        "change item",
+        "change method",
+        "change order",
+        "change price",
+        "change time"
+      ]
+    },
+    "order_slotval": {
+      "type": "string",
+      "description": "order slotval",
+      "enum": [
+        "give credit",
+        "tomorrow",
+        "next week",
+        "cancel shipment",
+        "by mail",
+        "in store",
+        "drop off center",
+        "waive fee"
+      ]
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "payment method",
+      "enum": [
+        "credit card",
+        "debit card",
+        "paypal"
+      ]
+    },
+    "product": {
+      "type": "string",
+      "description": "product",
+      "enum": [
+        "calvin klein boots",
+        "calvin klein jacket",
+        "calvin klein jeans",
+        "calvin klein shirt",
+        "guess boots",
+        "guess jacket",
+        "guess jeans",
+        "guess shirt",
+        "michael kors boots",
+        "michael kors jacket",
+        "michael kors jeans",
+        "michael kors shirt",
+        "tommy hilfiger boots",
+        "tommy hilfiger jacket",
+        "tommy hilfiger jeans",
+        "tommy hilfiger shirt"
+      ]
+    },
+    "refund_target": {
+      "type": "string",
+      "description": "refund target",
+      "enum": [
+        "add value",
+        "credit card",
+        "gift card",
+        "paper check"
+      ]
+    },
+    "reason_slotval": {
+      "type": "string",
+      "description": "reason slotval",
+      "enum": [
+        "subscription refund",
+        "previous purchase",
+        "promotional package",
+        "email",
+        "spouse",
+        "news",
+        "competitor",
+        "yesterday",
+        "9 days",
+        "5 days"
+      ]
+    },
+    "shipping_option": {
+      "type": "string",
+      "description": "shipping option",
+      "enum": [
+        "delivered",
+        "in transit",
+        "order received",
+        "out for delivery"
+      ]
+    },
+    "single_item_query": {
+      "type": "string",
+      "description": "single item query",
+      "enum": [
+        "boots_how_1",
+        "boots_how_2",
+        "boots_how_3",
+        "boots_how_4",
+        "boots_other_1",
+        "boots_other_2",
+        "boots_other_3",
+        "boots_other_4",
+        "jacket_how_1",
+        "jacket_how_2",
+        "jacket_how_3",
+        "jacket_how_4",
+        "jacket_other_1",
+        "jacket_other_2",
+        "jacket_other_3",
+        "jacket_other_4",
+        "jeans_how_1",
+        "jeans_how_2",
+        "jeans_how_3",
+        "jeans_how_4",
+        "jeans_other_1",
+        "jeans_other_2",
+        "jeans_other_3",
+        "jeans_other_4",
+        "shirt_how_1",
+        "shirt_how_2",
+        "shirt_how_3",
+        "shirt_how_4",
+        "shirt_other_1",
+        "shirt_other_2",
+        "shirt_other_3",
+        "shirt_other_4"
+      ]
+    },
+    "storewide_query": {
+      "type": "string",
+      "description": "storewide query",
+      "enum": [
+        "membership_1",
+        "membership_2",
+        "membership_3",
+        "membership_4",
+        "policy_1",
+        "policy_2",
+        "policy_3",
+        "policy_4",
+        "pricing_1",
+        "pricing_2",
+        "pricing_3",
+        "pricing_4",
+        "timing_1",
+        "timing_2",
+        "timing_3",
+        "timing_4"
+      ]
+    }
+  },
+  "names": [
+    "account_id",
+    "account_slotval",
+    "amount",
+    "change_option",
+    "company_team",
+    "customer_name",
+    "details_slotval",
+    "email",
+    "full_address",
+    "membership_level",
+    "order_id",
+    "order_slotval",
+    "payment_method",
+    "phone",
+    "pin_number",
+    "product",
+    "reason_slotval",
+    "refund_target",
+    "security_answer",
+    "shipping_option",
+    "single_item_query",
+    "storewide_query",
+    "street_address",
+    "username",
+    "zip_code"
+  ]
+}
