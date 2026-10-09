@@ -49,6 +49,6 @@ Train 출처를 68개 적합/17개 보류로 나누고, 보류 출처의 상태 
 
 `run_research.py --stage train`이 `constructionReplay`에 등록된 실제 Train 상태를 `research_cases`에 전달한다. 주석은 현재 관측 문서와 받은 응답에서 다시 만들며, rollout의 예측 상태나 최종 손실을 모수 상태 정답으로 쓰지 않는다. 등록된 Train 사건·출처가 다른 행과 Dev/Test 행은 거부한다. 원래 언어 사례와 중복되는 관측 입력도 다시 더하지 않는다. 옵션을 지정하지 않은 기존 경로는 동일하다.
 
-이 연결 수정 후 encoder 전체를 다시 학습한 결과는 아직 없다. 위 비교는 수정 전과 같은 encoder를 사용한 상태 head 진단이다. 전체 재학습 결과로 표현하지 않는다.
+위 비교는 같은 encoder를 사용한 상태 head 진단이다. 이후 실제 rollout 상태를 연결하여 encoder까지 추가 학습한 두 조건과, 모수 학습·추론 입력 불일치 수정은 [별도 비교](constructor-training.md)에 기록했다. 두 추가 학습 후보도 부모를 넘지 못해 선택되지 않았다.
 
 [검증·측정 요약](evidence/research-parameter-state-results.json)과 [원시 측정·표현·head·실행 코드 묶음](evidence/artifacts/research-parameter-state.tar.xz)에 유리한 결과와 불리한 결과를 함께 보존한다. 등록 당시 소스와 현재 학습 연결 수정의 소스 hash를 구분한다. 전체 ModernBERT 부모 가중치는 이 묶음에 포함하지 않아, 이 자료만으로 전체 언어 모델 추론을 외부에서 재실행할 수 있는 것은 아니다.

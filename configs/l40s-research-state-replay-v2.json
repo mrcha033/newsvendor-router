@@ -1,0 +1,132 @@
+{
+  "dataset": "data/processed/complementary",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-research-state-replay-v2/base/42",
+  "seed": 42,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25
+  },
+  "training": {
+    "epochs": 1,
+    "encoderLr": 1e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 512,
+    "checkpointEvery": 4096,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "research",
+    "validateInitial": true,
+    "validationEvery": 0,
+    "patience": 0,
+    "mix": {
+      "research": 0.8,
+      "public": 0.2
+    }
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 1,
+    "epochs": 30,
+    "noise": 0.1,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 2,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed",
+    "selection": "benchmark_normalized"
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "demandCheckpoint": null,
+  "documentComponents": [
+    "cuad",
+    "contractnli",
+    "orsharc",
+    "tatqa"
+  ],
+  "evaluateInitial": true,
+  "originalResearch": true,
+  "constructionReplay": [
+    "results/l40s-research-state-replay-v2/construction-replay.jsonl"
+  ],
+  "stateReplayStudy": {
+    "scope": "One full-encoder continuation on observed initial/reply states plus actual Train rollout replay; original public Train annotations serve as retention data. Not a matched causal estimate of replay alone.",
+    "parent": "selected forecast-v1",
+    "encoderAndHeadsTrainable": true,
+    "demandFixed": true,
+    "publicTrain": "Original complementary Train only; expanded TAT-QA was already used in the parent but is not repeated in this short retention pass. Dev records must match the parent dataset.",
+    "acceptance": "Original Dev learned-policy generated and retail mean total must not increase; final parameter, state, type, evidence, false-handoff and request recovery metrics must not regress. Public component retention metrics must not regress. State improvement alone is not proof of economic benefit.",
+    "testUsed": false,
+    "legacyTestUsedForSelection": false,
+    "newSourceHoldoutUsedForSelection": false
+  }
+}

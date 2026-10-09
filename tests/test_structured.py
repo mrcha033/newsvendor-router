@@ -4092,6 +4092,40 @@ def test_research_cases_use_actual_bounded_replies_and_reject_test():
         research_cases([{**episode, "split": "test"}])
 
 
+def test_research_field_training_matches_constructor_inputs(
+    tokenizer, settings, model, monkeypatch
+):
+    from newsvendor import structured_rollout
+    from newsvendor.structured_train import language_view
+
+    episode = next(
+        e
+        for e in corpus.generate(read("configs/full.json"))
+        if e["split"] == "train" and e["scenario"] == "sufficient"
+    )
+    observed = []
+
+    def capture(*args, **kwargs):
+        view = prepare(*args, **kwargs)
+        observed.append(view)
+        return view
+
+    monkeypatch.setattr(structured_rollout, "prepare", capture)
+    monkeypatch.setattr(
+        structured_rollout, "extract", lambda *args: observed_fields(episode["input"])
+    )
+    structured_rollout.ResearchRouter(model, tokenizer, settings).construct(episode["input"])
+    training, targets = language_view(
+        ("research", episode), tokenizer, {"encoder": settings}, {}, []
+    )
+    inference = observed[0]
+    assert set(targets) == {"fields"}
+    assert training["actions"] == inference["actions"]
+    assert training["queryPositions"] == inference["queryPositions"]
+    assert torch.equal(training["batch"]["input_ids"], inference["batch"]["input_ids"])
+    assert torch.equal(training["batch"]["attention_mask"], inference["batch"]["attention_mask"])
+
+
 def test_policy_selection_keeps_benchmarks_separate_and_is_unit_invariant():
     from newsvendor.structured_critic import selection_score
 

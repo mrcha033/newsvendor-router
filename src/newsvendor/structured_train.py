@@ -250,7 +250,9 @@ def language_view(case, tokenizer, config, labels, collection, round=0, state=No
             tokenizer,
             config["encoder"],
             fields=FIELDS,
-            actions=[{"id": a, "text": TEXT[a]} for a in TEXT],
+            # This loss supervises fields only. Match the constructor's query set:
+            # packed encoding and fusion self-attention otherwise change field states.
+            actions=[{"id": "hold", "text": TEXT["hold"]}],
             round=round,
         )
         target = research_targets(view, row["input"])
