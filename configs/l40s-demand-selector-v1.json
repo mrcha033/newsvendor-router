@@ -1,0 +1,26 @@
+{
+  "dataset": "data/processed/core-retail-train-v1",
+  "parent": "results/l40s-demand-selection-v2",
+  "output": "/dev/shm/newsvendor-demand-selector-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "seeds": [42, 43, 44],
+  "conditions": ["huber", "mean_difference"],
+  "epochs": 20,
+  "batchSize": 256,
+  "lr": 0.001,
+  "study": {
+    "candidateSeed": 42,
+    "testUsed": false,
+    "scope": "Only refit distribution selection. Reuse each seed's frozen GRU, three parameter heads, Train-only source cross-fitted losses and exact data from demand-selection-v2. Both objectives use the original selector initialization, identical cached states, batches, AdamW settings and 20 epochs. Dev weekly observation NLL chooses the epoch, as in the parent study. Keep all three seeds; do not pick the best seed.",
+    "trainDiagnosis": "results/research-checks/demand-selector/targets.json",
+    "selection": [
+      "Require source-disjoint Train/Dev, unchanged origins and frozen parameter hashes. Recompute each parent Dev prediction and require exact agreement before training the candidate.",
+      "Report the matched cached Huber control separately from the retained parent. Caching can change floating-point training details, so do not call it an exact historical retraining.",
+      "Against both the matched Huber and same-seed parent, seed 42 must lower weekly daily-allocation observation NLL and complete-period CRPS, and not increase any weekly order-loss ratio (1,3,9).",
+      "For seed 42, one-day CRPS and observation NLL must not worsen, and complete weekly 80-percent coverage must not decrease against either reference.",
+      "At least two of three seeds must improve weekly daily-allocation observation NLL, complete-period CRPS and mean order loss against both references.",
+      "Only if these gates pass, evaluate the frozen language and manager policy with the new seed-42 demand selector. Require lower actual retail total loss, no increase in invalid handoffs or unnecessary requests, and no change to the generated demand response path before replacement.",
+      "No Test or frozen 27-source holdout evaluation. Complete periods are a selected subset; repeated Dev selection and overlapping windows do not establish real-world calibration or organizational effectiveness."
+    ]
+  }
+}

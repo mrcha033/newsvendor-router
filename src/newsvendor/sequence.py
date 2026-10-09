@@ -279,6 +279,21 @@ def measure(model, rows, batch_size=64, config=None):
     return torch.cat(result)
 
 
+def selector_loss(scores, targets, kind="huber"):
+    """Fit loss scores, or mean differences whose minimum has minimum expected loss.
+
+    Centering removes each observation's common loss level without changing its
+    family differences. Squared loss elicits their conditional mean; Huber loss
+    is retained for reproducible historical experiments, but need not do so.
+    """
+    require(kind in ("huber", "mean_difference"), "Unknown demand selector loss")
+    if kind == "huber":
+        return fn.smooth_l1_loss(scores, targets)
+    return fn.mse_loss(
+        scores - scores.mean(-1, keepdim=True), targets - targets.mean(-1, keepdim=True)
+    )
+
+
 def cross_fit(model, training, development, config, seed, progress=None):
     require(all(r["split"] == "train" for r in training), "Cross-fit requires Train only")
     require(all(r["split"] == "dev" for r in development), "Checkpoint selection requires Dev")
@@ -414,7 +429,12 @@ def cross_fit(model, training, development, config, seed, progress=None):
                 state = model([r["sequence"] for r in batch], [r["horizon"] for r in batch])[
                     "state"
                 ]
-            objective = fn.smooth_l1_loss(model.family(state), target[ids].to(state.device))
+            objective = selector_loss(
+                model.family(state),
+                target[ids].to(state.device),
+                config.get("selectorLoss", "huber"),
+            )
+            require(torch.isfinite(objective).item(), "Nonfinite demand selector objective")
             optimizer.zero_grad(set_to_none=True)
             objective.backward()
             optimizer.step()
@@ -446,7 +466,8 @@ def cross_fit(model, training, development, config, seed, progress=None):
         "selectorLosses": selector_losses,
         "selectedEpoch": selected,
         "devSelectedNLL": best if development else None,
-        "objective": "Train source-held-out family observation-loss regression; minimum predicted loss",
+        "objective": "Train source-held-out family observation-loss regression; minimum predicted loss score",
+        "selectorLoss": config.get("selectorLoss", "huber"),
         "observation": config.get("observation", "aggregate"),
         "allocationFit": allocation_fit,
         "parameterSelection": selection,

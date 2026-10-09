@@ -276,7 +276,8 @@ def test_daily_observation_targets_never_change_forecast_features():
 
 
 @pytest.mark.parametrize("concentration", [1, "fit"])
-def test_daily_head_reuse_and_source_crossfit_train_the_same_gru(concentration):
+@pytest.mark.parametrize("selector", ["huber", "mean_difference"])
+def test_daily_head_reuse_and_source_crossfit_train_the_same_gru(concentration, selector):
     torch.manual_seed(42)
     torch.set_num_threads(1)
     rows, labels = observation_cases()
@@ -301,6 +302,7 @@ def test_daily_head_reuse_and_source_crossfit_train_the_same_gru(concentration):
         "allocationConcentration": concentration,
         "epochs": 1,
         "selectorEpochs": 1,
+        "selectorLoss": selector,
         "folds": 2,
         "lr": 0.001,
         "batchSize": 8,
@@ -309,6 +311,7 @@ def test_daily_head_reuse_and_source_crossfit_train_the_same_gru(concentration):
     report, records = sequence.cross_fit(model, train, dev, config, 42)
     assert not torch.equal(model.gru.weight_ih_l0, initial)
     assert report["observation"] == "daily_allocation" and report["selectedEpoch"] == 1
+    assert report["selectorLoss"] == selector
     assert len(records) == len(train) and all("dailyCensored" in r for r in records)
     for fold in report["folds"]:
         assert not set(fold["fitFamilies"]) & set(fold["heldFamilies"])
@@ -372,3 +375,33 @@ def test_parameter_epoch_selection_keeps_outer_sources_out_and_preserves_raw_mea
         assert raw.shape == (config["epochs"], len(selected["origins"]), 3)
         assert torch.isfinite(raw).all()
         assert selected["objective"] == min(c["objective"] for c in selected["curves"])
+
+
+def test_selector_mean_differences_preserve_offsets_and_elicit_expected_loss():
+    # A is usually cheaper but has a rare large loss. The expected best family
+    # is B. An observation-wise winning-family target or a robust median loses
+    # that distinction.
+    targets = torch.tensor([[0.0, 1.0, 4.0]] * 9 + [[20.0, 1.0, 4.0]], dtype=torch.float64)
+    expected = targets.mean(0)
+    scores = expected.repeat(len(targets), 1).requires_grad_()
+    objective = sequence.selector_loss(scores, targets, "mean_difference")
+    gradient = torch.autograd.grad(objective, scores)[0].sum(0)
+    torch.testing.assert_close(gradient, torch.zeros_like(gradient), atol=1e-12, rtol=0)
+    assert expected.argmin().item() == 1
+    shifted = sequence.selector_loss(
+        scores + torch.arange(10, dtype=torch.float64)[:, None] * 3,
+        targets - torch.arange(10, dtype=torch.float64)[:, None] * 7,
+        "mean_difference",
+    )
+    torch.testing.assert_close(shifted, objective, atol=1e-12, rtol=0)
+    # The historical robust objective is not stationary at the expected losses.
+    robust_gradient = torch.autograd.grad(sequence.selector_loss(scores, targets), scores)[0].sum(0)
+    assert robust_gradient[0] > 0
+    torch.testing.assert_close(
+        sequence.selector_loss(scores, targets),
+        torch.nn.functional.smooth_l1_loss(scores, targets),
+        rtol=0,
+        atol=0,
+    )
+    with pytest.raises(ValueError, match="Unknown demand selector loss"):
+        sequence.selector_loss(scores, targets, "unsupported")
