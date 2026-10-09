@@ -1,4 +1,5 @@
 import math
+from copy import deepcopy
 from datetime import date, timedelta
 
 import pytest
@@ -319,3 +320,55 @@ def test_daily_head_reuse_and_source_crossfit_train_the_same_gru(concentration):
         assert set(report["allocationFit"]["families"]) == {r["family"] for r in train}
     resolved = {**config, "allocationConcentration": report["allocationConcentration"]}
     assert torch.isfinite(sequence.measure(model, dev, config=resolved)).all()
+
+
+def test_parameter_epoch_selection_keeps_outer_sources_out_and_preserves_raw_measurements():
+    torch.manual_seed(42)
+    torch.set_num_threads(1)
+    original, targets = observation_cases()
+    rows, labels = [], {}
+    for index in range(7):
+        row = deepcopy(original[0])
+        identity = f"selection-{index}"
+        row.update(id=identity, family=identity, split="dev" if index == 6 else "train")
+        for i, day in enumerate(row["input"]["observations"]):
+            day.update(sales=float(2 + i % 4) + index / 10, stockoutHours=0)
+        labels[identity] = deepcopy(targets[original[0]["id"]])
+        labels[identity].update(
+            answer=[float(2 + i % 4) + index / 10 for i in range(7)], complete=[True] * 7
+        )
+        rows.append(row)
+    samples = sequence.samples(rows, labels)
+    train = [r for r in samples if r["split"] == "train"]
+    dev = [r for r in samples if r["split"] == "dev"]
+    config = {
+        "observation": "daily_allocation",
+        "allocationConcentration": "fit",
+        "epochs": 2,
+        "selectorEpochs": 1,
+        "folds": 2,
+        "lr": 0.001,
+        "batchSize": 16,
+        "dailyWeight": 1.0,
+        "parameterValidationFraction": 0.25,
+    }
+    report, records = sequence.cross_fit(sequence.DemandEncoder(hidden=8), train, dev, config, 42)
+    assert len(records) == len(train)
+    selections = [
+        (f["parameterSelection"], set(f["heldFamilies"]), f["losses"]) for f in report["folds"]
+    ]
+    selections.append(
+        (report["parameterSelection"], {r["family"] for r in dev}, report["parameterLosses"])
+    )
+    for selected, excluded, losses in selections:
+        fitting, held = set(selected["fitFamilies"]), set(selected["heldFamilies"])
+        assert fitting and held and not fitting & held
+        assert not (fitting | held) & excluded
+        assert set(selected["allocationFit"]["families"]) <= fitting
+        assert len(losses) == selected["selectedEpoch"] <= config["epochs"]
+        assert {r["family"] for r in selected["origins"]} == held
+        assert len(selected["curves"]) == config["epochs"]
+        raw = torch.tensor([c["familyNLL"] for c in selected["curves"]])
+        assert raw.shape == (config["epochs"], len(selected["origins"]), 3)
+        assert torch.isfinite(raw).all()
+        assert selected["objective"] == min(c["objective"] for c in selected["curves"])

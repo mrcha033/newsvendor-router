@@ -18,21 +18,23 @@
 
 행동 가치 head는 같은 구성기에서 단순 질문 정책 및 가치 학습을 제거한 `no_value`와 비교합니다. 판매 이력에 연결한 통제 Dev에서는 경제 가치 학습의 추가 이점이 확인되지 않았습니다. 범용 업무 절차·도구 후보 재평가·ABCD controller는 주 경로에 포함하지 않습니다.
 
+최신 Dev 선택 모델은 문서·행동 가중치를 고정하고 **수요 GRU만 교체**했습니다. Train 출처 안에서 모수 학습 횟수를 선택한 뒤 세 seed를 비교했고, 사전 후보 seed 42가 채택 기준을 통과했습니다. 같은 통제 Dev의 평균 총손실은 **44.3274 → 24.3925**, 최종 모수·근거 정확도는 100%, 불필요한 질문·잘못된 발주 진행은 0건입니다. `no_value`·고정 질문도 24.3925로 같아 가치 head의 추가 이점은 없습니다. 정확한 총손실은 고유 기간 **5개 × 7개 조건**에 한정하며, 새 모델의 Test는 실행하지 않았습니다. [수요 학습 수정과 세 seed 결과](docs/demand-selection.md) · [동일 구성기의 실제 발주 비교](docs/evidence/research-forecast-results.json)
+
 동일 head·자료·학습 횟수를 사용한 L40S base/large 비교는 종료됐습니다. 전체 크기는 151.85M/397.68M이며, 통제 Dev의 최종 모수·근거 정확도는 모두 100%, 완전 관측 기간의 평균 총손실은 모두 44.3274였습니다. 불필요한 질문은 base 3건, large 0건이었습니다. 정확한 손실은 **5개 고유 판매 기간 × 7개 통제 조건**에 한정하며, 문서와 매니저 응답의 통제 생성 조건을 실제 조직 효과로 해석하지 않습니다. 공개 문서 숫자 추출과 수요분포 품질에는 개선이 남아 있습니다. [비교 요약·원시 파일 hash와 지연·메모리](docs/evidence/research-paired-results.json)
 
 확장 문서 Train을 사용한 후속 base 학습도 완료됐습니다. 같은 TAT-QA Dev의 엄격 정답은 **0/48 → 11/48**이지만, ContractNLI 상태 정확도는 **65.28% → 62.50%**로 낮아졌습니다. [후속 문서 학습 결과](docs/evidence/research-documents-expanded-results.json)
 
-확장 수요 자료의 seed 42·43·44 학습도 완료됐으나, 주간 NLL·CRPS가 모두 악화해 기존 GRU를 유지했습니다. 수요 분포 보정은 미해결입니다. [확장 수요 비교](docs/evidence/research-demand-expanded-results.json) · [원래 생성 Dev 결과](docs/evidence/research-generated-dev-results.json)
+첫 확장 수요 학습에서는 seed 42·43·44의 주간 NLL·CRPS가 모두 악화해 당시 기존 GRU를 유지했습니다. 이 부정적인 결과도 후속 개선과 함께 보존합니다. [첫 확장 수요 비교](docs/evidence/research-demand-expanded-results.json) · [원래 생성 Dev 결과](docs/evidence/research-generated-dev-results.json)
 
 원래 생성 Train과 실제 매니저 응답 상태를 복구한 다음 학습에서는 TAT-QA 엄격 정답이 **16/48**, 생성 Dev 평균 총손실이 **147.6813**이었습니다. 생성 Dev 60건·12개 family의 결과이며 보호된 Test 목표 달성으로 해석하지 않습니다. 새 가치 학습 후보는 채택되지 않아 구성기 재학습 이후의 개선으로 기록합니다. [재학습 결과](docs/evidence/research-replay-results.json) 같은 구성기의 `no_value`와 고정 질문 정책은 생성 Dev에서 181.6758이었습니다. [정책 비교](docs/evidence/research-replay-no-value-results.json)
 
-이후 가중치를 고정한 **생성 Test 120건의 총손실은 243.6274**로 목표 240.35 미만에 미달했습니다. `no_value`와 고정 질문은 263.2379였습니다. 판매 이력에 연결한 Test 504사례의 모수·근거는 100%, 불필요한 질문·잘못된 발주 진행은 0건이지만, 정확한 손실 비교는 고유 기간 9개에 한정됩니다. 수요 예측 품질도 여전히 미해결입니다. [최종 고정 Test 결과와 제한](docs/evidence/research-core-test-results.json)
+GRU 교체 전 replay-v1을 고정한 **생성 Test 120건의 총손실은 243.6274**로 목표 240.35 미만에 미달했습니다. `no_value`와 고정 질문은 263.2379였습니다. 판매 이력에 연결한 Test 504사례의 모수·근거는 100%, 불필요한 질문·잘못된 발주 진행은 0건이지만, 정확한 손실 비교는 고유 기간 9개에 한정됩니다. 이 측정을 새 통합 모델의 Test 결과로 표시하지 않습니다. [기존 모델의 고정 Test 결과와 제한](docs/evidence/research-core-test-results.json)
 
 후속 Train 감사에서 행동 head의 텍스트 입력이 잘리면서 현재 모수 일부가 전달되지 않는 결함을 확인했습니다. 수치 상태를 직접 전달하는 선택 경로와, 작은 수치 차이 및 학습·추론 계산을 보존하는 FP32 행동 head를 추가했습니다. 실제 L40S의 수치 검증은 통과했으나 동일 예산 정책 비교에서는 추가 Dev 개선이 없어 기존 선택 모델을 유지합니다. [입력 수정](docs/policy-state.md) · [정밀도 수정과 세 조건 비교](docs/action-precision.md)
 
 학습 표적도 점검했습니다. 추가 응답 잡음을 기본 평가와 맞추는 조건과, 행동별 8회 실제 응답 경로의 평균 손실을 학습하는 조건을 L40S에서 비교했습니다. 두 조건 모두 추가 Dev 개선이 없어 기존 모델을 유지합니다. Train 응답 seed·원시 손실·후보별 결과와 제한은 [응답 표본과 가치 학습](docs/response-supervision.md)에 정리했습니다.
 
-날짜별 수요 배분을 Train 출처 안에서 추정하는 후속 비교에서는 세 seed 모두 완전 관측 7일 CRPS·발주 손실이 개선됐습니다. 그러나 일별 CRPS와 품절을 포함한 관측 NLL은 기존 GRU보다 악화됐고 사전 채택 기준에 미달했습니다. 기존 모델을 유지하며, 이번 작은 GRU 후보의 가중치와 원시 결과는 함께 공개합니다. [배분 가정 점검과 세 seed 결과](docs/demand-concentration.md)
+날짜별 수요 배분을 Train 출처 안에서 추정하되 고정 20회 학습한 비교에서는 세 seed 모두 완전 관측 7일 CRPS·발주 손실이 개선됐습니다. 그러나 일별 CRPS와 품절을 포함한 관측 NLL이 악화해 그 후보는 채택하지 않았습니다. 이후 Train 출처별 학습 곡선에서 과적합을 확인하고, 위의 학습 횟수 선택을 적용했습니다. [배분 가정 점검과 이전 세 seed 결과](docs/demand-concentration.md)
 
 ## 새 clone에서 실행
 
@@ -67,9 +69,9 @@ uv run --no-project scripts/run_research.py \
 
 [`research-from-scratch.json`](configs/research-from-scratch.json)은 원본 snapshot의 문서·판매 Train과 원래 생성 Train을 사용합니다. Dev로 선택하며 Test는 학습·모델 선택에 사용하지 않습니다. `results/research-from-scratch/demand/model.pt`에 GRU가, `results/research-from-scratch/base/42/model.pt`에 전체 모델이 저장됩니다. 두 단계는 기존 실행을 덮어쓰지 않습니다. 공개 snapshot에서 GRU 학습과 전체 모델 연결·encoder 갱신까지 확인했습니다. [재현 경로 검증](docs/evidence/research-reproduction-checks.json) CPU에서 GRU만 학습하려면 `uv run python scripts/train_demand.py --device cpu`를 사용할 수 있습니다.
 
-현재 주간 수요 학습은 품절일이 있는 합계를 하한으로 취급합니다. 이 점수는 날짜별로 검열된 관측의 정확한 likelihood가 아닐 수 있으며 편향을 보이는 수치 예제를 확인했습니다. 재현 경로를 추가한 것이 수요 모형의 결함을 해결한 것은 아닙니다. [관측 모형 수치 검사](docs/evidence/research-aggregate-censoring-check.json)
+위 cold-start 기본 설정은 품절일이 있는 주간 합계를 하한으로 취급합니다. 이 점수는 날짜별로 검열된 관측의 정확한 likelihood가 아닐 수 있으며 편향을 보이는 수치 예제를 확인했습니다. 최신 선택 모델의 확장 자료·날짜별 관측 likelihood 실험과는 구분합니다. [관측 모형 수치 검사](docs/evidence/research-aggregate-censoring-check.json)
 
-날짜별 정확 관측과 품절을 구분하는 새 likelihood도 구현하고 L40S에서 seed 3개를 비교했습니다. 수치 검증은 통과했으나 사전 채택 조건에 미달해 기존 GRU와 기본 설정을 유지합니다. 이 후보는 선택 옵션으로 보존하며 Test로 선택하지 않았습니다. [관측 모형과 비교 결과](docs/demand-observations.md)
+날짜별 정확 관측과 품절을 구분한 최초 likelihood 후보는 수치 검증을 통과했지만 세 seed의 비교에서 채택 조건에 미달했습니다. 배분 농도 추정과 학습 횟수 선택까지 적용한 최신 설정은 [별도 실험 설정](configs/l40s-demand-selection-v2.json)에 보존합니다. 이 확장 자료 실험도 Test로 선택하지 않았습니다. [최초 관측 모형과 비교 결과](docs/demand-observations.md)
 
 ## 공개 자료와 재현 범위
 
@@ -77,7 +79,8 @@ uv run --no-project scripts/run_research.py \
 | --- | --- |
 | 원본 상보적 과제·주문 과제 | [압축 snapshot](cases/evaluation.tar.xz), [파일 hash·revision·라이선스](cases/evaluation.json); `restore-eval`로 복원 |
 | 원래 통제 시나리오 | [생성 설정](configs/full.json)과 [생성 코드](src/newsvendor/corpus.py); 600건, 출처 family 120개 |
-| 현재 ModernBERT·GRU | 학습·추론 코드와 고정 설정 제공. 과거 실행의 checkpoint 자체는 아직 공개되지 않음 |
+| 선택한 ModernBERT 통합 모델 | 학습·추론 코드, 설정, 부모·선택 checkpoint hash 제공. 전체 checkpoint는 아직 공개되지 않음 |
+| 선택한 수요 GRU와 반복 실험 | [세 seed의 실제 가중치·모든 내부 검증 손실·Dev 예측](docs/evidence/research-selection-results.json)을 압축 artifact로 제공 |
 | 확장 문서·판매 자료 | [문서 확장 기록](docs/evidence/research-document-expansion.json), [판매 확장 기록](docs/evidence/research-retail-expansion.json), [분할 검사](docs/evidence/research-expansion-audit.json). 기본 snapshot에는 미포함 |
 | 실험 요약과 검증 | [연구 범위](docs/research-scope.md), [추적되는 evidence JSON](docs/evidence/). JSON 안의 `results/` 경로는 로컬 원시 파일의 위치와 hash이며 다운로드 링크가 아님 |
 | 과거 native-v3 | [CPU 가중치와 원시 결과](models/native/), [이전 실행 안내](docs/native-history.md). 현재 ModernBERT의 가중치가 아님 |

@@ -227,16 +227,16 @@ def losses(output, rows, config=None):
     )
 
 
-def fit_params(model, rows, config, seed):
+def fit_params(model, rows, config, seed, observe=None):
     require(rows, "Empty demand training fold")
     optimizer = torch.optim.AdamW(
         [p for name, p in model.named_parameters() if not name.startswith("family.")],
         lr=config["lr"],
     )
     rand = torch.Generator().manual_seed(seed)
-    model.train()
     history = []
-    for _ in range(config["epochs"]):
+    for epoch_number in range(1, config["epochs"] + 1):
+        model.train()
         epoch = []
         for ids in torch.randperm(len(rows), generator=rand).split(config.get("batchSize", 64)):
             batch = [rows[i] for i in ids.tolist()]
@@ -259,6 +259,8 @@ def fit_params(model, rows, config, seed):
             optimizer.step()
             epoch.append(float(objective.detach()))
         history.append(float(np.mean(epoch)))
+        if observe is not None:
+            observe(model, epoch_number)
     return history
 
 
@@ -299,15 +301,72 @@ def cross_fit(model, training, development, config, seed, progress=None):
         fitted = fit_concentration(rows)
         return {**config, "allocationConcentration": fitted["concentration"]}, fitted
 
+    def parameter_fit(rows, random_seed, label):
+        fraction = config.get("parameterValidationFraction", 0)
+        require(0 <= fraction < 1, "Invalid parameter validation fraction")
+        selection = None
+        if fraction:
+            families = sorted(
+                {r["family"] for r in rows}, key=lambda f: digest([random_seed, "inner", f])
+            )
+            count = max(1, round(len(families) * fraction))
+            require(count < len(families), "Insufficient inner source groups")
+            held_families = set(families[:count])
+            fitting = [r for r in rows if r["family"] not in held_families]
+            validation = [r for r in rows if r["family"] in held_families]
+            inner_config, inner_allocation = observation_config(fitting)
+            curves = []
+            weights = torch.tensor(
+                [config.get("dailyWeight", 0.3) if r["horizon"] == 1 else 1 for r in validation]
+            )
+
+            def observe(current, epoch):
+                values = measure(current, validation, config.get("batchSize", 64), inner_config)
+                require(torch.isfinite(values).all().item(), "Nonfinite inner source likelihood")
+                curves.append(
+                    {
+                        "epoch": epoch,
+                        "objective": float((values.mean(-1) * weights).sum() / weights.sum()),
+                        "familyNLL": values.tolist(),
+                    }
+                )
+
+            if progress:
+                progress.update("demand", activity="parameter_selection", fold=label)
+            model.load_state_dict(initial)
+            fit_params(model, fitting, inner_config, random_seed, observe)
+            selected = min(curves, key=lambda c: c["objective"])
+            selection = {
+                "selectedEpoch": selected["epoch"],
+                "objective": selected["objective"],
+                "criterion": "Same weighted mean family observation NLL across both horizons as parameter training",
+                "fitFamilies": sorted({r["family"] for r in fitting}),
+                "heldFamilies": sorted(held_families),
+                "allocationFit": inner_allocation,
+                "origins": [
+                    {k: r[k] for k in ("id", "family", "cutoff", "horizon", "historyHash")}
+                    for r in validation
+                ],
+                "curves": curves,
+            }
+        fit_config, allocation_fit = observation_config(rows)
+        if selection is not None:
+            fit_config = {**fit_config, "epochs": selection["selectedEpoch"]}
+            if progress:
+                progress.update(
+                    "demand", activity="parameter_refit", fold=label, epochs=fit_config["epochs"]
+                )
+        model.load_state_dict(initial)
+        history = fit_params(model, rows, fit_config, random_seed)
+        return history, allocation_fit, selection, fit_config
+
     for fold in range(count):
         if progress:
             progress.update("demand", fold=fold + 1, folds=count)
         fit = [r for r in training if folds[r["family"]] != fold]
         ids = [i for i, r in enumerate(training) if folds[r["family"]] == fold]
         held = [training[i] for i in ids]
-        fold_config, allocation_fit = observation_config(fit)
-        model.load_state_dict(initial)
-        history = fit_params(model, fit, fold_config, seed + fold)
+        history, allocation_fit, selection, fold_config = parameter_fit(fit, seed + fold, fold)
         measured = measure(model, held, config=fold_config)
         target[ids] = measured
         reports.append(
@@ -317,6 +376,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
                 "heldFamilies": sorted({r["family"] for r in held}),
                 "losses": history,
                 "allocationFit": allocation_fit,
+                "parameterSelection": selection,
             }
         )
         for row, values in zip(held, measured.tolist(), strict=True):
@@ -338,11 +398,9 @@ def cross_fit(model, training, development, config, seed, progress=None):
                 | {k: row[k] for k in ("dailySales", "dailyCensored") if k in row}
                 | {"fold": fold, "familyNLL": values}
             )
-    model.load_state_dict(initial)
     if progress:
         progress.update("demand", activity="full_parameter_fit")
-    full_config, allocation_fit = observation_config(training)
-    full = fit_params(model, training, full_config, seed + count)
+    full, allocation_fit, selection, full_config = parameter_fit(training, seed + count, "full")
     # Fit only the loss-score selector; parameter models remain the Train-only final fits.
     optimizer = torch.optim.AdamW(model.family.parameters(), lr=config["lr"])
     rand = torch.Generator().manual_seed(seed)
@@ -391,6 +449,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
         "objective": "Train source-held-out family observation-loss regression; minimum predicted loss",
         "observation": config.get("observation", "aggregate"),
         "allocationFit": allocation_fit,
+        "parameterSelection": selection,
         "allocationConcentration": full_config.get("allocationConcentration", 1),
         "targetHash": digest(records),
     }, records

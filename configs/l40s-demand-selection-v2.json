@@ -1,0 +1,56 @@
+{
+  "dataset": "data/processed/core-retail-train-v1",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-demand-selection-v2",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed": 42,
+  "reference": "results/l40s-demand-concentration-v1",
+  "deployedCheckpoint": "results/l40s-research-v3/base/42/model.pt",
+  "deployedPredictions": "results/research-checks/demand-dev-v3/raw.jsonl",
+  "numericalCheck": "results/research-checks/concentration-quadrature.json",
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 256,
+    "dailyWeight": 1.0,
+    "minHistory": 28,
+    "observation": "daily_allocation",
+    "observationNodes": 64,
+    "allocationConcentration": "fit",
+    "parameterValidationFraction": 0.2
+  },
+  "study": {
+    "testUsed": false,
+    "candidateSeed": 42,
+    "scope": "Same GRU, expanded Train observations, initial weights, concentration fitting, maximum 20 parameter epochs and selector budget. Select parameter epochs on an inner 20% of each fitting set of Train sources, then refit from identical initialization. Full per-origin inner losses are preserved. More fitting work is required for inner selection; actual epochs and time are reported.",
+    "observationAssumptions": [
+      "Positive total is allocated across active days by a symmetric Dirichlet. Select concentration 1..8 by source-balanced conditional allocation log likelihood on complete Train periods only. Complete-period selection can bias this estimate.",
+      "Active days follow Bernoulli draws conditioned on at least one active day; the existing horizon=1 zero head supplies the inactive-day probability.",
+      "Daily stockout observations are treated as noninformative right censoring. This does not establish the actual intraday stockout mechanism or full cross-horizon marginal consistency."
+    ],
+    "selection": [
+      "Report all three seeds; candidate seed stays 42. No Test evaluation or selection.",
+      "Inner source validation minimizes the same weighted mean observation NLL over both horizons and all families used by parameter training. Refit on all eligible fitting sources at the selected epoch. Neither outer held families nor Dev select the parameter epoch or its allocation concentration.",
+      "Before a core rollout, seed 42 must lower seven-day complete-period CRPS and each order-loss ratio (1,3,9) against the retained GRU.",
+      "At least two of three seeds must each improve weekly complete-period CRPS, mean order loss and full daily-allocation observation NLL against the retained GRU.",
+      "Seed 42 one-day CRPS may increase by at most 10 percent, complete weekly 80-percent interval coverage may not decrease, and one-day observation NLL and weekly daily-allocation NLL must not increase against the retained GRU.",
+      "The rejected fixed-20-epoch fitted-allocation model remains a matched ablation comparator. Report all of its metric differences, but do not require dominance on its improved complete-period metrics while ignoring its worse whole-observation scores. Adoption reference remains the currently selected GRU; new whole-observation NLL requirements are explicit before any candidate Dev measurement.",
+      "Only after these gates pass, run the actual manager-request policy with the frozen language constructor. Require lower total loss and no increase in invalid handoffs or unnecessary requests before replacement.",
+      "Exact metrics on complete periods and the assumed censoring likelihood do not establish full latent-demand calibration or real organizational effectiveness."
+    ],
+    "trainDiagnosis": "results/research-checks/demand-curve-audit/report.json",
+    "repeatReferences": [
+      "deployed"
+    ],
+    "requireObservationNLL": true
+  },
+  "referenceKind": "daily_allocation"
+}

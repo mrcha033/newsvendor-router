@@ -132,6 +132,12 @@ def main():
     fixed = str(report["config"]["study"]["candidateSeed"])
     candidate = report["runs"][fixed]["candidate"]
     old = report["deployed"]["metrics"]
+    references = report["config"]["study"].get("repeatReferences", ["control", "deployed"])
+    require(references and set(references) <= {"control", "deployed"}, "Invalid repeat references")
+    weekly_metrics = ["uncensoredCRPS", "uncensoredMeanOrderLoss"]
+    require_likelihood = report["config"]["study"].get("requireObservationNLL", False)
+    if require_likelihood:
+        weekly_metrics.append("dailyAllocationNLL")
     gates = {
         "fixedSeedWeeklyCRPSAndAllOrderRatiosImprove": all(
             candidate["7"][m]["mean"] < old["7"][m]["mean"]
@@ -142,11 +148,11 @@ def main():
                 "uncensoredOrderLoss_u9",
             )
         ),
-        "atLeastTwoSeedsImproveWeeklyCRPSAndMeanOrderLossAgainstBothControls": sum(
+        "atLeastTwoSeedsImproveRequiredWeeklyMetricsAgainstRequiredReferences": sum(
             all(
                 comparisons[name]["7"][m]["seedMeanDifferences"][str(seed)] < 0
-                for name in ("control", "deployed")
-                for m in ("uncensoredCRPS", "uncensoredMeanOrderLoss")
+                for name in references
+                for m in weekly_metrics
             )
             for seed in seeds
         )
@@ -158,6 +164,11 @@ def main():
         ]["mean"]
         >= old["7"]["uncensoredInterval80Coverage"]["mean"],
     }
+    if require_likelihood:
+        gates["fixedSeedDailyAndWeeklyObservationNLLDoNotIncrease"] = all(
+            candidate[h][metric]["mean"] <= old[h][metric]["mean"]
+            for h, metric in (("1", "observationNLL"), ("7", "dailyAllocationNLL"))
+        )
     result = {
         "scope": "Dev observation-model study, all registered seeds; historical controls reevaluated, not retrained",
         "testUsed": False,
@@ -174,6 +185,8 @@ def main():
         "deployed": report["deployed"],
         "comparisons": comparisons,
         "gates": gates,
+        "repeatReferences": references,
+        "requiredWeeklyMetrics": weekly_metrics,
         "eligibleForCoreRollout": all(gates.values()),
         "coverage": {
             name: {
