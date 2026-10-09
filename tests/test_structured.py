@@ -293,16 +293,27 @@ def test_packed_sources_keep_all_positions_cells_and_history(tokenizer, settings
 
 
 @pytest.mark.parametrize(
-    "case_batch,workers,split,needed",
+    "case_batch,workers,split,needed,distill_weight",
     [
-        (1, 0, False, False),
-        (2, 2, False, False),
-        (2, 2, True, False),
-        (2, 2, False, True),
+        (1, 0, False, False, 0),
+        (2, 2, False, False, 0),
+        (2, 2, True, False, 0),
+        (2, 2, False, True, 0),
+        (2, 2, False, False, 4),
+        (2, 2, False, True, 4),
     ],
 )
 def test_interrupted_language_training_resumes_exactly(
-    tmp_path, tokenizer, settings, model, case_batch, workers, split, needed
+    tmp_path,
+    tokenizer,
+    settings,
+    model,
+    case_batch,
+    workers,
+    split,
+    needed,
+    distill_weight,
+    monkeypatch,
 ):
     from newsvendor.structured_progress import Progress
     from newsvendor.structured_train import train_language
@@ -317,6 +328,7 @@ def test_interrupted_language_training_resumes_exactly(
         progressEvery=4,
         caseBatch=case_batch,
         prefetchWorkers=workers,
+        distillWeight=distill_weight,
     )
     model.config["splitLongBatches"] = split
     config["encoder"]["splitLongBatches"] = split
@@ -336,6 +348,7 @@ def test_interrupted_language_training_resumes_exactly(
             {
                 "id": str(i),
                 "component": "cuad",
+                "split": "train",
                 "input": payload(
                     "Refund",
                     documents=(
@@ -359,6 +372,17 @@ def test_interrupted_language_training_resumes_exactly(
         for i in range(8)
     }
     initial = copy.deepcopy(model.state_dict())
+    if distill_weight:
+        from newsvendor import structured_train
+
+        parent = copy.deepcopy(model)
+        config["warmStart"] = "immutable-test-parent.pt"
+
+        def initialize_teacher(config):
+            seed(987)  # Parent loading must not change student or sampling RNG streams.
+            return copy.deepcopy(parent), tokenizer, {"fileHash": "test-parent"}
+
+        monkeypatch.setattr(structured_train, "initialize", initialize_teacher)
     seed(42)
     expected = train_language(model, tokenizer, config, rows, rows[:1], labels, [])
     weights = copy.deepcopy(model.state_dict())
@@ -1849,6 +1873,67 @@ def test_span_contract_cannot_select_arithmetic_and_replay_anchor_has_gradients(
     assert torch.isfinite(loss) and loss.item() > 0
     loss.backward()
     assert model.encoder.embeddings.tok_embeddings.weight.grad.abs().sum() > 0
+
+
+def test_language_distillation_preserves_public_retrieval_gradients_and_skips_research(
+    model, tokenizer, settings
+):
+    from newsvendor.structured_train import language_backward, language_view, teacher_predictions
+
+    config = {"encoder": settings, "training": {}, "noValue": False}
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    row = {
+        "id": "contract",
+        "component": "cuad",
+        "split": "train",
+        "input": payload(
+            "Refund",
+            documents=[
+                {"id": "irrelevant", "title": "Refund", "text": "Refund policy"},
+                {"id": "source", "title": "cost", "text": "10 2"},
+            ],
+        ),
+    }
+    config["encoder"] = dict(
+        settings, packedSources=True, chunkTokens=4, overlap=0, documentTokens=2
+    )
+    model.config.update(config["encoder"])
+    train = [("research", episode), ("public", row)]
+    labels = {
+        "contract": {"action": "answer", "spans": [{"document": "source", "start": 0, "end": 2}]}
+    }
+    prepared = []
+    for index, case in enumerate(train):
+        view, target = language_view(case, tokenizer, config, labels, [])
+        target.update(caseIndex=index, retrievalRound=1)
+        prepared.append((view, target))
+    assert prepared[1][1]["needsRetrieval"]
+    teacher = copy.deepcopy(model).requires_grad_(False).eval()
+    with torch.no_grad():
+        model.pointers["start"].weight.add_(0.03)
+    model.train().zero_grad(set_to_none=True)
+    baseline, _, _ = language_backward(model, prepared, tokenizer, config, train, labels, [])
+    before = model.encoder.embeddings.tok_embeddings.weight.grad.clone()
+    model.zero_grad(set_to_none=True)
+    values, measurements, cost = language_backward(
+        model,
+        prepared,
+        tokenizer,
+        config,
+        train,
+        labels,
+        [],
+        teacher=teacher,
+        distill_weight=4,
+    )
+    anchors = [r["distillation"] for r in measurements if "distillation" in r]
+    assert len(anchors) == 2 and max(anchors) > 0  # Initial public view and observed retrieval.
+    assert values == baseline and cost["teacherTokens"] > 0
+    assert not torch.equal(before, model.encoder.embeddings.tok_embeddings.weight.grad)
+    assert all(p.grad is None for p in teacher.parameters())
+    views, targets = zip(*prepared, strict=True)
+    with pytest.raises(ValueError, match="Train only"):
+        teacher_predictions(teacher, views, targets, [train[0], ("public", dict(row, split="dev"))])
 
 
 def test_policy_cannot_publish_economic_improvement_with_tool_regression(

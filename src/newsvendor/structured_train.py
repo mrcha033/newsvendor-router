@@ -59,6 +59,9 @@ def dataset_hashes(config):
         }
     if config.get("linkedManifest"):
         result["linkedManifest"] = digest(read(config["linkedManifest"]))
+    if config.get("training", {}).get("distillWeight", 0):
+        require(config.get("warmStart"), "Language distillation requires a frozen warm start")
+        result["languageTeacher"] = digest(Path(config["warmStart"]).read_bytes())
     return result
 
 
@@ -366,6 +369,48 @@ def conversation_successors(cases):
     return result
 
 
+def language_teacher(model, config, train):
+    weight = config["training"].get("distillWeight", 0.0)
+    require(math.isfinite(weight) and weight >= 0, "Invalid language distillation weight")
+    if not weight:
+        return None, None
+    public = [row for mode, row in train if mode == "public"]
+    require(
+        public and all(row.get("split") == "train" for row in public), "Teacher accepts Train only"
+    )
+    require(config.get("warmStart"), "Language distillation requires a frozen warm start")
+    from .structured_progress import restore_rng, rng_state
+
+    random, threads = rng_state(), torch.get_num_threads()
+    try:
+        # Reload the immutable parent on resume, never the partly trained student.
+        teacher, _, parent = initialize(config)
+    finally:
+        restore_rng(random)
+        torch.set_num_threads(threads)
+    teacher.to(next(model.parameters()).device).requires_grad_(False).eval()
+    return teacher, {"weight": weight, "parent": parent, "scope": "public Train inputs only"}
+
+
+def teacher_predictions(teacher, views, targets, train):
+    if teacher is None:
+        return {}, 0
+    selected = []
+    for index, target in enumerate(targets):
+        mode, row = train[target["caseIndex"]]
+        if mode == "public":
+            require(row.get("split") == "train", "Teacher accepts Train only")
+            selected.append((index, row["component"]))
+    if not selected:
+        return {}, 0
+    with torch.no_grad():
+        predictions = teacher([views[index] for index, _ in selected])
+    return {
+        index: (component, prediction)
+        for (index, component), prediction in zip(selected, predictions, strict=True)
+    }, teacher.last_batch["tokens"]
+
+
 def language_backward(
     model,
     group,
@@ -380,16 +425,13 @@ def language_backward(
 ):
     """One primary case loss; optional Train-supervised retrieval is averaged into that case."""
     views, targets = zip(*group, strict=True)
-    teacher_output = None
-    if teacher is not None:
-        with torch.no_grad():
-            teacher_output = teacher(list(views))
+    teacher_output, teacher_tokens = teacher_predictions(teacher, views, targets, train)
     output = model(list(views))
     objectives = [
         objective(o, t, no_value=config["noValue"]) for o, t in zip(output, targets, strict=True)
     ]
     expand = [
-        "caseIndex" in t
+        "retrievalRound" in t
         and (
             (bool(t.get("needsRetrieval")) and v["selectedChunks"] < v["indexedChunks"])
             or (
@@ -404,13 +446,13 @@ def language_backward(
         o[0] * (0.5 if follow else 1) * t.get("weight", 1.0)
         for o, follow, t in zip(objectives, expand, targets, strict=True)
     )
-    if teacher_output is not None:
+    if teacher_output:
         from .structured_policy import distillation
 
-        loss += distill_weight * sum(
-            distillation(student, parent, view, train[t["caseIndex"]][1]["component"])
-            for student, parent, view, t in zip(output, teacher_output, views, targets, strict=True)
-        )
+        for index, (component, parent) in teacher_output.items():
+            anchor = distillation(output[index], parent, views[index], component)
+            loss += distill_weight * anchor * (0.5 if expand[index] else 1)
+            objectives[index][1]["distillation"] = float(anchor.detach())
     require(torch.isfinite(loss).item(), "Nonfinite language loss")
     (loss * scale).backward()
     values = [float(loss.detach()) for loss, _ in objectives]
@@ -440,10 +482,11 @@ def language_backward(
             bool(targets[i].get("needsRetrieval"))
             and views[i]["selectedChunks"] < views[i]["indexedChunks"]
         )
+        case_index = (
+            next_index if next_index is not None and not retrieval else targets[i]["caseIndex"]
+        )
         view, target = language_view(
-            train[
-                next_index if next_index is not None and not retrieval else targets[i]["caseIndex"]
-            ],
+            train[case_index],
             tokenizer,
             config,
             labels,
@@ -451,10 +494,15 @@ def language_backward(
             0 if next_index is not None and not retrieval else targets[i]["retrievalRound"],
             state=state,
         )
+        target["caseIndex"] = case_index
         followups.append((i, view, target))
     if followups:
         follow_views = [v for _, v, _ in followups]
         for lo, hi in model.training_batches(follow_views):
+            parents, cost = teacher_predictions(
+                teacher, follow_views[lo:hi], [t for _, _, t in followups[lo:hi]], train
+            )
+            teacher_tokens += cost
             follow_outputs = model(follow_views[lo:hi])
             extra_losses = []
             for (i, _, target), out in zip(followups[lo:hi], follow_outputs, strict=True):
@@ -463,9 +511,21 @@ def language_backward(
                 extra_losses.append(loss * target.get("weight", 1.0))
                 values[i] = (values[i] + float(loss.detach())) * 0.5
                 measured.append(extra)
+            if parents:
+                from .structured_policy import distillation
+
+                for index, (component, parent) in parents.items():
+                    anchor = distillation(
+                        follow_outputs[index], parent, follow_views[lo + index], component
+                    )
+                    extra_losses[index] += distill_weight * anchor
+                    measured[-len(extra_losses) + index]["distillation"] = float(anchor.detach())
             (sum(extra_losses) * 0.5 * scale).backward()
             tokens += model.last_batch["tokens"]
-    return values, measured, {"tokens": tokens, "retrievals": sum(expand)}
+    cost = {"tokens": tokens, "retrievals": sum(expand)}
+    if teacher is not None:
+        cost["teacherTokens"] = teacher_tokens
+    return values, measured, cost
 
 
 def language_validation(model, case, tokenizer, config, labels, collection):
@@ -482,6 +542,7 @@ def language_validation(model, case, tokenizer, config, labels, collection):
 
 
 def train_language(model, tokenizer, config, train, dev, labels, collection, progress=None):
+    teacher, distillation = language_teacher(model, config, train)
     optimizer = model.optimizer(config["training"])
     rand = np.random.default_rng(config["seed"])
     report = []
@@ -575,7 +636,15 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
         progress.update("language_dev_revalidated", **checks[-1])
     if stopped:
         model.load_state_dict(saved)
-        return {"epochs": report, "selectedEpoch": selected, "checks": checks, "earlyStopped": True}
+        result = {
+            "epochs": report,
+            "selectedEpoch": selected,
+            "checks": checks,
+            "earlyStopped": True,
+        }
+        if distillation:
+            result["distillation"] = distillation
+        return result
     accumulation = config["training"].get("accumulation", 4)
     batch_size = case_batch(config)
     require(
@@ -619,6 +688,8 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                 target |= {"caseIndex": int(index), "retrievalRound": round + 1}
                 if index in next_turn:
                     target["nextIndex"] = next_turn[index]
+            if teacher is not None:
+                target["caseIndex"] = int(index)
             return view, target
 
         prepared = prepared_batches(
@@ -644,13 +715,15 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
                     train,
                     labels,
                     collection,
+                    teacher=teacher,
+                    distill_weight=config["training"].get("distillWeight", 0.0),
                 )
                 batches.extend(values)
                 for item in measurements:
                     for name, value in item.items():
                         details[name].append(value)
                 for key, value in cost.items():
-                    workload[key] += value
+                    workload[key] = workload.get(key, 0) + value
             pending += len(group)
             processed = number + len(group)
             if pending == accumulation or processed == epoch_cases:
@@ -855,7 +928,15 @@ def train_language(model, tokenizer, config, train, dev, labels, collection, pro
             break
     require(saved is not None, "Language training requires epochs and Dev cases")
     model.load_state_dict(saved)
-    return {"epochs": report, "selectedEpoch": selected, "checks": checks, "earlyStopped": stopped}
+    result = {
+        "epochs": report,
+        "selectedEpoch": selected,
+        "checks": checks,
+        "earlyStopped": stopped,
+    }
+    if distillation:
+        result["distillation"] = distillation
+    return result
 
 
 @torch.inference_mode()

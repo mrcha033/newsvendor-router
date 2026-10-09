@@ -1,0 +1,132 @@
+{
+  "dataset": "data/processed/complementary",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-research-retention-v1/base/42",
+  "seed": 42,
+  "seeds": [
+    42
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25,
+    "scopePrefix": false
+  },
+  "training": {
+    "epochs": 2,
+    "encoderLr": 1e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 512,
+    "checkpointEvery": 16384,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "research",
+    "validateInitial": true,
+    "validationEvery": 0,
+    "patience": 0,
+    "mix": {
+      "research": 0.8,
+      "public": 0.2
+    },
+    "distillWeight": 4.0
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 30,
+    "noise": 0.0,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 2,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed",
+    "selection": "benchmark_normalized",
+    "responseSamples": 1
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "demandCheckpoint": null,
+  "documentComponents": [
+    "cuad",
+    "contractnli",
+    "orsharc",
+    "tatqa"
+  ],
+  "evaluateInitial": true,
+  "originalResearch": true,
+  "constructionReplay": [
+    "results/l40s-research-state-replay-v2/construction-replay.jsonl",
+    "results/parameter-contrasts-v2/fit.jsonl"
+  ],
+  "retentionStudy": {
+    "scope": "Same normal-format Train cases and full-encoder budget as scope-control; add public Train output distillation from the immutable selected parent. Refit action values using fresh own-state Train returns after language updates.",
+    "testUsed": false,
+    "teacher": "warmStart, frozen, public Train inputs only; never held contrast targets or Dev/Test targets",
+    "comparison": "Existing scope-control language run and its completed value adaptation are historical references. Verify disabled-loss update parity before running. Report constructor and post-policy results separately.",
+    "selection": "Unchanged original research Dev language gate and benchmark-normalized policy selection. Full adoption additionally requires retained original public extraction, generated/retail loss, and zero new invalid handoffs.",
+    "weight": 4.0,
+    "weightSelection": "Fixed before new Dev evaluation; no grid or Test tuning",
+    "demand": "Frozen shared GRU",
+    "storage": "Live full checkpoints may use --output in /dev/shm; archive and verify all final/candidate model files on durable storage before cleanup."
+  }
+}
