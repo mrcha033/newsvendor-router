@@ -1,0 +1,704 @@
+{
+  "scope": "Train-only policy input visibility and numerical regression checks; no effectiveness claim",
+  "testModelEvaluated": false,
+  "sourceHash": "2b8c27a6050488f7a4580ef1de35b5127f38ad7c123dd3ac4e44ed3add8318ac",
+  "oldTokenInputAudit": {
+    "scope": "Train-only model-input aliasing audit. State perturbations are visibility diagnostics, not alternative ground truth or forecasts.",
+    "testUsed": false,
+    "devUsed": false,
+    "source": "results/l40s-research-replay-v1/base/42/value-targets-0.jsonl",
+    "hash": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+    "counts": {
+      "retail": {
+        "states": 308,
+        "truncated": 308,
+        "q_tested": 136,
+        "q_same": 136,
+        "types_tested": 308,
+        "types_same": 308,
+        "values_tested": 284,
+        "values_same": 284
+      },
+      "generated": {
+        "states": 620,
+        "truncated": 620,
+        "q_tested": 620,
+        "q_same": 0,
+        "gamma_tested": 620,
+        "gamma_same": 0,
+        "types_tested": 620,
+        "types_same": 0,
+        "values_tested": 620,
+        "values_same": 441
+      }
+    },
+    "examples": [
+      {
+        "id": "retail:0:38:28:sufficient",
+        "group": "retail",
+        "field": "q",
+        "stateHash": "5ebf07cf8924c36ccca1edfc7bc62c2fb610bbd8d1f8af7abf6d2d2459e2eb22",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "retail:0:38:28:sufficient",
+        "group": "retail",
+        "field": "types",
+        "stateHash": "5ebf07cf8924c36ccca1edfc7bc62c2fb610bbd8d1f8af7abf6d2d2459e2eb22",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "retail:0:38:28:sufficient",
+        "group": "retail",
+        "field": "values",
+        "stateHash": "5ebf07cf8924c36ccca1edfc7bc62c2fb610bbd8d1f8af7abf6d2d2459e2eb22",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "retail:0:38:28:missing_c",
+        "group": "retail",
+        "field": "types",
+        "stateHash": "e9ba9ae4fcb9e562eeb9bdbb18c565397400155cf8b7401b1b630c571fb2a2a3",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "retail:0:38:28:missing_c",
+        "group": "retail",
+        "field": "values",
+        "stateHash": "e9ba9ae4fcb9e562eeb9bdbb18c565397400155cf8b7401b1b630c571fb2a2a3",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "retail:0:38:28:missing_c",
+        "group": "retail",
+        "field": "q",
+        "stateHash": "ff8de6829a15560215d0dd68ea73ffa1248836c6401ec2a50389b505f70a9f9f",
+        "prefix": "{\"demand\": {\"distribution\": {\"family\": \"lognormal\", \"familyScores\": {\"lognormal\": 0.44718894362449646, \"truncated_normal\": 0.6406026482582092, \"weibull\": 0.6866893172264099}, \"normalizationScale\": 1.4250000000000003, \"parameters\": {\"logMean\": 0.123344287276268, \"logStd\": 0.47778236865997314, \"zeroProbability\": 0.002123938174918294}}, \"period\": {\""
+      },
+      {
+        "id": "sufficient-19-0",
+        "group": "generated",
+        "field": "values",
+        "stateHash": "c9e01c8e2b33de5c6f831e32792a444a25ead5774845248031ad9610794f12ed",
+        "prefix": "{\"errors\": [], \"gamma\": 0, \"q\": 72, \"retrievalCost\": 1.0, \"state\": {\"F\": \"verified\", \"b\": \"verified\", \"c\": \"verified\", \"p\": \"verified\", \"v\": \"verified\"}, \"types\": {\"F\": \"estimate\", \"b\": \"preference\", \"c\": \"fact\", \"p\": \"fact\", \"v\": \"fact\"}, \"valid\": true, \"values\": {\"b\": 24.2685, \"c\": 21.858900000000002, \"p\": 36."
+      },
+      {
+        "id": "sufficient-19-1",
+        "group": "generated",
+        "field": "values",
+        "stateHash": "5e1c561aa288975c14f97d9fc64e54c4d5a77a6f3cee0f35151430bd41b8e241",
+        "prefix": "{\"errors\": [], \"gamma\": 0, \"q\": 72, \"retrievalCost\": 1.0, \"state\": {\"F\": \"verified\", \"b\": \"verified\", \"c\": \"verified\", \"p\": \"verified\", \"v\": \"verified\"}, \"types\": {\"F\": \"estimate\", \"b\": \"preference\", \"c\": \"fact\", \"p\": \"fact\", \"v\": \"fact\"}, \"valid\": true, \"values\": {\"b\": 24.2685, \"c\": 21.858900000000002, \"p\": 36."
+      }
+    ],
+    "scriptHash": "af8b0b47ae5f12c4a42caa97c2e856ac6549ea6239bf361e32af511a53b2dac8"
+  },
+  "numericInputAudit": {
+    "scope": "Train-only visibility diagnostic, not a counterfactual forecast or effectiveness test",
+    "testUsed": false,
+    "devUsed": false,
+    "source": "results/l40s-research-replay-v1/base/42/value-targets-0.jsonl",
+    "sourceHash": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+    "scriptHash": "351246d9256467620808f2cc18c8a8c6f04d9b086493f75cb65ba42aefebd0d2",
+    "features": [
+      "valid",
+      "expected_loss",
+      "remaining",
+      "history",
+      "errors",
+      "candidate_count",
+      "q_present",
+      "q",
+      "gamma_present",
+      "gamma",
+      "tolerance_present",
+      "tolerance",
+      "expected_cost_present",
+      "expected_cost",
+      "demand_present",
+      "demand_mean_min",
+      "demand_mean_max",
+      "demand_std_min",
+      "demand_std_max",
+      "c_state_verified",
+      "c_state_candidate",
+      "c_state_unconfirmed",
+      "c_state_conflict",
+      "c_state_unavailable",
+      "p_state_verified",
+      "p_state_candidate",
+      "p_state_unconfirmed",
+      "p_state_conflict",
+      "p_state_unavailable",
+      "v_state_verified",
+      "v_state_candidate",
+      "v_state_unconfirmed",
+      "v_state_conflict",
+      "v_state_unavailable",
+      "b_state_verified",
+      "b_state_candidate",
+      "b_state_unconfirmed",
+      "b_state_conflict",
+      "b_state_unavailable",
+      "F_state_verified",
+      "F_state_candidate",
+      "F_state_unconfirmed",
+      "F_state_conflict",
+      "F_state_unavailable",
+      "c_type_fact",
+      "c_type_estimate",
+      "c_type_preference",
+      "c_type_assumption",
+      "p_type_fact",
+      "p_type_estimate",
+      "p_type_preference",
+      "p_type_assumption",
+      "v_type_fact",
+      "v_type_estimate",
+      "v_type_preference",
+      "v_type_assumption",
+      "b_type_fact",
+      "b_type_estimate",
+      "b_type_preference",
+      "b_type_assumption",
+      "F_type_fact",
+      "F_type_estimate",
+      "F_type_preference",
+      "F_type_assumption",
+      "c_present",
+      "c_value",
+      "p_present",
+      "p_value",
+      "v_present",
+      "v_value",
+      "b_present",
+      "b_value",
+      "c_available",
+      "c_cost",
+      "p_available",
+      "p_cost",
+      "v_available",
+      "v_cost",
+      "b_available",
+      "b_cost",
+      "demand_available",
+      "demand_cost",
+      "retrieve_available",
+      "retrieve_cost",
+      "action_hold",
+      "action_handoff",
+      "action_c",
+      "action_p",
+      "action_v",
+      "action_b",
+      "action_demand",
+      "action_retrieve",
+      "action_cost",
+      "previous_requests"
+    ],
+    "counts": {
+      "retail": {
+        "q_tested": 136,
+        "q_same": 0,
+        "types_tested": 308,
+        "types_same": 0,
+        "values_tested": 284,
+        "values_same": 0
+      },
+      "generated": {
+        "q_tested": 620,
+        "q_same": 0,
+        "gamma_tested": 620,
+        "gamma_same": 0,
+        "types_tested": 620,
+        "types_same": 0,
+        "values_tested": 620,
+        "values_same": 0
+      }
+    }
+  },
+  "tests": {
+    "passed": 213,
+    "seconds": 26.7,
+    "rawHash": "c5d328e6821c18a40470e8335086b7c22c5c42f23b679ccb028c5186390743da",
+    "covered": [
+      "No effect from poisoned hidden labels or response probabilities",
+      "Missing values distinguished from zero",
+      "Money-unit invariance",
+      "Both batch fusion paths preserve initial output and expose changed state",
+      "Gradient reaches new columns; cached training and inference agree"
+    ]
+  },
+  "ruff": {
+    "check": "passed",
+    "format": "passed"
+  },
+  "numericalSmoke": {
+    "episodes": 600,
+    "smokeEpisodes": 30,
+    "falseHandoffs": 0,
+    "logHash": "84eea35d382f55b1bfb77f0b0ac049c2cc32cf48eff554eae89e92c410369f84"
+  },
+  "auditArchive": {
+    "path": "docs/evidence/artifacts/numeric-state-audit.tar.gz",
+    "sha256": "6563651926f3a2b1c12951068598401fe839327dd1df47969bac51b4240238e5",
+    "bytes": 761865,
+    "members": {
+      "results/l40s-research-replay-v1/base/42/value-targets-0.jsonl": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+      "docs/evidence/scripts/audit-policy-context.py": "af8b0b47ae5f12c4a42caa97c2e856ac6549ea6239bf361e32af511a53b2dac8",
+      "docs/evidence/scripts/check-numeric-state.py": "351246d9256467620808f2cc18c8a8c6f04d9b086493f75cb65ba42aefebd0d2",
+      "configs/l40s-research-replay-v1.json": "8fdd89520cc11341ad7e703f2b8efbf141fc1ba9bbe8a7ff935d89f63715b935",
+      "results/research-checks/policy-context-audit.json": "30083e3d968d593d134fce24979fcbd1d3acf4d18d5c5fdc35a61a722ea9b3a1",
+      "results/research-checks/numeric-state-visibility-verified.json": "b8aee8a78168c18ba06ce4bf82b8c553f2250c4eb8c94f47a15c7218bfe60d85"
+    }
+  },
+  "sourceArchive": {
+    "path": "docs/evidence/artifacts/numeric-state-source.tar.gz",
+    "sha256": "89d4dcde6eb44e2741f9ddf4549c1216b325939681ece4c16b97654ec5b41472",
+    "bytes": 277349
+  },
+  "notes": [
+    "State perturbations test input visibility; they are not consistent alternative demand forecasts or new labels.",
+    "All numeric inputs come from the model-constructed state and declared task costs, bounds and budget. No rho/partial or hidden outcomes are read.",
+    "This optional path adds 24,064 parameters; the existing 256 input columns are preserved and new columns start at zero.",
+    "Raw numeric visibility does not guarantee BF16 visibility: 13/284 retail and 136/620 generated 1% price perturbations alias after the linear-input cast. This is a CPU dtype diagnostic, not a new GPU rollout."
+  ],
+  "sourceSeparation": {
+    "complementary": {
+      "manifestHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "check": {
+        "cases": 1802,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "native component diagnostics, not an end-to-end order benchmark",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-retail-train-v1": {
+      "manifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+      "check": {
+        "cases": 2314,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 562,
+            "families": 555,
+            "splits": {
+              "train": 542,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-tatqa-train-v1": {
+      "manifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+      "check": {
+        "cases": 14753,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 13191,
+            "families": 2201,
+            "splits": {
+              "train": 13095,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 2177,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    }
+  },
+  "researchManifest": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+      "labelsHash": "a89f6bfe8091c431aa8435e13a182946a2ec91f9114bd2fb126cf95ea822da59",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 13095
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "checks": {
+    "testLog": "c5d328e6821c18a40470e8335086b7c22c5c42f23b679ccb028c5186390743da",
+    "smokeLog": "84eea35d382f55b1bfb77f0b0ac049c2cc32cf48eff554eae89e92c410369f84",
+    "visibilityScript": "351246d9256467620808f2cc18c8a8c6f04d9b086493f75cb65ba42aefebd0d2"
+  },
+  "bf16PrecisionAudit": {
+    "scope": "Train-only feature quantization diagnostic; not an end-to-end GPU or effectiveness test",
+    "testUsed": false,
+    "devUsed": false,
+    "source": "results/l40s-research-replay-v1/base/42/value-targets-0.jsonl",
+    "sourceHash": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+    "scriptHash": "9b8b4a58a49dc76845addd4bc8019ec28268b792a4f921e7ce467b032e5e7f02",
+    "dtype": "bfloat16",
+    "counts": {
+      "retail": {
+        "q_tested": 136,
+        "q_same": 0,
+        "types_tested": 308,
+        "types_same": 0,
+        "values_tested": 284,
+        "values_same": 13
+      },
+      "generated": {
+        "q_tested": 620,
+        "q_same": 22,
+        "gamma_tested": 620,
+        "gamma_same": 53,
+        "types_tested": 620,
+        "types_same": 0,
+        "values_tested": 620,
+        "values_same": 136
+      }
+    }
+  }
+}

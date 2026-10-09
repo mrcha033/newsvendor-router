@@ -1,0 +1,4473 @@
+{
+  "scope": "Same pretrained constructor/GRU, policy-only continuation with or without numeric state",
+  "testUsed": false,
+  "registration": {
+    "testUsed": false,
+    "source": {
+      "configHash": "be6977b3233a55132728c4bbb41430fff677cda110d227cea38988096d78f1fe",
+      "sourceHash": "2b8c27a6050488f7a4580ef1de35b5127f38ad7c123dd3ac4e44ed3add8318ac",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "a41331f02e8f9834a614e160704bfa59d9351af8f572f56b46babeaf666e4541",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "2203902ec724350e15f1dfd4f1b05f41ffff0eff1f033088218640ca9d014896",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "cd73fe824f4aeae68c72ca400f35a03444ae98879a25d4d80de45a18cc1b8209",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "fb4746c3d6df73ee1d16ec039b09fba88f323f0a4dd71c5424b7e026ef06eaf4",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "772f542ddb728849d7860b5cc8c0d71143f106a751c087b12b305490164bae71",
+        "src/newsvendor/structured_rollout.py": "47c7139749069b7302b489c25648d505542be75433a2036f916119e4d25b8cfc",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+        "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "ba63f9e9e08faec9d300d37dc44ed459e4678b01",
+      "timestamp": "2026-10-09T10:56:34.736826+00:00"
+    },
+    "features": [
+      "valid",
+      "expected_loss",
+      "remaining",
+      "history",
+      "errors",
+      "candidate_count",
+      "q_present",
+      "q",
+      "gamma_present",
+      "gamma",
+      "tolerance_present",
+      "tolerance",
+      "expected_cost_present",
+      "expected_cost",
+      "demand_present",
+      "demand_mean_min",
+      "demand_mean_max",
+      "demand_std_min",
+      "demand_std_max",
+      "c_state_verified",
+      "c_state_candidate",
+      "c_state_unconfirmed",
+      "c_state_conflict",
+      "c_state_unavailable",
+      "p_state_verified",
+      "p_state_candidate",
+      "p_state_unconfirmed",
+      "p_state_conflict",
+      "p_state_unavailable",
+      "v_state_verified",
+      "v_state_candidate",
+      "v_state_unconfirmed",
+      "v_state_conflict",
+      "v_state_unavailable",
+      "b_state_verified",
+      "b_state_candidate",
+      "b_state_unconfirmed",
+      "b_state_conflict",
+      "b_state_unavailable",
+      "F_state_verified",
+      "F_state_candidate",
+      "F_state_unconfirmed",
+      "F_state_conflict",
+      "F_state_unavailable",
+      "c_type_fact",
+      "c_type_estimate",
+      "c_type_preference",
+      "c_type_assumption",
+      "p_type_fact",
+      "p_type_estimate",
+      "p_type_preference",
+      "p_type_assumption",
+      "v_type_fact",
+      "v_type_estimate",
+      "v_type_preference",
+      "v_type_assumption",
+      "b_type_fact",
+      "b_type_estimate",
+      "b_type_preference",
+      "b_type_assumption",
+      "F_type_fact",
+      "F_type_estimate",
+      "F_type_preference",
+      "F_type_assumption",
+      "c_present",
+      "c_value",
+      "p_present",
+      "p_value",
+      "v_present",
+      "v_value",
+      "b_present",
+      "b_value",
+      "c_available",
+      "c_cost",
+      "p_available",
+      "p_cost",
+      "v_available",
+      "v_cost",
+      "b_available",
+      "b_cost",
+      "demand_available",
+      "demand_cost",
+      "retrieve_available",
+      "retrieve_cost",
+      "action_hold",
+      "action_handoff",
+      "action_c",
+      "action_p",
+      "action_v",
+      "action_b",
+      "action_demand",
+      "action_retrieve",
+      "action_cost",
+      "previous_requests"
+    ],
+    "conditions": {
+      "control": {
+        "dataset": "data/processed/core-tatqa-train-v1",
+        "expansion": null,
+        "researchConfig": "configs/full.json",
+        "output": "results/l40s-research-numeric-v1/control/42",
+        "seed": 42,
+        "seeds": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "maxRetrievals": 4,
+        "backbones": {
+          "base": {
+            "model": "answerdotai/ModernBERT-base",
+            "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+          },
+          "large": {
+            "model": "answerdotai/ModernBERT-large",
+            "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+            "splitLongBatches": true
+          }
+        },
+        "encoder": {
+          "retrievalCost": 1.0,
+          "retrievals": 2,
+          "maxLength": 1024,
+          "queryTokens": 128,
+          "overlap": 32,
+          "chunks": 8,
+          "encoderBatch": 16,
+          "retrievalDocuments": 5,
+          "gradientCheckpointing": false,
+          "precision": "bf16",
+          "packedQueries": true,
+          "bucketLengths": true,
+          "checkpointTokenLimit": 55000,
+          "compileLayers": false,
+          "compileLimit": 64,
+          "attention": "sdpa",
+          "padMultiple": 128,
+          "splitLongBatches": true,
+          "packedSources": true,
+          "chunkTokens": 256,
+          "documentTokens": 1024,
+          "historyChunks": 1024,
+          "tableChunks": 4096,
+          "batchFusion": true,
+          "sharedQueries": true,
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+          "exactActionCosts": true,
+          "paddingRatio": 1.25,
+          "numericState": false
+        },
+        "training": {
+          "epochs": 2,
+          "encoderLr": 1e-05,
+          "headLr": 0.0003,
+          "weightDecay": 0.01,
+          "accumulation": 32,
+          "progressEvery": 512,
+          "checkpointEvery": 8192,
+          "caseBatch": {
+            "base": 32,
+            "large": 32,
+            "no_value": 32
+          },
+          "prefetchWorkers": 2,
+          "fusedOptimizer": true,
+          "retrievalTraining": "needed",
+          "selection": "loss",
+          "validateInitial": false,
+          "validationEvery": 0,
+          "patience": 0,
+          "mix": {
+            "research": 0.25,
+            "public": 0.75
+          }
+        },
+        "demand": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 0.3,
+          "minHistory": 28
+        },
+        "policy": {
+          "iterations": 2,
+          "epochs": 40,
+          "noise": 0.1,
+          "trainable": "value",
+          "batchSize": 64,
+          "valueLr": 0.001,
+          "validationEvery": 10,
+          "patience": 3,
+          "rankWeight": 0.25,
+          "collectionPolicy": "mixed",
+          "selection": "benchmark_normalized"
+        },
+        "variant": "base",
+        "noValue": false,
+        "dataSeed": 53,
+        "cutoffStride": 7,
+        "warmStart": "results/l40s-research-replay-v1/base/42/model.pt",
+        "demandCheckpoint": null,
+        "documentComponents": [
+          "cuad",
+          "contractnli",
+          "orsharc",
+          "tatqa"
+        ],
+        "evaluateInitial": true,
+        "originalResearch": true,
+        "numericStateStudy": {
+          "scope": "Train-only context audit found own-state values dropped by token truncation. Compare identical policy continuation with and without 94 numeric state features, plus matched no_value recovery. Language constructor and demand GRU are frozen.",
+          "testUsed": false,
+          "seed": 42,
+          "training": "Same two iterations, 40 maximum epochs each, actual Train forced-action rollout targets, same learning rate/batches/selection. No language fine-tuning or demand training.",
+          "initialization": "Legacy 256 columns preserved, numeric columns start at zero. No hidden response probabilities, outcome labels or oracle state in features.",
+          "selection": "Existing equal benchmark-normalized Dev mean. Promotion additionally requires generated raw total <= 147.6812873, retail raw total <= 44.3274213, no false handoffs or increased unnecessary requests, and unchanged constructor/GRU weights. Compare all conditions; do not evaluate or select on Test."
+        }
+      },
+      "value": {
+        "dataset": "data/processed/core-tatqa-train-v1",
+        "expansion": null,
+        "researchConfig": "configs/full.json",
+        "output": "results/l40s-research-numeric-v1/value/42",
+        "seed": 42,
+        "seeds": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "maxRetrievals": 4,
+        "backbones": {
+          "base": {
+            "model": "answerdotai/ModernBERT-base",
+            "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+          },
+          "large": {
+            "model": "answerdotai/ModernBERT-large",
+            "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+            "splitLongBatches": true
+          }
+        },
+        "encoder": {
+          "retrievalCost": 1.0,
+          "retrievals": 2,
+          "maxLength": 1024,
+          "queryTokens": 128,
+          "overlap": 32,
+          "chunks": 8,
+          "encoderBatch": 16,
+          "retrievalDocuments": 5,
+          "gradientCheckpointing": false,
+          "precision": "bf16",
+          "packedQueries": true,
+          "bucketLengths": true,
+          "checkpointTokenLimit": 55000,
+          "compileLayers": false,
+          "compileLimit": 64,
+          "attention": "sdpa",
+          "padMultiple": 128,
+          "splitLongBatches": true,
+          "packedSources": true,
+          "chunkTokens": 256,
+          "documentTokens": 1024,
+          "historyChunks": 1024,
+          "tableChunks": 4096,
+          "batchFusion": true,
+          "sharedQueries": true,
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+          "exactActionCosts": true,
+          "paddingRatio": 1.25,
+          "numericState": true
+        },
+        "training": {
+          "epochs": 2,
+          "encoderLr": 1e-05,
+          "headLr": 0.0003,
+          "weightDecay": 0.01,
+          "accumulation": 32,
+          "progressEvery": 512,
+          "checkpointEvery": 8192,
+          "caseBatch": {
+            "base": 32,
+            "large": 32,
+            "no_value": 32
+          },
+          "prefetchWorkers": 2,
+          "fusedOptimizer": true,
+          "retrievalTraining": "needed",
+          "selection": "loss",
+          "validateInitial": false,
+          "validationEvery": 0,
+          "patience": 0,
+          "mix": {
+            "research": 0.25,
+            "public": 0.75
+          }
+        },
+        "demand": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 0.3,
+          "minHistory": 28
+        },
+        "policy": {
+          "iterations": 2,
+          "epochs": 40,
+          "noise": 0.1,
+          "trainable": "value",
+          "batchSize": 64,
+          "valueLr": 0.001,
+          "validationEvery": 10,
+          "patience": 3,
+          "rankWeight": 0.25,
+          "collectionPolicy": "mixed",
+          "selection": "benchmark_normalized"
+        },
+        "variant": "base",
+        "noValue": false,
+        "dataSeed": 53,
+        "cutoffStride": 7,
+        "warmStart": "results/l40s-research-replay-v1/base/42/model.pt",
+        "demandCheckpoint": null,
+        "documentComponents": [
+          "cuad",
+          "contractnli",
+          "orsharc",
+          "tatqa"
+        ],
+        "evaluateInitial": true,
+        "originalResearch": true,
+        "numericStateStudy": {
+          "scope": "Train-only context audit found own-state values dropped by token truncation. Compare identical policy continuation with and without 94 numeric state features, plus matched no_value recovery. Language constructor and demand GRU are frozen.",
+          "testUsed": false,
+          "seed": 42,
+          "training": "Same two iterations, 40 maximum epochs each, actual Train forced-action rollout targets, same learning rate/batches/selection. No language fine-tuning or demand training.",
+          "initialization": "Legacy 256 columns preserved, numeric columns start at zero. No hidden response probabilities, outcome labels or oracle state in features.",
+          "selection": "Existing equal benchmark-normalized Dev mean. Promotion additionally requires generated raw total <= 147.6812873, retail raw total <= 44.3274213, no false handoffs or increased unnecessary requests, and unchanged constructor/GRU weights. Compare all conditions; do not evaluate or select on Test."
+        }
+      },
+      "no_value": {
+        "dataset": "data/processed/core-tatqa-train-v1",
+        "expansion": null,
+        "researchConfig": "configs/full.json",
+        "output": "results/l40s-research-numeric-v1/no_value/42",
+        "seed": 42,
+        "seeds": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "maxRetrievals": 4,
+        "backbones": {
+          "base": {
+            "model": "answerdotai/ModernBERT-base",
+            "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+          },
+          "large": {
+            "model": "answerdotai/ModernBERT-large",
+            "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+            "splitLongBatches": true
+          }
+        },
+        "encoder": {
+          "retrievalCost": 1.0,
+          "retrievals": 2,
+          "maxLength": 1024,
+          "queryTokens": 128,
+          "overlap": 32,
+          "chunks": 8,
+          "encoderBatch": 16,
+          "retrievalDocuments": 5,
+          "gradientCheckpointing": false,
+          "precision": "bf16",
+          "packedQueries": true,
+          "bucketLengths": true,
+          "checkpointTokenLimit": 55000,
+          "compileLayers": false,
+          "compileLimit": 64,
+          "attention": "sdpa",
+          "padMultiple": 128,
+          "splitLongBatches": true,
+          "packedSources": true,
+          "chunkTokens": 256,
+          "documentTokens": 1024,
+          "historyChunks": 1024,
+          "tableChunks": 4096,
+          "batchFusion": true,
+          "sharedQueries": true,
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+          "exactActionCosts": true,
+          "paddingRatio": 1.25,
+          "numericState": true
+        },
+        "training": {
+          "epochs": 2,
+          "encoderLr": 1e-05,
+          "headLr": 0.0003,
+          "weightDecay": 0.01,
+          "accumulation": 32,
+          "progressEvery": 512,
+          "checkpointEvery": 8192,
+          "caseBatch": {
+            "base": 32,
+            "large": 32,
+            "no_value": 32
+          },
+          "prefetchWorkers": 2,
+          "fusedOptimizer": true,
+          "retrievalTraining": "needed",
+          "selection": "loss",
+          "validateInitial": false,
+          "validationEvery": 0,
+          "patience": 0,
+          "mix": {
+            "research": 0.25,
+            "public": 0.75
+          }
+        },
+        "demand": {
+          "epochs": 20,
+          "selectorEpochs": 20,
+          "folds": 3,
+          "lr": 0.001,
+          "batchSize": 64,
+          "dailyWeight": 0.3,
+          "minHistory": 28
+        },
+        "policy": {
+          "iterations": 2,
+          "epochs": 40,
+          "noise": 0.1,
+          "trainable": "value",
+          "batchSize": 64,
+          "valueLr": 0.001,
+          "validationEvery": 10,
+          "patience": 3,
+          "rankWeight": 0.25,
+          "collectionPolicy": "mixed",
+          "selection": "benchmark_normalized"
+        },
+        "variant": "no_value",
+        "noValue": true,
+        "dataSeed": 53,
+        "cutoffStride": 7,
+        "warmStart": "results/l40s-research-replay-v1/base/42/model.pt",
+        "demandCheckpoint": null,
+        "documentComponents": [
+          "cuad",
+          "contractnli",
+          "orsharc",
+          "tatqa"
+        ],
+        "evaluateInitial": true,
+        "originalResearch": true,
+        "numericStateStudy": {
+          "scope": "Train-only context audit found own-state values dropped by token truncation. Compare identical policy continuation with and without 94 numeric state features, plus matched no_value recovery. Language constructor and demand GRU are frozen.",
+          "testUsed": false,
+          "seed": 42,
+          "training": "Same two iterations, 40 maximum epochs each, actual Train forced-action rollout targets, same learning rate/batches/selection. No language fine-tuning or demand training.",
+          "initialization": "Legacy 256 columns preserved, numeric columns start at zero. No hidden response probabilities, outcome labels or oracle state in features.",
+          "selection": "Existing equal benchmark-normalized Dev mean. Promotion additionally requires generated raw total <= 147.6812873, retail raw total <= 44.3274213, no false handoffs or increased unnecessary requests, and unchanged constructor/GRU weights. Compare all conditions; do not evaluate or select on Test."
+        }
+      }
+    },
+    "scriptHash": "50897e1a288d9a50fcea2bb6ac93d7071493a2a58b96cd997d3d25cd195dc39f",
+    "results": {}
+  },
+  "parentCheckpoint": {
+    "path": "results/l40s-research-replay-v1/base/42/model.pt",
+    "sha256": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b"
+  },
+  "fixedWeightsHash": "168d2f757a8dbe10d7e9660be3b9918d6c64f07a3cb8753d3980cc92dbf4a2ad",
+  "scriptHash": "02703700268a0be93f0ee6a38642fc307a71f4f620aa05185c4f6cbdad48f4f1",
+  "conditions": {
+    "control": {
+      "parameters": 151848374,
+      "seconds": 386.50966979702935,
+      "peakGpuBytes": 1332686848,
+      "hardware": {
+        "device": "cuda",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "runProvenance": {
+        "timestamp": "2026-10-09T10:56:49.199204+00:00",
+        "packages": {
+          "torch": "2.14.1+cu130",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "sourceHash": "2b8c27a6050488f7a4580ef1de35b5127f38ad7c123dd3ac4e44ed3add8318ac",
+        "configHash": "b8a04f9e77463d8ba71816c2868892261a7b3e52ccf4c5447fa2f96d4e313d66",
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "commit": "ba63f9e9e08faec9d300d37dc44ed459e4678b01"
+      },
+      "initialGeneratedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 147.6812873023908,
+          "meanRequestCost": 20.800383333333333,
+          "meanInteractions": 0.35,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 21,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 10,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "3d7f3d5738c7597f9cb18833fd7eef2683ae125a9f5b7f2163b9f4838ae7bdaa"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "2548da77e8feca2b845e006c7bd3317adace01a42cfc0269f73d4b227f47dcb3"
+        }
+      },
+      "initialRetailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "17b2260b7751ac6ea376a69f96c409bb84bc51e81d5b3bfa26150970c9706093"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "7233f5101c952f6b9ba2250791e631b6d4d8e546acc79328b14c033f2b6a5f81"
+        }
+      },
+      "generatedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 147.6812873023908,
+          "meanRequestCost": 20.800383333333333,
+          "meanInteractions": 0.35,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 21,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 10,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "c6ef50b9966dbf67dfb67cf2cda59863a29308adf16906d46620988e5e95847d"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "42e2f94b532e9155d2b54ee46d261ddc95ab6809f31ee68a6a967ecbb1f13638"
+        }
+      },
+      "retailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "1e1a936d66cf43cc032e76c6a948325119f76317b7f80d4f38f6b2481453efec"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "1997e0ea2fb1cacfb1bab12349e1f5c208191379e5f1ec0d906055ee7ffab53d"
+        }
+      },
+      "policy": [
+        {
+          "iteration": 0,
+          "ownStateTargets": 928,
+          "trainRawHash": "4d5e5636b2d270df357494dc615176c8bb930ad76e6ef7a276ed9cdd863272be",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.04279644377529621,
+              "devSelectionLoss": 0.19071414081209487,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 148.35488705755532,
+                  "meanNormalizedTotal": 0.29147375773565576
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 0.0406170775492986,
+              "devSelectionLoss": 0.21511407893710233,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 153.40772872422198,
+                  "meanNormalizedTotal": 0.3402736339856707
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 0.03923412176469962,
+              "devSelectionLoss": 0.21511407893710233,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 153.40772872422198,
+                  "meanNormalizedTotal": 0.3402736339856707
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": null,
+            "epoch": null,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.1899591554464823
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "731a3715ed7108fb52c6555c20e8c25e14976c3a1a55fb26cdfb6aa55a0562ea",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "f037a2ef02d644522b9c4f283484320b59e5371e7531a1e5ab536945f2926b79"
+          },
+          "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+          "target": "Measured terminal loss and request costs after forced first action",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 147.68128730239084,
+              "meanNormalizedTotal": 0.2899637870044306
+            }
+          },
+          "devSelectionLoss": 0.1899591554464823
+        },
+        {
+          "iteration": 1,
+          "ownStateTargets": 928,
+          "trainRawHash": "a0fc51cf7a92cb56ba8c76c84cd6a2c301265168823856c9f0abc28c59938917",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.04380362046261629,
+              "devSelectionLoss": 0.19071414081209487,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 148.35488705755532,
+                  "meanNormalizedTotal": 0.29147375773565576
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 0.043665697673956554,
+              "devSelectionLoss": 0.20047411606209786,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 150.37602372422194,
+                  "meanNormalizedTotal": 0.31099370823566175
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 0.04029418701926867,
+              "devSelectionLoss": 0.21511407893710233,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 153.40772872422198,
+                  "meanNormalizedTotal": 0.3402736339856707
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": null,
+            "epoch": null,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.1899591554464823
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "731a3715ed7108fb52c6555c20e8c25e14976c3a1a55fb26cdfb6aa55a0562ea",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "f037a2ef02d644522b9c4f283484320b59e5371e7531a1e5ab536945f2926b79"
+          },
+          "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+          "target": "Measured terminal loss and request costs after forced first action",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 147.68128730239084,
+              "meanNormalizedTotal": 0.2899637870044306
+            }
+          },
+          "devSelectionLoss": 0.1899591554464823
+        }
+      ],
+      "candidates": [
+        {
+          "path": "policy-candidate-0-19.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 0.0406170775492986,
+            "devSelectionLoss": 0.21511407893710233,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 153.40772872422198,
+                "meanNormalizedTotal": 0.3402736339856707
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 300.0
+        },
+        {
+          "path": "policy-candidate-0-29.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 0.03923412176469962,
+            "devSelectionLoss": 0.21511407893710233,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 153.40772872422198,
+                "meanNormalizedTotal": 0.3402736339856707
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 450.0
+        },
+        {
+          "path": "policy-candidate-0-9.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.04279644377529621,
+            "devSelectionLoss": 0.19071414081209487,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 148.35488705755532,
+                "meanNormalizedTotal": 0.29147375773565576
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 150.0
+        },
+        {
+          "path": "policy-candidate-1-19.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 0.043665697673956554,
+            "devSelectionLoss": 0.20047411606209786,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 150.37602372422194,
+                "meanNormalizedTotal": 0.31099370823566175
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 300.0
+        },
+        {
+          "path": "policy-candidate-1-29.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 0.04029418701926867,
+            "devSelectionLoss": 0.21511407893710233,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 153.40772872422198,
+                "meanNormalizedTotal": 0.3402736339856707
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 450.0
+        },
+        {
+          "path": "policy-candidate-1-9.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.04380362046261629,
+            "devSelectionLoss": 0.19071414081209487,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 148.35488705755532,
+                "meanNormalizedTotal": 0.29147375773565576
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 0.0,
+          "optimizerMaxStep": 150.0
+        }
+      ],
+      "changedParameters": [],
+      "numericColumnNorm": {
+        "value": 0.0,
+        "recovery": 0.0
+      },
+      "fixedWeightsUnchanged": true,
+      "initialWeightsMatchLegacyWithZeroExtension": true,
+      "artifacts": {
+        "final-dev.json": {
+          "sha256": "62cc603202c5ef045ba3e28929b4eed906d48be4119eaad31b1f20120426d9c6",
+          "bytes": 4615
+        },
+        "manifest.json": {
+          "sha256": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+          "bytes": 4680
+        },
+        "documents-labels.json": {
+          "sha256": "f54ae9e7b8f06e944fc639b2054135b6beb0fba9bc86f6c6d875591557c2e540",
+          "bytes": 3017419
+        },
+        "config.json": {
+          "sha256": "0d695bc2e0339cf32b7f63852b46097caf67253da0fee4a5dab2a69354adce00",
+          "bytes": 3801
+        },
+        "report.json": {
+          "sha256": "d1363764b9945bba6f8a29744ca1dbc56935e4dc01702c506de11411d721d7fb",
+          "bytes": 31519
+        },
+        "initial-generated-dev.json": {
+          "sha256": "583ab3258845b23048ea41ce6beb1fc412d46e0621b3925f15b3c76cdbe433bf",
+          "bytes": 1709
+        },
+        "progress.json": {
+          "sha256": "f7e13afcb97873f385be19a21385edb97d186e9058ffbe5a00e4fce3d6b6e2e6",
+          "bytes": 187
+        },
+        "parent.json": {
+          "sha256": "6dd5439b7b70ff75e1b3867b7a0b14b9b256d2dbc251222f509fe6a622a45ca6",
+          "bytes": 634
+        },
+        "final-generated-dev.json": {
+          "sha256": "456dfbc3fc3e0f64da58868463522d5d662e7c4a3622379d79e1b6151caa048e",
+          "bytes": 1709
+        },
+        "run.json": {
+          "sha256": "915cdac9af10234c2e1f88fb5941ba0a5b3ad05fabbd344db234395600c20787",
+          "bytes": 7062
+        },
+        "job.json": {
+          "sha256": "6790ae63a9a32e59e9d2f5d7191ff3f47569fd35df19fadf7689e07560e2acda",
+          "bytes": 98
+        },
+        "initial-dev.json": {
+          "sha256": "e92e13daead661832721f3e064c01d79f94f921ca6039dc548b30e3fed27f6b4",
+          "bytes": 4615
+        },
+        "rollout-train-1.jsonl": {
+          "sha256": "c6a24b9b4d310bae6fe2084bfa18c7d6e6687f59061976078fbe0b0ffeb42e0f",
+          "bytes": 65038539
+        },
+        "policy-dev-initial.jsonl": {
+          "sha256": "3753e3bc67d7c72b93fd1c1e16c2f7e7dec4af08f21bbf7ee57ed791de7a6c3c",
+          "bytes": 4647005
+        },
+        "policy-dev-0-19.jsonl": {
+          "sha256": "6e01770f4bcd3f0d464ef01dfb420032a5a928ccfda84308c4eaab4a62b0e18b",
+          "bytes": 4545846
+        },
+        "value-targets-1.jsonl": {
+          "sha256": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+          "bytes": 14450023
+        },
+        "initial-generated-dev-checklist.jsonl": {
+          "sha256": "2548da77e8feca2b845e006c7bd3317adace01a42cfc0269f73d4b227f47dcb3",
+          "bytes": 997226
+        },
+        "initial-generated-dev-learned.jsonl": {
+          "sha256": "3d7f3d5738c7597f9cb18833fd7eef2683ae125a9f5b7f2163b9f4838ae7bdaa",
+          "bytes": 1254684
+        },
+        "inputs.jsonl": {
+          "sha256": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+          "bytes": 33104974
+        },
+        "final-generated-dev-checklist.jsonl": {
+          "sha256": "42e2f94b532e9155d2b54ee46d261ddc95ab6809f31ee68a6a967ecbb1f13638",
+          "bytes": 997223
+        },
+        "retention-0.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "rollout-train-0.jsonl": {
+          "sha256": "fb69a6ae64ae20b04eb8b2ea7c7351cd08d4523c14fdcb29b203065b9f97e839",
+          "bytes": 65038531
+        },
+        "final-generated-dev-learned.jsonl": {
+          "sha256": "c6ef50b9966dbf67dfb67cf2cda59863a29308adf16906d46620988e5e95847d",
+          "bytes": 1254686
+        },
+        "generated-environment.jsonl": {
+          "sha256": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+          "bytes": 75810
+        },
+        "policy-dev-0-9.jsonl": {
+          "sha256": "1a871986d2e06c6f191c4d085f2309fe303270e34ecbb0a2486a47170b982c18",
+          "bytes": 4630161
+        },
+        "final-dev-checklist.jsonl": {
+          "sha256": "1997e0ea2fb1cacfb1bab12349e1f5c208191379e5f1ec0d906055ee7ffab53d",
+          "bytes": 21877890
+        },
+        "policy-dev-1-19.jsonl": {
+          "sha256": "2b6f191394e235b053f10f91d42bc6dacd86bbe932893a9753dc1f92c06acf34",
+          "bytes": 4596439
+        },
+        "retention-initial.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "policy-dev-0-29.jsonl": {
+          "sha256": "e0b5c1d51453495274e5f78625c10fba4027ff971e6cca5fcc945d583297625f",
+          "bytes": 4547880
+        },
+        "final-dev-learned.jsonl": {
+          "sha256": "1e1a936d66cf43cc032e76c6a948325119f76317b7f80d4f38f6b2481453efec",
+          "bytes": 30958676
+        },
+        "policy-dev-1-29.jsonl": {
+          "sha256": "3f4913d488eb7d35772a3064cfcb62715c31c857992022ab2f14f97a936fe850",
+          "bytes": 4545872
+        },
+        "environment.jsonl": {
+          "sha256": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+          "bytes": 711804
+        },
+        "documents-inputs.jsonl": {
+          "sha256": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+          "bytes": 58889187
+        },
+        "policy-dev-1-9.jsonl": {
+          "sha256": "83b671d2e182441b1096b1507dcff9bcb59be8e63d1f39d870e17d0f153006ef",
+          "bytes": 4635252
+        },
+        "initial-dev-learned.jsonl": {
+          "sha256": "17b2260b7751ac6ea376a69f96c409bb84bc51e81d5b3bfa26150970c9706093",
+          "bytes": 30958663
+        },
+        "generated-inputs.jsonl": {
+          "sha256": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+          "bytes": 1009454
+        },
+        "value-targets-0.jsonl": {
+          "sha256": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+          "bytes": 14450023
+        },
+        "retention-1.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "initial-dev-checklist.jsonl": {
+          "sha256": "7233f5101c952f6b9ba2250791e631b6d4d8e546acc79328b14c033f2b6a5f81",
+          "bytes": 21877884
+        },
+        "model.pt": {
+          "sha256": "93afa8da541acc611b5f69e06a82560b3ec8983b4fcc7f1a758cf1e95e2685f4",
+          "bytes": 607473815
+        },
+        "policy-candidate-1-29.pt": {
+          "sha256": "dbf12257c9ced536d5a5271c7c5569917e4b6e69a2b64563b157c8099b65b4b9",
+          "bytes": 422205
+        },
+        "policy-candidate-1-9.pt": {
+          "sha256": "7fa5d12ebcb5a40332fd9cfb0ea7bd124b74f8d5ef3d5f22c876d7e9938f0e04",
+          "bytes": 422181
+        },
+        "policy-base.pt": {
+          "sha256": "f037a2ef02d644522b9c4f283484320b59e5371e7531a1e5ab536945f2926b79",
+          "bytes": 607509243
+        },
+        "policy-candidate-0-19.pt": {
+          "sha256": "c7da6ba866652b5a88f10bab8617a971c5bba223af018f2277626e503e8bc4b0",
+          "bytes": 422205
+        },
+        "policy-candidate-0-9.pt": {
+          "sha256": "95d2873141ef1911b73d47f0c565cab58ff2f89df49f6ec8c20e085f9bcc2252",
+          "bytes": 422181
+        },
+        "policy-candidate-1-19.pt": {
+          "sha256": "558bf1161bae48c3a3b1e544182f6af58c82a19b569a30a79f4ac4c7f39e5869",
+          "bytes": 422205
+        },
+        "policy-candidate-0-29.pt": {
+          "sha256": "cb09704826c58691a0caec818920f7a3e674e9975ecd23501696283bc5aba69c",
+          "bytes": 422205
+        },
+        "source.tar.gz": {
+          "sha256": "89d4dcde6eb44e2741f9ddf4549c1216b325939681ece4c16b97654ec5b41472",
+          "bytes": 277349
+        }
+      }
+    },
+    "value": {
+      "parameters": 151872438,
+      "seconds": 383.9426738070324,
+      "peakGpuBytes": 1333819904,
+      "hardware": {
+        "device": "cuda",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "runProvenance": {
+        "timestamp": "2026-10-09T11:03:27.699525+00:00",
+        "packages": {
+          "torch": "2.14.1+cu130",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "sourceHash": "2b8c27a6050488f7a4580ef1de35b5127f38ad7c123dd3ac4e44ed3add8318ac",
+        "configHash": "f35f7e64110c31e30481380fcd223e836924db397954f2536813bf298f815dc4",
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "commit": "ba63f9e9e08faec9d300d37dc44ed459e4678b01"
+      },
+      "initialGeneratedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 147.6812873023908,
+          "meanRequestCost": 20.800383333333333,
+          "meanInteractions": 0.35,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 21,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 10,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "405bad6710cdbae1348f15c41233e8accbb894b682aec7ea2db843a60415955d"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "e7f698b08551841ad4e1a73aa58a82e1a5e86c573d46e17f1b7fd48cc7e195b2"
+        }
+      },
+      "initialRetailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "fa95d68da831adb75eb3053ff0db89895f4167a4ace5588db423fc3ac7ef42aa"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "fd419079bece60abd5ff74f7bc66968b1c78b241c8ea093ab443ca19467af5f5"
+        }
+      },
+      "generatedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 147.6812873023908,
+          "meanRequestCost": 20.800383333333333,
+          "meanInteractions": 0.35,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 21,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 10,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "b254008d84ba3330f22206a2cc61d1eee9a222e96b07cf2fab77e168419fef0a"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "f0a371a60eaa5192845293b27a760a02f961496dbe2109a116d9b54372ac5635"
+        }
+      },
+      "retailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "e89955d3c8d53cb450c2ebe82f7d6013757708d01db7bb9be07008d3fc0f528e"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "2e1f2dfbd5283c84edc058ae8981550b65f65d2818ad11206900c1ee45f0134c"
+        }
+      },
+      "policy": [
+        {
+          "iteration": 0,
+          "ownStateTargets": 928,
+          "trainRawHash": "5fdb58b53c19f474173eb0c2e69035a58820c6f15b1bf3c860831260d624bf93",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.04121819672485193,
+              "devSelectionLoss": 0.21023409131210083,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 152.39716039088864,
+                  "meanNormalizedTotal": 0.3305136587356677
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 0.03969590788086255,
+              "devSelectionLoss": 0.20535410368709933,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 151.38659205755528,
+                  "meanNormalizedTotal": 0.3207536834856647
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 0.03792818362514178,
+              "devSelectionLoss": 0.22636395480408347,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 165.234628724222,
+                  "meanNormalizedTotal": 0.36277338571963297
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": null,
+            "epoch": null,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.1899591554464823
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "8bd4cff1bcebdbe337faae0857c8dbcf15a43d4edce64dfbaaa0771a34c99a12",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "692d85bb6763c777c5af85f61889917cb6690c423673eb877a537ec02293517f"
+          },
+          "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+          "target": "Measured terminal loss and request costs after forced first action",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 147.68128730239084,
+              "meanNormalizedTotal": 0.2899637870044306
+            }
+          },
+          "devSelectionLoss": 0.1899591554464823
+        },
+        {
+          "iteration": 1,
+          "ownStateTargets": 928,
+          "trainRawHash": "1c210668ad47fc96f83a5dff290c65ba7e17587e32bd372168999f43169f0dc7",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.04204957994321982,
+              "devSelectionLoss": 0.21023409131210083,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 152.39716039088864,
+                  "meanNormalizedTotal": 0.3305136587356677
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 0.041043075546622274,
+              "devSelectionLoss": 0.21511407893710233,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 153.40772872422198,
+                  "meanNormalizedTotal": 0.3402736339856707
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 0.03823997216920058,
+              "devSelectionLoss": 0.22907235020392622,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 168.0819420575553,
+                  "meanNormalizedTotal": 0.36819017651931846
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": null,
+            "epoch": null,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.1899591554464823
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "8bd4cff1bcebdbe337faae0857c8dbcf15a43d4edce64dfbaaa0771a34c99a12",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "692d85bb6763c777c5af85f61889917cb6690c423673eb877a537ec02293517f"
+          },
+          "trainable": "heads.value only; encoder fine-tuned in preceding language stage",
+          "target": "Measured terminal loss and request costs after forced first action",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 147.68128730239084,
+              "meanNormalizedTotal": 0.2899637870044306
+            }
+          },
+          "devSelectionLoss": 0.1899591554464823
+        }
+      ],
+      "candidates": [
+        {
+          "path": "policy-candidate-0-19.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 0.03969590788086255,
+            "devSelectionLoss": 0.20535410368709933,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 151.38659205755528,
+                "meanNormalizedTotal": 0.3207536834856647
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 4.286874771118164,
+          "optimizerMaxStep": 300.0
+        },
+        {
+          "path": "policy-candidate-0-29.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 0.03792818362514178,
+            "devSelectionLoss": 0.22636395480408347,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 165.234628724222,
+                "meanNormalizedTotal": 0.36277338571963297
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 5.21120548248291,
+          "optimizerMaxStep": 450.0
+        },
+        {
+          "path": "policy-candidate-0-9.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.04121819672485193,
+            "devSelectionLoss": 0.21023409131210083,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 152.39716039088864,
+                "meanNormalizedTotal": 0.3305136587356677
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 2.6767923831939697,
+          "optimizerMaxStep": 150.0
+        },
+        {
+          "path": "policy-candidate-1-19.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 0.041043075546622274,
+            "devSelectionLoss": 0.21511407893710233,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 153.40772872422198,
+                "meanNormalizedTotal": 0.3402736339856707
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 3.921704053878784,
+          "optimizerMaxStep": 300.0
+        },
+        {
+          "path": "policy-candidate-1-29.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 0.03823997216920058,
+            "devSelectionLoss": 0.22907235020392622,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 168.0819420575553,
+                "meanNormalizedTotal": 0.36819017651931846
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 4.855414390563965,
+          "optimizerMaxStep": 450.0
+        },
+        {
+          "path": "policy-candidate-1-9.pt",
+          "head": "value",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.04204957994321982,
+            "devSelectionLoss": 0.21023409131210083,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 152.39716039088864,
+                "meanNormalizedTotal": 0.3305136587356677
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 2.4603562355041504,
+          "optimizerMaxStep": 150.0
+        }
+      ],
+      "changedParameters": [],
+      "numericColumnNorm": {
+        "value": 0.0,
+        "recovery": 0.0
+      },
+      "fixedWeightsUnchanged": true,
+      "initialWeightsMatchLegacyWithZeroExtension": true,
+      "artifacts": {
+        "final-dev.json": {
+          "sha256": "f727fedd4ade3653429a9ab7890ae7100ab43805b332d1f6fd2d2b052ef0c970",
+          "bytes": 4615
+        },
+        "manifest.json": {
+          "sha256": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+          "bytes": 4680
+        },
+        "documents-labels.json": {
+          "sha256": "f54ae9e7b8f06e944fc639b2054135b6beb0fba9bc86f6c6d875591557c2e540",
+          "bytes": 3017419
+        },
+        "config.json": {
+          "sha256": "475bd1e860da232f253dd21a768a7111857f9b2c5e633a3e77c61539a6016eac",
+          "bytes": 3796
+        },
+        "report.json": {
+          "sha256": "447d03687f482a82ae1025d6e7acd9197712d26a8e35728bef0c6790f874aad0",
+          "bytes": 31507
+        },
+        "initial-generated-dev.json": {
+          "sha256": "6aeec44c52c0536efc4decb757fc53ed69cb13559d85f5e08e2c1541432db285",
+          "bytes": 1709
+        },
+        "progress.json": {
+          "sha256": "785b62759c473791516bcfbf9267292888c756c3a998c0d643f23383554d625a",
+          "bytes": 186
+        },
+        "parent.json": {
+          "sha256": "8338839576b0b6383e3db6e0061baf4e44b39dd270839d0100e7d8b3ffea2bda",
+          "bytes": 633
+        },
+        "final-generated-dev.json": {
+          "sha256": "c335060515e70839b2b7690dd768173cca8e4967f012843b0c3036c6d627b2c4",
+          "bytes": 1709
+        },
+        "run.json": {
+          "sha256": "0e79e4f2b15e553820b8effe4039c991ddb9db65d728b67d710816133b5f04d9",
+          "bytes": 7062
+        },
+        "job.json": {
+          "sha256": "404dde151a22e2b2228dc1338e0920385360528dfe836e83d7d8c7caecce634e",
+          "bytes": 97
+        },
+        "initial-dev.json": {
+          "sha256": "c928e956b9d1456e120e17eedb458c664a6fdef9afa5e36dd30be5fe62766753",
+          "bytes": 4615
+        },
+        "rollout-train-1.jsonl": {
+          "sha256": "d910eecce1db55cbe0b00e1e76a13efc945c8e53473210e97d607eef613dfaa0",
+          "bytes": 65038536
+        },
+        "policy-dev-initial.jsonl": {
+          "sha256": "15002e1b720dfa6c01204ddae1a44dc4f3ccdd9efed55569cabe444121d13574",
+          "bytes": 4646999
+        },
+        "policy-dev-0-19.jsonl": {
+          "sha256": "e4f9820ac7c0351c0bfa0e94a65e55c20523af5b2ebcad61ccce860b32d393db",
+          "bytes": 4579599
+        },
+        "value-targets-1.jsonl": {
+          "sha256": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+          "bytes": 14450023
+        },
+        "initial-generated-dev-checklist.jsonl": {
+          "sha256": "e7f698b08551841ad4e1a73aa58a82e1a5e86c573d46e17f1b7fd48cc7e195b2",
+          "bytes": 997222
+        },
+        "initial-generated-dev-learned.jsonl": {
+          "sha256": "405bad6710cdbae1348f15c41233e8accbb894b682aec7ea2db843a60415955d",
+          "bytes": 1254692
+        },
+        "inputs.jsonl": {
+          "sha256": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+          "bytes": 33104974
+        },
+        "final-generated-dev-checklist.jsonl": {
+          "sha256": "f0a371a60eaa5192845293b27a760a02f961496dbe2109a116d9b54372ac5635",
+          "bytes": 997222
+        },
+        "retention-0.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "rollout-train-0.jsonl": {
+          "sha256": "d7fb518d2148484c1908fc2d166504d27e8fdab92e126f9fcfd19522b3085c3c",
+          "bytes": 65038549
+        },
+        "final-generated-dev-learned.jsonl": {
+          "sha256": "b254008d84ba3330f22206a2cc61d1eee9a222e96b07cf2fab77e168419fef0a",
+          "bytes": 1254690
+        },
+        "generated-environment.jsonl": {
+          "sha256": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+          "bytes": 75810
+        },
+        "policy-dev-0-9.jsonl": {
+          "sha256": "db712165c45101b35d71240d701f8a48bbf54a2631ee7c81ffd54ff4d210b8b1",
+          "bytes": 4564786
+        },
+        "final-dev-checklist.jsonl": {
+          "sha256": "2e1f2dfbd5283c84edc058ae8981550b65f65d2818ad11206900c1ee45f0134c",
+          "bytes": 21877890
+        },
+        "policy-dev-1-19.jsonl": {
+          "sha256": "a48b29d7954d0f0a5e37dc862c7344eaa05d7be2f60892d9d230b136cd3d3fa9",
+          "bytes": 4545848
+        },
+        "retention-initial.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "policy-dev-0-29.jsonl": {
+          "sha256": "7bce2374649674bc2a5df84c67c280659ee566681195dd9a81a0d342b1425875",
+          "bytes": 4478155
+        },
+        "final-dev-learned.jsonl": {
+          "sha256": "e89955d3c8d53cb450c2ebe82f7d6013757708d01db7bb9be07008d3fc0f528e",
+          "bytes": 30958639
+        },
+        "policy-dev-1-29.jsonl": {
+          "sha256": "2da23406236dab1ec29255a5ec894b2ccc6eeeb52e8b6b521ae2e9391a951e28",
+          "bytes": 4512190
+        },
+        "environment.jsonl": {
+          "sha256": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+          "bytes": 711804
+        },
+        "documents-inputs.jsonl": {
+          "sha256": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+          "bytes": 58889187
+        },
+        "policy-dev-1-9.jsonl": {
+          "sha256": "b2871cfb3acf049ea70b0123b7d13eb1036e91fcef3cf291ed16fe42ce8e73f1",
+          "bytes": 4562724
+        },
+        "initial-dev-learned.jsonl": {
+          "sha256": "fa95d68da831adb75eb3053ff0db89895f4167a4ace5588db423fc3ac7ef42aa",
+          "bytes": 30958657
+        },
+        "generated-inputs.jsonl": {
+          "sha256": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+          "bytes": 1009454
+        },
+        "value-targets-0.jsonl": {
+          "sha256": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+          "bytes": 14450023
+        },
+        "retention-1.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "initial-dev-checklist.jsonl": {
+          "sha256": "fd419079bece60abd5ff74f7bc66968b1c78b241c8ea093ab443ca19467af5f5",
+          "bytes": 21877851
+        },
+        "model.pt": {
+          "sha256": "995f2defc050dd2e93d091abe8a796bb81a5b0f46978d4175df342ff6eccbb4b",
+          "bytes": 607570007
+        },
+        "policy-candidate-1-29.pt": {
+          "sha256": "1834695276240bebd79226652d274bcd7969bb9753f000d802c1be5f0b58e454",
+          "bytes": 566589
+        },
+        "policy-candidate-1-9.pt": {
+          "sha256": "ed82a87a1ad7726656cf34030f576e91f78dfe3a50d83e5e1df24554730f9e26",
+          "bytes": 566565
+        },
+        "policy-base.pt": {
+          "sha256": "692d85bb6763c777c5af85f61889917cb6690c423673eb877a537ec02293517f",
+          "bytes": 607605499
+        },
+        "policy-candidate-0-19.pt": {
+          "sha256": "82dad5289d1ca06d0437ac669a40087b9cbf18b67d22bf2a00d850cb62c0f6ad",
+          "bytes": 566589
+        },
+        "policy-candidate-0-9.pt": {
+          "sha256": "68cd8a7bfa256ab6b0a7a5a6511f42a2924582b6f02360917966a618856f7462",
+          "bytes": 566565
+        },
+        "policy-candidate-1-19.pt": {
+          "sha256": "c482df714838e1e10246457d538b6c8e8d63baa88fa743b2c8642249d6764898",
+          "bytes": 566589
+        },
+        "policy-candidate-0-29.pt": {
+          "sha256": "2ca36882f81e4af17fb29fd34967f722f098f554f5c99045077d4fa666a2d1e9",
+          "bytes": 566589
+        },
+        "source.tar.gz": {
+          "sha256": "b1161d7754aa45812037f50ce5ee481e01115fdcd2cf5d5972b90f07edf0b825",
+          "bytes": 277349
+        }
+      }
+    },
+    "no_value": {
+      "parameters": 151872438,
+      "seconds": 295.06512891897,
+      "peakGpuBytes": 1334063104,
+      "hardware": {
+        "device": "cuda",
+        "cuda": "13.0",
+        "name": "NVIDIA L40S",
+        "totalBytes": 47667740672,
+        "capability": [
+          8,
+          9
+        ],
+        "uuid": "674d64b8-4bdf-7006-1791-5dc7f7245409"
+      },
+      "runProvenance": {
+        "timestamp": "2026-10-09T11:10:03.854457+00:00",
+        "packages": {
+          "torch": "2.14.1+cu130",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "sourceHash": "2b8c27a6050488f7a4580ef1de35b5127f38ad7c123dd3ac4e44ed3add8318ac",
+        "configHash": "519e627b1ff6b3a14cfd82a560c9a400efcde258a7fac92efcdfee52f7ee946e",
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "commit": "ba63f9e9e08faec9d300d37dc44ed459e4678b01"
+      },
+      "initialGeneratedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 336.57609023461026,
+          "meanRequestCost": 0.0,
+          "meanInteractions": 0.0,
+          "falseHandoffs": 0,
+          "holds": 35,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 0,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 0,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "f2c4ecbcfcc1c218dc7be06c22c490275b4502ee570ba0ccef02f073dd32ae4b"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "b6d5601bc5a385a7faf5ea155ad51a7897b734f889d29c798d07d18a0533b807"
+        }
+      },
+      "initialRetailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 399.8425700771929,
+          "meanCensoredOrderLossLowerBound": 0.2876820985160034,
+          "falseHandoffs": 0,
+          "handoffs": 54,
+          "meanInteractions": 0.017857142857142856,
+          "meanRequestCost": 0.1893452380952381,
+          "necessaryRequests": 6,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 6,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 330,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "2634e5cedd8dc389ff975050fd45afad49c94dea33ec16d9eb0dae7a04467bea"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "d22a8121497fafb5650177175341d00b8ea3072eb8b13f2dc6dadc014c7cdff2"
+        }
+      },
+      "generatedDev": {
+        "learned": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "0f2b0fe4413a69124ac616f1319bf92f9ee104a32ff00d1ab1907b8ee910cfe1"
+        },
+        "checklist": {
+          "episodes": 60,
+          "sourceFamilies": 12,
+          "meanTotal": 181.67582129739634,
+          "meanRequestCost": 61.33535833333334,
+          "meanInteractions": 1.0,
+          "falseHandoffs": 0,
+          "holds": 11,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "typeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 0.9583333333333334,
+            "typeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "missingFieldRequests": 60,
+          "resolvedFieldRequests": 0,
+          "resolvedAfterRequest": 35,
+          "requestMetricScope": "Missing observed fields; this does not mean each request was economically necessary under the legacy minimax task.",
+          "rawHash": "4697eaa64fc84a13d77c47e61d96eb8db9e350138aeabd964c4530cdb84f6d46"
+        }
+      },
+      "retailDev": {
+        "learned": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "e588988cfa7b60831cee6ce50ae2e9069b5ac29c7a807401a4ce8cbcf920c38c"
+        },
+        "checklist": {
+          "episodes": 336,
+          "sourceFamilies": 8,
+          "completePeriods": 35,
+          "censoredPeriods": 301,
+          "uniqueObservedPeriods": 48,
+          "completeUniquePeriods": 5,
+          "initialParameters": {
+            "parameterAccuracy": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalParameters": {
+            "parameterAccuracy": 1.0,
+            "allParametersCorrect": 1.0,
+            "stateAccuracy": 1.0,
+            "rawStateAccuracy": 1.0,
+            "rawParameterAccuracy": 1.0,
+            "typeAccuracy": 1.0,
+            "rawTypeAccuracy": 1.0
+          },
+          "finalEvidenceAccuracy": 1.0,
+          "meanTotalOnCompletePeriods": 44.32742132570505,
+          "meanCensoredOrderLossLowerBound": 0.3144432239593526,
+          "falseHandoffs": 0,
+          "handoffs": 336,
+          "meanInteractions": 1.0,
+          "meanRequestCost": 9.868955782312925,
+          "necessaryRequests": 336,
+          "unnecessaryRequests": 0,
+          "recoveredAfterRequest": 336,
+          "unresolvedAfterRequest": 0,
+          "missingParametersAtStop": 0,
+          "forecast": {
+            "censoredOrderLossLowerBound_u1": {
+              "mean": 0.13258348916604606,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u3": {
+              "mean": 0.12810672730654898,
+              "count": 301
+            },
+            "censoredOrderLossLowerBound_u9": {
+              "mean": 0.0,
+              "count": 301
+            },
+            "distributionValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "observationNLL": {
+              "mean": 0.5085259733941647,
+              "count": 336
+            },
+            "orderValid": {
+              "mean": 1.0,
+              "count": 336
+            },
+            "uncensoredCRPS": {
+              "mean": 2.0093434787946483,
+              "count": 35
+            },
+            "uncensoredInterval80Coverage": {
+              "mean": 0.4,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u1": {
+              "mean": 2.815752807475904,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u3": {
+              "mean": 5.690399745459264,
+              "count": 35
+            },
+            "uncensoredOrderLoss_u9": {
+              "mean": 9.251552947391962,
+              "count": 35
+            },
+            "uncensoredTotalMAE": {
+              "mean": 3.745209897999465,
+              "count": 35
+            }
+          },
+          "rawHash": "fa0c02ad20f58d036f98e87a32f99a2019bf22eed19f50bd11f9e403018a62fe"
+        }
+      },
+      "policy": [
+        {
+          "iteration": 0,
+          "ownStateTargets": 786,
+          "trainRawHash": "82c0c803ba60c3e98ad75e98ee5440e6400e3178da6aef31a4a82d57460a7e19",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.011289866426243233,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": true,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 0.003139018045308498,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 0.0015764282568572806,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 40,
+              "trainLoss": 0.0009497984384114926,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": 0,
+            "epoch": 9,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.22275414143943137
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "3928629dd34f5ee2045f05dc05aa564b8b102ad25c5ab931cdfcbc76de600f6b",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "2d516fbbaaf6a6311bd993084a1bbd1c6c06164529556fff429387d430bf3e69"
+          },
+          "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+          "target": "Observed missing-parameter request/checklist, no economic targets",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "devSelectionLoss": 0.22275414143943137
+        },
+        {
+          "iteration": 1,
+          "ownStateTargets": 1048,
+          "trainRawHash": "10a1eee31c98a7708978805584c898440ada5760a9057086b29794be647e5990",
+          "epochs": [
+            {
+              "epoch": 10,
+              "trainLoss": 0.00011423936837886954,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 20,
+              "trainLoss": 3.3711949072312564e-05,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            },
+            {
+              "epoch": 30,
+              "trainLoss": 1.589056613310651e-05,
+              "devSelectionLoss": 0.22275414143943137,
+              "selectionMetric": "benchmark_normalized",
+              "devBenchmarks": {
+                "retail": {
+                  "episodes": 35,
+                  "meanTotal": 44.32742132570505,
+                  "meanNormalizedTotal": 0.08995452388853398
+                },
+                "generated": {
+                  "episodes": 60,
+                  "meanTotal": 181.67582129739634,
+                  "meanNormalizedTotal": 0.35555375899032876
+                }
+              },
+              "accepted": false,
+              "retentionFailures": []
+            }
+          ],
+          "selected": {
+            "iteration": 0,
+            "epoch": 9,
+            "selectionMetric": "benchmark_normalized",
+            "selectionLoss": 0.22275414143943137
+          },
+          "publicDevBaseline": {},
+          "frozenWeightsHash": "3928629dd34f5ee2045f05dc05aa564b8b102ad25c5ab931cdfcbc76de600f6b",
+          "frozenWeightsUnchanged": true,
+          "checkpointBase": {
+            "path": "policy-base.pt",
+            "hash": "2d516fbbaaf6a6311bd993084a1bbd1c6c06164529556fff429387d430bf3e69"
+          },
+          "trainable": "heads.recovery only; encoder fine-tuned in preceding language stage",
+          "target": "Observed missing-parameter request/checklist, no economic targets",
+          "selectionMetric": "benchmark_normalized",
+          "devBenchmarks": {
+            "retail": {
+              "episodes": 35,
+              "meanTotal": 44.32742132570505,
+              "meanNormalizedTotal": 0.08995452388853398
+            },
+            "generated": {
+              "episodes": 60,
+              "meanTotal": 181.67582129739634,
+              "meanNormalizedTotal": 0.35555375899032876
+            }
+          },
+          "devSelectionLoss": 0.22275414143943137
+        }
+      ],
+      "candidates": [
+        {
+          "path": "policy-candidate-0-19.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 0.003139018045308498,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 2.352857828140259,
+          "optimizerMaxStep": 260.0
+        },
+        {
+          "path": "policy-candidate-0-29.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 0.0015764282568572806,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 2.680269241333008,
+          "optimizerMaxStep": 390.0
+        },
+        {
+          "path": "policy-candidate-0-39.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 40,
+            "trainLoss": 0.0009497984384114926,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 2.9460630416870117,
+          "optimizerMaxStep": 520.0
+        },
+        {
+          "path": "policy-candidate-0-9.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.011289866426243233,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": true,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 1.856054425239563,
+          "optimizerMaxStep": 130.0
+        },
+        {
+          "path": "policy-candidate-1-19.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 20,
+            "trainLoss": 3.3711949072312564e-05,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 3.5882811546325684,
+          "optimizerMaxStep": 340.0
+        },
+        {
+          "path": "policy-candidate-1-29.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 30,
+            "trainLoss": 1.589056613310651e-05,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 3.8371410369873047,
+          "optimizerMaxStep": 510.0
+        },
+        {
+          "path": "policy-candidate-1-9.pt",
+          "head": "recovery",
+          "dev": {
+            "epoch": 10,
+            "trainLoss": 0.00011423936837886954,
+            "devSelectionLoss": 0.22275414143943137,
+            "selectionMetric": "benchmark_normalized",
+            "devBenchmarks": {
+              "retail": {
+                "episodes": 35,
+                "meanTotal": 44.32742132570505,
+                "meanNormalizedTotal": 0.08995452388853398
+              },
+              "generated": {
+                "episodes": 60,
+                "meanTotal": 181.67582129739634,
+                "meanNormalizedTotal": 0.35555375899032876
+              }
+            },
+            "accepted": false,
+            "retentionFailures": []
+          },
+          "numericColumnNorm": 3.2037599086761475,
+          "optimizerMaxStep": 170.0
+        }
+      ],
+      "changedParameters": [
+        "heads.recovery.layers.0.weight",
+        "heads.recovery.layers.0.bias",
+        "heads.recovery.layers.2.weight",
+        "heads.recovery.layers.2.bias"
+      ],
+      "numericColumnNorm": {
+        "value": 0.0,
+        "recovery": 1.856054425239563
+      },
+      "fixedWeightsUnchanged": true,
+      "initialWeightsMatchLegacyWithZeroExtension": true,
+      "artifacts": {
+        "final-dev.json": {
+          "sha256": "bfd113980251e1f0bebc708ac956ab0cadc630878ec5335bd87f1bac6f4d5b0f",
+          "bytes": 4615
+        },
+        "manifest.json": {
+          "sha256": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+          "bytes": 4680
+        },
+        "documents-labels.json": {
+          "sha256": "f54ae9e7b8f06e944fc639b2054135b6beb0fba9bc86f6c6d875591557c2e540",
+          "bytes": 3017419
+        },
+        "config.json": {
+          "sha256": "d85c3a25e8121061c9ed9b43f70cb42722c2b7b6598e0cbb40952b2304d7cf40",
+          "bytes": 3805
+        },
+        "report.json": {
+          "sha256": "2c9bf24271dcc4780e1d07e530e8b3391b6f02a3017f9fdbacbe36f4ec4d4222",
+          "bytes": 32188
+        },
+        "initial-generated-dev.json": {
+          "sha256": "1c01efe57455cf9e406f92f5a629125f5b709cfdf2d997d9bb4e1287a4b2a1e7",
+          "bytes": 1692
+        },
+        "progress.json": {
+          "sha256": "8df038fc1a128292b8916e7e62b49b71b73fd44028f6133be0b887699c5f7c2a",
+          "bytes": 187
+        },
+        "parent.json": {
+          "sha256": "8338839576b0b6383e3db6e0061baf4e44b39dd270839d0100e7d8b3ffea2bda",
+          "bytes": 633
+        },
+        "final-generated-dev.json": {
+          "sha256": "24d85478fd246bf49e4037fbbffe8d6f1acaf08d1dd0052e3973a1719611d9b8",
+          "bytes": 1723
+        },
+        "run.json": {
+          "sha256": "5c57037d54905bde96b5dcb55f96621e498ebeb050750d4e053fff9a1bf837f3",
+          "bytes": 7062
+        },
+        "job.json": {
+          "sha256": "5bc6c36d0db8edfee118451b830cf696c748c65f6165e841ec3a8a3eb4652fda",
+          "bytes": 95
+        },
+        "initial-dev.json": {
+          "sha256": "06e3cbecfedb7b6125e8059f0d52d7ca8a197506f72eb3485b36352e5d7a4314",
+          "bytes": 4630
+        },
+        "rollout-train-1.jsonl": {
+          "sha256": "f8f21bab3a0b446eaf45375d87430e980551fa2435cc8d8d21307ee27613d2e4",
+          "bytes": 20480626
+        },
+        "policy-dev-initial.jsonl": {
+          "sha256": "6eb531aca9556abe7304991caddd9491ab4acbec6fed4d760f276c56d7c3eb19",
+          "bytes": 2582029
+        },
+        "policy-dev-0-19.jsonl": {
+          "sha256": "c22a8e9e07d877229a1d20dfa69750889036f69c72fe193c1e765fe4093d887d",
+          "bytes": 5247291
+        },
+        "initial-generated-dev-checklist.jsonl": {
+          "sha256": "b6d5601bc5a385a7faf5ea155ad51a7897b734f889d29c798d07d18a0533b807",
+          "bytes": 997214
+        },
+        "initial-generated-dev-learned.jsonl": {
+          "sha256": "f2c4ecbcfcc1c218dc7be06c22c490275b4502ee570ba0ccef02f073dd32ae4b",
+          "bytes": 893423
+        },
+        "inputs.jsonl": {
+          "sha256": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+          "bytes": 33104974
+        },
+        "final-generated-dev-checklist.jsonl": {
+          "sha256": "4697eaa64fc84a13d77c47e61d96eb8db9e350138aeabd964c4530cdb84f6d46",
+          "bytes": 997217
+        },
+        "retention-0.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "rollout-train-0.jsonl": {
+          "sha256": "3f47328c74797b97d6aad094c4e3eece894a50c2b952946338b96b086d90d9e0",
+          "bytes": 14076522
+        },
+        "final-generated-dev-learned.jsonl": {
+          "sha256": "0f2b0fe4413a69124ac616f1319bf92f9ee104a32ff00d1ab1907b8ee910cfe1",
+          "bytes": 1862273
+        },
+        "generated-environment.jsonl": {
+          "sha256": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+          "bytes": 75810
+        },
+        "policy-dev-0-9.jsonl": {
+          "sha256": "981a49c8a64cbbc4e3798caf60f4192f4bb892a5a8fbaf8533a3b84b73e99b07",
+          "bytes": 5247294
+        },
+        "recovery-targets-1.jsonl": {
+          "sha256": "05d786aaf3bfe455e4e2602f2d278a48c9caed6830fc474d63301b01fb200518",
+          "bytes": 15362947
+        },
+        "recovery-targets-0.jsonl": {
+          "sha256": "65b93f062eed4f5c186f26ae23806c62350af7f3b188f6a44eac699643e4ed24",
+          "bytes": 11426145
+        },
+        "final-dev-checklist.jsonl": {
+          "sha256": "fa0c02ad20f58d036f98e87a32f99a2019bf22eed19f50bd11f9e403018a62fe",
+          "bytes": 21877916
+        },
+        "policy-dev-1-19.jsonl": {
+          "sha256": "e884c90fbcbc38707917afb2d6216f979c2d51b72cf40a6ad09fb5a1b5a42613",
+          "bytes": 5247288
+        },
+        "retention-initial.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "policy-dev-0-29.jsonl": {
+          "sha256": "735969e04d247de19b67f5454911daabf73379ceb16f927302f0d14b8cd9bdc2",
+          "bytes": 5247284
+        },
+        "final-dev-learned.jsonl": {
+          "sha256": "e588988cfa7b60831cee6ce50ae2e9069b5ac29c7a807401a4ce8cbcf920c38c",
+          "bytes": 30891771
+        },
+        "policy-dev-1-29.jsonl": {
+          "sha256": "95b238334e1dd483dfb269dd25b2453725a920ce89ca9de9d5fb76c64e6e1a46",
+          "bytes": 5247293
+        },
+        "environment.jsonl": {
+          "sha256": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+          "bytes": 711804
+        },
+        "documents-inputs.jsonl": {
+          "sha256": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+          "bytes": 58889187
+        },
+        "policy-dev-1-9.jsonl": {
+          "sha256": "4c4f6c40c4faccdb8c5d1d790bdf11359767ad7d62c02ad2266b599c958b343c",
+          "bytes": 5247288
+        },
+        "initial-dev-learned.jsonl": {
+          "sha256": "2634e5cedd8dc389ff975050fd45afad49c94dea33ec16d9eb0dae7a04467bea",
+          "bytes": 14724991
+        },
+        "generated-inputs.jsonl": {
+          "sha256": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+          "bytes": 1009454
+        },
+        "policy-dev-0-39.jsonl": {
+          "sha256": "c4bcffa5633b26ed2a7d2be35fcf0969f6eb208fd2dc40aaaaaaa7cd50b5768e",
+          "bytes": 5247290
+        },
+        "retention-1.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "initial-dev-checklist.jsonl": {
+          "sha256": "d22a8121497fafb5650177175341d00b8ea3072eb8b13f2dc6dadc014c7cdff2",
+          "bytes": 21877815
+        },
+        "model.pt": {
+          "sha256": "f9af126146b42c8fee57909517d83e6271c8f7d3a1f8040629b17525d43b6f58",
+          "bytes": 607570135
+        },
+        "policy-candidate-1-29.pt": {
+          "sha256": "ca6517dca73c57b84fa21a1c5394153df66be5c33216fbd1f3ef92a4211309af",
+          "bytes": 565053
+        },
+        "policy-candidate-1-9.pt": {
+          "sha256": "30223dec40ad1211bb9a815e7cdfb688a21ddafb76e559e705184cc7d17c8c9b",
+          "bytes": 565029
+        },
+        "policy-base.pt": {
+          "sha256": "2d516fbbaaf6a6311bd993084a1bbd1c6c06164529556fff429387d430bf3e69",
+          "bytes": 607605499
+        },
+        "policy-candidate-0-19.pt": {
+          "sha256": "4755f941026364ea6e85bdb3787143a73fd72bf70fb4d3e9a4a47fb69493f294",
+          "bytes": 565053
+        },
+        "policy-candidate-0-9.pt": {
+          "sha256": "e39c0bcb58eed7d7e75396843b5fb01918fbb86fbe1942048796ddc0551cd54e",
+          "bytes": 565029
+        },
+        "policy-candidate-1-19.pt": {
+          "sha256": "c67fd76443c70d46a317dc81e68934e7381a27d362108c05748d9db0c142e093",
+          "bytes": 565053
+        },
+        "policy-candidate-0-29.pt": {
+          "sha256": "afb35d32aaf4185fb86db739120f2017dff0e166ea64a4e814a707595ae8add8",
+          "bytes": 565053
+        },
+        "policy-candidate-0-39.pt": {
+          "sha256": "e16db0c64d771fd180de1c5514eb9b89a0676ad610daf2ae7792bfb720fbc927",
+          "bytes": 565053
+        },
+        "source.tar.gz": {
+          "sha256": "004a11915d386a2f535cc4c6ef91898942a364dde75369d9045ff019200db596",
+          "bytes": 277349
+        }
+      }
+    }
+  },
+  "manifestsIdentical": true,
+  "manifest": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+      "labelsHash": "a89f6bfe8091c431aa8435e13a182946a2ec91f9114bd2fb126cf95ea822da59",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 13095
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "pairedGeneratedDev": {
+    "numericMinusControl": {
+      "meanLeftMinusRight": 0.0,
+      "familyBootstrap95CI": [
+        0.0,
+        0.0
+      ],
+      "families": 12,
+      "resamples": 5000,
+      "seed": 53,
+      "byFamily": {
+        "sufficient-01": 0.0,
+        "sufficient-11": 0.0,
+        "missing_contract-00": 0.0,
+        "missing_contract-11": 0.0,
+        "missing_demand-14": 0.0,
+        "missing_demand-18": 0.0,
+        "unset_preference-05": 0.0,
+        "unset_preference-08": 0.0,
+        "conflicting-05": 0.0,
+        "conflicting-19": 0.0,
+        "unavailable-03": 0.0,
+        "unavailable-17": 0.0
+      },
+      "changedActionCases": [],
+      "scope": "Descriptive paired Dev interval after model selection, not confirmatory evidence"
+    },
+    "numericMinusNoValue": {
+      "meanLeftMinusRight": -33.99453399500552,
+      "familyBootstrap95CI": [
+        -65.69099097512003,
+        -6.0666745764228365
+      ],
+      "families": 12,
+      "resamples": 5000,
+      "seed": 53,
+      "byFamily": {
+        "sufficient-01": 0.0,
+        "sufficient-11": 0.0,
+        "missing_contract-00": -19.32806293635087,
+        "missing_contract-11": -85.80482022861649,
+        "missing_demand-14": 0.0,
+        "missing_demand-18": 0.0,
+        "unset_preference-05": 32.332788247893326,
+        "unset_preference-08": -87.57139383315554,
+        "conflicting-05": 0.0,
+        "conflicting-19": 0.0,
+        "unavailable-03": -84.2363968059641,
+        "unavailable-17": -163.32652238387254
+      },
+      "changedActionCases": [
+        {
+          "id": "missing_contract-00-0",
+          "family": "missing_contract-00",
+          "leftTotal": 65.84657363946138,
+          "rightTotal": 40.9601,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-00-1",
+          "family": "missing_contract-00",
+          "leftTotal": 65.84657363946138,
+          "rightTotal": 92.70213641319997,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-00-2",
+          "family": "missing_contract-00",
+          "leftTotal": 65.84657363946138,
+          "rightTotal": 92.70213641319997,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-00-3",
+          "family": "missing_contract-00",
+          "leftTotal": 65.84657363946138,
+          "rightTotal": 106.80667363946138,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-00-4",
+          "family": "missing_contract-00",
+          "leftTotal": 65.84657363946138,
+          "rightTotal": 92.70213641319997,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-11-0",
+          "family": "missing_contract-11",
+          "leftTotal": 53.427898856917466,
+          "rightTotal": 149.91829885691746,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-11-1",
+          "family": "missing_contract-11",
+          "leftTotal": 53.427898856917466,
+          "rightTotal": 149.91829885691746,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-11-2",
+          "family": "missing_contract-11",
+          "leftTotal": 53.427898856917466,
+          "rightTotal": 149.91829885691746,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-11-3",
+          "family": "missing_contract-11",
+          "leftTotal": 53.427898856917466,
+          "rightTotal": 96.4904,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "missing_contract-11-4",
+          "family": "missing_contract-11",
+          "leftTotal": 53.427898856917466,
+          "rightTotal": 149.91829885691746,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-05-1",
+          "family": "unset_preference-05",
+          "leftTotal": 46.790985309866656,
+          "rightTotal": 6.375,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-05-2",
+          "family": "unset_preference-05",
+          "leftTotal": 46.790985309866656,
+          "rightTotal": 6.375,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-05-3",
+          "family": "unset_preference-05",
+          "leftTotal": 46.790985309866656,
+          "rightTotal": 6.375,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-05-4",
+          "family": "unset_preference-05",
+          "leftTotal": 46.790985309866656,
+          "rightTotal": 6.375,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-08-0",
+          "family": "unset_preference-08",
+          "leftTotal": 1.927757708555589,
+          "rightTotal": 89.1136,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-08-1",
+          "family": "unset_preference-08",
+          "leftTotal": 1.927757708555589,
+          "rightTotal": 89.1136,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-08-2",
+          "family": "unset_preference-08",
+          "leftTotal": 1.927757708555589,
+          "rightTotal": 91.0413577085556,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-08-3",
+          "family": "unset_preference-08",
+          "leftTotal": 1.927757708555589,
+          "rightTotal": 89.1136,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unset_preference-08-4",
+          "family": "unset_preference-08",
+          "leftTotal": 1.927757708555589,
+          "rightTotal": 89.1136,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-03-0",
+          "family": "unavailable-03",
+          "leftTotal": 4.2426439158691664,
+          "rightTotal": 88.47904072183327,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-03-1",
+          "family": "unavailable-03",
+          "leftTotal": 4.2426439158691664,
+          "rightTotal": 88.47904072183327,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-03-2",
+          "family": "unavailable-03",
+          "leftTotal": 4.2426439158691664,
+          "rightTotal": 88.47904072183327,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-03-3",
+          "family": "unavailable-03",
+          "leftTotal": 4.2426439158691664,
+          "rightTotal": 88.47904072183327,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-03-4",
+          "family": "unavailable-03",
+          "leftTotal": 4.2426439158691664,
+          "rightTotal": 88.47904072183327,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-17-0",
+          "family": "unavailable-17",
+          "leftTotal": 10.115065259992662,
+          "rightTotal": 168.5558,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-17-1",
+          "family": "unavailable-17",
+          "leftTotal": 10.115065259992662,
+          "rightTotal": 168.5558,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-17-2",
+          "family": "unavailable-17",
+          "leftTotal": 10.115065259992662,
+          "rightTotal": 175.7127364796667,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-17-3",
+          "family": "unavailable-17",
+          "leftTotal": 10.115065259992662,
+          "rightTotal": 178.67086525999267,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        },
+        {
+          "id": "unavailable-17-4",
+          "family": "unavailable-17",
+          "leftTotal": 10.115065259992662,
+          "rightTotal": 175.7127364796667,
+          "leftActions": [
+            "handoff"
+          ],
+          "rightActions": [
+            "v",
+            "b",
+            "handoff"
+          ]
+        }
+      ],
+      "scope": "Descriptive paired Dev interval after model selection, not confirmatory evidence"
+    }
+  },
+  "initialNumericAndControlDecisionsIdentical": true,
+  "initialValueTrainingTargetsIdentical": true,
+  "promotionGates": {
+    "generatedRawNotWorse": true,
+    "retailRawNotWorse": true,
+    "noFalseHandoffs": true,
+    "noMoreUnnecessaryRequests": true,
+    "constructorAndDemandUnchanged": true,
+    "meaningfulDevImprovement": false
+  },
+  "eligibleForFurtherValidation": false,
+  "limitations": [
+    "One fixed training seed; repeated Dev selection is not independent confirmation.",
+    "Generated Dev has 12 families. Retail exact loss uses only 5 unique complete periods across 7 controlled conditions each.",
+    "This changes action inputs, not document extraction or demand forecasting. It does not establish appropriate demand calibration or final Test goal attainment.",
+    "Raw files remain immutable; model weights and underlying expanded training data are not supplied by this report."
+  ],
+  "precisionLimitation": {
+    "scope": "Train-only feature quantization diagnostic; not an end-to-end GPU or effectiveness test",
+    "testUsed": false,
+    "devUsed": false,
+    "source": "results/l40s-research-replay-v1/base/42/value-targets-0.jsonl",
+    "sourceHash": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+    "scriptHash": "9b8b4a58a49dc76845addd4bc8019ec28268b792a4f921e7ce467b032e5e7f02",
+    "dtype": "bfloat16",
+    "counts": {
+      "retail": {
+        "q_tested": 136,
+        "q_same": 0,
+        "types_tested": 308,
+        "types_same": 0,
+        "values_tested": 284,
+        "values_same": 13
+      },
+      "generated": {
+        "q_tested": 620,
+        "q_same": 22,
+        "gamma_tested": 620,
+        "gamma_same": 53,
+        "types_tested": 620,
+        "types_same": 0,
+        "values_tested": 620,
+        "values_same": 136
+      }
+    }
+  },
+  "publishedRaw": {
+    "path": "docs/evidence/artifacts/numeric-state-results.tar.xz",
+    "sha256": "56766ba2999502191eb2b9de059737310da39a7cfda0eee04d8202f69ca5421c",
+    "bytes": 10709800,
+    "members": {
+      "results/l40s-research-numeric-v1/registered.json": "a43152fa12f4a97ac7fd307535803c4fe482e955a53ed8112e2ef4eb606af91e",
+      "results/l40s-research-numeric-v1/queue.json": "40101ad24e58971a220e9ef17ae48c6e7bb7640b4b9f0619b96d7411f9940855",
+      "results/l40s-research-numeric-v1/queue-results.json": "7edff21fbf97d2a0dc60c81f5f4a4068520c29e184794444be7b2e8c96068778",
+      "docs/evidence/scripts/compare-numeric-state.py": "02703700268a0be93f0ee6a38642fc307a71f4f620aa05185c4f6cbdad48f4f1",
+      "docs/evidence/scripts/check-state-precision.py": "9b8b4a58a49dc76845addd4bc8019ec28268b792a4f921e7ce467b032e5e7f02",
+      "results/research-checks/numeric-state-precision-verified.json": "6637b33e4e2053e07e8fae6f5762d227ed40c8812600ebf289284cb4bf3a4e73",
+      "results/research-checks/run-numeric-state.py": "50897e1a288d9a50fcea2bb6ac93d7071493a2a58b96cd997d3d25cd195dc39f",
+      "results/l40s-research-numeric-v1/control/42/config.json": "0d695bc2e0339cf32b7f63852b46097caf67253da0fee4a5dab2a69354adce00",
+      "results/l40s-research-numeric-v1/control/42/run.json": "915cdac9af10234c2e1f88fb5941ba0a5b3ad05fabbd344db234395600c20787",
+      "results/l40s-research-numeric-v1/control/42/parent.json": "6dd5439b7b70ff75e1b3867b7a0b14b9b256d2dbc251222f509fe6a622a45ca6",
+      "results/l40s-research-numeric-v1/control/42/manifest.json": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+      "results/l40s-research-numeric-v1/control/42/report.json": "d1363764b9945bba6f8a29744ca1dbc56935e4dc01702c506de11411d721d7fb",
+      "results/l40s-research-numeric-v1/control/42/job.json": "6790ae63a9a32e59e9d2f5d7191ff3f47569fd35df19fadf7689e07560e2acda",
+      "results/l40s-research-numeric-v1/control/42/initial-dev.json": "e92e13daead661832721f3e064c01d79f94f921ca6039dc548b30e3fed27f6b4",
+      "results/l40s-research-numeric-v1/control/42/final-dev.json": "62cc603202c5ef045ba3e28929b4eed906d48be4119eaad31b1f20120426d9c6",
+      "results/l40s-research-numeric-v1/control/42/initial-generated-dev.json": "583ab3258845b23048ea41ce6beb1fc412d46e0621b3925f15b3c76cdbe433bf",
+      "results/l40s-research-numeric-v1/control/42/final-generated-dev.json": "456dfbc3fc3e0f64da58868463522d5d662e7c4a3622379d79e1b6151caa048e",
+      "results/l40s-research-numeric-v1/control/42/initial-dev-checklist.jsonl": "7233f5101c952f6b9ba2250791e631b6d4d8e546acc79328b14c033f2b6a5f81",
+      "results/l40s-research-numeric-v1/control/42/initial-dev-learned.jsonl": "17b2260b7751ac6ea376a69f96c409bb84bc51e81d5b3bfa26150970c9706093",
+      "results/l40s-research-numeric-v1/control/42/initial-generated-dev-checklist.jsonl": "2548da77e8feca2b845e006c7bd3317adace01a42cfc0269f73d4b227f47dcb3",
+      "results/l40s-research-numeric-v1/control/42/initial-generated-dev-learned.jsonl": "3d7f3d5738c7597f9cb18833fd7eef2683ae125a9f5b7f2163b9f4838ae7bdaa",
+      "results/l40s-research-numeric-v1/control/42/final-dev-checklist.jsonl": "1997e0ea2fb1cacfb1bab12349e1f5c208191379e5f1ec0d906055ee7ffab53d",
+      "results/l40s-research-numeric-v1/control/42/final-dev-learned.jsonl": "1e1a936d66cf43cc032e76c6a948325119f76317b7f80d4f38f6b2481453efec",
+      "results/l40s-research-numeric-v1/control/42/final-generated-dev-checklist.jsonl": "42e2f94b532e9155d2b54ee46d261ddc95ab6809f31ee68a6a967ecbb1f13638",
+      "results/l40s-research-numeric-v1/control/42/final-generated-dev-learned.jsonl": "c6ef50b9966dbf67dfb67cf2cda59863a29308adf16906d46620988e5e95847d",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-0-19.jsonl": "6e01770f4bcd3f0d464ef01dfb420032a5a928ccfda84308c4eaab4a62b0e18b",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-0-29.jsonl": "e0b5c1d51453495274e5f78625c10fba4027ff971e6cca5fcc945d583297625f",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-0-9.jsonl": "1a871986d2e06c6f191c4d085f2309fe303270e34ecbb0a2486a47170b982c18",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-1-19.jsonl": "2b6f191394e235b053f10f91d42bc6dacd86bbe932893a9753dc1f92c06acf34",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-1-29.jsonl": "3f4913d488eb7d35772a3064cfcb62715c31c857992022ab2f14f97a936fe850",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-1-9.jsonl": "83b671d2e182441b1096b1507dcff9bcb59be8e63d1f39d870e17d0f153006ef",
+      "results/l40s-research-numeric-v1/control/42/policy-dev-initial.jsonl": "3753e3bc67d7c72b93fd1c1e16c2f7e7dec4af08f21bbf7ee57ed791de7a6c3c",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-0-19.pt": "c7da6ba866652b5a88f10bab8617a971c5bba223af018f2277626e503e8bc4b0",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-0-29.pt": "cb09704826c58691a0caec818920f7a3e674e9975ecd23501696283bc5aba69c",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-0-9.pt": "95d2873141ef1911b73d47f0c565cab58ff2f89df49f6ec8c20e085f9bcc2252",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-1-19.pt": "558bf1161bae48c3a3b1e544182f6af58c82a19b569a30a79f4ac4c7f39e5869",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-1-29.pt": "dbf12257c9ced536d5a5271c7c5569917e4b6e69a2b64563b157c8099b65b4b9",
+      "results/l40s-research-numeric-v1/control/42/policy-candidate-1-9.pt": "7fa5d12ebcb5a40332fd9cfb0ea7bd124b74f8d5ef3d5f22c876d7e9938f0e04",
+      "results/research-checks/numeric-state-control.log": "1178035a463dc0462b27ba47a29e65444c68df23daf3b76b6046d032ff61d8e1",
+      "results/l40s-research-numeric-v1/value/42/config.json": "475bd1e860da232f253dd21a768a7111857f9b2c5e633a3e77c61539a6016eac",
+      "results/l40s-research-numeric-v1/value/42/run.json": "0e79e4f2b15e553820b8effe4039c991ddb9db65d728b67d710816133b5f04d9",
+      "results/l40s-research-numeric-v1/value/42/parent.json": "8338839576b0b6383e3db6e0061baf4e44b39dd270839d0100e7d8b3ffea2bda",
+      "results/l40s-research-numeric-v1/value/42/manifest.json": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+      "results/l40s-research-numeric-v1/value/42/report.json": "447d03687f482a82ae1025d6e7acd9197712d26a8e35728bef0c6790f874aad0",
+      "results/l40s-research-numeric-v1/value/42/job.json": "404dde151a22e2b2228dc1338e0920385360528dfe836e83d7d8c7caecce634e",
+      "results/l40s-research-numeric-v1/value/42/initial-dev.json": "c928e956b9d1456e120e17eedb458c664a6fdef9afa5e36dd30be5fe62766753",
+      "results/l40s-research-numeric-v1/value/42/final-dev.json": "f727fedd4ade3653429a9ab7890ae7100ab43805b332d1f6fd2d2b052ef0c970",
+      "results/l40s-research-numeric-v1/value/42/initial-generated-dev.json": "6aeec44c52c0536efc4decb757fc53ed69cb13559d85f5e08e2c1541432db285",
+      "results/l40s-research-numeric-v1/value/42/final-generated-dev.json": "c335060515e70839b2b7690dd768173cca8e4967f012843b0c3036c6d627b2c4",
+      "results/l40s-research-numeric-v1/value/42/initial-dev-checklist.jsonl": "fd419079bece60abd5ff74f7bc66968b1c78b241c8ea093ab443ca19467af5f5",
+      "results/l40s-research-numeric-v1/value/42/initial-dev-learned.jsonl": "fa95d68da831adb75eb3053ff0db89895f4167a4ace5588db423fc3ac7ef42aa",
+      "results/l40s-research-numeric-v1/value/42/initial-generated-dev-checklist.jsonl": "e7f698b08551841ad4e1a73aa58a82e1a5e86c573d46e17f1b7fd48cc7e195b2",
+      "results/l40s-research-numeric-v1/value/42/initial-generated-dev-learned.jsonl": "405bad6710cdbae1348f15c41233e8accbb894b682aec7ea2db843a60415955d",
+      "results/l40s-research-numeric-v1/value/42/final-dev-checklist.jsonl": "2e1f2dfbd5283c84edc058ae8981550b65f65d2818ad11206900c1ee45f0134c",
+      "results/l40s-research-numeric-v1/value/42/final-dev-learned.jsonl": "e89955d3c8d53cb450c2ebe82f7d6013757708d01db7bb9be07008d3fc0f528e",
+      "results/l40s-research-numeric-v1/value/42/final-generated-dev-checklist.jsonl": "f0a371a60eaa5192845293b27a760a02f961496dbe2109a116d9b54372ac5635",
+      "results/l40s-research-numeric-v1/value/42/final-generated-dev-learned.jsonl": "b254008d84ba3330f22206a2cc61d1eee9a222e96b07cf2fab77e168419fef0a",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-0-19.jsonl": "e4f9820ac7c0351c0bfa0e94a65e55c20523af5b2ebcad61ccce860b32d393db",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-0-29.jsonl": "7bce2374649674bc2a5df84c67c280659ee566681195dd9a81a0d342b1425875",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-0-9.jsonl": "db712165c45101b35d71240d701f8a48bbf54a2631ee7c81ffd54ff4d210b8b1",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-1-19.jsonl": "a48b29d7954d0f0a5e37dc862c7344eaa05d7be2f60892d9d230b136cd3d3fa9",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-1-29.jsonl": "2da23406236dab1ec29255a5ec894b2ccc6eeeb52e8b6b521ae2e9391a951e28",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-1-9.jsonl": "b2871cfb3acf049ea70b0123b7d13eb1036e91fcef3cf291ed16fe42ce8e73f1",
+      "results/l40s-research-numeric-v1/value/42/policy-dev-initial.jsonl": "15002e1b720dfa6c01204ddae1a44dc4f3ccdd9efed55569cabe444121d13574",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-0-19.pt": "82dad5289d1ca06d0437ac669a40087b9cbf18b67d22bf2a00d850cb62c0f6ad",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-0-29.pt": "2ca36882f81e4af17fb29fd34967f722f098f554f5c99045077d4fa666a2d1e9",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-0-9.pt": "68cd8a7bfa256ab6b0a7a5a6511f42a2924582b6f02360917966a618856f7462",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-1-19.pt": "c482df714838e1e10246457d538b6c8e8d63baa88fa743b2c8642249d6764898",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-1-29.pt": "1834695276240bebd79226652d274bcd7969bb9753f000d802c1be5f0b58e454",
+      "results/l40s-research-numeric-v1/value/42/policy-candidate-1-9.pt": "ed82a87a1ad7726656cf34030f576e91f78dfe3a50d83e5e1df24554730f9e26",
+      "results/research-checks/numeric-state-value.log": "08a80d04bd6f0a2fca95bed24f9a4624e1f38b6c158fc4cb9664b93c9c8eb235",
+      "results/l40s-research-numeric-v1/no_value/42/config.json": "d85c3a25e8121061c9ed9b43f70cb42722c2b7b6598e0cbb40952b2304d7cf40",
+      "results/l40s-research-numeric-v1/no_value/42/run.json": "5c57037d54905bde96b5dcb55f96621e498ebeb050750d4e053fff9a1bf837f3",
+      "results/l40s-research-numeric-v1/no_value/42/parent.json": "8338839576b0b6383e3db6e0061baf4e44b39dd270839d0100e7d8b3ffea2bda",
+      "results/l40s-research-numeric-v1/no_value/42/manifest.json": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+      "results/l40s-research-numeric-v1/no_value/42/report.json": "2c9bf24271dcc4780e1d07e530e8b3391b6f02a3017f9fdbacbe36f4ec4d4222",
+      "results/l40s-research-numeric-v1/no_value/42/job.json": "5bc6c36d0db8edfee118451b830cf696c748c65f6165e841ec3a8a3eb4652fda",
+      "results/l40s-research-numeric-v1/no_value/42/initial-dev.json": "06e3cbecfedb7b6125e8059f0d52d7ca8a197506f72eb3485b36352e5d7a4314",
+      "results/l40s-research-numeric-v1/no_value/42/final-dev.json": "bfd113980251e1f0bebc708ac956ab0cadc630878ec5335bd87f1bac6f4d5b0f",
+      "results/l40s-research-numeric-v1/no_value/42/initial-generated-dev.json": "1c01efe57455cf9e406f92f5a629125f5b709cfdf2d997d9bb4e1287a4b2a1e7",
+      "results/l40s-research-numeric-v1/no_value/42/final-generated-dev.json": "24d85478fd246bf49e4037fbbffe8d6f1acaf08d1dd0052e3973a1719611d9b8",
+      "results/l40s-research-numeric-v1/no_value/42/initial-dev-checklist.jsonl": "d22a8121497fafb5650177175341d00b8ea3072eb8b13f2dc6dadc014c7cdff2",
+      "results/l40s-research-numeric-v1/no_value/42/initial-dev-learned.jsonl": "2634e5cedd8dc389ff975050fd45afad49c94dea33ec16d9eb0dae7a04467bea",
+      "results/l40s-research-numeric-v1/no_value/42/initial-generated-dev-checklist.jsonl": "b6d5601bc5a385a7faf5ea155ad51a7897b734f889d29c798d07d18a0533b807",
+      "results/l40s-research-numeric-v1/no_value/42/initial-generated-dev-learned.jsonl": "f2c4ecbcfcc1c218dc7be06c22c490275b4502ee570ba0ccef02f073dd32ae4b",
+      "results/l40s-research-numeric-v1/no_value/42/final-dev-checklist.jsonl": "fa0c02ad20f58d036f98e87a32f99a2019bf22eed19f50bd11f9e403018a62fe",
+      "results/l40s-research-numeric-v1/no_value/42/final-dev-learned.jsonl": "e588988cfa7b60831cee6ce50ae2e9069b5ac29c7a807401a4ce8cbcf920c38c",
+      "results/l40s-research-numeric-v1/no_value/42/final-generated-dev-checklist.jsonl": "4697eaa64fc84a13d77c47e61d96eb8db9e350138aeabd964c4530cdb84f6d46",
+      "results/l40s-research-numeric-v1/no_value/42/final-generated-dev-learned.jsonl": "0f2b0fe4413a69124ac616f1319bf92f9ee104a32ff00d1ab1907b8ee910cfe1",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-0-19.jsonl": "c22a8e9e07d877229a1d20dfa69750889036f69c72fe193c1e765fe4093d887d",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-0-29.jsonl": "735969e04d247de19b67f5454911daabf73379ceb16f927302f0d14b8cd9bdc2",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-0-39.jsonl": "c4bcffa5633b26ed2a7d2be35fcf0969f6eb208fd2dc40aaaaaaa7cd50b5768e",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-0-9.jsonl": "981a49c8a64cbbc4e3798caf60f4192f4bb892a5a8fbaf8533a3b84b73e99b07",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-1-19.jsonl": "e884c90fbcbc38707917afb2d6216f979c2d51b72cf40a6ad09fb5a1b5a42613",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-1-29.jsonl": "95b238334e1dd483dfb269dd25b2453725a920ce89ca9de9d5fb76c64e6e1a46",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-1-9.jsonl": "4c4f6c40c4faccdb8c5d1d790bdf11359767ad7d62c02ad2266b599c958b343c",
+      "results/l40s-research-numeric-v1/no_value/42/policy-dev-initial.jsonl": "6eb531aca9556abe7304991caddd9491ab4acbec6fed4d760f276c56d7c3eb19",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-0-19.pt": "4755f941026364ea6e85bdb3787143a73fd72bf70fb4d3e9a4a47fb69493f294",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-0-29.pt": "afb35d32aaf4185fb86db739120f2017dff0e166ea64a4e814a707595ae8add8",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-0-39.pt": "e16db0c64d771fd180de1c5514eb9b89a0676ad610daf2ae7792bfb720fbc927",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-0-9.pt": "e39c0bcb58eed7d7e75396843b5fb01918fbb86fbe1942048796ddc0551cd54e",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-1-19.pt": "c67fd76443c70d46a317dc81e68934e7381a27d362108c05748d9db0c142e093",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-1-29.pt": "ca6517dca73c57b84fa21a1c5394153df66be5c33216fbd1f3ef92a4211309af",
+      "results/l40s-research-numeric-v1/no_value/42/policy-candidate-1-9.pt": "30223dec40ad1211bb9a815e7cdfb688a21ddafb76e559e705184cc7d17c8c9b",
+      "results/research-checks/numeric-state-no_value.log": "fa2162e8bec8f41a70b1548496ad60c696c75fccdb820914ada78826ef310ce6"
+    },
+    "contents": "Unmodified initial/final Dev and candidate rollout records, candidate action-head weights/optimizer, configuration, provenance, logs and comparison scripts. Full encoder/core checkpoints and underlying expanded Train inputs are not included."
+  }
+}

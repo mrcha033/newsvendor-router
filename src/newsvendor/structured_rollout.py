@@ -183,6 +183,12 @@ class ResearchRouter:
             round=sum(h["action"] == "retrieve" for h in value["history"]),
         )
         view["allowReread"] = False
+        if self.config.get("numericState"):
+            from .structured_value import state_features
+
+            view["economicFeatures"] = state_features(
+                value, state, allowed, self.config.get("retrievalCost", 1.0)
+            )
         if self.config.get("exactActionCosts"):
             from .structured_value import known_costs
 

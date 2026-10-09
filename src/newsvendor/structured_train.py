@@ -89,6 +89,23 @@ def load(path, device="cpu"):
     return model.to(device).eval(), tokenizer, config, payload["report"]
 
 
+def import_core(model, weights):
+    """Only an explicitly enabled numeric-state head may extend legacy input columns."""
+    weights = dict(weights)
+    if model.config.get("numericState"):
+        for name in ("value", "recovery"):
+            key = f"heads.{name}.layers.0.weight"
+            expected = model.heads[name].layers[0].weight
+            if weights[key].shape != expected.shape:
+                require(
+                    weights[key].shape == (expected.shape[0], 256), "Unexpected action-head shape"
+                )
+                expanded = weights[key].new_zeros(expected.shape)
+                expanded[:, :256] = weights[key]
+                weights[key] = expanded
+    model.load_state_dict(weights, strict=True)
+
+
 def initialize(config):
     """Warm-start a core, or pair pretrained encoders with identical fresh functional heads."""
     from .structured_tool_eval import weights_hash
@@ -126,7 +143,7 @@ def initialize(config):
         weights = {
             k: v for k, v in payload["weights"].items() if not k.startswith(("tools.", "control."))
         }
-        model.load_state_dict(weights, strict=True)
+        import_core(model, weights)
     else:
         weights = {
             k.removeprefix("demand."): v
@@ -148,6 +165,8 @@ def initialize(config):
             }
         ),
         "demandWeightsHash": weights_hash(model.demand.state_dict()),
+        "numericStateAdded": bool(config["encoder"].get("numericState"))
+        and not payload["config"].get("encoder", {}).get("numericState", False),
         "removedAuxiliaryParameters": sum(
             v.numel() for k, v in payload["weights"].items() if k.startswith(("tools.", "control."))
         )

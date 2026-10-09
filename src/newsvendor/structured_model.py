@@ -12,7 +12,7 @@ from .heads import Head
 from .io import digest, require
 from .sequence import DemandEncoder, features
 from .structured_inputs import DECISIONS, MODES, OPS, SCALES, best_span, span_value
-from .structured_value import constrain
+from .structured_value import STATE_FEATURES, constrain
 
 SCHEMA = "structured-router-v1"
 
@@ -58,6 +58,7 @@ class Router(nn.Module):
         )
         self.fusion = nn.TransformerDecoder(layer, 2)
         self.demand = DemandEncoder()
+        action_dim = 256 + (len(STATE_FEATURES) if config.get("numericState") else 0)
         self.heads = nn.ModuleDict(
             {
                 "kind": Head(256, 128, len(KINDS)),
@@ -69,8 +70,8 @@ class Router(nn.Module):
                 "scale": Head(256, 128, len(SCALES)),
                 "decision": Head(256, 128, len(DECISIONS)),
                 "question": Head(256, 128, 1),
-                "recovery": Head(256, 128, 1),
-                "value": Head(256, 128, 2),
+                "recovery": Head(action_dim, 128, 1),
+                "value": Head(action_dim, 128, 2),
             }
         )
         self.pointers = nn.ModuleDict(
@@ -279,7 +280,11 @@ class Router(nn.Module):
         fused = self.fusion(
             queries, tokens, tgt_key_padding_mask=query_mask, memory_key_padding_mask=token_mask
         )
-        heads = {name: head(fused) for name, head in self.heads.items()}
+        heads = {
+            name: head(fused)
+            for name, head in self.heads.items()
+            if not (self.config.get("numericState") and name in ("value", "recovery"))
+        }
         pointers = {name: pointer(fused) for name, pointer in self.pointers.items()}
         return [
             self.finish(
@@ -306,9 +311,18 @@ class Router(nn.Module):
             ]
         )
         fields, actions = joined[:count], joined[count : count + action_count]
+        if self.config.get("numericState"):
+            numeric = actions.new_tensor(
+                view.get("economicFeatures", [[0.0] * len(STATE_FEATURES)] * action_count)
+            )
+            require(numeric.shape == (action_count, len(STATE_FEATURES)), "Economic state shape")
+            actions = torch.cat([actions, numeric], dim=-1)
         output = {}
         for name, head in self.heads.items():
             on_actions = name in ("value", "recovery")
+            if on_actions and self.config.get("numericState"):
+                output[name] = head(actions)
+                continue
             output[name] = (
                 (
                     fused[1][name][count : count + action_count]

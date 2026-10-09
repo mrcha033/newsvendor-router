@@ -3756,6 +3756,120 @@ def test_value_costs_shared_by_forward_cached_training_and_decoder(tokenizer, se
     assert constrain(plain) is plain
 
 
+def test_numeric_state_uses_own_predictions_and_public_costs_only():
+    from newsvendor.structured_value import STATE_FEATURES, state_features
+
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    value = copy.deepcopy(episode["input"])
+    state = reference(value)
+    actions = ["hold", "handoff", "v"]
+    original = state_features(value, state, actions)
+    poisoned = copy.deepcopy(value)
+    poisoned["task"]["rho"] = {"v": 0}
+    poisoned["task"]["partial"] = {"v": 1}
+    poisoned["gold"] = {"theta": "not observable"}
+    assert state_features(poisoned, state, actions) == original
+    numeric = dict(zip(STATE_FEATURES, original[0], strict=True))
+    assert numeric["valid"] == float(state["valid"])
+    changed = copy.deepcopy(state)
+    changed["q"] += 1
+    changed["values"]["p"] *= 2
+    changed["types"]["b"] = "fact"
+    other = dict(zip(STATE_FEATURES, state_features(value, changed, actions)[0], strict=True))
+    assert other["q"] != numeric["q"] and other["p_value"] != numeric["p_value"]
+    assert other["b_type_fact"] != numeric["b_type_fact"]
+    missing = copy.deepcopy(state)
+    missing["values"].pop("b", None)
+    absent = state_features(value, missing, actions)
+    missing["values"]["b"] = 0.0
+    zero = state_features(value, missing, actions)
+    assert absent[0][STATE_FEATURES.index("b_present")] == 0
+    assert zero[0][STATE_FEATURES.index("b_present")] == 1
+    assert all(len(row) == len(STATE_FEATURES) for row in original)
+
+
+def test_numeric_state_is_invariant_to_money_units():
+    from newsvendor.structured_value import state_features
+
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    value = copy.deepcopy(episode["input"])
+    state = reference(value)
+    actions = ["hold", "handoff", "v", "retrieve"]
+    original = state_features(value, state, actions, retrieval_cost=1)
+    for key in ("hold", "tolerance"):
+        if value["task"][key] is not None:
+            value["task"][key] *= 10
+    value["task"]["costs"] = {k: 10 * v for k, v in value["task"]["costs"].items()}
+    state["values"] = {k: 10 * v for k, v in state["values"].items()}
+    for key in ("gamma", "expectedCost"):
+        if state.get(key) is not None:
+            state[key] *= 10
+    converted = state_features(value, state, actions, retrieval_cost=10)
+    torch.testing.assert_close(
+        torch.tensor(original), torch.tensor(converted), rtol=1e-6, atol=1e-7
+    )
+
+
+@pytest.mark.parametrize("batch_fusion", [False, True])
+def test_numeric_state_survives_prefix_truncation_and_cached_value_training(
+    tokenizer, settings, model, batch_fusion
+):
+    from newsvendor.structured_critic import value_loss
+    from newsvendor.structured_rollout import ResearchRouter
+    from newsvendor.structured_train import import_core
+    from newsvendor.structured_value import STATE_FEATURES, constrain
+
+    config = {
+        **settings,
+        "queryTokens": 1,
+        "numericState": True,
+        "batchFusion": batch_fusion,
+        "exactActionCosts": True,
+    }
+    current = Router(copy.deepcopy(model.encoder), config)
+    import_core(current, model.state_dict())
+    assert current.heads["value"].layers[0].weight[:, 256:].count_nonzero() == 0
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    value = episode["input"]
+    state = reference(value)
+    router = ResearchRouter(current, tokenizer, config)
+    before = router.view(value, state)
+    changed = copy.deepcopy(state)
+    changed["q"] += 1
+    after = router.view(value, changed)
+    assert torch.equal(before["batch"]["input_ids"], after["batch"]["input_ids"])
+    assert before["economicFeatures"] != after["economicFeatures"]
+    current.eval()
+    results = current([before, after])
+    for view, output in zip((before, after), results, strict=True):
+        assert output["actionState"].shape[1] == 256 + len(STATE_FEATURES)
+        cached = constrain(
+            torch.nn.functional.softplus(current.heads["value"](output["actionState"])),
+            view["valueCosts"],
+        )
+        torch.testing.assert_close(cached, output["value"])
+    # Zero extension retains the old head's function and construction weights.
+    reference_scores = constrain(
+        torch.nn.functional.softplus(model.heads["value"](results[0]["actionState"][:, :256])),
+        before["valueCosts"],
+    )
+    torch.testing.assert_close(results[0]["value"], reference_scores, rtol=1e-5, atol=1e-6)
+    targets = results[0]["value"].detach().clone()
+    targets[0, 0] += 0.5
+    value_loss(
+        current.heads["value"], [(results[0]["actionState"], targets, before["valueCosts"])]
+    ).backward()
+    assert current.heads["value"].layers[0].weight.grad[:, 256:].abs().sum() > 0
+    # Once learned, the numeric state can affect a decision even when text is identical.
+    with torch.no_grad():
+        current.heads["value"].layers[0].weight[:, 256:] += 0.1
+    new_scores = current([before, after])
+    assert not torch.equal(new_scores[0]["value"], new_scores[1]["value"])
+    for name, old in model.state_dict().items():
+        if not name.startswith(("heads.value.", "heads.recovery.")):
+            assert torch.equal(old, current.state_dict()[name])
+
+
 def test_generated_cost_rejects_pointer_to_selling_price(tokenizer, settings, model, monkeypatch):
     from newsvendor import structured_rollout
     from newsvendor.construction import candidates
