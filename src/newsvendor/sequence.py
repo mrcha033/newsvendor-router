@@ -177,7 +177,7 @@ def losses(output, rows, config=None):
     observation = config.get("observation", "aggregate")
     require(observation in ("aggregate", "daily_allocation"), "Unknown demand observation model")
     if observation == "daily_allocation":
-        from .observations import allocation_nll
+        from .observations import allocation_nll, allocation_polynomial
 
         days = max(r["horizon"] for r in rows)
         sales = torch.tensor(
@@ -194,6 +194,15 @@ def losses(output, rows, config=None):
             torch.arange(days, device=device)[None, :]
             < torch.tensor([r["horizon"] for r in rows], device=device)[:, None]
         )
+        concentration = config.get("allocationConcentration", 1)
+        require(
+            type(concentration) is int, "Resolve allocation concentration on fitting Train sources"
+        )
+        coefficients = (
+            allocation_polynomial(sales, censored, present, concentration)
+            if concentration > 1
+            else None
+        )
         return torch.stack(
             [
                 allocation_nll(
@@ -204,6 +213,8 @@ def losses(output, rows, config=None):
                     present,
                     size=config.get("observationNodes", 64),
                     daily_zero_logit=output["dailyZero"][f],
+                    concentration=concentration,
+                    coefficients=coefficients,
                 )
                 for f in demand.FAMILIES
             ],
@@ -276,15 +287,28 @@ def cross_fit(model, training, development, config, seed, progress=None):
     initial = copy.deepcopy(model.state_dict())
     target = torch.zeros(len(training), 3)
     records, reports = [], []
+
+    def observation_config(rows):
+        if config.get("allocationConcentration") != "fit":
+            return config, None
+        from .observations import fit_concentration
+
+        require(
+            config.get("observation") == "daily_allocation", "Allocation fit needs daily likelihood"
+        )
+        fitted = fit_concentration(rows)
+        return {**config, "allocationConcentration": fitted["concentration"]}, fitted
+
     for fold in range(count):
         if progress:
             progress.update("demand", fold=fold + 1, folds=count)
         fit = [r for r in training if folds[r["family"]] != fold]
         ids = [i for i, r in enumerate(training) if folds[r["family"]] == fold]
         held = [training[i] for i in ids]
+        fold_config, allocation_fit = observation_config(fit)
         model.load_state_dict(initial)
-        history = fit_params(model, fit, config, seed + fold)
-        measured = measure(model, held, config=config)
+        history = fit_params(model, fit, fold_config, seed + fold)
+        measured = measure(model, held, config=fold_config)
         target[ids] = measured
         reports.append(
             {
@@ -292,6 +316,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
                 "fitFamilies": sorted({r["family"] for r in fit}),
                 "heldFamilies": sorted({r["family"] for r in held}),
                 "losses": history,
+                "allocationFit": allocation_fit,
             }
         )
         for row, values in zip(held, measured.tolist(), strict=True):
@@ -316,7 +341,8 @@ def cross_fit(model, training, development, config, seed, progress=None):
     model.load_state_dict(initial)
     if progress:
         progress.update("demand", activity="full_parameter_fit")
-    full = fit_params(model, training, config, seed + count)
+    full_config, allocation_fit = observation_config(training)
+    full = fit_params(model, training, full_config, seed + count)
     # Fit only the loss-score selector; parameter models remain the Train-only final fits.
     optimizer = torch.optim.AdamW(model.family.parameters(), lr=config["lr"])
     rand = torch.Generator().manual_seed(seed)
@@ -346,7 +372,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
                         [r["horizon"] for r in batch],
                         daily=config.get("observation") == "daily_allocation",
                     )
-                    chosen = losses(out, batch, config).gather(
+                    chosen = losses(out, batch, full_config).gather(
                         1, out["scores"].argmin(-1, keepdim=True)
                     )
                     values.extend(chosen[[r["horizon"] == 7 for r in batch]].flatten().tolist())
@@ -364,6 +390,8 @@ def cross_fit(model, training, development, config, seed, progress=None):
         "devSelectedNLL": best if development else None,
         "objective": "Train source-held-out family observation-loss regression; minimum predicted loss",
         "observation": config.get("observation", "aggregate"),
+        "allocationFit": allocation_fit,
+        "allocationConcentration": full_config.get("allocationConcentration", 1),
         "targetHash": digest(records),
     }, records
 

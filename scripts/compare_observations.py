@@ -142,11 +142,15 @@ def main():
                 "uncensoredOrderLoss_u9",
             )
         ),
-        "atLeastTwoSeedsImproveWeeklyCRPSAndMeanOrderLossAgainstBothControls": all(
-            comparisons[name]["7"][m]["improvingSeeds"] >= 2
-            for name in ("control", "deployed")
-            for m in ("uncensoredCRPS", "uncensoredMeanOrderLoss")
-        ),
+        "atLeastTwoSeedsImproveWeeklyCRPSAndMeanOrderLossAgainstBothControls": sum(
+            all(
+                comparisons[name]["7"][m]["seedMeanDifferences"][str(seed)] < 0
+                for name in ("control", "deployed")
+                for m in ("uncensoredCRPS", "uncensoredMeanOrderLoss")
+            )
+            for seed in seeds
+        )
+        >= 2,
         "fixedSeedDailyCRPSWithinTenPercent": candidate["1"]["uncensoredCRPS"]["mean"]
         <= 1.1 * old["1"]["uncensoredCRPS"]["mean"],
         "fixedSeedWeeklyObservedCoverageDoesNotDecrease": candidate["7"][
@@ -184,7 +188,7 @@ def main():
             "Rolling periods overlap. Seeds and repeated forecasts are not new independent observations.",
             "Uncensored CRPS/order loss and conditional coverage do not establish full latent-demand calibration.",
             "Aggregate lower-bound and joint daily NLL are different scores and are never subtracted from each other.",
-            "Joint daily likelihood assumes uniform positive allocation and noninformative daily right censoring; raw neural parameters are preserved.",
+            f"Joint daily likelihood assumes symmetric Dirichlet allocation with concentration {report.get('scoreConcentration', 1)} and noninformative daily right censoring; raw neural parameters are preserved.",
             "This comparison measures emitted F and orders, not a full manager-request rollout.",
         ],
     }

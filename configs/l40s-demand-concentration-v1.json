@@ -1,0 +1,49 @@
+{
+  "dataset": "data/processed/core-retail-train-v1",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-demand-concentration-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed": 42,
+  "reference": "results/l40s-demand-observations-v1",
+  "deployedCheckpoint": "results/l40s-research-v3/base/42/model.pt",
+  "deployedPredictions": "results/research-checks/demand-dev-v3/raw.jsonl",
+  "numericalCheck": "results/research-checks/concentration-quadrature.json",
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 256,
+    "dailyWeight": 1.0,
+    "minHistory": 28,
+    "observation": "daily_allocation",
+    "observationNodes": 64,
+    "allocationConcentration": "fit"
+  },
+  "study": {
+    "testUsed": false,
+    "candidateSeed": 42,
+    "scope": "Same two-layer GRU and three distribution heads, Train histories, initial weights and training budgets; replace uniform day allocation with a symmetric Dirichlet concentration fitted on complete Train periods within each source fold and again on all Train. Historical uniform-allocation controls are reevaluated, not retrained.",
+    "observationAssumptions": [
+      "Positive total is allocated across active days by a symmetric Dirichlet. Select concentration 1..8 by source-balanced conditional allocation log likelihood on complete Train periods only. Complete-period selection can bias this estimate.",
+      "Active days follow Bernoulli draws conditioned on at least one active day; the existing horizon=1 zero head supplies the inactive-day probability.",
+      "Daily stockout observations are treated as noninformative right censoring. This does not establish the actual intraday stockout mechanism or full cross-horizon marginal consistency."
+    ],
+    "selection": [
+      "Report all three seeds; never deploy the best Dev seed.",
+      "Before a core rollout, seed 42 must lower seven-day CRPS and each exact order-loss ratio (1,3,9) against the retained GRU.",
+      "At least two of three seeds must each improve seven-day CRPS and mean exact order loss against both the same-seed uniform-allocation control and the retained GRU.",
+      "Seed 42 one-day CRPS may increase by at most 10 percent against the retained GRU, and seven-day observed 80-percent interval coverage may not decrease.",
+      "If these gates pass, measure an actual manager-request rollout with the frozen language constructor. Require lower total loss and no increase in invalid handoffs or unnecessary requests before replacement.",
+      "Joint observation NLL alone never justifies replacement. Exact metrics on uncensored periods do not establish latent-demand calibration."
+    ],
+    "trainDiagnosis": "results/research-checks/demand-train-audit/allocation-fit.json"
+  },
+  "referenceKind": "daily_allocation"
+}

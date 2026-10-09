@@ -1,8 +1,10 @@
 """Check quadrature and unchanged aggregate scoring using Train observations only."""
 
 import argparse
+import os
 import sys
 import tarfile
+import time
 import types
 from pathlib import Path
 
@@ -11,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np
 import torch
 
-from newsvendor import demand, sequence
+from newsvendor import demand, observations, sequence
 from newsvendor.io import digest, lines, read, require, write
 from newsvendor.structured_tool_eval import weights_hash
 from newsvendor.train import seed
@@ -21,8 +23,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reference", default="results/l40s-demand-expanded-v2/42")
     parser.add_argument("--output", required=True)
+    parser.add_argument("--concentration", type=int, default=1)
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    parser.add_argument("--uniform-reference")
     args = parser.parse_args()
     torch.set_num_threads(4)
+    if args.device == "cuda":
+        require(
+            os.environ.get("CUDA_VISIBLE_DEVICES") == "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409"
+            and torch.cuda.device_count() == 1
+            and "L40S" in torch.cuda.get_device_name(0),
+            "Use the assigned L40S only",
+        )
     reference = Path(args.reference)
     report = read(reference / "report.json")
     config = read(reference / "config.json")
@@ -64,7 +76,7 @@ def main():
     rng = np.random.default_rng(53)
     batch = [samples[i] for i in sorted(rng.choice(len(samples), 256, replace=False))]
     seed(42)
-    model = sequence.DemandEncoder()
+    model = sequence.DemandEncoder().to(args.device)
     initial = weights_hash(model.state_dict())
     require(initial == report["conditions"]["daily10"]["initialHash"], "Initialization changed")
     result = {
@@ -80,7 +92,24 @@ def main():
         "referenceSourceHash": digest(source),
         "scriptHash": digest(Path(__file__).read_bytes()),
         "conditions": {},
+        "concentration": args.concentration,
+        "device": args.device,
     }
+    uniform = None
+    if args.uniform_reference:
+        uniform_path = Path(args.uniform_reference)
+        uniform_report = read(uniform_path / "report.json")
+        with tarfile.open(uniform_path / "source.tar.gz") as archive:
+            uniform_source = archive.extractfile("src/newsvendor/observations.py").read()
+        require(
+            digest(uniform_source)
+            == uniform_report["provenance"]["sources"]["src/newsvendor/observations.py"],
+            "Uniform reference source changed",
+        )
+        uniform = types.ModuleType("newsvendor._uniform_observations")
+        uniform.__package__ = "newsvendor"
+        exec(compile(uniform_source, "<archived observations.py>", "exec"), uniform.__dict__)
+        result["uniformReferenceHash"] = digest(uniform_source)
     for condition in ("initial", "trained_aggregate"):
         if condition == "trained_aggregate":
             checkpoint = reference / "daily10/demand.pt"
@@ -104,10 +133,48 @@ def main():
         )
         for a, b in zip(old_grad, new_grad, strict=True):
             torch.testing.assert_close(a, b, rtol=0, atol=0)
+        if uniform is not None:
+            days = max(r["horizon"] for r in batch)
+            sales = torch.tensor(
+                [r["dailySales"] + [0.0] * (days - r["horizon"]) for r in batch],
+                dtype=torch.float64,
+                device=args.device,
+            )
+            censored = torch.tensor(
+                [r["dailyCensored"] + [False] * (days - r["horizon"]) for r in batch],
+                device=args.device,
+            )
+            present = (
+                torch.arange(days, device=args.device)[None, :]
+                < torch.tensor([r["horizon"] for r in batch], device=args.device)[:, None]
+            )
+            for family in demand.FAMILIES:
+                raw, daily = out["raw"][family], out["dailyZero"][family]
+                before = uniform.allocation_nll(
+                    family, raw, sales, censored, present, daily_zero_logit=daily
+                )
+                after = observations.allocation_nll(
+                    family, raw, sales, censored, present, daily_zero_logit=daily
+                )
+                torch.testing.assert_close(before, after, rtol=0, atol=0)
+                before_grad = torch.autograd.grad(before.sum(), (raw, daily), retain_graph=True)
+                after_grad = torch.autograd.grad(after.sum(), (raw, daily), retain_graph=True)
+                for a, b in zip(before_grad, after_grad, strict=True):
+                    torch.testing.assert_close(a, b, rtol=0, atol=0)
         losses, gradients = {}, {}
+        timings = {}
         for nodes in (64, 128, 256):
+            if args.device == "cuda":
+                torch.cuda.synchronize()
+            started = time.perf_counter()
             values = sequence.losses(
-                out, batch, {"observation": "daily_allocation", "observationNodes": nodes}
+                out,
+                batch,
+                {
+                    "observation": "daily_allocation",
+                    "observationNodes": nodes,
+                    "allocationConcentration": args.concentration,
+                },
             )
             grad = torch.autograd.grad(values.sum(), tuple(out["raw"].values()), retain_graph=True)
             require(
@@ -116,8 +183,13 @@ def main():
             )
             losses[nodes] = values.detach()
             gradients[nodes] = torch.cat([g.flatten() for g in grad]).detach()
+            if args.device == "cuda":
+                torch.cuda.synchronize()
+            timings[str(nodes)] = time.perf_counter() - started
         result["conditions"][condition] = {
             "aggregateLossAndGradientEqual": True,
+            "uniformLossAndGradientEqual": True if uniform is not None else None,
+            "secondsByQuadratureSize": timings,
             "quadrature": {
                 str(n): {
                     "maxAbsoluteNLLDifferenceFrom256": float((losses[n] - losses[256]).abs().max()),

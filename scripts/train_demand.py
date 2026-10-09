@@ -76,7 +76,7 @@ def main():
     report = {
         "scope": "New training from the published snapshot; not restoration of historical weights",
         "observationModel": (
-            "Joint daily observations under a zero-inflated total, conditionally nonempty active days and uniform allocation; assumes noninformative daily right censoring"
+            "Joint daily observations under a zero-inflated total, conditionally nonempty active days and symmetric Dirichlet allocation; concentration is recorded in the training report. Assumes noninformative daily right censoring"
             if config["demand"].get("observation") == "daily_allocation"
             else "Complete totals use density; censored totals use an aggregate lower-bound survival score, which is not generally the likelihood of separately censored daily observations"
         ),

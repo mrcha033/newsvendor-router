@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np
 import torch
 
-from newsvendor import demand, sequence
+from newsvendor import demand, observations, sequence
 from newsvendor.cli import provenance
 from newsvendor.io import digest, jsonl, lines, read, require, write
 from newsvendor.structured_tool_eval import weights_hash
@@ -29,7 +29,7 @@ def identity(row):
 
 
 @torch.inference_mode()
-def evaluate(model, rows, nodes):
+def evaluate(model, rows, nodes, concentration=1):
     records = []
     model.eval()
     for start in range(0, len(rows), 64):
@@ -37,7 +37,13 @@ def evaluate(model, rows, nodes):
         output = model([r["sequence"] for r in batch], [r["horizon"] for r in batch], daily=True)
         aggregate = sequence.losses(output, batch)
         joint = sequence.losses(
-            output, batch, {"observation": "daily_allocation", "observationNodes": nodes}
+            output,
+            batch,
+            {
+                "observation": "daily_allocation",
+                "observationNodes": nodes,
+                "allocationConcentration": concentration,
+            },
         )
         for i, row in enumerate(batch):
             scores = output["scores"][i]
@@ -103,6 +109,7 @@ def evaluate(model, rows, nodes):
                     "dailyZeroLogits": {
                         f: float(output["dailyZero"][f][i]) for f in demand.FAMILIES
                     },
+                    "allocationConcentration": concentration,
                 }
             )
     return records
@@ -139,6 +146,36 @@ def check_reference(records, previous):
                 row["prediction"][key] == reference["prediction"][key],
                 "Changed reference prediction: " + key,
             )
+
+
+def control(config, number):
+    """Resolve and verify a preserved same-seed control, without retraining it."""
+    root = Path(config["reference"])
+    uniform = config.get("referenceKind") == "daily_allocation"
+    report_path = root / "report.json" if uniform else root / str(number) / "report.json"
+    previous = read(report_path)
+    entry = previous["runs"][str(number)] if uniform else previous["conditions"]["daily10"]
+    path = root / str(number) if uniform else root / str(number) / "daily10"
+    settings = previous["config"]["demand"] if uniform else entry["settings"]
+    require(
+        all(config["demand"][k] == v for k, v in settings.items()),
+        "Unmatched training settings",
+    )
+    for name, expected in entry["rawHashes"].items():
+        require(digest((path / name).read_bytes()) == expected, "Changed control artifact")
+    seed(number)
+    initial_hash = weights_hash(sequence.DemandEncoder().state_dict())
+    require(initial_hash == entry["initialHash"], "Control initialization differs")
+    return {
+        "path": str(path),
+        "checkpoint": str(path / ("model.pt" if uniform else "demand.pt")),
+        "predictions": str(path / ("candidate.jsonl" if uniform else "dev.jsonl")),
+        "dataManifestHash": previous["dataManifestHash"],
+        "reportHash": digest(report_path.read_bytes()),
+        "sourceHash": previous["provenance"]["sourceHash"],
+        "initialHash": initial_hash,
+        "reuse": "Historical trained control, reevaluated on unchanged observations; no new baseline training",
+    }
 
 
 def main():
@@ -184,6 +221,22 @@ def main():
         all(v["aggregateLossAndGradientEqual"] for v in numerical["conditions"].values()),
         "Changed control objective",
     )
+    allocation_fit = (
+        observations.fit_concentration(training)
+        if config["demand"].get("allocationConcentration") == "fit"
+        else None
+    )
+    concentration = (
+        allocation_fit["concentration"]
+        if allocation_fit
+        else config["demand"].get("allocationConcentration", 1)
+    )
+    if concentration > 1:
+        require(
+            numerical["concentration"] == concentration
+            and all(v["uniformLossAndGradientEqual"] for v in numerical["conditions"].values()),
+            "Train-fitted concentration and unchanged uniform control must be checked",
+        )
     root.mkdir(parents=True)
     started = time.perf_counter()
     report = {
@@ -199,34 +252,13 @@ def main():
         },
         "controls": {},
         "runs": {},
+        "scoreConcentration": concentration,
+        "allocationFit": allocation_fit,
     }
     for number in config["seeds"]:
-        path = Path(config["reference"]) / str(number)
-        previous = read(path / "report.json")
-        require(previous["dataManifestHash"] == report["dataManifestHash"], "Control data changed")
-        old_settings = previous["conditions"]["daily10"]["settings"]
-        require(
-            all(config["demand"][k] == v for k, v in old_settings.items()),
-            "Unmatched training settings",
-        )
-        for name, expected in previous["conditions"]["daily10"]["rawHashes"].items():
-            require(
-                digest((path / "daily10" / name).read_bytes()) == expected,
-                "Changed control artifact",
-            )
-        seed(number)
-        initial = sequence.DemandEncoder()
-        require(
-            weights_hash(initial.state_dict()) == previous["conditions"]["daily10"]["initialHash"],
-            "Control initialization differs",
-        )
-        report["controls"][str(number)] = {
-            "path": str(path),
-            "reportHash": digest((path / "report.json").read_bytes()),
-            "sourceHash": previous["provenance"]["sourceHash"],
-            "initialHash": weights_hash(initial.state_dict()),
-            "reuse": "Historical trained control, reevaluated on unchanged observations; no new baseline training",
-        }
+        reference = control(config, number)
+        require(reference["dataManifestHash"] == report["dataManifestHash"], "Control data changed")
+        report["controls"][str(number)] = reference
     write(root / "registered.json", report)
     with tarfile.open(root / "source.tar.gz", "w:gz") as archive:
         for path in sorted(Path("src").rglob("*.py")):
@@ -276,16 +308,20 @@ def main():
                 },
                 path / "model.pt",
             )
-            candidates = evaluate(model, development, nodes)
+            require(trained["allocationConcentration"] == concentration, "Changed full-Train fit")
+            candidates = evaluate(model, development, nodes, concentration)
             jsonl(path / "candidate.jsonl", candidates)
-            previous_path = Path(config["reference"]) / str(number) / "daily10"
+            reference = report["controls"][str(number)]
             model.load_state_dict(
-                torch.load(previous_path / "demand.pt", weights_only=True, map_location="cpu")[
-                    "weights"
-                ]
+                {
+                    k.removeprefix("demand."): v
+                    for k, v in torch.load(
+                        reference["checkpoint"], weights_only=True, map_location="cpu"
+                    )["weights"].items()
+                }
             )
-            controls = evaluate(model, development, nodes)
-            check_reference(controls, lines(previous_path / "dev.jsonl"))
+            controls = evaluate(model, development, nodes, concentration)
+            check_reference(controls, lines(reference["predictions"]))
             jsonl(path / "control.jsonl", controls)
             report["runs"][str(number)] = {
                 "initialHash": initial_hash,
@@ -311,13 +347,16 @@ def main():
             }
         )
         # The retained reference was measured on CPU. Preserve its inference
-        # device for the exact prediction comparison as well as its weights.
-        deployed = evaluate(model.to("cpu"), development, nodes)
+        # device and thread count as well as its weights. seed() sets one CPU
+        # thread for training, but the historical reference used four.
+        torch.set_num_threads(config.get("referenceThreads", 4))
+        deployed = evaluate(model.to("cpu"), development, nodes, concentration)
         check_reference(deployed, lines(config["deployedPredictions"]))
         jsonl(root / "deployed.jsonl", deployed)
         report["deployed"] = {
             "metrics": summarize(deployed),
             "device": "cpu",
+            "threads": torch.get_num_threads(),
             "predictionsIdentical": True,
             "rawHash": digest((root / "deployed.jsonl").read_bytes()),
             "checkpointHash": digest(Path(config["deployedCheckpoint"]).read_bytes()),

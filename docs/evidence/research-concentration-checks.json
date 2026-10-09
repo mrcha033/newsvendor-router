@@ -1,0 +1,1127 @@
+{
+  "scope": "Train diagnosis, numerical likelihood/gradient checks and source isolation; not real organizational effectiveness or forecast improvement evidence",
+  "testUsed": false,
+  "devUsedForDiagnosis": false,
+  "source": {
+    "configHash": "07c5e5e530fb38818f8a705f5ceb6ca44cad2b8c3837e7a97ee9ff93eeafa9d2",
+    "sourceHash": "7ba425105b39523092e081cf9992241b38da26261b7da41c0906650d373f12e5",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+      "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/sequence.py": "c93c0b6dd59bddc2005000eff2c0b3d418c17546b1c02efe02022537a01814c4",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+      "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+      "src/newsvendor/structured_critic.py": "1a1e91f2b66107c6b8f4127659ad7ca2e12a45a6035d8ba7cfd7c0d4db0f4fae",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+      "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+      "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+      "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+      "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+      "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+      "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+      "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+      "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+      "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+      "src/newsvendor/structured_rollout.py": "2a03c005e6adb69ceee2af62c6d498bc87d7b1ffb917708a795821a336f7800f",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+      "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+      "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+      "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+      "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cpu",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "300890ccd37a1e96be7315074bf82f2a30278146",
+    "timestamp": "2026-10-09T12:59:04.971975+00:00"
+  },
+  "tests": {
+    "passed": 246,
+    "seconds": 27.31,
+    "command": ".venv/bin/pytest -q"
+  },
+  "ruff": "Source, tests and touched runner scripts: lint and format passed",
+  "sourceChecks": {
+    "complementary": {
+      "manifestHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "check": {
+        "cases": 1802,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "native component diagnostics, not an end-to-end order benchmark",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-retail-train-v1": {
+      "manifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+      "check": {
+        "cases": 2314,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 562,
+            "families": 555,
+            "splits": {
+              "train": 542,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-tatqa-train-v1": {
+      "manifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+      "check": {
+        "cases": 14753,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 13191,
+            "families": 2201,
+            "splits": {
+              "train": 13095,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 2177,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    }
+  },
+  "numericalSmoke": {
+    "episodes": 600,
+    "smokeEpisodes": 30,
+    "split": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "falseHandoffs": 0,
+    "provenance": {
+      "configHash": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "sourceHash": "7ba425105b39523092e081cf9992241b38da26261b7da41c0906650d373f12e5",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "c93c0b6dd59bddc2005000eff2c0b3d418c17546b1c02efe02022537a01814c4",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "1a1e91f2b66107c6b8f4127659ad7ca2e12a45a6035d8ba7cfd7c0d4db0f4fae",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "2a03c005e6adb69ceee2af62c6d498bc87d7b1ffb917708a795821a336f7800f",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+        "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "300890ccd37a1e96be7315074bf82f2a30278146",
+      "timestamp": "2026-10-09T12:56:38.094111+00:00"
+    }
+  },
+  "researchInputCheck": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "c253468489bd734c6380046a04097b41eace840c9c0091867228b846f7e2c108",
+      "labelsHash": "5109048706d6b1fe06a8d1c71a2a36613bf9167989b86358545429431766a1d2",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 144
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "numerical": {
+    "scope": "Train-only numerical check, not effectiveness evidence",
+    "testUsed": false,
+    "devUsed": false,
+    "trainOrigins": 35772,
+    "sampledOrigins": 256,
+    "samplingSeed": 53,
+    "initialHash": "f6cceda589dbed21223ea339f402372cd7b16094884b10397d649337b61ac31b",
+    "featuresAndTargetsEqual": true,
+    "reference": "results/l40s-demand-expanded-v2/42",
+    "referenceSourceHash": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+    "scriptHash": "7ff7d565608a4fe58c13e3837da67d33fc8e0be461de00f2907e016e784a4072",
+    "conditions": {
+      "initial": {
+        "aggregateLossAndGradientEqual": true,
+        "uniformLossAndGradientEqual": true,
+        "secondsByQuadratureSize": {
+          "64": 0.017307825037278235,
+          "128": 0.01998659793753177,
+          "256": 0.02829535200726241
+        },
+        "quadrature": {
+          "64": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          },
+          "128": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          }
+        },
+        "familyMeanJointNLL": {
+          "truncated_normal": 2.203326940536499,
+          "lognormal": 0.011382929980754852,
+          "weibull": 0.12683334946632385
+        }
+      },
+      "trained_aggregate": {
+        "aggregateLossAndGradientEqual": true,
+        "uniformLossAndGradientEqual": true,
+        "secondsByQuadratureSize": {
+          "64": 0.016154197044670582,
+          "128": 0.016044043004512787,
+          "256": 0.020001181052066386
+        },
+        "quadrature": {
+          "64": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 1.0472107625503213e-08
+          },
+          "128": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          }
+        },
+        "familyMeanJointNLL": {
+          "truncated_normal": -0.6754647493362427,
+          "lognormal": -0.6341160535812378,
+          "weibull": -0.6211704015731812
+        }
+      }
+    },
+    "concentration": 4,
+    "device": "cuda",
+    "uniformReferenceHash": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27"
+  },
+  "trainDiagnosis": {
+    "scope": "Train diagnosis only. New Train families were not used to fit the selected small-cohort GRU; they are development evidence, not a fresh Test.",
+    "devUsed": false,
+    "testUsed": false,
+    "checkpoint": "results/l40s-research-replay-v1/base/42/model.pt",
+    "checkpointHash": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b",
+    "demandWeightsHash": "3c07b4f758b8b6bbc4f67775db693999183071c5b12bc63b9ab13374edc022e8",
+    "source": {
+      "configHash": "86ce82d86f68a4f9f7e321f0aef7b788a6df37dda3e54adff6fa19c92570018a",
+      "sourceHash": "83e1fc84e20775b5400610814f05ada4aa533a664f4c2cddb805205dfd643316",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "a41331f02e8f9834a614e160704bfa59d9351af8f572f56b46babeaf666e4541",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "1a1e91f2b66107c6b8f4127659ad7ca2e12a45a6035d8ba7cfd7c0d4db0f4fae",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "2a03c005e6adb69ceee2af62c6d498bc87d7b1ffb917708a795821a336f7800f",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+        "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cu130",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "300890ccd37a1e96be7315074bf82f2a30278146",
+      "timestamp": "2026-10-09T12:37:08.426245+00:00"
+    },
+    "scriptHash": "182c441d5b8df3cca76f949be098e38204b0365efcd47f6b3317d413663f8c2f",
+    "dataManifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+    "families": {
+      "original": 25,
+      "newTrain": 512
+    },
+    "limitations": [
+      "Rolling origins overlap; count source families separately.",
+      "Complete-period conditional coverage is selection-biased when stockouts depend on demand. It is not latent demand calibration.",
+      "Censored observations only identify lower bounds. Future stockout status is used for scoring/grouping, not model inputs."
+    ],
+    "groups": {
+      "original:1": {
+        "forecasts": 990,
+        "families": 25,
+        "complete": 611,
+        "completeFamilies": 25,
+        "completeZeros": 9,
+        "selectedFamilies": {
+          "lognormal": 914,
+          "truncated_normal": 75,
+          "weibull": 1
+        },
+        "models": {
+          "selected": {
+            "completeDirections": {
+              "inside": 509,
+              "below": 68,
+              "above": 34
+            },
+            "completeMedianBias": -0.02747820182178125,
+            "completeMeanBias": 0.14245136251131985,
+            "knownAboveUpperAll": 50,
+            "allNormalizedNLL": 0.8342635002398788,
+            "completeNormalizedNLL": 0.8175532519809731
+          },
+          "truncated_normal": {
+            "completeDirections": {
+              "inside": 506,
+              "above": 65,
+              "below": 40
+            },
+            "completeMedianBias": 0.021752954269674787,
+            "completeMeanBias": 0.06034043995393686,
+            "knownAboveUpperAll": 103,
+            "allNormalizedNLL": 0.8961434334817558,
+            "completeNormalizedNLL": 0.8613731562359633
+          },
+          "lognormal": {
+            "completeDirections": {
+              "inside": 508,
+              "below": 71,
+              "above": 32
+            },
+            "completeMedianBias": -0.03103464570795555,
+            "completeMeanBias": 0.15384497023940275,
+            "knownAboveUpperAll": 46,
+            "allNormalizedNLL": 0.8057989147315366,
+            "completeNormalizedNLL": 0.8105554753836738
+          },
+          "weibull": {
+            "completeDirections": {
+              "inside": 504,
+              "above": 59,
+              "below": 48
+            },
+            "completeMedianBias": 0.040079588023220016,
+            "completeMeanBias": 0.10572707257080576,
+            "knownAboveUpperAll": 91,
+            "allNormalizedNLL": 0.8193424186819807,
+            "completeNormalizedNLL": 0.8010771015198648
+          }
+        }
+      },
+      "original:7": {
+        "forecasts": 990,
+        "families": 25,
+        "complete": 134,
+        "completeFamilies": 18,
+        "completeZeros": 0,
+        "selectedFamilies": {
+          "lognormal": 798,
+          "truncated_normal": 192
+        },
+        "models": {
+          "selected": {
+            "completeDirections": {
+              "inside": 105,
+              "below": 29
+            },
+            "completeMedianBias": 2.2105895376696854,
+            "completeMeanBias": 3.07527381551831,
+            "knownAboveUpperAll": 1,
+            "allNormalizedNLL": 0.2375480728880079,
+            "completeNormalizedNLL": 0.6712087062430748
+          },
+          "truncated_normal": {
+            "completeDirections": {
+              "inside": 98,
+              "below": 32,
+              "above": 4
+            },
+            "completeMedianBias": 2.2252720067849228,
+            "completeMeanBias": 2.2842020944956545,
+            "knownAboveUpperAll": 9,
+            "allNormalizedNLL": 0.24507582907216868,
+            "completeNormalizedNLL": 0.7391693510997818
+          },
+          "lognormal": {
+            "completeDirections": {
+              "inside": 107,
+              "below": 27
+            },
+            "completeMedianBias": 2.373301476994163,
+            "completeMeanBias": 3.4395628596510703,
+            "knownAboveUpperAll": 0,
+            "allNormalizedNLL": 0.23671290935993175,
+            "completeNormalizedNLL": 0.6804298116241707
+          },
+          "weibull": {
+            "completeDirections": {
+              "inside": 104,
+              "below": 27,
+              "above": 3
+            },
+            "completeMedianBias": 2.477965651786381,
+            "completeMeanBias": 2.5905472524405795,
+            "knownAboveUpperAll": 5,
+            "allNormalizedNLL": 0.24631181769237637,
+            "completeNormalizedNLL": 0.7237990074287127
+          }
+        }
+      },
+      "newTrain:1": {
+        "forecasts": 16896,
+        "families": 512,
+        "complete": 10323,
+        "completeFamilies": 505,
+        "completeZeros": 402,
+        "selectedFamilies": {
+          "lognormal": 16312,
+          "truncated_normal": 584
+        },
+        "models": {
+          "selected": {
+            "completeDirections": {
+              "inside": 7727,
+              "above": 944,
+              "below": 1652
+            },
+            "completeMedianBias": -0.029918916908686456,
+            "completeMeanBias": 0.09687275556360829,
+            "knownAboveUpperAll": 1483,
+            "allNormalizedNLL": 1.0176567877034413,
+            "completeNormalizedNLL": 1.09072126436602
+          },
+          "truncated_normal": {
+            "completeDirections": {
+              "inside": 7890,
+              "above": 1296,
+              "below": 1137
+            },
+            "completeMedianBias": 0.016046372684477058,
+            "completeMeanBias": 0.04875151182447474,
+            "knownAboveUpperAll": 2066,
+            "allNormalizedNLL": 1.987096666136026,
+            "completeNormalizedNLL": 1.3108583120130284
+          },
+          "lognormal": {
+            "completeDirections": {
+              "inside": 7737,
+              "above": 927,
+              "below": 1659
+            },
+            "completeMedianBias": -0.03190478915454139,
+            "completeMeanBias": 0.10170177616397927,
+            "knownAboveUpperAll": 1457,
+            "allNormalizedNLL": 1.0057056213940445,
+            "completeNormalizedNLL": 1.0815429410161557
+          },
+          "weibull": {
+            "completeDirections": {
+              "inside": 7605,
+              "above": 1328,
+              "below": 1390
+            },
+            "completeMedianBias": 0.020446775302256463,
+            "completeMeanBias": 0.07030914850306073,
+            "knownAboveUpperAll": 2088,
+            "allNormalizedNLL": 2.0079038416675674,
+            "completeNormalizedNLL": 1.2351232981420264
+          }
+        }
+      },
+      "newTrain:7": {
+        "forecasts": 16896,
+        "families": 512,
+        "complete": 2252,
+        "completeFamilies": 319,
+        "completeZeros": 0,
+        "selectedFamilies": {
+          "lognormal": 15315,
+          "truncated_normal": 1581
+        },
+        "models": {
+          "selected": {
+            "completeDirections": {
+              "below": 1015,
+              "inside": 1193,
+              "above": 44
+            },
+            "completeMedianBias": 3.0396235378937533,
+            "completeMeanBias": 3.812577007601874,
+            "knownAboveUpperAll": 175,
+            "allNormalizedNLL": 0.44081575701840786,
+            "completeNormalizedNLL": 1.5225505820954415
+          },
+          "truncated_normal": {
+            "completeDirections": {
+              "below": 1109,
+              "inside": 1063,
+              "above": 80
+            },
+            "completeMedianBias": 3.0060299994023043,
+            "completeMeanBias": 3.053181706310276,
+            "knownAboveUpperAll": 388,
+            "allNormalizedNLL": 0.6554196121239336,
+            "completeNormalizedNLL": 1.4962947743147286
+          },
+          "lognormal": {
+            "completeDirections": {
+              "below": 1000,
+              "inside": 1219,
+              "above": 33
+            },
+            "completeMedianBias": 3.2168261068855015,
+            "completeMeanBias": 4.152989964614353,
+            "knownAboveUpperAll": 144,
+            "allNormalizedNLL": 0.43518026386196296,
+            "completeNormalizedNLL": 1.5274871916300907
+          },
+          "weibull": {
+            "completeDirections": {
+              "below": 981,
+              "inside": 1208,
+              "above": 63
+            },
+            "completeMedianBias": 3.4156801591632546,
+            "completeMeanBias": 3.5130778017304665,
+            "knownAboveUpperAll": 297,
+            "allNormalizedNLL": 1.075974796475493,
+            "completeNormalizedNLL": 1.3073938791874795
+          }
+        }
+      }
+    },
+    "seconds": 12.967580311000347,
+    "rawHash": "ef2b0bf8a014130d569393e350333720915b2404838a2cc9bd6d9d685ca3cf2e"
+  },
+  "allocationFit": {
+    "None": {
+      "concentration": 4,
+      "fitScores": {
+        "1": 6.083833887308899,
+        "2": 7.552985535370353,
+        "3": 8.030891023597505,
+        "4": 8.128395640273775,
+        "5": 8.023819343542137,
+        "6": 7.793757177661721,
+        "7": 7.478155643571288,
+        "8": 7.100492630893888
+      },
+      "fitPeriods": 2385,
+      "fitFamilies": 337,
+      "heldGain": null,
+      "heldPeriods": null
+    },
+    "0": {
+      "concentration": 4,
+      "fitScores": {
+        "1": 6.039334141892816,
+        "2": 7.479630751897462,
+        "3": 7.933118812229541,
+        "4": 8.007918537592479,
+        "5": 7.881549748207551,
+        "6": 7.6302626737309796,
+        "7": 7.293823603183252,
+        "8": 6.895604351722622
+      },
+      "fitPeriods": 1645,
+      "fitFamilies": 229,
+      "heldGain": 2.2056618901290754,
+      "heldPeriods": 740
+    },
+    "1": {
+      "concentration": 4,
+      "fitScores": {
+        "1": 6.094318291716788,
+        "2": 7.562619936844751,
+        "3": 8.038279070597687,
+        "4": 8.132999436917197,
+        "5": 8.025352558578534,
+        "6": 7.792041782124027,
+        "7": 7.4730701758306095,
+        "8": 7.091948911126162
+      },
+      "fitPeriods": 1670,
+      "fitFamilies": 226,
+      "heldGain": 2.0565348822871217,
+      "heldPeriods": 715
+    },
+    "2": {
+      "concentration": 4,
+      "fitScores": {
+        "1": 6.119546062213468,
+        "2": 7.619747501955183,
+        "3": 8.125503524881625,
+        "4": 8.249623030559636,
+        "5": 8.1710030455211,
+        "6": 7.966487409587104,
+        "7": 7.676152689042764,
+        "8": 7.323553345951997
+      },
+      "fitPeriods": 1455,
+      "fitFamilies": 219,
+      "heldGain": 1.8858513108589152,
+      "heldPeriods": 930
+    }
+  },
+  "fitVerified": true,
+  "publishedRaw": {
+    "path": "docs/evidence/artifacts/demand-concentration-checks.tar.xz",
+    "sha256": "3a763ef7a27976ad4145636fc23ebc1d1eb3812cfef4b6370d045ec258bf0ee9",
+    "bytes": 13971528,
+    "files": {
+      "results/research-checks/demand-train-audit/allocation-fit.json": {
+        "sha256": "f05bcd0b4288865ea78decc3615190beabcd668f8d5eacbbec04a9daa8c90ec0",
+        "bytes": 1633
+      },
+      "results/research-checks/demand-train-audit/allocation-moments.json": {
+        "sha256": "801aba66113b26ad07a4035419b0683de105c5f2ad02af3818b487c5d35649f5",
+        "bytes": 2615
+      },
+      "results/research-checks/demand-train-audit/fit-verification.json": {
+        "sha256": "8a36575910cd422e1c7befe413b69c98990331aac10799189efee19c51f5f44f",
+        "bytes": 81346
+      },
+      "results/research-checks/demand-train-audit/progress.json": {
+        "sha256": "b4d436e86129653ae0eb3bf24f515faeb533f29dd057d0ea8c356b84fee4385c",
+        "bytes": 76
+      },
+      "results/research-checks/demand-train-audit/registered.json": {
+        "sha256": "63b71245bc63a7e5ec10bc25b5e73c22239469e29362608bc823367f94006d5c",
+        "bytes": 7362
+      },
+      "results/research-checks/demand-train-audit/report.json": {
+        "sha256": "77f513fa84865b467b47de2e46aabfde5aef27f35248ff41ec5bc75cc165bc48",
+        "bytes": 15025
+      },
+      "results/research-checks/demand-train-audit/strata.json": {
+        "sha256": "3e6dc135204bd87a17f9676f3f3a1d221954c6383aa6d6c57640fe5e87e97e1b",
+        "bytes": 4301
+      },
+      "results/research-checks/demand-train-audit/raw.jsonl": {
+        "sha256": "ef2b0bf8a014130d569393e350333720915b2404838a2cc9bd6d9d685ca3cf2e",
+        "bytes": 75536332
+      },
+      "results/research-checks/audit-demand-train.py": {
+        "sha256": "182c441d5b8df3cca76f949be098e38204b0365efcd47f6b3317d413663f8c2f",
+        "bytes": 6634
+      },
+      "results/research-checks/verify-concentration-fit.py": {
+        "sha256": "30a38bf148c9c08251a19a16853355ce7b8d31c7edaa35fe4661a48d64194abf",
+        "bytes": 2464
+      },
+      "results/research-checks/concentration-quadrature.json": {
+        "sha256": "7ad4c526679e9a3a7711ab54211b502350a207b1c9637d945fac87a3a303580f",
+        "bytes": 2379
+      },
+      "results/research-checks/concentration-sources.json": {
+        "sha256": "22663ff706e0bafa8d8d5f4323da73106d454c910a9ed6ad06ca2393d3ee1d4f",
+        "bytes": 6793
+      },
+      "results/research-checks/publish-concentration-checks.py": {
+        "sha256": "61d523cdfd31719f40cf440706ecae955f16deaf7c7e04e3befdf6b1bde95e4e",
+        "bytes": 3011
+      },
+      "results/research-checks/concentration-core-check/manifest.json": {
+        "sha256": "506c3f89c26aa39dab002f8c046ca4dbf74cc3526a39d7b25542a1013de127c3",
+        "bytes": 4678
+      },
+      "results/smoke.json": {
+        "sha256": "7f4f00e2ccc7a354e1ee581cc9b4fa64f095122fb19d7bff7f8b3a34bbe4428c",
+        "bytes": 6611
+      },
+      "scripts/check_observations.py": {
+        "sha256": "7ff7d565608a4fe58c13e3837da67d33fc8e0be461de00f2907e016e784a4072",
+        "bytes": 9474
+      },
+      "tests/test_observations.py": {
+        "sha256": "01915f4df514ae2bac98707e09f5318e1db229a32ad63df14c3452b9228a1865",
+        "bytes": 13920
+      }
+    },
+    "verified": true,
+    "scope": "All 35,772 Train forecast parameters/quantiles and observations, source identities, fitting verification, numerical reports, source checks and audit scripts. Full original model and expanded training capture are not bundled."
+  },
+  "publishedSource": {
+    "path": "docs/evidence/artifacts/demand-concentration-v1-source.tar.gz",
+    "sha256": "f185ee5bc2b70384c13d20e02a9d861ecdf6a45f9d635679b80306508e935eb2",
+    "bytes": 188950
+  }
+}
