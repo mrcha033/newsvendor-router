@@ -1,0 +1,878 @@
+{
+  "scope": "Train loss/noise diagnosis and Train-only sampled-response supervision; numerical and separation checks, not effectiveness proof",
+  "testUsed": false,
+  "devUsedForDiagnosis": false,
+  "source": {
+    "configHash": "911896ddcaf329d7fe9d27b7360da2d5f7df5d1f7f927d72b1ac3949361feeec",
+    "sourceHash": "83e1fc84e20775b5400610814f05ada4aa533a664f4c2cddb805205dfd643316",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+      "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/observations.py": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/sequence.py": "a41331f02e8f9834a614e160704bfa59d9351af8f572f56b46babeaf666e4541",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+      "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+      "src/newsvendor/structured_critic.py": "1a1e91f2b66107c6b8f4127659ad7ca2e12a45a6035d8ba7cfd7c0d4db0f4fae",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+      "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+      "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+      "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+      "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+      "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+      "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+      "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+      "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+      "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+      "src/newsvendor/structured_rollout.py": "2a03c005e6adb69ceee2af62c6d498bc87d7b1ffb917708a795821a336f7800f",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+      "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+      "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+      "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+      "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cpu",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "775adba2379ab6ae1bc23f9f9a53556728211da7",
+    "timestamp": "2026-10-09T12:07:39.927764+00:00"
+  },
+  "tests": {
+    "passed": 226,
+    "seconds": 27.6,
+    "logHash": "3974ce89f1d1fbade8cfd6675677af367225b3734b04ae4c5f114129f346145c"
+  },
+  "ruff": "passed, source/tests and touched runner scripts",
+  "sourceChecks": {
+    "complementary": {
+      "manifestHash": "47b76564fba3d19003824d946695448da639081487c57536571faef13a394997",
+      "check": {
+        "cases": 1802,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "native component diagnostics, not an end-to-end order benchmark",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-retail-train-v1": {
+      "manifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+      "check": {
+        "cases": 2314,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 562,
+            "families": 555,
+            "splits": {
+              "train": 542,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "core-tatqa-train-v1": {
+      "manifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+      "check": {
+        "cases": 14753,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 13191,
+            "families": 2201,
+            "splits": {
+              "train": 13095,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 2177,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      }
+    }
+  },
+  "researchInputCheck": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+      "labelsHash": "a89f6bfe8091c431aa8435e13a182946a2ec91f9114bd2fb126cf95ea822da59",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 13095
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "numericalSmoke": {
+    "episodes": 600,
+    "smokeEpisodes": 30,
+    "split": {
+      "counts": {
+        "test": 120,
+        "dev": 60,
+        "cal": 60,
+        "train": 360
+      },
+      "families": 120,
+      "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+    },
+    "falseHandoffs": 0,
+    "provenance": {
+      "configHash": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+      "sourceHash": "83e1fc84e20775b5400610814f05ada4aa533a664f4c2cddb805205dfd643316",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "a41331f02e8f9834a614e160704bfa59d9351af8f572f56b46babeaf666e4541",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "1a1e91f2b66107c6b8f4127659ad7ca2e12a45a6035d8ba7cfd7c0d4db0f4fae",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "2a03c005e6adb69ceee2af62c6d498bc87d7b1ffb917708a795821a336f7800f",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+        "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "775adba2379ab6ae1bc23f9f9a53556728211da7",
+      "timestamp": "2026-10-09T12:06:44.179090+00:00"
+    }
+  },
+  "trainLossAudit": {
+    "scope": "One recorded noisy Train response per action, continued with the inherited policy. Best forced action is a hindsight lower bound within these continuations, not an expected-value oracle or a new policy.",
+    "testUsed": false,
+    "devUsed": false,
+    "sourceHash": "f9535d8ea22ec262732c922245b716f528242e09f523562bbb36a82113c80858",
+    "scriptHash": "7ad65444df59f446b16b2bce83cafd0b513669fecf5d6071d47e71e8a7757b23",
+    "inputHashes": {
+      "results/l40s-research-precision-v1/control/42/value-targets-0.jsonl": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+      "results/l40s-research-precision-v1/control/42/rollout-train-0.jsonl": "0226379140ec19c754bec698ed499ed632aef3fa490ba9dfc8d842012304e434",
+      "results/research-checks/action-precision/fp32/inherited.jsonl": "c620afe15c6c2cca988de58f7f2d56df2749e149ec7a7f4c348a2507cc1fee47"
+    },
+    "benchmarks": {
+      "retail": {
+        "episodes": 154,
+        "families": 13,
+        "means": {
+          "total": 108.82195744527206,
+          "terminal": 92.83127098887132,
+          "requestCost": 15.990686456400743,
+          "invalidHandoffPenalty": 0.0,
+          "realizedGap": 4.738928333820637,
+          "interactions": 1.0
+        },
+        "holds": 16,
+        "falseHandoffs": 0,
+        "positiveRealizedGap": 16,
+        "initialErrors": {
+          "conflict-v": 22
+        },
+        "gapByInitialAction": {
+          "b": 582.3521062655209,
+          "c": 8.240000000000009,
+          "handoff": 0.0,
+          "p": 40.42857142857156,
+          "v": 98.77428571428567
+        }
+      },
+      "generated": {
+        "episodes": 360,
+        "families": 72,
+        "means": {
+          "total": 159.46664745618057,
+          "terminal": 135.98747273395833,
+          "requestCost": 23.479174722222222,
+          "invalidHandoffPenalty": 8.931863891596173,
+          "realizedGap": 25.517981123017723,
+          "interactions": 0.4083333333333333
+        },
+        "holds": 66,
+        "falseHandoffs": 7,
+        "positiveRealizedGap": 113,
+        "initialErrors": {
+          "censored-demand": 60,
+          "conflict-v": 60
+        },
+        "gapByInitialAction": {
+          "b": 4617.674980054054,
+          "demand": 2754.7457,
+          "handoff": 1112.6513242323258,
+          "v": 701.4012
+        }
+      }
+    },
+    "rawHash": "21aa6ece388c43d025d9f243808bdf8051b02bb4dce1dcd953d8a56bda013ebb"
+  },
+  "noiseComparison": {
+    "scope": "Same frozen model, Train only; remove additional corruption only. Existing missing/partial response environment remains. Not a new trained model.",
+    "testUsed": false,
+    "devUsed": false,
+    "benchmarks": {
+      "retail": {
+        "episodes": 154,
+        "initialActionsIdentical": true,
+        "oldTotal": 108.82195744527206,
+        "total": 53.97970109256886,
+        "requestCost": 15.990686456400743,
+        "terminalLoss": 37.98901463616813,
+        "gap": -1.9032394707859826e-15,
+        "oldFalseHandoff": 0,
+        "falseHandoff": 0,
+        "oldHold": 16,
+        "hold": 0,
+        "changedCases": 16
+      },
+      "generated": {
+        "episodes": 360,
+        "initialActionsIdentical": true,
+        "oldTotal": 159.46664745618057,
+        "total": 150.54913615472873,
+        "requestCost": 23.479174722222222,
+        "terminalLoss": 127.06996143250647,
+        "gap": 22.319130845239947,
+        "oldFalseHandoff": 7,
+        "falseHandoff": 0,
+        "oldHold": 66,
+        "hold": 66,
+        "changedCases": 7
+      }
+    }
+  },
+  "noiseRun": {
+    "seconds": 89.79631485894788,
+    "states": 928,
+    "rollouts": 2156,
+    "testUsed": false
+  },
+  "noisePlan": {
+    "scope": "Train diagnostic only, same inherited policy and no extra response corruption. Environment missing/partial responses remain. No Dev/Test selection.",
+    "source": {
+      "configHash": "1fe43eaaa5bdee4ce4e5a5c4fdd479f199f50386afc69be8d039b925444df69b",
+      "sourceHash": "f9535d8ea22ec262732c922245b716f528242e09f523562bbb36a82113c80858",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "f17e4046511a909ba08c9a081ad62e9f6f5ab0bd9e0ac0860ba5dac5d15beb27",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "2665ceeb2c04b460ff0ac16b8e6e27fd5ff72241c2fbb7af80fe7df115d8679a",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/sequence.py": "a41331f02e8f9834a614e160704bfa59d9351af8f572f56b46babeaf666e4541",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "2203902ec724350e15f1dfd4f1b05f41ffff0eff1f033088218640ca9d014896",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "427f86274e145b83d3cc695c27817a7fd7b5a858893fe82f01d08b87c5d7d7a7",
+        "src/newsvendor/structured_inputs.py": "f36b50a081579f6d852cbe840aa9a1fd6f0e129542a6d1f06db160c527dfd63d",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "511dc9608dcd0bc2de63a38c030c4a84d0a2afd8c6dc18c602b5cc0afe863efb",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "fb4746c3d6df73ee1d16ec039b09fba88f323f0a4dd71c5424b7e026ef06eaf4",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_retail.py": "772f542ddb728849d7860b5cc8c0d71143f106a751c087b12b305490164bae71",
+        "src/newsvendor/structured_rollout.py": "47c7139749069b7302b489c25648d505542be75433a2036f916119e4d25b8cfc",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "fafda0d1a4dbb222f33a528d599bd8b98edc57b0ed66482d6c99b11ffd34a2ff",
+        "src/newsvendor/structured_value.py": "7d04514c16aac87e16846909aceae318182b2ffb453a79ddb3099daa9c7668bd",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cu130",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "775adba2379ab6ae1bc23f9f9a53556728211da7",
+      "timestamp": "2026-10-09T12:02:07.921155+00:00"
+    },
+    "checkpointHash": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b",
+    "scriptHash": "2550ea03d853658a2af07aa436ca7d05e25226cfb5660680da43ff006a8139d7",
+    "episodes": 514,
+    "inputHash": "78c9350d52f0cebc33ec326fc5ed56fec9e41d6909920205efc1159aa861b6d3",
+    "noise": 0,
+    "testUsed": false
+  },
+  "limitations": [
+    "Fixed-model Train loss changes reflect a response condition intervention, not new learned weights.",
+    "Best realized forced return is a hindsight comparison, not an expected-value oracle.",
+    "Sampling changes Train observations and estimated returns; eight draws do not identify a real manager response distribution."
+  ],
+  "artifacts": {
+    "response-supervision-checks.tar.xz": {
+      "path": "docs/evidence/artifacts/response-supervision-checks.tar.xz",
+      "sha256": "6ce8ef4fe0c5e8188b0d00365013778c5d7d96df85adb984e613086c21f22d05",
+      "bytes": 1138592
+    },
+    "response-supervision-source.tar.gz": {
+      "path": "docs/evidence/artifacts/response-supervision-source.tar.gz",
+      "sha256": "72f57a4a1d78646a6156f1aa92c0035f491208214ef106fc9f179e5a35ef81c3",
+      "bytes": 329891
+    }
+  },
+  "rawFiles": {
+    "results/research-checks/train-loss-audit/raw.jsonl": {
+      "sha256": "21aa6ece388c43d025d9f243808bdf8051b02bb4dce1dcd953d8a56bda013ebb",
+      "bytes": 501111
+    },
+    "results/research-checks/train-loss-audit/run.py": {
+      "sha256": "b40fa8a15ac463e0325438dd1c27f8825704b14dae8f1e887f0040419a192e79",
+      "bytes": 3107
+    },
+    "results/research-checks/train-loss-audit/no-noise-decisions.jsonl": {
+      "sha256": "f89de4002c97f6947d58618a2134cf94dd084863f1b7cb7ffde58fa431747e58",
+      "bytes": 152127
+    },
+    "results/research-checks/train-loss-audit/audit.log": {
+      "sha256": "f504d209eea5d3fa7be0e370279e784d6ae694ea7ed9eb55fc6d6e1b2ea5c62a",
+      "bytes": 376
+    },
+    "results/research-checks/train-loss-audit/no-noise-targets.jsonl": {
+      "sha256": "ab5553aa95423e518c727fe7f68161ee930e51e8cf0b42663abc8abf76f03c2e",
+      "bytes": 14527081
+    },
+    "results/research-checks/train-loss-audit/noise-run.json": {
+      "sha256": "5c8b2cb3a1710be7331007c59606206953c90ca3e66ac2f4a6cb562b7504f81a",
+      "bytes": 93
+    },
+    "results/research-checks/train-loss-audit/source-checks.json": {
+      "sha256": "22663ff706e0bafa8d8d5f4323da73106d454c910a9ed6ad06ca2393d3ee1d4f",
+      "bytes": 6793
+    },
+    "results/research-checks/train-loss-audit/tests.log": {
+      "sha256": "3974ce89f1d1fbade8cfd6675677af367225b3734b04ae4c5f114129f346145c",
+      "bytes": 341
+    },
+    "results/research-checks/train-loss-audit/audit.py": {
+      "sha256": "7ad65444df59f446b16b2bce83cafd0b513669fecf5d6071d47e71e8a7757b23",
+      "bytes": 4146
+    },
+    "results/research-checks/train-loss-audit/report.json": {
+      "sha256": "a6d552b85f6b46ca6f3dbb7f41ea0154e0f06bd7867ce776ae8be343223cb0b9",
+      "bytes": 87946
+    },
+    "results/research-checks/train-loss-audit/noise.log": {
+      "sha256": "4627dd8c04e767ee53304645d28177130bd9ef51d216179874fabc30cadce6e2",
+      "bytes": 603
+    },
+    "results/research-checks/train-loss-audit/noise-comparison.json": {
+      "sha256": "55755288a98e3059f3b397f50154e8765d4a73b71f979724e4a05d660a951267",
+      "bytes": 229762
+    },
+    "results/research-checks/train-loss-audit/noise-plan.json": {
+      "sha256": "a9d02f0dc8ffa06119203a55933d3de73b26e8c6dbc9c18e7321eb05fd9e1ac5",
+      "bytes": 6803
+    },
+    "results/research-checks/train-loss-audit/no-noise-rollouts.jsonl": {
+      "sha256": "3135725f720a6f9b0dd452f70b9b8abb5058a02b06930a7f44fce771439898c5",
+      "bytes": 66328035
+    },
+    "results/research-checks/train-loss-audit/data-check.log": {
+      "sha256": "9f48577def133cb5c7872b68eb82b73e3202b2192013b500ac54d581802e6d48",
+      "bytes": 4004
+    },
+    "results/research-checks/train-loss-audit/noise.py": {
+      "sha256": "2550ea03d853658a2af07aa436ca7d05e25226cfb5660680da43ff006a8139d7",
+      "bytes": 3090
+    },
+    "results/research-checks/train-loss-audit/smoke.log": {
+      "sha256": "84eea35d382f55b1bfb77f0b0ac049c2cc32cf48eff554eae89e92c410369f84",
+      "bytes": 59
+    },
+    "results/research-checks/train-loss-audit/audit-fixed.log": {
+      "sha256": "13d3a82dcf6dd5878de8d4fa6c649440197acd83426c84b66583554f92feb2ab",
+      "bytes": 976
+    },
+    "results/l40s-research-precision-v1/control/42/value-targets-0.jsonl": {
+      "sha256": "bed27ac31e5fe2ef069e5e8033aedef0bf99be59111c5fd8c38828952919bf67",
+      "bytes": 14450023
+    },
+    "results/l40s-research-precision-v1/control/42/rollout-train-0.jsonl": {
+      "sha256": "0226379140ec19c754bec698ed499ed632aef3fa490ba9dfc8d842012304e434",
+      "bytes": 65038457
+    },
+    "results/research-checks/action-precision/fp32/inherited.jsonl": {
+      "sha256": "c620afe15c6c2cca988de58f7f2d56df2749e149ec7a7f4c348a2507cc1fee47",
+      "bytes": 459500
+    },
+    "results/research-checks/train-loss-audit/legacy-parity.json": {
+      "sha256": "2753ae0f2e43b47a5a42a2cf853f6b363f5944b930f9d84e6800c5b12afd0f41",
+      "bytes": 577
+    }
+  },
+  "legacyParity": {
+    "sourceBefore": "f9535d8ea22ec262732c922245b716f528242e09f523562bbb36a82113c80858",
+    "sourceAfter": "83e1fc84e20775b5400610814f05ada4aa533a664f4c2cddb805205dfd643316",
+    "sameFullTrainTargets": true,
+    "states": 928,
+    "hashBefore": "ab5553aa95423e518c727fe7f68161ee930e51e8cf0b42663abc8abf76f03c2e",
+    "hashAfter": "ab5553aa95423e518c727fe7f68161ee930e51e8cf0b42663abc8abf76f03c2e",
+    "scope": "No added response seed, frozen parent numeric zero-extension gives same behavior as prior token-only FP32 probe; same sampled historical Train responses and return targets."
+  },
+  "fullDiagnostics": {
+    "archive": "docs/evidence/artifacts/response-supervision-checks.tar.xz",
+    "paths": [
+      "results/research-checks/train-loss-audit/report.json",
+      "results/research-checks/train-loss-audit/raw.jsonl",
+      "results/research-checks/train-loss-audit/noise-comparison.json"
+    ],
+    "scope": "Per-case diagnostics and original raw rollouts are preserved in the archive; this JSON contains summaries and exact file hashes."
+  }
+}

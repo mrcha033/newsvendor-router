@@ -146,6 +146,10 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
             progress=progress,
             policy=policy.get("collectionPolicy", "mixed"),
             with_values=not no_value,
+            response_samples=1 if no_value else policy.get("responseSamples", 1),
+            response_seed=digest([policy["responseSeed"], iteration])
+            if policy.get("responseSeed") is not None
+            else None,
         )
         jsonl(directory / f"rollout-train-{iteration}.jsonl", raw)
         jsonl(directory / f"{name}-targets-{iteration}.jsonl", training)
@@ -267,7 +271,9 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
                 "trainable": f"heads.{name} only; encoder fine-tuned in preceding language stage",
                 "target": "Observed missing-parameter request/checklist, no economic targets"
                 if no_value
-                else "Measured terminal loss and request costs after forced first action",
+                else "Mean measured terminal loss and request costs after forced first action",
+                "responseSamples": 1 if no_value else policy.get("responseSamples", 1),
+                "responseSeed": policy.get("responseSeed"),
                 "selectionMetric": selection_metric,
                 "devBenchmarks": selected_metrics,
                 loss_key: best,

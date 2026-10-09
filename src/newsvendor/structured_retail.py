@@ -183,12 +183,18 @@ def attach_targets(episodes, rows, labels):
     return result
 
 
-def response(episode, current, action, noise=0):
+def response(episode, current, action, noise=0, *, seed=None):
     require(action in episode["responses"], "Request has no registered observed-response channel")
     require(0 <= noise <= 1, "Invalid missing-response probability")
-    rng = random.Random(
-        digest([episode["family"], episode["cutoffIndex"], action, len(current["history"])])
-    )
+    key = [episode["family"], episode["cutoffIndex"], action]
+    if seed is None:
+        key.append(len(current["history"]))
+    else:
+        require(episode["split"] == "train", "Response resampling accepts Train only")
+        # One draw per request channel: changing question order cannot change
+        # which manager answers. Default historical evaluation remains unchanged.
+        key = ["train-response-v1", seed, *key]
+    rng = random.Random(digest(key))
     return None if rng.random() < noise else episode["responses"][action]
 
 

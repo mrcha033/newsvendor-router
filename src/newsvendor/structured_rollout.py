@@ -249,7 +249,11 @@ def behavior(value, state, router=None):
     )
 
 
-def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
+def rollout(episode, router, *, value=None, first=None, explore=False, noise=0, response_seed=None):
+    require(
+        response_seed is None or episode["split"] == "train",
+        "Response resampling accepts Train only",
+    )
     started = time.perf_counter()
     current = copy.deepcopy(episode["input"] if value is None else value)
     linked = "forecast" in current["task"]
@@ -296,11 +300,9 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
             event["observedResponse"] = observed
             continue
         cost += current["task"]["costs"][action]
-        observed = (
-            structured_retail.response(episode, current, action, noise)
-            if linked
-            else response(episode, current, action, noise)
-        )
+        respond = structured_retail.response if linked else response
+        options = {} if response_seed is None else {"seed": response_seed}
+        observed = respond(episode, current, action, noise, **options)
         event["observedResponse"] = observed
         current = outcome(current, action, observed)
     if linked:
@@ -350,11 +352,32 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0):
 
 
 def collect(
-    episodes, router, split="train", noise=0, progress=None, policy="behavior", with_values=True
+    episodes,
+    router,
+    split="train",
+    noise=0,
+    progress=None,
+    policy="behavior",
+    with_values=True,
+    *,
+    response_samples=1,
+    response_seed=None,
 ):
     require(
         split in ("train", "dev") and all(e["split"] == split for e in episodes),
         "Rollout supervision may use only its requested Train/Dev partition",
+    )
+    require(
+        type(response_samples) is int and response_samples > 0,
+        "Response samples must be a positive integer",
+    )
+    require(response_samples == 1 or response_seed is not None, "Resampling needs a seed")
+    require(response_seed is None or split == "train", "Response resampling accepts Train only")
+    require(with_values or response_samples == 1, "Recovery has no sampled value targets")
+    draws = (
+        [digest([response_seed, "target", i]) for i in range(response_samples)]
+        if response_seed is not None
+        else [None]
     )
     require(
         not with_values
@@ -370,15 +393,30 @@ def collect(
         # Collect actual encountered own-prediction states, including failed construction.
         require(policy in ("behavior", "mixed", "own"), "Unknown collection policy")
         explore = policy == "behavior" or (policy == "mixed" and number % 2 == 0)
-        observed = rollout(episode, router, explore=explore, noise=noise)
+        observed_seed = digest([response_seed, "observed"]) if response_seed is not None else None
+        observed = rollout(
+            episode, router, explore=explore, noise=noise, response_seed=observed_seed
+        )
         if not with_values:
-            measurements.append(observed)
+            measurements.append(
+                observed | ({"responseSeed": observed_seed} if response_seed is not None else {})
+            )
         for event in observed["events"]:
             value, state = event["input"], event["state"]
             permitted = allowed_actions(router, value, state)
             outcomes = (
                 [
-                    rollout(episode, router, value=value, first=action, noise=noise)
+                    [
+                        rollout(
+                            episode,
+                            router,
+                            value=value,
+                            first=action,
+                            noise=noise,
+                            response_seed=draw,
+                        )
+                        for draw in draws
+                    ]
                     for action in permitted
                 ]
                 if with_values
@@ -400,23 +438,33 @@ def collect(
             if with_values:
                 rows[-1].update(
                     values=[
-                        [r["terminalLoss"] / scale, r["requestCost"] / scale] for r in outcomes
+                        [
+                            sum(r[key] for r in samples) / len(samples) / scale
+                            for key in ("terminalLoss", "requestCost")
+                        ]
+                        for samples in outcomes
                     ],
                     valueIndices=list(range(len(permitted))),
                 )
-            for action, measured in zip(permitted if with_values else [], outcomes, strict=True):
-                measurements.append(
-                    {
-                        "id": episode["id"],
-                        "family": episode["family"],
-                        "split": split,
-                        "stateHash": event["stateHash"],
-                        "constructorState": state,
-                        "forcedAction": action,
-                        "scale": scale,
-                        **measured,
-                    }
+            if response_seed is not None:
+                rows[-1].update(
+                    responseSeeds=draws if with_values else [], observedResponseSeed=observed_seed
                 )
+            for action, samples in zip(permitted if with_values else [], outcomes, strict=True):
+                for draw, measured in zip(draws, samples, strict=True):
+                    measurements.append(
+                        {
+                            "id": episode["id"],
+                            "family": episode["family"],
+                            "split": split,
+                            "stateHash": event["stateHash"],
+                            "constructorState": state,
+                            "forcedAction": action,
+                            "scale": scale,
+                            **measured,
+                            **({"responseSeed": draw} if response_seed is not None else {}),
+                        }
+                    )
         if progress and (number + 1) % 10 == 0:
             progress.update(
                 "policy_collect",

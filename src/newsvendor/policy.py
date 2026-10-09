@@ -7,7 +7,7 @@ from .construction import construct, reference
 from .corpus import SLOTS, STATUSES, outcome, possible
 from .encoder import ACTIONS, POLICY_EXTRA
 from .evaluation import VERSION, score
-from .io import digest
+from .io import digest, require
 from .optimizer import optimal, regret
 
 
@@ -234,11 +234,15 @@ def states(input, builder=reference):
     return list(visited.values())
 
 
-def response(episode, input, action, noise):
+def response(episode, input, action, noise, *, seed=None):
     # Hidden truth is accessed only by the environment after the policy selected an action.
-    chance = int(digest(episode["id"] + ":" + action)[:8], 16) / 2**32
-    quality = int(digest(episode["id"] + ":quality:" + action)[:8], 16) / 2**32
-    error = int(digest(episode["id"] + ":noise:" + action)[:8], 16) / 2**32
+    key = episode["id"]
+    if seed is not None:
+        require(episode["split"] == "train", "Response resampling accepts Train only")
+        key = digest(["train-response-v1", seed, key])
+    chance = int(digest(key + ":" + action)[:8], 16) / 2**32
+    quality = int(digest(key + ":quality:" + action)[:8], 16) / 2**32
+    error = int(digest(key + ":noise:" + action)[:8], 16) / 2**32
     if chance >= input["task"]["rho"].get(action, 1):
         return None
     if quality < input["task"]["partial"].get(action, 0):

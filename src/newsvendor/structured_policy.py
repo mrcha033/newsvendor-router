@@ -242,6 +242,10 @@ def fit(
             noise=policy.get("noise", 0.1),
             progress=progress,
             policy=policy.get("collectionPolicy", "behavior"),
+            response_samples=policy.get("responseSamples", 1),
+            response_seed=digest([policy["responseSeed"], iteration])
+            if policy.get("responseSeed") is not None
+            else None,
         )
         jsonl(directory / f"rollout-train-{iteration}.jsonl", raw)
         details, epochs, replay_ids = defaultdict(list), [], []
