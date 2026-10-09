@@ -14,8 +14,14 @@ jobs:
           version: "0.9.28"
           enable-cache: true
       - run: uv sync --frozen
-      - run: uv run ruff check src tests scripts/run_research.py scripts/train_demand.py
-      - run: uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
+      - run: >-
+          uv run ruff check src tests scripts/run_research.py scripts/train_demand.py
+          scripts/check_observations.py scripts/study_demand.py
+          scripts/compare_observations.py scripts/evaluate_core.py
+      - run: >-
+          uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
+          scripts/check_observations.py scripts/study_demand.py
+          scripts/compare_observations.py scripts/evaluate_core.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval

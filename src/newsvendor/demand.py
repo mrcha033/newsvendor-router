@@ -58,8 +58,8 @@ def parameters(family, raw):
     return first, second
 
 
-def observation_nll(family, zero_logit, first, second, observed, censored):
-    """Density / zero mass for exact observations; survival for stockout lower bounds."""
+def positive_logs(family, first, second, observed):
+    """Log density and survival of the positive component, without its zero atom."""
     log_y = observed.clamp_min(1e-12).log()
     if family == "lognormal":
         z = (log_y - first) / second
@@ -76,6 +76,12 @@ def observation_nll(family, zero_logit, first, second, observed, censored):
         power = (first * log_ratio).clamp(max=80).exp()
         density = first.log() - second.log() + (first - 1) * log_ratio - power
         tail = -power
+    return density, tail
+
+
+def observation_nll(family, zero_logit, first, second, observed, censored):
+    """Density / zero mass for exact observations; survival for stockout lower bounds."""
+    density, tail = positive_logs(family, first, second, observed)
     exact = fn.logsigmoid(-zero_logit) + density
     exact = torch.where(observed == 0, fn.logsigmoid(zero_logit), exact)
     tail = fn.logsigmoid(-zero_logit) + tail

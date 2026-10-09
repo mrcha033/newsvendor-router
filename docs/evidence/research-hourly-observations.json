@@ -1,0 +1,47 @@
+{
+  "scope": "Train observations only, no model evaluation",
+  "counts": {
+    "days": 32520,
+    "countEquals6:22": 32520,
+    "countEquals6:23": 19513,
+    "countEquals0:24": 14155,
+    "hours": 780480,
+    "salesOnStockout": 3836,
+    "stockoutHoursRaw": 184787,
+    "offHoursSales": 8892,
+    "roundedTenths": 779400
+  },
+  "sumDifferences": [
+    [
+      0.0,
+      32520
+    ]
+  ],
+  "stockoutHourCounts": {
+    "0": 12768,
+    "1": 12287,
+    "2": 11547,
+    "3": 10232,
+    "4": 8496,
+    "5": 5874,
+    "6": 2093,
+    "7": 1490,
+    "8": 1738,
+    "9": 2183,
+    "10": 2810,
+    "11": 3719,
+    "12": 4526,
+    "13": 5144,
+    "14": 5662,
+    "15": 6324,
+    "16": 7439,
+    "17": 8866,
+    "18": 10096,
+    "19": 10979,
+    "20": 11822,
+    "21": 12669,
+    "22": 13007,
+    "23": 13016
+  },
+  "examples": []
+}

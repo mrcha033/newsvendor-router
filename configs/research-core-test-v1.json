@@ -1,0 +1,36 @@
+{
+  "scope": "Final frozen core Test evaluation after Train/Dev model selection; original generated Test is an existing legacy benchmark, not new blind data",
+  "split": "test",
+  "trainingAllowed": false,
+  "selection": "Retain replay-v1 base and its same-constructor no_value. The registered observation-study candidate seed 42 failed the Dev gates; other seeds cannot replace it. No settings may be selected using these Test outcomes.",
+  "output": "results/research-core-test-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "models": {
+    "value": {
+      "path": "results/l40s-research-replay-v1/base/42/model.pt",
+      "hash": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b"
+    },
+    "no_value": {
+      "path": "results/l40s-research-replay-v1/no_value/42/model.pt",
+      "hash": "b48ead97bd18b7011cdd364416b0124ebee8c55fad1b2dfbf24825854db1b69e"
+    }
+  },
+  "dataset": "data/processed/core-tatqa-train-v1",
+  "researchConfig": "configs/full.json",
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "minHistory": 28,
+  "generatedLossBelow": 240.35,
+  "sourceHash": "c6ed57378cd3a01529d100caf35668dc16cf5c337a9c806144c727439ebfce9f",
+  "dataManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+  "scripts": {
+    "scripts/evaluate_core.py": "e3d49839a304bac880609e10ccb5eea0687a4bd8686aa6a5a96cf9fdd4d9fa36",
+    "scripts/study_demand.py": "abfa81843c4236fd6820d5a6787946a0731b855914c25bcd3d59968e3cb89cfe"
+  },
+  "comparison": "Generated total losses remain separate from exact observed retail losses. Retail documents/manager conditions are generated; censored outcomes are lower bounds. Compare value, same-constructor no_value and fixed checklist with original response environment and no additional response dropout.",
+  "preflight": {
+    "testInputsOpened": false,
+    "correction": "Verify frozen weight names using heads.value / heads.recovery before execution.",
+    "fixedWeightsHash": "168d2f757a8dbe10d7e9660be3b9918d6c64f07a3cb8753d3980cc92dbf4a2ad"
+  }
+}

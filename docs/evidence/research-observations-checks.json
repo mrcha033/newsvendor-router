@@ -1,0 +1,220 @@
+{
+  "scope": "Observation-model implementation, Train-only numerical checks and source boundaries; not empirical effectiveness",
+  "sourceHash": "c6ed57378cd3a01529d100caf35668dc16cf5c337a9c806144c727439ebfce9f",
+  "testModelEvaluated": false,
+  "tests": {
+    "passed": 209,
+    "log": "results/research-checks/allocation-full-tests-v2.log",
+    "initialFailure": "One existing aggregate cross-fit fixture omitted daily fields; optional recording now preserves backward compatibility. Initial failure and successful rerun logs retained."
+  },
+  "ruff": "lint and format passed for src/tests and new scripts",
+  "numericalSmoke": {
+    "cases": 30,
+    "falseHandoffs": 0
+  },
+  "coreInputChecks": {
+    "benchmark": "retail-newsvendor-v2",
+    "scope": "Controlled financial conditions paired with observed retail histories; not actual organizational effectiveness",
+    "inputFileHash": "f03a02f62de54ad58815d35d0ca64969b7a85d8c7e494062775945c3f7afc59f",
+    "environmentFileHash": "4c8c43ec3e24a93816e36b161f9f53f2c008a77bfc196e3bf1722e7057d012ad",
+    "sourceManifestHash": "5d3959d5a46430052d8da69e241733f785c54d0eb8e6e10c9d1ad8eeef908585",
+    "dataSeed": 53,
+    "cutoffStride": 7,
+    "splits": {
+      "train": {
+        "episodes": 1260,
+        "sourceFamilies": [
+          "0b82a18d2f0767432143faba1089ae6ce30a2a6dddd173ae94afea3f67d4cc8a",
+          "10756b8116938b912cfb8978165fc48ddc2a595a05229965bb94ac9ca93acbbf",
+          "1576e8d16d08b1b5cdc6cb59040ed266c2349aed149a5bb3cb4a72d7bc12ee0c",
+          "1775f6336feef8e71e548ec0d9ef60428ff994ad80333cf570ebf3e259f9a330",
+          "34d6d795d58aa580da9c0a17f49b404055fa1c364756932300a4f7f254f7e665",
+          "3f8111a42104d47dab5f1d85a6459e2ee86a6261afd3267786fb47e6dc45bff8",
+          "442d0168360ca7f6610784b9480a4a88e50e70343178806551ecbc56860bd698",
+          "4d9efafbabd3922d6d546ab29e59302381b92441ffcffefbd0985fd61def5293",
+          "594b5097abd79ef36f7d0e58093a43644ab1329c3b8d7226cc9f4ffe0587eb5a",
+          "7c35d9815a18b3e47b96d147ab058d6841c7ea3e1d26307fe87fa0ba8180c426",
+          "7dd70addba3ef74640a25b137e1ada981f2a59fb3c34cb5a05307136003b9800",
+          "8c4bf38427506e6c1cb8cab8eea4d95c7a52f75ba1d57432dc30b10b962027d5",
+          "9214a1da05bb960f79024dedb757e5a0dd30b037296aa88694d736f0f65c625f",
+          "9da951cfd40cf059f0607d113bd338216283609720f65dbc740475cad43ad615",
+          "a0432933ecd1654ccce63b547b44c028a11d172f5c92b46399a9c12d5d5e5e51",
+          "b22a42bfcbea037995bab46ab34920e041e85300c9454ec48efddbf55e4f4c11",
+          "b3e135b27ffbc5dcc25d3617a796e6167c9624bbe71c8a875dfdb76330176d9b",
+          "bf7e3296519bce2a314370ff739b1396d24fd46330e6c60996e0dbdba1f9b7ee",
+          "cda659f0995433856b296c144baca5f708cef294572f902a6133cc8e98cd39b3",
+          "cf2e795c5730281720a1a55d552c93d58e0947aa89727139a8b44ab2cac8f4f3",
+          "e1721dfba643d22e551c6453282e72413dba7bdb0f99beb64949f99c366a5e63",
+          "e5e95801548d2d4a2a114b75956208c9677cc105c4d9af4296df8738d0e74d8f",
+          "f1e98b1007c58944996e4a6c601de17df4a77b8c908ca40d697635ebc5213f53",
+          "f876ff028c1b8a5e7c14e6b0c60babda589711ac2f39a5ce07fe4a6e7864984e",
+          "fc087c9593ac1629967dc89fdc62b2f9341d34352b12cac2658b4f3ff200a5d1"
+        ],
+        "completeOutcomeEpisodes": 154
+      },
+      "dev": {
+        "episodes": 336,
+        "sourceFamilies": [
+          "33e8e2d0f883ed1ec7a533eed0519a6f9c681b74134ee919687be0911d50808e",
+          "5193a24ecd1adc2f623146b10e996815d17ea8215a97dc5e99b5e10625c058f1",
+          "59ec6248913c97380e0e4e278b2ff38d0c8240e5e5deecdec705b743755601b5",
+          "767e7f0e1639500d4776338f92fc14af570e96fd37c8d8b0388b00bf50e5129f",
+          "a4c73f3f3d396b776f962a9bbf8e0a04636db2c56835afa0b16fdb9bcf718073",
+          "a7e4190594f8411f1b7982e6f51c4f1c6a5f91dc542147b899f5fa0b7790e2d4",
+          "c81e293712dac02f9496fb95b9950bf50a70565e804634dc39f99f1f13c3ded9",
+          "d7dedac5c07e31028458256fa8bff191b5247bc04927dd1902f5a543f1668e2c"
+        ],
+        "completeOutcomeEpisodes": 35
+      }
+    },
+    "sourceOverlaps": 0,
+    "testUsed": false,
+    "generated": {
+      "scope": "Original generated benchmark, with unchanged source split and loss definition; response probabilities are environment-only",
+      "corpus": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "testUsed": false,
+      "inputFileHash": "70c700bcf7ef3b3f4ea60ed9334a8572ccc89723e39bc8b4ecb06b7cb95106e2",
+      "environmentFileHash": "d49606f9914cf01a770ec58103be8e8efd7b5fe9b60e40043a68132e29dfbada",
+      "splits": {
+        "train": {
+          "episodes": 360,
+          "families": 72
+        },
+        "dev": {
+          "episodes": 60,
+          "families": 12
+        }
+      }
+    },
+    "documents": {
+      "components": [
+        "cuad",
+        "contractnli",
+        "orsharc",
+        "tatqa"
+      ],
+      "inputsHash": "04dbd17c9aef7c43654ed81a5e8f74ab0427690e6f137cfeabcf94a1f17ee213",
+      "labelsHash": "a89f6bfe8091c431aa8435e13a182946a2ec91f9114bd2fb126cf95ea822da59",
+      "collectionHash": "42a325d717fe9700e0daf8e8b406a1ab57c61d8310b2263921bcb458d2b84a01",
+      "splits": {
+        "train": {
+          "cuad": 270,
+          "contractnli": 216,
+          "orsharc": 144,
+          "tatqa": 13095
+        },
+        "dev": {
+          "cuad": 90,
+          "contractnli": 72,
+          "orsharc": 48,
+          "tatqa": 48
+        }
+      }
+    }
+  },
+  "quadrature": {
+    "scope": "Train-only numerical check, not effectiveness evidence",
+    "testUsed": false,
+    "devUsed": false,
+    "trainOrigins": 35772,
+    "sampledOrigins": 256,
+    "samplingSeed": 53,
+    "initialHash": "f6cceda589dbed21223ea339f402372cd7b16094884b10397d649337b61ac31b",
+    "featuresAndTargetsEqual": true,
+    "reference": "results/l40s-demand-expanded-v2/42",
+    "referenceSourceHash": "76d85afe07a2f3266a0987436b86e5e1d4d7800e8b84b0cbd74024d3908409aa",
+    "scriptHash": "1efdb3f27c652677e1efbb53e3313b8b244ed16e6423ca9ef32baa6bfcf5df21",
+    "conditions": {
+      "initial": {
+        "aggregateLossAndGradientEqual": true,
+        "quadrature": {
+          "64": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          },
+          "128": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          }
+        },
+        "familyMeanJointNLL": {
+          "truncated_normal": 3.1402785778045654,
+          "lognormal": 0.8837893605232239,
+          "weibull": 0.9385647773742676
+        }
+      },
+      "trained_aggregate": {
+        "aggregateLossAndGradientEqual": true,
+        "quadrature": {
+          "64": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          },
+          "128": {
+            "maxAbsoluteNLLDifferenceFrom256": 0.0,
+            "meanAbsoluteNLLDifferenceFrom256": 0.0,
+            "relativeGradientNormDifferenceFrom256": 0.0
+          }
+        },
+        "familyMeanJointNLL": {
+          "truncated_normal": -0.19307217001914978,
+          "lognormal": -0.1887449026107788,
+          "weibull": -0.1762622445821762
+        }
+      }
+    }
+  },
+  "speedSmoke": {
+    "aggregate": {
+      "secondsPerStep": 0.01070915349991992,
+      "lastLoss": 1.32011079788208,
+      "peakBytes": 188503552
+    },
+    "daily_allocation": {
+      "secondsPerStep": 0.020973243494518103,
+      "lastLoss": 1.699409008026123,
+      "peakBytes": 188512768
+    }
+  },
+  "speedScope": "Assigned L40S, batch 256, 12 optimizer steps with first two excluded; not full study runtime",
+  "rawFiles": {
+    "results/research-checks/allocation-full-tests.log": "08aeacaa2da7b4cbf3fb411cbabcb96582e7c12e9929b98cafd5ace857b3ef35",
+    "results/research-checks/allocation-full-tests-v2.log": "3e82c39752ebb8ad3082482d43a16656b8985e1155c95d4eeb8502a6784e0d0b",
+    "results/research-checks/allocation-math-tests-v2.log": "2beb67e890c72731c9372c42319b152e71fb50badff4efd412b94c14c18fe79f",
+    "results/research-checks/allocation-integrated-tests.log": "1e91487aeba351783047014b0dcdd0018334204d9507910ade9df45aca2c2f9d",
+    "results/research-checks/allocation-numerical-smoke.log": "84eea35d382f55b1bfb77f0b0ac049c2cc32cf48eff554eae89e92c410369f84",
+    "results/research-checks/allocation-quadrature-v2.json": "66e3296eb4101796b668c498e5342ad766d9acb7d0a84b023e704388c916df81",
+    "results/research-checks/allocation-core-check/manifest.json": "258ad3758d9c8f6ceb882d612bc727e0a11e8a73fe2fffb1c0067019ed95766c",
+    "results/research-checks/benchmark-allocation.json": "7b355eb9e6a0951a82913177f29e17f5047347131dc6cf08fb1c8b3e7313eaa8"
+  },
+  "limit": "The explicit allocation/censoring assumptions must still be checked against actual forecast and order outcomes. Train numerical parity is measured at float32 output/gradient precision.",
+  "sourceGroupChecks": {
+    "path": "results/research-checks/observations-source-checks.json",
+    "hash": "8d93384659fe1fcd8c74ecd044232a201c895af40ea1cef2461fc179a003ceac",
+    "datasets": [
+      "data/processed/complementary",
+      "data/processed/core-retail-train-v1",
+      "data/processed/core-tatqa-train-v1"
+    ],
+    "allPassed": true
+  },
+  "historicalReferenceDeviceFix": {
+    "predictionsExactlyEqual": true,
+    "origins": 528,
+    "device": "cpu",
+    "torch": "2.14.1+cu130",
+    "scope": "Standalone CPU reference check after the study runner device correction; no new training."
+  }
+}

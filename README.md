@@ -26,6 +26,8 @@
 
 원래 생성 Train과 실제 매니저 응답 상태를 복구한 다음 학습에서는 TAT-QA 엄격 정답이 **16/48**, 생성 Dev 평균 총손실이 **147.6813**이었습니다. 생성 Dev 60건·12개 family의 결과이며 보호된 Test 목표 달성으로 해석하지 않습니다. 새 가치 학습 후보는 채택되지 않아 구성기 재학습 이후의 개선으로 기록합니다. [재학습 결과](docs/evidence/research-replay-results.json) 같은 구성기의 `no_value`와 고정 질문 정책은 생성 Dev에서 181.6758이었습니다. [정책 비교](docs/evidence/research-replay-no-value-results.json)
 
+이후 가중치를 고정한 **생성 Test 120건의 총손실은 243.6274**로 목표 240.35 미만에 미달했습니다. `no_value`와 고정 질문은 263.2379였습니다. 판매 이력에 연결한 Test 504사례의 모수·근거는 100%, 불필요한 질문·잘못된 발주 진행은 0건이지만, 정확한 손실 비교는 고유 기간 9개에 한정됩니다. 수요 예측 품질도 여전히 미해결입니다. [최종 고정 Test 결과와 제한](docs/evidence/research-core-test-results.json)
+
 ## 새 clone에서 실행
 
 Python 3.12와 uv를 사용합니다. 아래 경로는 저장소에 포함된 자료와 고정 revision의 공개 ModernBERT로 **새 수요 GRU부터 학습**합니다. 이전 로컬 checkpoint는 필요하지 않습니다. 기존 실험의 가중치를 복원하는 명령은 아니므로 과거 표의 수치와 동일하다고 보장하지 않습니다.
@@ -60,6 +62,8 @@ uv run --no-project scripts/run_research.py \
 [`research-from-scratch.json`](configs/research-from-scratch.json)은 원본 snapshot의 문서·판매 Train과 원래 생성 Train을 사용합니다. Dev로 선택하며 Test는 학습·모델 선택에 사용하지 않습니다. `results/research-from-scratch/demand/model.pt`에 GRU가, `results/research-from-scratch/base/42/model.pt`에 전체 모델이 저장됩니다. 두 단계는 기존 실행을 덮어쓰지 않습니다. 공개 snapshot에서 GRU 학습과 전체 모델 연결·encoder 갱신까지 확인했습니다. [재현 경로 검증](docs/evidence/research-reproduction-checks.json) CPU에서 GRU만 학습하려면 `uv run python scripts/train_demand.py --device cpu`를 사용할 수 있습니다.
 
 현재 주간 수요 학습은 품절일이 있는 합계를 하한으로 취급합니다. 이 점수는 날짜별로 검열된 관측의 정확한 likelihood가 아닐 수 있으며 편향을 보이는 수치 예제를 확인했습니다. 재현 경로를 추가한 것이 수요 모형의 결함을 해결한 것은 아닙니다. [관측 모형 수치 검사](docs/evidence/research-aggregate-censoring-check.json)
+
+날짜별 정확 관측과 품절을 구분하는 새 likelihood도 구현하고 L40S에서 seed 3개를 비교했습니다. 수치 검증은 통과했으나 사전 채택 조건에 미달해 기존 GRU와 기본 설정을 유지합니다. 이 후보는 선택 옵션으로 보존하며 Test로 선택하지 않았습니다. [관측 모형과 비교 결과](docs/demand-observations.md)
 
 ## 공개 자료와 재현 범위
 

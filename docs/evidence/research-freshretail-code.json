@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/Dingdong-Inc/frn-50k-baseline",
+  "revision": "8af694a09a5a427d1d50648d348c022565a781f2",
+  "files": {
+    "README.md": {
+      "url": "https://raw.githubusercontent.com/Dingdong-Inc/frn-50k-baseline/8af694a09a5a427d1d50648d348c022565a781f2/README.md",
+      "sha256": "5f0ccd948982fba8f8c1d8374a57611f46b91cfc4f0703b5ab1541e5b17567f2",
+      "bytes": 4805
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/Dingdong-Inc/frn-50k-baseline/8af694a09a5a427d1d50648d348c022565a781f2/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    "latent_demand_recovery/exp/data/generate_data.py": {
+      "url": "https://raw.githubusercontent.com/Dingdong-Inc/frn-50k-baseline/8af694a09a5a427d1d50648d348c022565a781f2/latent_demand_recovery/exp/data/generate_data.py",
+      "sha256": "0ef44455b7932a585cf777cf10d8f66c9c0a1d701380986a916cbed9eea6000a",
+      "bytes": 4234
+    },
+    "demand_forecasting/SSA/ssa_forecasting.py": {
+      "url": "https://raw.githubusercontent.com/Dingdong-Inc/frn-50k-baseline/8af694a09a5a427d1d50648d348c022565a781f2/demand_forecasting/SSA/ssa_forecasting.py",
+      "sha256": "505b6ff537856e376a45b7fd89901543376c2bf1a41c9bb09fc8e14c9637b69b",
+      "bytes": 5513
+    }
+  }
+}

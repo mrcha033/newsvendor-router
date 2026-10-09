@@ -75,7 +75,11 @@ def main():
     model = sequence.DemandEncoder().to(args.device)
     report = {
         "scope": "New training from the published snapshot; not restoration of historical weights",
-        "observationModel": "Complete totals use density; censored totals use an aggregate lower-bound survival score, which is not generally the likelihood of separately censored daily observations",
+        "observationModel": (
+            "Joint daily observations under a zero-inflated total, conditionally nonempty active days and uniform allocation; assumes noninformative daily right censoring"
+            if config["demand"].get("observation") == "daily_allocation"
+            else "Complete totals use density; censored totals use an aggregate lower-bound survival score, which is not generally the likelihood of separately censored daily observations"
+        ),
         "testUsed": False,
         "config": config,
         "device": args.device,

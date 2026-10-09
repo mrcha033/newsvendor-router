@@ -87,7 +87,7 @@ class DemandEncoder(nn.Module):
                 head.layers[-1].weight.mul_(0.1)
                 head.layers[-1].bias.copy_(torch.tensor(initial[family]))
 
-    def forward(self, sequences, horizons, context=None):
+    def forward(self, sequences, horizons, context=None, *, daily=False):
         device = next(self.parameters()).device
         require(
             len(sequences) == len(horizons) > 0 and all(h > 0 for h in horizons),
@@ -105,11 +105,18 @@ class DemandEncoder(nn.Module):
         if context is not None:
             require(context.shape == state.shape, "Linked language/demand context mismatch")
             state = state + context
-        return {
+        result = {
             "state": state,
             "scores": self.family(state),
             "raw": {f: h(state) for f, h in self.params.items()},
         }
+        if daily:
+            one_day = torch.full_like(days, math.log(2))
+            daily_state = self.condition(torch.cat([hidden[-1], one_day], -1)).tanh()
+            if context is not None:
+                daily_state = daily_state + context
+            result["dailyZero"] = {f: h(daily_state)[:, 0] for f, h in self.params.items()}
+        return result
 
 
 def samples(rows, labels, min_history=28):
@@ -154,6 +161,8 @@ def samples(rows, labels, min_history=28):
                         "scale": scale * horizon,
                         "y": sum(f["sales"] for f in future) / (scale * horizon),
                         "censored": any(f["stockoutHours"] > 0 for f in future),
+                        "dailySales": [f["sales"] / (scale * horizon) for f in future],
+                        "dailyCensored": [f["stockoutHours"] > 0 for f in future],
                         "cutoff": history[-1]["date"],
                         "dates": dates,
                         "historyHash": digest(history),
@@ -162,8 +171,44 @@ def samples(rows, labels, min_history=28):
     return result
 
 
-def losses(output, rows):
+def losses(output, rows, config=None):
     device = output["scores"].device
+    config = config or {}
+    observation = config.get("observation", "aggregate")
+    require(observation in ("aggregate", "daily_allocation"), "Unknown demand observation model")
+    if observation == "daily_allocation":
+        from .observations import allocation_nll
+
+        days = max(r["horizon"] for r in rows)
+        sales = torch.tensor(
+            [r["dailySales"] + [0.0] * (days - r["horizon"]) for r in rows],
+            dtype=torch.float64,
+            device=device,
+        )
+        censored = torch.tensor(
+            [r["dailyCensored"] + [False] * (days - r["horizon"]) for r in rows],
+            dtype=torch.bool,
+            device=device,
+        )
+        present = (
+            torch.arange(days, device=device)[None, :]
+            < torch.tensor([r["horizon"] for r in rows], device=device)[:, None]
+        )
+        return torch.stack(
+            [
+                allocation_nll(
+                    f,
+                    output["raw"][f],
+                    sales,
+                    censored,
+                    present,
+                    size=config.get("observationNodes", 64),
+                    daily_zero_logit=output["dailyZero"][f],
+                )
+                for f in demand.FAMILIES
+            ],
+            -1,
+        ).to(output["scores"].dtype)
     observed = torch.tensor([r["y"] for r in rows], device=device)
     censored = torch.tensor([r["censored"] for r in rows], dtype=torch.bool, device=device)
     return torch.stack(
@@ -184,8 +229,12 @@ def fit_params(model, rows, config, seed):
         epoch = []
         for ids in torch.randperm(len(rows), generator=rand).split(config.get("batchSize", 64)):
             batch = [rows[i] for i in ids.tolist()]
-            output = model([r["sequence"] for r in batch], [r["horizon"] for r in batch])
-            values = losses(output, batch)
+            output = model(
+                [r["sequence"] for r in batch],
+                [r["horizon"] for r in batch],
+                daily=config.get("observation") == "daily_allocation",
+            )
+            values = losses(output, batch, config)
             # Both horizons and all families receive likelihood gradients.
             weights = torch.tensor(
                 [config.get("dailyWeight", 0.3) if r["horizon"] == 1 else 1 for r in batch],
@@ -203,13 +252,17 @@ def fit_params(model, rows, config, seed):
 
 
 @torch.inference_mode()
-def measure(model, rows, batch_size=64):
+def measure(model, rows, batch_size=64, config=None):
     model.eval()
     result = []
     for start in range(0, len(rows), batch_size):
         batch = rows[start : start + batch_size]
-        output = model([r["sequence"] for r in batch], [r["horizon"] for r in batch])
-        result.append(losses(output, batch).cpu())
+        output = model(
+            [r["sequence"] for r in batch],
+            [r["horizon"] for r in batch],
+            daily=(config or {}).get("observation") == "daily_allocation",
+        )
+        result.append(losses(output, batch, config).cpu())
     return torch.cat(result)
 
 
@@ -231,7 +284,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
         held = [training[i] for i in ids]
         model.load_state_dict(initial)
         history = fit_params(model, fit, config, seed + fold)
-        measured = measure(model, held)
+        measured = measure(model, held, config=config)
         target[ids] = measured
         reports.append(
             {
@@ -257,6 +310,7 @@ def cross_fit(model, training, development, config, seed, progress=None):
                         "scale",
                     )
                 }
+                | {k: row[k] for k in ("dailySales", "dailyCensored") if k in row}
                 | {"fold": fold, "familyNLL": values}
             )
     model.load_state_dict(initial)
@@ -287,8 +341,14 @@ def cross_fit(model, training, development, config, seed, progress=None):
                 values = []
                 for start in range(0, len(development), 64):
                     batch = development[start : start + 64]
-                    out = model([r["sequence"] for r in batch], [r["horizon"] for r in batch])
-                    chosen = losses(out, batch).gather(1, out["scores"].argmin(-1, keepdim=True))
+                    out = model(
+                        [r["sequence"] for r in batch],
+                        [r["horizon"] for r in batch],
+                        daily=config.get("observation") == "daily_allocation",
+                    )
+                    chosen = losses(out, batch, config).gather(
+                        1, out["scores"].argmin(-1, keepdim=True)
+                    )
                     values.extend(chosen[[r["horizon"] == 7 for r in batch]].flatten().tolist())
                 loss = float(np.mean(values))
             if loss < best:
@@ -302,7 +362,8 @@ def cross_fit(model, training, development, config, seed, progress=None):
         "selectorLosses": selector_losses,
         "selectedEpoch": selected,
         "devSelectedNLL": best if development else None,
-        "objective": "Train source-held-out family NLL regression; minimum predicted loss",
+        "objective": "Train source-held-out family observation-loss regression; minimum predicted loss",
+        "observation": config.get("observation", "aggregate"),
         "targetHash": digest(records),
     }, records
 
