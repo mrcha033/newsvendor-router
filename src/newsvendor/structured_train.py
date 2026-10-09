@@ -93,9 +93,13 @@ def load(path, device="cpu"):
     return model.to(device).eval(), tokenizer, config, payload["report"]
 
 
-def import_core(model, weights):
-    """Only an explicitly enabled numeric-state head may extend legacy input columns."""
+def import_core(model, weights, *, reset_value=False):
+    """Preserve the core; reinitialize the value head only when explicitly requested."""
     weights = dict(weights)
+    if reset_value:
+        weights.update(
+            {"heads.value." + k: v for k, v in model.heads["value"].state_dict().items()}
+        )
     if model.config.get("numericState"):
         for name in ("value", "recovery"):
             key = f"heads.{name}.layers.0.weight"
@@ -147,7 +151,7 @@ def initialize(config):
         weights = {
             k: v for k, v in payload["weights"].items() if not k.startswith(("tools.", "control."))
         }
-        import_core(model, weights)
+        import_core(model, weights, reset_value=config.get("policy", {}).get("resetValue", False))
     else:
         weights = {
             k.removeprefix("demand."): v
@@ -171,6 +175,7 @@ def initialize(config):
         "demandWeightsHash": weights_hash(model.demand.state_dict()),
         "numericStateAdded": bool(config["encoder"].get("numericState"))
         and not payload["config"].get("encoder", {}).get("numericState", False),
+        "valueHeadReset": bool(warm and config.get("policy", {}).get("resetValue")),
         "removedAuxiliaryParameters": sum(
             v.numel() for k, v in payload["weights"].items() if k.startswith(("tools.", "control."))
         )

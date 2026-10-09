@@ -160,11 +160,25 @@ def fit(model, tokenizer, config, episodes, progress, public_dev, labels, collec
             for start in range(0, len(training), policy["batchSize"]):
                 group = training[start : start + policy["batchSize"]]
                 views = [router.view(row["input"], row["state"]) for row in group]
+                if not no_value and config["encoder"].get("valueInput") == "state":
+                    device = next(head.parameters()).device
+                    for row, view in zip(group, views, strict=True):
+                        require(len(view["actions"]) == len(row["values"]), "Value target count")
+                        features.append(
+                            (
+                                torch.tensor(
+                                    view["valueFeatures"], device=device, dtype=torch.float32
+                                ),
+                                torch.tensor(row["values"], device=device, dtype=torch.float32),
+                                view.get("valueCosts"),
+                            )
+                        )
+                    continue
                 for lo, hi in model.training_batches(views):
                     for output, row, view in zip(
                         model(views[lo:hi]), group[lo:hi], views[lo:hi], strict=True
                     ):
-                        state = output["actionState"].detach()
+                        state = output["actionState" if no_value else "valueState"].detach()
                         require(
                             len(state) == len(row["actions"]),
                             "Action targets differ from encoded actions",

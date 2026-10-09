@@ -35,6 +35,9 @@ STATE_FEATURES = (
     "action_cost",
     "previous_requests",
 )
+VALUE_FEATURES = STATE_FEATURES + tuple(
+    f"{slot}_range_{part}" for slot in SLOTS for part in ("present", "min", "max")
+)
 
 
 def state_features(value, state, actions, retrieval_cost=1.0):
@@ -120,6 +123,30 @@ def state_features(value, state, actions, retrieval_cost=1.0):
         )
         result.append(row)
     return result
+
+
+def value_features(value, state, actions, retrieval_cost=1.0):
+    """Own-state values and feasible ranges, without encoder activations or outcomes."""
+    rows = state_features(value, state, actions, retrieval_cost)
+    unit = value["task"]["hold"] / max(1.0, *(abs(v) for v in value["task"]["bounds"]))
+    ranges = []
+    for slot in SLOTS:
+        numbers = [theta[slot] for theta in state.get("omega", []) if slot in theta]
+        if slot in state["values"]:
+            numbers.append(state["values"][slot])
+        require(all(math.isfinite(v) for v in numbers), "Invalid own-state parameter range")
+        ranges += (
+            [
+                1.0,
+                *(
+                    math.copysign(math.log1p(abs(v / unit)), v)
+                    for v in (min(numbers), max(numbers))
+                ),
+            ]
+            if numbers
+            else [0.0, 0.0, 0.0]
+        )
+    return [row + ranges for row in rows]
 
 
 def known_costs(actions, *, hold, costs, remaining, history_length, deadline, retrieval_cost):

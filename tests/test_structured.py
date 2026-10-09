@@ -4023,6 +4023,144 @@ def test_numeric_state_is_invariant_to_money_units():
     )
 
 
+def test_value_features_preserve_observed_ranges_without_hidden_labels():
+    from newsvendor.structured_value import VALUE_FEATURES, value_features
+
+    episode = next(
+        e
+        for e in corpus.generate(read("configs/full.json"))
+        if e["split"] == "train" and e["scenario"] == "unset_preference"
+    )
+    value = copy.deepcopy(episode["input"])
+    state = reference(value)
+    actions = ["hold", "handoff", "b", "retrieve"]
+    original = value_features(value, state, actions)
+    poisoned = copy.deepcopy(value)
+    poisoned["task"]["rho"], poisoned["task"]["partial"] = {}, {}
+    poisoned["gold"] = {"theta": "not observable"}
+    assert value_features(poisoned, state, actions) == original
+    assert len(original[0]) == len(VALUE_FEATURES)
+    current = dict(zip(VALUE_FEATURES, original[0], strict=True))
+    assert current["b_range_present"] == 1
+    assert current["b_range_max"] > current["b_range_min"]
+    changed = copy.deepcopy(state)
+    changed["omega"][-1]["b"] *= 2
+    assert value_features(value, changed, actions) != original
+    for key in ("hold", "tolerance"):
+        if value["task"][key] is not None:
+            value["task"][key] *= 10
+    value["task"]["costs"] = {k: v * 10 for k, v in value["task"]["costs"].items()}
+    state["values"] = {k: v * 10 for k, v in state["values"].items()}
+    for theta in state["omega"]:
+        for key in corpus.SLOTS:
+            theta[key] *= 10
+    for key in ("gamma", "expectedCost"):
+        if state.get(key) is not None:
+            state[key] *= 10
+    converted = value_features(value, state, actions, retrieval_cost=10)
+    torch.testing.assert_close(torch.tensor(original), torch.tensor(converted))
+
+
+@pytest.mark.parametrize("value_input", ["state", "encoded_state"])
+@pytest.mark.parametrize("batch_fusion", [False, True])
+def test_value_input_separates_encoder_drift_and_preserves_constructor(
+    tokenizer, settings, model, value_input, batch_fusion
+):
+    from newsvendor.structured_critic import value_loss
+    from newsvendor.structured_rollout import ResearchRouter
+    from newsvendor.structured_train import import_core
+    from newsvendor.structured_value import VALUE_FEATURES, constrain
+
+    config = {
+        **settings,
+        "valueInput": value_input,
+        "batchFusion": batch_fusion,
+        "exactActionCosts": True,
+        "queryTokens": 1,
+    }
+    current = Router(copy.deepcopy(model.encoder), config).eval()
+    with pytest.raises(RuntimeError, match="size mismatch"):
+        import_core(current, model.state_dict())
+    import_core(current, model.state_dict(), reset_value=True)
+    for name, old in model.state_dict().items():
+        if not name.startswith("heads.value."):
+            assert torch.equal(current.state_dict()[name], old)
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    router = ResearchRouter(current, tokenizer, config)
+    view = router.view(episode["input"], reference(episode["input"]))
+    views = [view, copy.deepcopy(view)]
+    outputs = current(views)
+    dimension = len(VALUE_FEATURES) + (256 if value_input == "encoded_state" else 0)
+    for output in outputs:
+        assert output["valueState"].shape[1] == dimension
+        cached = constrain(
+            torch.nn.functional.softplus(current.heads["value"](output["valueState"])),
+            view["valueCosts"],
+        )
+        torch.testing.assert_close(cached, output["value"], rtol=0, atol=0)
+    before = outputs[0]["value"].detach().clone()
+    with torch.no_grad():
+        current.project.weight.add_(torch.randn_like(current.project.weight) * 0.2)
+    changed = current(views)[0]
+    assert not torch.equal(outputs[0]["fieldState"], changed["fieldState"])
+    assert torch.equal(before, changed["value"]) == (value_input == "state")
+    target = changed["value"].detach() + 0.25
+    value_loss(
+        current.heads["value"], [(changed["valueState"], target, view["valueCosts"])]
+    ).backward()
+    assert any(
+        p.grad is not None and p.grad.abs().sum() > 0 for p in current.heads["value"].parameters()
+    )
+    encoder_gradient = any(
+        p.grad is not None and p.grad.abs().sum() > 0 for p in current.encoder.parameters()
+    )
+    assert encoder_gradient == (value_input == "encoded_state")
+    current.zero_grad(set_to_none=True)
+    objective(current(view), research_targets(view, episode["input"]))[0].backward()
+    assert any(p.grad is not None and p.grad.abs().sum() > 0 for p in current.encoder.parameters())
+
+
+def test_state_value_decision_matches_forward_without_reencoding(tokenizer, settings, model):
+    from newsvendor.structured_rollout import ResearchRouter
+    from newsvendor.structured_train import import_core
+    from newsvendor.structured_value import VALUE_FEATURES
+
+    config = {**settings, "valueInput": "state", "exactActionCosts": True}
+    current = Router(copy.deepcopy(model.encoder), config).eval()
+    import_core(current, model.state_dict(), reset_value=True)
+    value = next(
+        e["input"] for e in corpus.generate(read("configs/full.json")) if e["split"] == "train"
+    )
+    state = reference(value)
+    router = ResearchRouter(current, tokenizer, config)
+    state["fields"] = observed_fields(value)
+    view = router.view(value, state)
+    expected = assemble(view, current(view))
+
+    def forbidden(*args):
+        raise AssertionError("Decision unexpectedly reencoded the document")
+
+    hook = current.encoder.register_forward_pre_hook(forbidden)
+    result = router.decision(value, state)
+    hook.remove()
+    assert result["action"] == expected["action"]
+    assert result["policyMode"] == expected["policyMode"] == "value"
+    for actual, old in zip(result["actionValues"], expected["actionValues"], strict=True):
+        assert actual["residualLoss"] == old["residualLoss"] * value["task"]["hold"]
+        assert actual["requestCost"] == old["requestCost"] * value["task"]["hold"]
+    with pytest.raises(ValueError, match="Missing constructed"):
+        current.state_values({k: v for k, v in view.items() if k != "valueFeatures"})
+    changed = copy.deepcopy(view)
+    column = VALUE_FEATURES.index("p_value")
+    for before, after in zip(view["valueFeatures"], changed["valueFeatures"], strict=True):
+        before[column], after[column] = 0.5, 0.501
+    with torch.no_grad():
+        current.heads["value"].layers[0].weight[:, column] = 1
+    with torch.autocast("cpu", dtype=torch.bfloat16):
+        a, b = current.state_values(view), current.state_values(changed)
+    assert a.dtype == torch.float32 and not torch.equal(a, b)
+
+
 @pytest.mark.parametrize("batch_fusion", [False, True])
 def test_numeric_state_survives_prefix_truncation_and_cached_value_training(
     tokenizer, settings, model, batch_fusion

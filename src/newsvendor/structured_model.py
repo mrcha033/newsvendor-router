@@ -12,7 +12,7 @@ from .heads import Head
 from .io import digest, require
 from .sequence import DemandEncoder, features
 from .structured_inputs import DECISIONS, MODES, OPS, SCALES, best_span, span_value
-from .structured_value import STATE_FEATURES, constrain
+from .structured_value import STATE_FEATURES, VALUE_FEATURES, constrain
 
 SCHEMA = "structured-router-v1"
 
@@ -21,6 +21,12 @@ class Router(nn.Module):
     def __init__(self, encoder, config):
         super().__init__()
         self.config = config
+        value_input = config.get("valueInput", "encoded")
+        require(value_input in ("encoded", "encoded_state", "state"), "Unknown value input")
+        require(
+            value_input == "encoded" or not config.get("numericState"),
+            "Use one numeric value input path",
+        )
         require(
             config.get("actionPrecision", "encoder") in ("encoder", "float32"),
             "Unknown action-head precision",
@@ -63,6 +69,11 @@ class Router(nn.Module):
         self.fusion = nn.TransformerDecoder(layer, 2)
         self.demand = DemandEncoder()
         action_dim = 256 + (len(STATE_FEATURES) if config.get("numericState") else 0)
+        value_dim = (
+            action_dim
+            if value_input == "encoded"
+            else len(VALUE_FEATURES) + (256 if value_input == "encoded_state" else 0)
+        )
         self.heads = nn.ModuleDict(
             {
                 "kind": Head(256, 128, len(KINDS)),
@@ -75,7 +86,7 @@ class Router(nn.Module):
                 "decision": Head(256, 128, len(DECISIONS)),
                 "question": Head(256, 128, 1),
                 "recovery": Head(action_dim, 128, 1),
-                "value": Head(action_dim, 128, 2),
+                "value": Head(value_dim, 128, 2),
             }
         )
         self.pointers = nn.ModuleDict(
@@ -287,7 +298,8 @@ class Router(nn.Module):
         heads = {
             name: head(fused)
             for name, head in self.heads.items()
-            if not (
+            if not (name == "value" and self.config.get("valueInput", "encoded") != "encoded")
+            and not (
                 name in ("value", "recovery")
                 and (
                     self.config.get("numericState")
@@ -330,9 +342,26 @@ class Router(nn.Module):
             )
             require(numeric.shape == (action_count, len(STATE_FEATURES)), "Economic state shape")
             actions = torch.cat([actions, numeric], dim=-1)
+        value_state = actions
+        if self.config.get("valueInput", "encoded") != "encoded":
+            numeric = torch.tensor(
+                view.get("valueFeatures", [[0.0] * len(VALUE_FEATURES)] * action_count),
+                device=device,
+                dtype=torch.float32,
+            )
+            require(numeric.shape == (action_count, len(VALUE_FEATURES)), "Value state shape")
+            value_state = (
+                torch.cat([actions.float(), numeric], dim=-1)
+                if self.config["valueInput"] == "encoded_state"
+                else numeric
+            )
         output = {}
         for name, head in self.heads.items():
             on_actions = name in ("value", "recovery")
+            if name == "value" and self.config.get("valueInput", "encoded") != "encoded":
+                with torch.autocast(device.type, enabled=False):
+                    output[name] = head(value_state)
+                continue
             if on_actions and action_fp32:
                 # Cached critic fitting uses FP32. Preserve numeric inputs before
                 # the head and use the same arithmetic during mixed-precision inference.
@@ -354,6 +383,7 @@ class Router(nn.Module):
         output["type"] = output.pop("kind")
         output["fieldState"] = fields
         output["actionState"] = actions
+        output["valueState"] = value_state
         for name in ("start", "end"):
             projected = fused[2][name][:count] if fused is not None else self.pointers[name](fields)
             output[name] = projected @ tokens.T / math.sqrt(256)
@@ -405,6 +435,17 @@ class Router(nn.Module):
             if view.get("contextRerank"):
                 self.tools.rerank_context(view, actions, queries, output)
         return output
+
+    def state_values(self, view):
+        """Evaluate a constructed state without another encoder pass."""
+        require(self.config.get("valueInput") == "state", "State value head is not enabled")
+        require("valueFeatures" in view, "Missing constructed value features")
+        head = self.heads["value"]
+        device = next(head.parameters()).device
+        features = torch.tensor(view["valueFeatures"], device=device, dtype=torch.float32)
+        require(features.shape == (len(view["actions"]), len(VALUE_FEATURES)), "Value state shape")
+        with torch.autocast(device.type, enabled=False):
+            return constrain(fn.softplus(head(features)), view.get("valueCosts"))
 
     def optimizer(self, config):
         backbone = list(self.encoder.parameters())
@@ -575,9 +616,7 @@ def extract(view, output):
     return fields
 
 
-@torch.inference_mode()
-def assemble(view, output, *, no_value=False, use_value=True):
-    fields = extract(view, output)
+def action_indices(view):
     valid = []
     for i, action in enumerate(view["actions"]):
         if not view["allowedActions"][i]:
@@ -590,6 +629,24 @@ def assemble(view, output, *, no_value=False, use_value=True):
             continue
         valid.append(i)
     require(valid, "No permitted action")
+    return valid
+
+
+def value_records(view, scores, indices):
+    return [
+        {
+            "action": view["actions"][i]["id"],
+            "residualLoss": float(scores[i, 0]),
+            "requestCost": float(scores[i, 1]),
+        }
+        for i in indices
+    ]
+
+
+@torch.inference_mode()
+def assemble(view, output, *, no_value=False, use_value=True):
+    fields = extract(view, output)
+    valid = action_indices(view)
     selected = (
         max(valid, key=lambda i: float(output["recovery"][i]))
         if no_value or not use_value
@@ -603,14 +660,7 @@ def assemble(view, output, *, no_value=False, use_value=True):
     result = {
         "action": action,
         "fields": fields,
-        "actionValues": [
-            {
-                "action": view["actions"][i]["id"],
-                "residualLoss": float(output["value"][i, 0]),
-                "requestCost": float(output["value"][i, 1]),
-            }
-            for i in valid
-        ],
+        "actionValues": value_records(view, output["value"], valid),
         "retrieved": view["retrieved"],
         "inputHash": view["inputHash"],
     }

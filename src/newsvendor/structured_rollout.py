@@ -13,7 +13,7 @@ from .io import digest, require
 from .optimizer import regret
 from .policy import actions, response
 from .structured_inputs import prepare, research_input
-from .structured_model import assemble, extract
+from .structured_model import action_indices, assemble, extract, value_records
 
 FIELDS = [
     {
@@ -196,6 +196,12 @@ class ResearchRouter:
             view["economicFeatures"] = state_features(
                 value, state, allowed, self.config.get("retrievalCost", 1.0)
             )
+        if self.config.get("valueInput", "encoded") != "encoded":
+            from .structured_value import value_features
+
+            view["valueFeatures"] = value_features(
+                value, state, allowed, self.config.get("retrievalCost", 1.0)
+            )
         if self.config.get("exactActionCosts"):
             from .structured_value import known_costs
 
@@ -216,7 +222,19 @@ class ResearchRouter:
         self.model.eval()
         state = self.construct(value) if state is None else state
         view = self.view(value, state)
-        result = assemble(view, self.model(view), no_value=self.no_value)
+        if self.config.get("valueInput") == "state" and not self.no_value:
+            scores = self.model.state_values(view)
+            valid = action_indices(view)
+            selected = min(valid, key=lambda i: float(scores[i].sum()))
+            result = {
+                "action": view["actions"][selected]["id"],
+                "actionValues": value_records(view, scores, valid),
+                "retrieved": view["retrieved"],
+                "inputHash": view["inputHash"],
+                "policyMode": "value",
+            }
+        else:
+            result = assemble(view, self.model(view), no_value=self.no_value)
         for estimates in result.get("actionValues", []):
             estimates["residualLoss"] *= value["task"]["hold"]
             estimates["requestCost"] *= value["task"]["hold"]

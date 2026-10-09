@@ -1,0 +1,125 @@
+{
+  "dataset": "data/processed/core-tatqa-train-v1",
+  "expansion": null,
+  "researchConfig": "configs/full.json",
+  "output": "results/l40s-research-state-value-v1/state/42",
+  "seed": 42,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "maxRetrievals": 4,
+  "backbones": {
+    "base": {
+      "model": "answerdotai/ModernBERT-base",
+      "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8"
+    },
+    "large": {
+      "model": "answerdotai/ModernBERT-large",
+      "revision": "45bb4654a4d5aaff24dd11d4781fa46d39bf8c13",
+      "splitLongBatches": true
+    }
+  },
+  "encoder": {
+    "retrievalCost": 1.0,
+    "retrievals": 2,
+    "maxLength": 1024,
+    "queryTokens": 128,
+    "overlap": 32,
+    "chunks": 8,
+    "encoderBatch": 16,
+    "retrievalDocuments": 5,
+    "gradientCheckpointing": false,
+    "precision": "bf16",
+    "packedQueries": true,
+    "bucketLengths": true,
+    "checkpointTokenLimit": 55000,
+    "compileLayers": false,
+    "compileLimit": 64,
+    "attention": "sdpa",
+    "padMultiple": 128,
+    "splitLongBatches": true,
+    "packedSources": true,
+    "chunkTokens": 256,
+    "documentTokens": 1024,
+    "historyChunks": 1024,
+    "tableChunks": 4096,
+    "batchFusion": true,
+    "sharedQueries": true,
+    "model": "answerdotai/ModernBERT-base",
+    "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "exactActionCosts": true,
+    "paddingRatio": 1.25,
+    "scopePrefix": false,
+    "valueInput": "state"
+  },
+  "training": {
+    "epochs": 2,
+    "encoderLr": 1e-05,
+    "headLr": 0.0003,
+    "weightDecay": 0.01,
+    "accumulation": 32,
+    "progressEvery": 512,
+    "checkpointEvery": 16384,
+    "caseBatch": {
+      "base": 32,
+      "large": 32,
+      "no_value": 32
+    },
+    "prefetchWorkers": 2,
+    "fusedOptimizer": true,
+    "retrievalTraining": "needed",
+    "selection": "research",
+    "validateInitial": true,
+    "validationEvery": 0,
+    "patience": 0
+  },
+  "demand": {
+    "epochs": 20,
+    "selectorEpochs": 20,
+    "folds": 3,
+    "lr": 0.001,
+    "batchSize": 64,
+    "dailyWeight": 0.3,
+    "minHistory": 28
+  },
+  "policy": {
+    "iterations": 2,
+    "epochs": 40,
+    "noise": 0.0,
+    "trainable": "value",
+    "batchSize": 64,
+    "valueLr": 0.001,
+    "validationEvery": 10,
+    "patience": 3,
+    "rankWeight": 0.25,
+    "collectionPolicy": "mixed",
+    "selection": "benchmark_normalized",
+    "responseSamples": 1,
+    "resetValue": true
+  },
+  "variant": "base",
+  "noValue": false,
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "warmStart": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "demandCheckpoint": null,
+  "documentComponents": [],
+  "evaluateInitial": false,
+  "originalResearch": true,
+  "stateValueStudy": {
+    "scope": "Separate economic value inputs from encoder activations; retain the shared fine-tuned constructor and GRU.",
+    "testUsed": false,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "conditions": "Two newly initialized value heads, both given the same 106 observable-state features. encoded_state additionally receives 256 encoder action features. All other weights strictly imported from the same forecast-v1 checkpoint.",
+    "training": "Policy phase only: two actual own-state Train rollout collections, no synthetic corruption, up to 40 epochs each, AdamW lr 0.001, batch 64, validation every 10, patience 3. Equal budget, not identical on-policy states.",
+    "selection": "Existing benchmark_normalized Dev selector. Frozen Test and retail holdout outcomes are excluded.",
+    "promotion": "Across all three seeds, generated and retail actual mean loss must not exceed forecast-v1; no lower final parameter/evidence accuracy, no increase in unnecessary or missed requests or invalid handoffs. At least one loss or request improvement is required. Keep the parent if these gates fail.",
+    "limitations": "Generated Dev has 60 examples/12 families. Retail exact losses use five observed periods times seven controlled conditions. No real organizational or demand-calibration claim."
+  }
+}
