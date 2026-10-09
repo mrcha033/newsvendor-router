@@ -18,10 +18,14 @@ jobs:
           uv run ruff check src tests scripts/run_research.py scripts/train_demand.py
           scripts/check_observations.py scripts/study_demand.py
           scripts/compare_observations.py scripts/evaluate_core.py
+          scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py
+          scripts/reproduce_retail_forecast.py
       - run: >-
           uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
           scripts/check_observations.py scripts/study_demand.py
           scripts/compare_observations.py scripts/evaluate_core.py
+          scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py
+          scripts/reproduce_retail_forecast.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval

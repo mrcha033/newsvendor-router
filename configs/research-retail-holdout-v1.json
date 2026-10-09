@@ -1,0 +1,77 @@
+{
+  "scope": "Frozen replication on every remaining mutually store/product-disjoint identity in the pinned source capture. No new training, model selection or reuse of existing Test cases. Financial documents and manager replies remain generated experimental conditions.",
+  "registeredAt": "2026-10-09T14:08:13.896804+00:00",
+  "newSourceHoldout": true,
+  "legacyTestUsed": false,
+  "trainingAllowed": false,
+  "selectionAllowed": false,
+  "baseDataset": "data/processed/core-retail-train-v1",
+  "baseHashes": {
+    "inputs.jsonl": "608bca852dbb1c2664df613490655eb4aa0b0b2c9f8c3606e1ff2c9684f233ea",
+    "labels.jsonl": "6819e824a679dd41309b7d692c871151bc644c3f168f9081d6e41950680fb17f",
+    "manifest.json": "e7bcd737679edc7bd333106298e597ad5b8ff0a3dbee07d1d41c2645805a58c6",
+    "collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e"
+  },
+  "dataset": "data/processed/core-retail-holdout-v1",
+  "output": "results/l40s-retail-holdout-v1",
+  "source": {
+    "path": "data/raw/complementary/retail/08c1fab7f9257bc73679d415d65d644165d351d4/train.parquet",
+    "url": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K/resolve/08c1fab7f9257bc73679d415d65d644165d351d4/data/train.parquet",
+    "revision": "08c1fab7f9257bc73679d415d65d644165d351d4",
+    "sha256": "6706832db892bbae4969c19d87e07975d2543d2ba7d7d4756360654785de5a3d",
+    "bytes": 106436287,
+    "split": "official train only"
+  },
+  "selectionSeed": 61,
+  "selectionRule": "Identity-only hash-order greedy matching of all remaining pairs; exclude every store and product from every existing split and prevent overlap among additions. Do not replace histories based on observed outcomes.",
+  "expectedSources": 27,
+  "feasibilityHash": "c3882e46f8ecf2e4ad2b61664deb9b262e5a3ec9f24690a0595bc30b91d1dd3a",
+  "sourceHash": "59f9137ddc4b04ff01015c9bb8054fd74c89d086deec7b930b428a1f139813d7",
+  "models": {
+    "previous": {
+      "path": "results/l40s-research-replay-v1/base/42/model.pt",
+      "hash": "2461f9fa09a4587a0988119c7bd55139346365c5675501422428a6c15a8a7c5b"
+    },
+    "selected": {
+      "path": "results/l40s-research-forecast-v1/base/42/model.pt",
+      "hash": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a"
+    },
+    "no_value": {
+      "path": "results/l40s-research-forecast-v1/no_value/42/model.pt",
+      "hash": "a2dc2598415b4d1cdfb884caecc77f626b91cd804d0b19f87e4d174ad7ec4f4f"
+    }
+  },
+  "scripts": {
+    "scripts/prepare_retail_holdout.py": "a95a1a89c6d5eed4c68fde1ff4e7697a8f25d4fff9649fcbc229697760c57e60",
+    "scripts/evaluate_retail_holdout.py": "08a101039e5502129514694fb678b52c5906a66e01c11aba5f7e6e35e28c5fcd",
+    "scripts/study_demand.py": "e26f102273a7651b95ede482afef9011226cbaab0e512d5fadec1eb91df7aa97",
+    "scripts/compare_observations.py": "2c68ed491240e576c9f44f8b164a2bf00a497fc90f6d02b388a791e5d285c4b2",
+    "scripts/compare_demand.py": "a81554a99741c994ccf3fe4b5a2e506027b3e666438ed68497efd0610df0367d"
+  },
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "dataSeed": 53,
+  "cutoffs": [
+    28,
+    35,
+    42,
+    49,
+    56
+  ],
+  "minHistory": 28,
+  "observationNodes": 64,
+  "allocationConcentration": 4,
+  "primary": "Actual emitted-order terminal loss plus request cost on complete seven-day periods, paired across frozen models; family bootstrap 5000 repetitions, seed 61. Censored periods receive only loss lower bounds.",
+  "secondary": [
+    "Final parameter/state/evidence accuracy, necessary and unnecessary requests, response recovery, unresolved parameters and false handoffs on every registered financial condition.",
+    "All 33 rolling forecast origins for horizons 1 and 7; both aggregate and joint daily NLL, complete-period CRPS, interval coverage, identified full coverage bounds and order losses at cost ratios 1/3/9.",
+    "Report value-minus-checklist and value-minus-no_value with exactly matched constructor and GRU weights."
+  ],
+  "interpretation": [
+    "This project has not used these source histories for fitting or model selection; the source publisher calls them Train. Preserve both identities.",
+    "Remaining greedy matches are a selected part of the source catalog, not a random sample of all retailer business.",
+    "Five disjoint weeks per source and seven generated conditions are repeated measurements; financial conditions do not add independent demand observations.",
+    "Complete-period selection and unknown latent demand restrict calibration claims; missing outcomes are not zero losses.",
+    "The existing generated Test threshold 240.35 has a different loss definition and is not applied to this retail cohort.",
+    "The selected model stays fixed throughout. Report all results, including unfavorable outcomes; do not tune or replace it using this evaluation."
+  ]
+}

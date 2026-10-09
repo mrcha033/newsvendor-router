@@ -18,7 +18,9 @@
 
 행동 가치 head는 같은 구성기에서 단순 질문 정책 및 가치 학습을 제거한 `no_value`와 비교합니다. 판매 이력에 연결한 통제 Dev에서는 경제 가치 학습의 추가 이점이 확인되지 않았습니다. 범용 업무 절차·도구 후보 재평가·ABCD controller는 주 경로에 포함하지 않습니다.
 
-최신 Dev 선택 모델은 문서·행동 가중치를 고정하고 **수요 GRU만 교체**했습니다. Train 출처 안에서 모수 학습 횟수를 선택한 뒤 세 seed를 비교했고, 사전 후보 seed 42가 채택 기준을 통과했습니다. 같은 통제 Dev의 평균 총손실은 **44.3274 → 24.3925**, 최종 모수·근거 정확도는 100%, 불필요한 질문·잘못된 발주 진행은 0건입니다. `no_value`·고정 질문도 24.3925로 같아 가치 head의 추가 이점은 없습니다. 정확한 총손실은 고유 기간 **5개 × 7개 조건**에 한정하며, 새 모델의 Test는 실행하지 않았습니다. [수요 학습 수정과 세 seed 결과](docs/demand-selection.md) · [동일 구성기의 실제 발주 비교](docs/evidence/research-forecast-results.json)
+최신 Dev 선택 모델은 문서·행동 가중치를 고정하고 **수요 GRU만 교체**했습니다. Train 출처 안에서 모수 학습 횟수를 선택한 뒤 세 seed를 비교했고, 사전 후보 seed 42가 채택 기준을 통과했습니다. 같은 통제 Dev의 평균 총손실은 **44.3274 → 24.3925**, 최종 모수·근거 정확도는 100%, 불필요한 질문·잘못된 발주 진행은 0건입니다. `no_value`·고정 질문도 24.3925로 같아 가치 head의 추가 이점은 없습니다. 정확한 총손실은 고유 기간 **5개 × 7개 조건**에 한정하며 Test로 선택하지 않았습니다. [수요 학습 수정과 세 seed 결과](docs/demand-selection.md) · [동일 구성기의 실제 발주 비교](docs/evidence/research-forecast-results.json)
+
+이후 모델을 고정하고 기존 모든 분할과 매장·상품이 겹치지 않는 **새 출처 27개**에서 별도로 평가했습니다. 같은 새 자료의 정확한 총손실은 이전 GRU **83.1514**, 새 GRU **69.0309**였습니다. 완전 관측 30개 기간·16개 출처에서의 차이 95% 구간은 **[−31.60, +3.54]**로, 평균 감소만으로 확실한 개선을 단정하지 않습니다. 주간 CRPS·관측 NLL은 개선됐지만 품절 기간 손실 하한은 높아졌고, 모수·근거 100%와 질문·회복은 같았습니다. 이 자료로 재학습하거나 모델을 교체하지 않았습니다. [새 출처 검증·전체 결과·공개 자료 재현](docs/retail-holdout.md)
 
 동일 head·자료·학습 횟수를 사용한 L40S base/large 비교는 종료됐습니다. 전체 크기는 151.85M/397.68M이며, 통제 Dev의 최종 모수·근거 정확도는 모두 100%, 완전 관측 기간의 평균 총손실은 모두 44.3274였습니다. 불필요한 질문은 base 3건, large 0건이었습니다. 정확한 손실은 **5개 고유 판매 기간 × 7개 통제 조건**에 한정하며, 문서와 매니저 응답의 통제 생성 조건을 실제 조직 효과로 해석하지 않습니다. 공개 문서 숫자 추출과 수요분포 품질에는 개선이 남아 있습니다. [비교 요약·원시 파일 hash와 지연·메모리](docs/evidence/research-paired-results.json)
 
@@ -81,6 +83,7 @@ uv run --no-project scripts/run_research.py \
 | 원래 통제 시나리오 | [생성 설정](configs/full.json)과 [생성 코드](src/newsvendor/corpus.py); 600건, 출처 family 120개 |
 | 선택한 ModernBERT 통합 모델 | 학습·추론 코드, 설정, 부모·선택 checkpoint hash 제공. 전체 checkpoint는 아직 공개되지 않음 |
 | 선택한 수요 GRU와 반복 실험 | [세 seed의 실제 가중치·모든 내부 검증 손실·Dev 예측](docs/evidence/research-selection-results.json)을 압축 artifact로 제공 |
+| 새 출처 27개의 고정 평가 | [입력·분리된 결과 주석·모든 예측과 순차 경로](docs/evidence/research-retail-holdout-results.json) 공개. 전체 ModernBERT 없이 작은 GRU의 예측을 [L40S에서 정확히 재현](docs/retail-holdout.md#공개-artifact만으로-수요-예측-재계산)했으며 CPU 수치 차이도 기록 |
 | 확장 문서·판매 자료 | [문서 확장 기록](docs/evidence/research-document-expansion.json), [판매 확장 기록](docs/evidence/research-retail-expansion.json), [분할 검사](docs/evidence/research-expansion-audit.json). 기본 snapshot에는 미포함 |
 | 실험 요약과 검증 | [연구 범위](docs/research-scope.md), [추적되는 evidence JSON](docs/evidence/). JSON 안의 `results/` 경로는 로컬 원시 파일의 위치와 hash이며 다운로드 링크가 아님 |
 | 과거 native-v3 | [CPU 가중치와 원시 결과](models/native/), [이전 실행 안내](docs/native-history.md). 현재 ModernBERT의 가중치가 아님 |
