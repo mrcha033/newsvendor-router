@@ -137,7 +137,7 @@ def copy_memory(value, record):
 
 
 def copy_responses(value, record):
-    """Copy a received typed reply only when its current source agrees in value and scope."""
+    """Carry observed reply values and unavailable/partial states, preserving source scope."""
     latest = {}
     for index, event in enumerate(value["history"]):
         if (
@@ -184,6 +184,54 @@ def copy_responses(value, record):
             "evidence": locations,
         }
     record["copiedResponses"] = copied
+    statuses = {}
+    latest_events = {
+        event["action"]: (index, event)
+        for index, event in enumerate(value["history"])
+        if event["action"] in SLOTS
+    }
+    rejected = {}
+    for slot in SLOTS:
+        failed = any(
+            event["action"] == slot and event["answer"] in (None, "no_response", "partial")
+            for event in value["history"]
+        )
+        if record["state"].get(slot) == "unavailable" and not failed:
+            # Unavailable records an observed request outcome, not a prediction
+            # that a manager would fail to answer a future question.
+            record["state"][slot] = "unconfirmed"
+            rejected[slot] = "no-observed-failed-reply"
+    for slot, (index, event) in latest_events.items():
+        if event["answer"] not in (None, "no_response", "partial"):
+            continue
+        if slot in record["values"] or record["state"].get(slot) == "conflict":
+            continue
+        # A missing reply cannot invalidate complete evidence or resolve a conflict.
+        # No value is filled from these candidates; they only prevent a false downgrade.
+        if current_candidates(value, slot):
+            continue
+        partial = [
+            doc
+            for doc in value["docs"]
+            if not doc.get("complete", True)
+            and doc["sku"] == value["task"]["sku"]
+            and doc["period"] == value["task"]["period"]
+            and matches(doc, slot)
+        ]
+        if not partial and (
+            event["answer"] == "partial" or record["state"].get(slot) == "candidate"
+        ):
+            continue
+        status = "candidate" if partial else "unavailable"
+        record["state"][slot] = status
+        statuses[slot] = {
+            "state": status,
+            "historyIndex": index,
+            "responseHash": digest(event),
+            "partialSources": {doc["id"]: digest(doc) for doc in partial},
+        }
+    record["responseStates"] = statuses
+    record["rejectedStates"] = rejected
 
 
 def resolved_fields(record, forecast):
@@ -226,6 +274,13 @@ def resolved_fields(record, forecast):
                 if slot == "b" and field["type"] != "preference"
                 else current["state"],
             )
+            if slot in record.get("responseStates", {}):
+                current["responseState"] = copy.deepcopy(record["responseStates"][slot])
+                current["reason"] = (
+                    "partial_response" if current["state"] == "candidate" else "no_response"
+                )
+            elif slot in record.get("rejectedStates", {}):
+                current["reason"] = record["rejectedStates"][slot]
         fields.append(current)
     fields.append(
         {

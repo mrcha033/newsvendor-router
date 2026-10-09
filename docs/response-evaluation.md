@@ -34,6 +34,8 @@
 
 ## 공개 가중치로 재현
 
+이 절의 수치는 상태 처리 수정 전 커밋 [`a6f251a`](https://github.com/mrcha033/newsvendor-router/commit/a6f251afbd4b493f306199ef76726c8ebc914301)에서 재현한다. 별도 checkout을 그 커밋으로 맞추면 기록된 소스 해시와 일치한다. 이후 관측 응답을 반영하는 상태 처리 수정은 [후속 비교](response-state.md)에 구분해 기록한다.
+
 먼저 [선택 모델 다운로드 안내](model-bundle.md)에 따라 `research-forecast-v1` 묶음을 받는다. 아래 기록에는 원래 관측 입력과 별도 채점 환경, 모든 조합의 측정값, 약 269 KB의 `no_value` head 가중치가 있다. `no_value`는 공개된 전체 모델의 행동 head만 바꿔 복원하며, 전체 tensor hash가 원래 checkpoint와 같은지 검사한다. 원래 무시된 학습 자료나 로컬 checkpoint는 필요하지 않다.
 
 ```bash

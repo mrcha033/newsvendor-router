@@ -22,8 +22,8 @@ from newsvendor.structured_tool_eval import weights_hash
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--bundle", required=True)
-    parser.add_argument("--evidence", default="docs/evidence/research-paired-response-results.json")
-    parser.add_argument("--data", default="results/l40s-response-eval-v1")
+    parser.add_argument("--evidence", default="docs/evidence/research-response-state-results.json")
+    parser.add_argument("--data", default="results/l40s-response-state-retail-v1")
     parser.add_argument("--output", required=True)
     parser.add_argument(
         "--smoke",
@@ -47,7 +47,7 @@ def main():
     members = {
         Path(k).name: v
         for k, v in evidence["artifact"]["files"].items()
-        if k.startswith("results/l40s-response-eval-v1/")
+        if k.startswith(evidence.get("dataPrefix", "results/l40s-response-eval-v1") + "/")
         and Path(k).name
         in {
             "inputs.jsonl",

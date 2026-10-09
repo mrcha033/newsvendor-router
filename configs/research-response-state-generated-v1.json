@@ -1,0 +1,20 @@
+{
+  "split": "dev",
+  "trainingAllowed": false,
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "output": "/dev/shm/newsvendor-response-state-generated-v1",
+  "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "baseWeightsHash": "736836c735ab9e61662ea14371b699139bd60f00d80a7fdfd40e6b7139b6137e",
+  "beforeSource": "results/research-checks/response-state/before-structured_forecast.py",
+  "policyDelta": "results/research-checks/response-eval/policy-heads.pt",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "files": {
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "results/research-checks/response-state/before-structured_forecast.py": "9e0ccb2b90eba893a44d5d676fec5ef2240493e9a2695b50f2284f155e15b631",
+    "results/research-checks/response-eval/policy-heads.pt": "fae497955522cc73da51c2ac45579e939f45c2ff277eefa22d39caa22d6dda3b",
+    "results/research-checks/response-state/generated.py": "f901f76421d494ad12fc745ec8a93567cc0a4930f5d2ed8c1c015a95590fd7d4",
+    "results/l40s-parameter-state-dev-v1/parent-generated-learned.jsonl": "54982b426509a1eeeda0773d52c03311183b94d408d963b1b9de344d565b82da"
+  },
+  "historicalGeneratedValue": 147.6812873023908,
+  "acceptance": "On original generated Dev, do not increase actual total loss, invalid handoffs, or financial value/evidence/type errors; improve or preserve resolved state accuracy. Every raw head prediction remains traceable. Only then run the full fixed retail response-condition comparison; no new Test or frozen 27-source inference. Three fixed policies are all reported; no weight selection or changes."
+}
