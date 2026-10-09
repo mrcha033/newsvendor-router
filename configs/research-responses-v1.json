@@ -1,0 +1,47 @@
+{
+  "split": "dev",
+  "trainingAllowed": false,
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "dataset": "data/processed/core-retail-train-v1",
+  "dataManifestHash": "1946b854f7aa34b3e0c0309cba0c66022e3c70160e12d7334e02ecca958f6641",
+  "dataSeed": 53,
+  "cutoffStride": 7,
+  "noiseLevels": [
+    0,
+    0.1,
+    0.2
+  ],
+  "responseModel": "Independent Bernoulli missingness per c/p/v/b request channel. Enumerate all 16 patterns with common outcomes across policies; do not reveal availability until the relevant request. No parameter selection, no Test or frozen 27-source holdout inference.",
+  "output": "/dev/shm/newsvendor-response-eval-v1",
+  "sourceHash": "8f2f0cf16c46cfe8ace8d6e90f153bb90f7a2425e8d3b80680839fb6ed4a0127",
+  "scriptHash": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+  "models": {
+    "value": {
+      "path": "results/l40s-research-forecast-v1/base/42/model.pt",
+      "sha256": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a"
+    },
+    "no_value": {
+      "path": "results/l40s-research-forecast-v1/no_value/42/model.pt",
+      "sha256": "a2dc2598415b4d1cdfb884caecc77f626b91cd804d0b19f87e4d174ad7ec4f4f"
+    }
+  },
+  "references": {
+    "value": {
+      "path": "results/l40s-research-forecast-v1/candidate-value.jsonl",
+      "sha256": "913244506b2f124ae94940ae31c392bb3f301675a373fcd76b9713ba6a1237ac"
+    },
+    "no_value": {
+      "path": "results/l40s-research-forecast-v1/candidate-no-value.jsonl",
+      "sha256": "6cd40f894ef35de69da113bc09ac5aa508a2d19b7d804a9173118469d9757ec0"
+    },
+    "checklist": {
+      "path": "results/l40s-research-forecast-v1/candidate-checklist.jsonl",
+      "sha256": "c7e9647ec3d234bcfd98f4d441d2c4f959e2e19b520bccfe4df212acb939256c"
+    }
+  },
+  "inputs": {
+    "path": "results/l40s-research-forecast-v1/inputs.jsonl",
+    "sha256": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9"
+  },
+  "interpretation": "Descriptive Dev sensitivity with fixed checkpoints. This finite expectation removes response-draw variation; it does not add independent retail observations or establish real manager behavior. Preserve original order-dependent historical results separately."
+}

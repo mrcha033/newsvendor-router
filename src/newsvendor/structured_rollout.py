@@ -274,7 +274,17 @@ def behavior(value, state, router=None):
     )
 
 
-def rollout(episode, router, *, value=None, first=None, explore=False, noise=0, response_seed=None):
+def rollout(
+    episode,
+    router,
+    *,
+    value=None,
+    first=None,
+    explore=False,
+    noise=0,
+    response_seed=None,
+    missing_responses=None,
+):
     require(
         response_seed is None or episode["split"] == "train",
         "Response resampling accepts Train only",
@@ -282,6 +292,15 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0, 
     started = time.perf_counter()
     current = copy.deepcopy(episode["input"] if value is None else value)
     linked = "forecast" in current["task"]
+    if missing_responses is not None:
+        require(
+            linked and episode["split"] == "dev", "Fixed response conditions accept retail Dev only"
+        )
+        require(
+            isinstance(missing_responses, (set, frozenset)) and missing_responses <= set(SLOTS),
+            "Fixed response conditions must name financial request channels",
+        )
+        require(noise == 0 and response_seed is None, "Do not combine fixed and random responses")
     if linked:
         from . import structured_retail
 
@@ -327,7 +346,13 @@ def rollout(episode, router, *, value=None, first=None, explore=False, noise=0, 
         cost += current["task"]["costs"][action]
         respond = structured_retail.response if linked else response
         options = {} if response_seed is None else {"seed": response_seed}
-        observed = respond(episode, current, action, noise, **options)
+        # Evaluation conditions stay outside model inputs. A channel has the same
+        # availability for every policy, regardless of earlier questions.
+        observed = (
+            None
+            if missing_responses is not None and action in missing_responses
+            else respond(episode, current, action, noise, **options)
+        )
         event["observedResponse"] = observed
         current = outcome(current, action, observed)
     if linked:

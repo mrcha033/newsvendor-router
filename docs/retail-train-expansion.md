@@ -107,3 +107,11 @@ PYTHONPATH=src .venv/bin/python scripts/compare_observations.py \
   --study results/l40s-demand-linked-v1 \
   --output results/l40s-demand-linked-v1/recomputed-comparison.json
 ```
+
+## 후속 Train 진단: 출처별 학습 비중
+
+추가 이력이 붙은 257개 출처의 관측 행 비중은 약 **47.97% → 73.01%**로 늘었다. 전체 출처 수는 같지만 학습 기울기에 기여하는 비중은 달라진다. 다만 원래 Train 관측의 cross-fit 점수를 대조하면 Dev에서 본 품절 날짜 악화가 그대로 반복되지는 않았다. 비중 변화가 Dev 악화의 원인이라고 확정하지 않았다.
+
+모수 학습에서 각 출처의 총 가중치를 같게 맞추는 후보를 먼저 Train 내부에서만 시험했다. 같은 초기값·미니배치 순서·20회 학습, 같은 학습 출처 430개·제외 출처 107개를 썼다. 비교군에도 같은 출처 가중 검증 기준을 적용해 가장 좋은 epoch를 다시 골랐다. 후보는 4회째 **−0.69594**, 기존 방식은 6회째 **−0.70895**로, 낮을수록 좋은 평균 관측 손실이 개선되지 않았다. L40S 모수 학습과 내부 검증은 122.51초였다.
+
+사전 규칙에 따라 새 Dev 비교로 확대하지 않았다. 실패한 선택지를 주 학습 코드에 남기지 않고 실험 코드·테스트·가중치·모든 epoch의 원시 손실을 보존했다. Test와 별도 27개 출처는 평가하지 않았으며 선택 모델도 유지한다. 이 단일 초기값의 Train 진단은 출처 가중의 일반적인 무효를 입증하지 않는다. [판정·원시 기록 해시](evidence/research-demand-weight-results.json) · [실행한 소스와 원시 측정 전체](evidence/artifacts/demand-weight-pilot-v1.tar.xz)
