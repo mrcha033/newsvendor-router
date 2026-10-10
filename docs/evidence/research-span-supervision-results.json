@@ -1,0 +1,2653 @@
+{
+  "scope": "Whole-answer Train span supervision fix and a paired frozen-encoder pointer study; no current accuracy improvement or new selected model is claimed.",
+  "testUsed": false,
+  "devUsed": false,
+  "newSourceHoldoutUsed": false,
+  "weightsAdopted": false,
+  "retainedModel": "recovery-v1",
+  "retainedWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "source": {
+    "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+    "sources": {
+      "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+      "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+      "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+      "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+      "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+      "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+      "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+      "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+      "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+      "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+      "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+      "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+      "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+      "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+      "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+      "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+      "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+      "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+      "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+      "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+      "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+      "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+      "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+      "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+      "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+      "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+      "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+      "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+      "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+      "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+      "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+      "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+      "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+      "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+      "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+      "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+      "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+      "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+      "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+      "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+      "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+      "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+      "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+      "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+      "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+      "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+      "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+      "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+      "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+      "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+      "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+      "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+      "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+      "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+      "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+      "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+    },
+    "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.18.0",
+      "numpy": "2.5.3"
+    },
+    "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+    "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+    "timestamp": "2026-10-10T02:15:26.967277+00:00"
+  },
+  "diagnosis": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cu130",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:07:18.176573+00:00"
+    },
+    "pools": {
+      "original": {
+        "cases": 144,
+        "families": 36,
+        "counts": {
+          "type:span": 64,
+          "correct:span": 54,
+          "rounded:span": 54,
+          "predictedMode:span": 85,
+          "supervisedModeInitially": 115,
+          "supervisedModeAfterFullView": 115,
+          "goldOnlyAfterRetrieval": 0,
+          "initiallyNeedsRetrieval": 0,
+          "error:wrong_value": 65,
+          "type:arithmetic": 61,
+          "correct:arithmetic": 25,
+          "rounded:arithmetic": 41,
+          "predictedMode:compute": 59,
+          "type:multi-span": 17,
+          "correct:multi-span": 0,
+          "rounded:multi-span": 0,
+          "type:count": 2,
+          "correct:count": 0,
+          "rounded:count": 0
+        },
+        "conditional": {
+          "modeCorrect": {
+            "correct": 114,
+            "count": 115
+          },
+          "spanPointerCorrect": {
+            "correct": 51,
+            "count": 64
+          },
+          "relationCorrect": {
+            "correct": 48,
+            "count": 51
+          },
+          "operand1Correct": {
+            "correct": 47,
+            "count": 51
+          },
+          "operand1Top5": {
+            "correct": 51,
+            "count": 51
+          },
+          "operand2Correct": {
+            "correct": 47,
+            "count": 51
+          },
+          "operand2Top5": {
+            "correct": 51,
+            "count": 51
+          }
+        }
+      },
+      "expanded": {
+        "cases": 512,
+        "families": 467,
+        "counts": {
+          "type:arithmetic": 204,
+          "correct:arithmetic": 88,
+          "rounded:arithmetic": 131,
+          "predictedMode:compute": 211,
+          "supervisedModeInitially": 382,
+          "supervisedModeAfterFullView": 382,
+          "goldOnlyAfterRetrieval": 0,
+          "initiallyNeedsRetrieval": 0,
+          "type:multi-span": 76,
+          "correct:multi-span": 0,
+          "rounded:multi-span": 0,
+          "predictedMode:span": 301,
+          "error:wrong_value": 261,
+          "type:count": 13,
+          "correct:count": 0,
+          "rounded:count": 0,
+          "type:span": 219,
+          "correct:span": 163,
+          "rounded:span": 163
+        },
+        "conditional": {
+          "modeCorrect": {
+            "correct": 370,
+            "count": 382
+          },
+          "relationCorrect": {
+            "correct": 158,
+            "count": 163
+          },
+          "operand1Correct": {
+            "correct": 141,
+            "count": 163
+          },
+          "operand1Top5": {
+            "correct": 162,
+            "count": 163
+          },
+          "operand2Correct": {
+            "correct": 140,
+            "count": 163
+          },
+          "operand2Top5": {
+            "correct": 162,
+            "count": 163
+          },
+          "spanPointerCorrect": {
+            "correct": 159,
+            "count": 219
+          }
+        }
+      }
+    },
+    "seconds": 25.777294142055325,
+    "weightsUnchanged": true,
+    "rawHashes": {
+      "original.jsonl": "a422e1a7dc28ba33778e94bafc9b312c1f3b17774ff44958e2f8edd8d36f6542",
+      "expanded.jsonl": "a40e8e9359b3f6116763b8ce68a4fe3212f1c134b918fb1b93c7fae058c4ce8a"
+    }
+  },
+  "top5Audit": {
+    "testUsed": false,
+    "devUsed": false,
+    "pools": {
+      "original": {
+        "operand1Cases": 51,
+        "operand1ActualTop5": 51,
+        "operand2Cases": 51,
+        "operand2ActualTop5": 51
+      },
+      "expanded": {
+        "operand1Cases": 163,
+        "operand1ActualTop5": 162,
+        "operand2Cases": 163,
+        "operand2ActualTop5": 162
+      }
+    },
+    "definition": "Membership in the actual saved topk indices, resolving any ties by the executed topk result; optimistic strict-score rank is not used."
+  },
+  "targetAudit": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:15:21.591893+00:00"
+    },
+    "registrationHash": "32bc247edf0daab656f82aaece28cf69ac2282cd8886131d21d8758b87a4e5e7",
+    "testUsed": false,
+    "devUsed": false,
+    "newSourceHoldoutUsed": false,
+    "counts": {
+      "allAnnotations": 13095,
+      "type:span": 5678,
+      "oldSpanTargets": 7887,
+      "newSpanTargets": 7499,
+      "oldSupportedCases": 5677,
+      "newSupportedCases": 5630,
+      "type:arithmetic": 5492,
+      "type:multi-span": 1624,
+      "type:count": 301,
+      "affectedCases": 128,
+      "removedSpanTargets": 388,
+      "nowMaskedCases": 47
+    },
+    "families": 2177,
+    "affectedFamilies": 117,
+    "seconds": 18.53996008390095,
+    "rawHash": "ce8b8d65fd6ed08205257a18ced8bccf04a963fe943298c26918f0895bb38fb6"
+  },
+  "preliminaryTargetAudit": {
+    "scope": "Rejected strict punctuation-matching diagnostic, not the adopted adapter and never used in model fitting. Preserved with its exact source and raw records.",
+    "report": {
+      "source": {
+        "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "sourceHash": "034d60a7853319887f9bc611119dab9553bd805f127253411f745e1d0ba530b5",
+        "sources": {
+          "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+          "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+          "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+          "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+          "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+          "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+          "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+          "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+          "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+          "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+          "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+          "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+          "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+          "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+          "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+          "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+          "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+          "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+          "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+          "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+          "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+          "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+          "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+          "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+          "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+          "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+          "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+          "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+          "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+          "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+          "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+          "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+          "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+          "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+          "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+          "src/newsvendor/structured_labels.py": "8b1cd693ca3f8ddcc9515d3621bdeb1ddcd3f1c0cf9dcaccadf6dc49a42d6e50",
+          "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+          "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+          "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+          "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+          "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+          "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+          "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+          "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+          "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+          "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+          "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+          "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+          "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+          "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+          "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+          "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+          "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+          "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+          "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+          "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+        },
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "packages": {
+          "torch": "2.14.1+cpu",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+        "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+        "timestamp": "2026-10-10T02:12:23.531660+00:00"
+      },
+      "registrationHash": "5b744b2bcb7c041612a5e61823fb28b4f435f024a0c658df7973b69d5d5f0c75",
+      "testUsed": false,
+      "devUsed": false,
+      "newSourceHoldoutUsed": false,
+      "counts": {
+        "allAnnotations": 13095,
+        "type:span": 5678,
+        "oldSpanTargets": 7887,
+        "newSpanTargets": 7441,
+        "oldSupportedCases": 5677,
+        "newSupportedCases": 5579,
+        "type:arithmetic": 5492,
+        "type:multi-span": 1624,
+        "type:count": 301,
+        "affectedCases": 182,
+        "removedSpanTargets": 446,
+        "nowMaskedCases": 98
+      },
+      "families": 2177,
+      "affectedFamilies": 164,
+      "seconds": 18.016620995942503,
+      "rawHash": "d5253e09c271c53939f571ec640636c4f80905ad40e239af1252399755924ec4"
+    }
+  },
+  "study": {
+    "testUsed": false,
+    "devUsed": false,
+    "newSourceHoldoutUsed": false,
+    "scope": "Only two span pointers are fitted. Parent encoder/fusion/other heads are frozen. Internal Train families may have been seen by the parent: this is a head-selection split, not independent generalization evidence. Original scalar answer scoring is unchanged.",
+    "initialHash": "768cdac2bf3226a03b76dbbf0bd2bc1ed47760b84c0142bd3ccdc9b283d41a3e",
+    "fitCases": 4515,
+    "heldCases": 1163,
+    "conditions": {
+      "legacy-42": {
+        "selectedEpoch": 3,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 872.0,
+          "pointerExact": 854,
+          "correctedNll": 1.0410718861983341
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.1662759736809931,
+            "cases": 1163,
+            "answerExact": 864.0,
+            "pointerExact": 845,
+            "correctedNll": 1.0637853990212045
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.0997467851135092,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 849,
+            "correctedNll": 1.0439766496804288
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.0684138570033328,
+            "cases": 1163,
+            "answerExact": 872.0,
+            "pointerExact": 854,
+            "correctedNll": 1.0410718861983341
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0442959502549238,
+            "cases": 1163,
+            "answerExact": 871.0,
+            "pointerExact": 851,
+            "correctedNll": 1.0399208708457257
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.019701982467947,
+            "cases": 1163,
+            "answerExact": 866.0,
+            "pointerExact": 847,
+            "correctedNll": 1.0395929193250701
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.0007865993489682,
+            "cases": 1163,
+            "answerExact": 866.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0388930424061298
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 0.9889563790089647,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 851,
+            "correctedNll": 1.0344248399689397
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9774853433941452,
+            "cases": 1163,
+            "answerExact": 867.0,
+            "pointerExact": 850,
+            "correctedNll": 1.0391031573890923
+          }
+        ],
+        "weightsHash": "721984c0f7d714247fdb7c8aaf276767f35c316c1080d4fd6a8b4edd1f11bf7e"
+      },
+      "corrected-42": {
+        "selectedEpoch": 2,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 871.0,
+          "pointerExact": 852,
+          "correctedNll": 1.0447753882059636
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.1682386584579945,
+            "cases": 1163,
+            "answerExact": 865.0,
+            "pointerExact": 846,
+            "correctedNll": 1.0662666937962546
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.1024385401060883,
+            "cases": 1163,
+            "answerExact": 871.0,
+            "pointerExact": 852,
+            "correctedNll": 1.0447753882059636
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.0720955360103661,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 851,
+            "correctedNll": 1.042805876694972
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0485189208682155,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0403249452366259
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.0238184007540556,
+            "cases": 1163,
+            "answerExact": 866.0,
+            "pointerExact": 847,
+            "correctedNll": 1.0389163445421876
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.0045753427794282,
+            "cases": 1163,
+            "answerExact": 864.0,
+            "pointerExact": 846,
+            "correctedNll": 1.0396743964656918
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 0.9928608545115296,
+            "cases": 1163,
+            "answerExact": 867.0,
+            "pointerExact": 851,
+            "correctedNll": 1.034852859539301
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9822171284279353,
+            "cases": 1163,
+            "answerExact": 865.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0400458713184628
+          }
+        ],
+        "weightsHash": "2ca94a8e2770c05f911b40be264d9c5cbf2300c7931ea75dcc29a76fa2476afe"
+      },
+      "legacy-43": {
+        "selectedEpoch": 4,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 870.0,
+          "pointerExact": 848,
+          "correctedNll": 1.0391274695753128
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.19223331859414,
+            "cases": 1163,
+            "answerExact": 862.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0610146177091788
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.1207868398075373,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 852,
+            "correctedNll": 1.0489976494761244
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.0656387646433334,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 853,
+            "correctedNll": 1.039722485575098
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0472930934227689,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0391274695753128
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.0174354089187905,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 852,
+            "correctedNll": 1.0366333336637437
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.003574769261857,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 849,
+            "correctedNll": 1.0377246867657117
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 0.9919687834843783,
+            "cases": 1163,
+            "answerExact": 866.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0381246149181191
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9786636015059242,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 848,
+            "correctedNll": 1.034958194528073
+          }
+        ],
+        "weightsHash": "8c2ab01f4f3baa70ad1733a73d36ebcb53ab8befd696d14c6d9d6edbf195b188"
+      },
+      "corrected-43": {
+        "selectedEpoch": 5,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 869.0,
+          "pointerExact": 852,
+          "correctedNll": 1.0363175541495622
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.1930008685924638,
+            "cases": 1163,
+            "answerExact": 862.0,
+            "pointerExact": 848,
+            "correctedNll": 1.062418595789223
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.1239483205365464,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 852,
+            "correctedNll": 1.05032712846405
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.0695253570734615,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 850,
+            "correctedNll": 1.0430548433486695
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0519825620970256,
+            "cases": 1163,
+            "answerExact": 865.0,
+            "pointerExact": 845,
+            "correctedNll": 1.041614978916155
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.0217627370336526,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 852,
+            "correctedNll": 1.0363175541495622
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.007470697794162,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 850,
+            "correctedNll": 1.0359692622235595
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 0.995725650182912,
+            "cases": 1163,
+            "answerExact": 864.0,
+            "pointerExact": 849,
+            "correctedNll": 1.0383898564586327
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9833647436659101,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 849,
+            "correctedNll": 1.0357426835971972
+          }
+        ],
+        "weightsHash": "8cc9814b0b1acaf09dc6f1ba4eac819982bc9900f709f28c438b703b824f8551"
+      },
+      "legacy-44": {
+        "selectedEpoch": 7,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 871.0,
+          "pointerExact": 854,
+          "correctedNll": 1.0379509546074084
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.1701890309931526,
+            "cases": 1163,
+            "answerExact": 861.0,
+            "pointerExact": 846,
+            "correctedNll": 1.06531108911962
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.1082195320599515,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 850,
+            "correctedNll": 1.0481136903512713
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.0673269495158129,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 854,
+            "correctedNll": 1.0413865928289097
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0438589439005919,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 852,
+            "correctedNll": 1.0352147889875278
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.0299211144447327,
+            "cases": 1163,
+            "answerExact": 866.0,
+            "pointerExact": 851,
+            "correctedNll": 1.033899117828133
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.0076611046220216,
+            "cases": 1163,
+            "answerExact": 867.0,
+            "pointerExact": 851,
+            "correctedNll": 1.0346087655012504
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 0.9988422154540747,
+            "cases": 1163,
+            "answerExact": 871.0,
+            "pointerExact": 854,
+            "correctedNll": 1.0379509546074084
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9786859110627376,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 854,
+            "correctedNll": 1.0365322441349538
+          }
+        ],
+        "weightsHash": "b70d80b937317e2e3f66196f94cb13816d6ef12f85d8f3d79d555fe96f41c99b"
+      },
+      "corrected-44": {
+        "selectedEpoch": 8,
+        "selected": {
+          "cases": 1163,
+          "answerExact": 870.0,
+          "pointerExact": 853,
+          "correctedNll": 1.035928893120045
+        },
+        "history": [
+          {
+            "epoch": 1,
+            "fitLoss": 1.1719332475897293,
+            "cases": 1163,
+            "answerExact": 863.0,
+            "pointerExact": 847,
+            "correctedNll": 1.0674111606330576
+          },
+          {
+            "epoch": 2,
+            "fitLoss": 1.1123803018684117,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0490968996148016
+          },
+          {
+            "epoch": 3,
+            "fitLoss": 1.071467446189531,
+            "cases": 1163,
+            "answerExact": 865.0,
+            "pointerExact": 850,
+            "correctedNll": 1.0412992043732983
+          },
+          {
+            "epoch": 4,
+            "fitLoss": 1.0477583416750733,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 848,
+            "correctedNll": 1.0375633481137216
+          },
+          {
+            "epoch": 5,
+            "fitLoss": 1.0346308218341478,
+            "cases": 1163,
+            "answerExact": 868.0,
+            "pointerExact": 854,
+            "correctedNll": 1.0333607382848153
+          },
+          {
+            "epoch": 6,
+            "fitLoss": 1.0118673118487211,
+            "cases": 1163,
+            "answerExact": 867.0,
+            "pointerExact": 851,
+            "correctedNll": 1.0361594333283777
+          },
+          {
+            "epoch": 7,
+            "fitLoss": 1.0021299690427914,
+            "cases": 1163,
+            "answerExact": 869.0,
+            "pointerExact": 854,
+            "correctedNll": 1.037385782289382
+          },
+          {
+            "epoch": 8,
+            "fitLoss": 0.9823141482094644,
+            "cases": 1163,
+            "answerExact": 870.0,
+            "pointerExact": 853,
+            "correctedNll": 1.035928893120045
+          }
+        ],
+        "weightsHash": "03c49037a325619719d3e7fc97d4a1c3a4159fa38df1828b857e957198aecaaa"
+      }
+    },
+    "initial": {
+      "cases": 1163,
+      "answerExact": 850.0,
+      "pointerExact": 826,
+      "correctedNll": 1.1683095368658378
+    },
+    "seconds": 213.20806540199555,
+    "rawHashes": {
+      "features.pt": "cd9a4b0ab474270f929fd412e4e46645095fc6d66cc023ffea81b74342f0e481",
+      "targets.jsonl": "16a56f1c13f877fd186fc1195b92f39f983d250d029df176b146f64346a8acc4",
+      "parent-held.jsonl": "17fcd4eb5fda19e738f0b1efca0f7eb3aad8144e7718f09f4e7fdb1095f311d4",
+      "legacy-42.pt": "753727ea77c901b06d187c9daacaf4d74131b91ea7b0fb81ba12ef159320ab28",
+      "legacy-42-held.jsonl": "1ebf00e436ceb50c7eadc119ecb56fd21515fadaff4cf223cf40b0ae1d997b21",
+      "corrected-42.pt": "09f749a1da1a6b6aec2ac9f4199b3d1ac8d7c59623b7aa1e1919f7fc68c96c7e",
+      "corrected-42-held.jsonl": "c22bfe445280a67df20f4ab2f88a37daed2dbf97d5ab05d959b53c7850a93656",
+      "legacy-43.pt": "b11e6477837773385aaf0f7d2bcd591234e7449988b42b52c50ef14139e21737",
+      "legacy-43-held.jsonl": "345c8c701b1fde86d71f4acbcdf8c4bf0c993d51d4765de0434e8945aab341d9",
+      "corrected-43.pt": "95a4ef6abe3d526c35c81eaf071c8a46e8193562bae8759a7fb1804383a9f55a",
+      "corrected-43-held.jsonl": "f78b51aedcee80181e6d7279da1fe2b260b650569a5f3414e44e44536044a20b",
+      "legacy-44.pt": "c7b16bb9c76284e47ccdf0e37e6cc980b1bac85575c4bc5cfb9f44dc2981c322",
+      "legacy-44-held.jsonl": "9ff6f1328b787e905cf44c773eeab900abec15fa7b3eaef3fa4e13bd6fdea161",
+      "corrected-44.pt": "7e678c8c00f79001a740eeb4733268c47d3c7954356f01f1d14056815584d03b",
+      "corrected-44-held.jsonl": "fa8228704e867261e494d209784c994ec2d28927e26f178d92631ceae89231b5"
+    }
+  },
+  "plan": {
+    "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+    "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+    "scriptHash": "48faaacf608816a59aa36fc453a1d76971e0c541b1a46159b02d526b6e7108e9",
+    "files": {
+      "results/l40s-research-recovery-v1/base/42/model.pt": "5776ff708338ec6ffd6cb952d6d763e0b66ad51bfe6aa40678a3fcd560c9484e",
+      "results/research-checks/numeric-grounding/legacy_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+      "data/processed/core-tatqa-train-v1/inputs.jsonl": "4a4f5af43778172537c5e3cb79da409b996c4ca94b4250618c1917128ffba1f4",
+      "data/processed/core-tatqa-train-v1/labels.jsonl": "0b29e0a69cef25560b4078eaffd68249c77babaa433268f2ea832cf889ee3261",
+      "data/processed/core-tatqa-train-v1/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e",
+      "data/processed/core-tatqa-train-v1/manifest.json": "e88820f16f19414e90b1ab790868fcbc25d56c18c8efbd3aeee26bf6edab2345"
+    },
+    "dataset": "data/processed/core-tatqa-train-v1",
+    "parent": "results/l40s-research-recovery-v1/base/42/model.pt",
+    "parentWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+    "legacyLabels": "results/research-checks/numeric-grounding/legacy_labels.py",
+    "output": "/dev/shm/newsvendor-span-supervision-v1",
+    "partitionSeed": 7313,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "epochs": 8,
+    "lr": 0.0001,
+    "batchSize": 32,
+    "cacheBatch": 8,
+    "testUsed": false,
+    "devUsed": false,
+    "scope": "Paired loss-target correction with fixed encoder, fusion, GRU and all other heads. Same initial two span pointers, 8 epochs and exact batches for each of three seeds. Only existing TAT-QA Train span annotations carry pointer loss; full benchmark denominators do not change.",
+    "selection": "Within original Train source families: highest held scalar answerExact, then lower corrected span NLL; include untouched parent as epoch 0. The parent saw these Train families before, so this is not independent-source generalization.",
+    "nextGate": "Require every corrected seed to improve the internal Train answer score over parent and be no worse than its matched legacy arm before refitting. Refit for the selected epoch budget using all Train span rows, then actual sequential Train preservation controls before any fixed original Dev comparison. No Test or frozen retail holdout inference.",
+    "adoption": "Fixed primary seed42; original public Dev answer accuracy must improve with other public task scores preserved, controlled parameter/evidence/state/type retained, and generated/retail economic losses no worse. No adoption on cached Train scores alone."
+  },
+  "decision": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cu130",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:15:26.967277+00:00"
+    },
+    "reportHash": "a5cf7dca99f8f57d146cb4433102828b855604c82e937ec0b69ff53dd625850d",
+    "planHash": "7fb7d07fd7c219be526fb91a6d481246a10f0c3ea1d153b4b04e75f162f2cf3c",
+    "gates": {
+      "42": {
+        "improvesParent": true,
+        "notWorseThanLegacy": false
+      },
+      "43": {
+        "improvesParent": true,
+        "notWorseThanLegacy": false
+      },
+      "44": {
+        "improvesParent": true,
+        "notWorseThanLegacy": false
+      }
+    },
+    "eligibleForRefit": false,
+    "adopted": false,
+    "testUsed": false,
+    "devUsed": false,
+    "newSourceHoldoutUsed": false,
+    "seconds": 213.20806540199555,
+    "decision": "All corrected seeds improve parent after pointer fitting, but each is one answer below the matched old-target arm. The predeclared gate fails: no full-Train refit, Dev selection, or model replacement. The loss-target correctness fix is retained; no accuracy benefit from it is established."
+  },
+  "studyAudit": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cu130",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:15:26.967277+00:00"
+    },
+    "testUsed": false,
+    "devUsed": false,
+    "cases": 5678,
+    "partitions": {
+      "fit": {
+        "cases": 4515,
+        "families": 1642
+      },
+      "held": {
+        "cases": 1163,
+        "families": 422
+      }
+    },
+    "sourceOverlap": 0,
+    "counts": {
+      "oldSpans": 7887,
+      "newSpans": 7499,
+      "changedCases": 128
+    },
+    "matchedOrders": {
+      "42": {
+        "epochs": 8,
+        "annotationsPerEpoch": 4515,
+        "updatesPerEpoch": 142
+      },
+      "43": {
+        "epochs": 8,
+        "annotationsPerEpoch": 4515,
+        "updatesPerEpoch": 142
+      },
+      "44": {
+        "epochs": 8,
+        "annotationsPerEpoch": 4515,
+        "updatesPerEpoch": 142
+      }
+    },
+    "fittedParameters": 131072,
+    "initialParentPointersExact": true,
+    "conditionsAudited": 6,
+    "rawHashesVerified": true,
+    "selectionsVerified": true,
+    "parentAtCacheCreationAnswerExact": 850.0,
+    "parentAtScoringAnswerExact": 850.0,
+    "parentFullPredictionsIdentical": 1163,
+    "note": "Cached pointer computations are an internal head comparison. They do not replace actual sequential inference or a full public benchmark."
+  },
+  "checks": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:16:35.908724+00:00"
+    },
+    "sources": {
+      "complementary": {
+        "cases": 1802,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "native component diagnostics, not an end-to-end order benchmark",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "core-retail-train-v1": {
+        "cases": 2314,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 562,
+            "families": 555,
+            "splits": {
+              "train": 542,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus source-disjoint original Train sales; no latent demand or organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "core-tatqa-train-v1": {
+        "cases": 14753,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 50,
+            "families": 43,
+            "splits": {
+              "train": 30,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 25,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 13191,
+            "families": 2201,
+            "splits": {
+              "train": 13095,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 2177,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Frozen complementary snapshot plus original Train financial-document annotations; no organizational efficacy claim",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "core-retail-holdout-v1": {
+        "cases": 2341,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 589,
+            "families": 582,
+            "splits": {
+              "train": 542,
+              "test": 39,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 37
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Existing inputs unchanged plus frozen unseen-source evaluation; original public Train split reused only for previously unused sources, not model training",
+        "endToEndOrderBenchmarkReady": false
+      },
+      "core-retail-linked-v1": {
+        "cases": 2817,
+        "components": {
+          "abcd": {
+            "cases": 462,
+            "families": 80,
+            "splits": {
+              "dev": 96,
+              "train": 270,
+              "test": 96
+            },
+            "splitFamilies": {
+              "train": 48,
+              "dev": 16,
+              "test": 16
+            }
+          },
+          "contractnli": {
+            "cases": 360,
+            "families": 60,
+            "splits": {
+              "train": 216,
+              "dev": 72,
+              "test": 72
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "cuad": {
+            "cases": 450,
+            "families": 75,
+            "splits": {
+              "train": 270,
+              "test": 90,
+              "dev": 90
+            },
+            "splitFamilies": {
+              "train": 45,
+              "dev": 15,
+              "test": 15
+            }
+          },
+          "orsharc": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          },
+          "retail": {
+            "cases": 1065,
+            "families": 555,
+            "splits": {
+              "train": 1045,
+              "test": 12,
+              "dev": 8
+            },
+            "splitFamilies": {
+              "train": 537,
+              "dev": 8,
+              "test": 10
+            }
+          },
+          "tatqa": {
+            "cases": 240,
+            "families": 60,
+            "splits": {
+              "train": 144,
+              "dev": 48,
+              "test": 48
+            },
+            "splitFamilies": {
+              "train": 36,
+              "dev": 12,
+              "test": 12
+            }
+          }
+        },
+        "sourceOverlaps": 0,
+        "inputOverlaps": 0,
+        "retrievalDocuments": 651,
+        "language": "en",
+        "scope": "Original snapshots unchanged; extra observations within existing Train source families",
+        "endToEndOrderBenchmarkReady": false
+      }
+    },
+    "smoke": {
+      "episodes": 600,
+      "smokeEpisodes": 30,
+      "split": {
+        "counts": {
+          "test": 120,
+          "dev": 60,
+          "cal": 60,
+          "train": 360
+        },
+        "families": 120,
+        "hash": "cb58afb3e3f4072cdff596b846f15225bb1ee64b8752801c4112d75ff38372fe"
+      },
+      "falseHandoffs": 0,
+      "provenance": {
+        "configHash": "3a8b33a26b4354814ec410452af98b0b37197f12dd662205655fac5e77130aa8",
+        "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+        "sources": {
+          "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+          "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+          "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+          "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+          "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+          "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+          "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+          "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+          "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+          "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+          "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+          "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+          "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+          "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+          "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+          "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+          "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+          "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+          "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+          "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+          "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+          "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+          "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+          "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+          "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+          "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+          "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+          "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+          "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+          "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+          "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+          "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+          "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+          "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+          "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+          "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+          "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+          "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+          "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+          "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+          "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+          "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+          "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+          "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+          "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+          "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+          "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+          "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+          "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+          "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+          "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+          "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+          "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+          "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+          "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+          "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+        },
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "packages": {
+          "torch": "2.14.1+cpu",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+        "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+        "timestamp": "2026-10-10T02:16:35.900220+00:00"
+      }
+    }
+  },
+  "tests": {
+    "passed": 343,
+    "logHash": "adab6b7cfcd48e8e743a6feed24552040d6c0b2db133f6dccef9b8ea1c00e0c8"
+  },
+  "pinnedComposition": {
+    "sourceCommit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+    "sourceWorktree": "/dev/shm/newsvendor-span-prior-compose-2b",
+    "manifest": {
+      "schema": "newsvendor-inference-v1",
+      "config": {
+        "encoder": {
+          "retrievalCost": 1.0,
+          "retrievals": 2,
+          "maxLength": 1024,
+          "queryTokens": 128,
+          "overlap": 32,
+          "chunks": 8,
+          "encoderBatch": 16,
+          "retrievalDocuments": 5,
+          "gradientCheckpointing": false,
+          "precision": "bf16",
+          "packedQueries": true,
+          "bucketLengths": true,
+          "checkpointTokenLimit": 55000,
+          "compileLayers": false,
+          "compileLimit": 64,
+          "attention": "sdpa",
+          "padMultiple": 128,
+          "splitLongBatches": true,
+          "packedSources": true,
+          "chunkTokens": 256,
+          "documentTokens": 1024,
+          "historyChunks": 1024,
+          "tableChunks": 4096,
+          "batchFusion": true,
+          "sharedQueries": true,
+          "model": "answerdotai/ModernBERT-base",
+          "revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+          "exactActionCosts": true,
+          "paddingRatio": 1.25,
+          "numericState": true,
+          "actionPrecision": "float32",
+          "recoveryResidual": true
+        },
+        "noValue": false
+      },
+      "source": {
+        "configHash": "c58e01b34c45ee052ed9327b22c4c9ec92b2c99815331334d5af0b59936689cd",
+        "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+        "sources": {
+          "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+          "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+          "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+          "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+          "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+          "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+          "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+          "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+          "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+          "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+          "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+          "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+          "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+          "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+          "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+          "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+          "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+          "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+          "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+          "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+          "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+          "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+          "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+          "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+          "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+          "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+          "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+          "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+          "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+          "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+          "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+          "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+          "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+          "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+          "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+          "src/newsvendor/structured_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+          "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+          "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+          "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+          "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+          "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+          "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+          "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+          "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+          "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+          "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+          "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+          "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+          "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+          "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+          "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+          "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+          "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+          "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+          "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+          "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+        },
+        "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+        "python": "3.12.8",
+        "packages": {
+          "torch": "2.14.1+cpu",
+          "transformers": "5.18.0",
+          "numpy": "2.5.3"
+        },
+        "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+        "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+        "timestamp": "2026-10-10T02:17:14.580114+00:00",
+        "checkpointHash": "62710ab6f1402d70dac594155deabe3b8dee6572bd3291a4fada0899ebd8afcb",
+        "parentWeightsHash": "736836c735ab9e61662ea14371b699139bd60f00d80a7fdfd40e6b7139b6137e",
+        "parentManifestHash": "f0a6507bdfca6928674afea4f91f453b495ccdfbe137bc30ea7fd006052cc978",
+        "studyReportHash": "67d89967c4db1759a95530f753b69eb75ea9653581fd1588dbd1daf6e68c721f",
+        "devReportHash": "e5e1bc1ef40b836dea95aa7f2aa50ecba221eea92f0cfb70d05c38289298d9c3",
+        "selectedEpoch": 40,
+        "selectedSeed": 42,
+        "testUsed": false,
+        "parameters": 151884856,
+        "frozenCoreWeightsHash": "765022f49ca448ba2b9dfd420edcf45a47248b8216264dd7923b7aef55099c5a",
+        "scope": "Fixed recovery-scoped v2/42 on the published forecast-v1 model; controlled Dev selection, no new Test result."
+      },
+      "weightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+      "files": {
+        "encoder/config.json": {
+          "sha256": "e553df31c61de34fe3bfe3b5e90c99ac7093ae9f3393384c5220adb8f15dcc11",
+          "bytes": 1904
+        },
+        "encoder/tokenizer.json": {
+          "sha256": "6c8aaa9a542084f2457eab775d4eeb51f92a70c0fd9de28d5edb0ddec3c08d30",
+          "bytes": 3583228
+        },
+        "encoder/tokenizer_config.json": {
+          "sha256": "ed06f6fa335652e31bdfebcd9dbce04a7ec36d9a1ff3272d6dc705f15ef1cc34",
+          "bytes": 384
+        },
+        "model.pt": {
+          "sha256": "d6815914a80756fe3b7229621ca9b7b04fdbe139e87be9104c1ecb4b90b784f5",
+          "bytes": 607602567
+        }
+      }
+    },
+    "manifestHash": "fe5ed527a0d1365940d570da5956db2f5823f7658601ee458840097b63049c47",
+    "compositionLogHash": "66e3e695fe72dcd82228f97e63af04717e22365c00c9c1f1e5f883f1b979a556",
+    "originalPublicBundle": "/dev/shm/newsvendor-public-download-1654e77/forecast-v1",
+    "sameSelectedTensorHash": true,
+    "testUsed": false,
+    "trainingPerformed": false
+  },
+  "cpuEquivalence": {
+    "source": {
+      "configHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+      "sources": {
+        "src/newsvendor/__init__.py": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc",
+        "src/newsvendor/benchmark.py": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3",
+        "src/newsvendor/bundle.py": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84",
+        "src/newsvendor/cli.py": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6",
+        "src/newsvendor/construction.py": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87",
+        "src/newsvendor/corpus.py": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97",
+        "src/newsvendor/data.py": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f",
+        "src/newsvendor/demand.py": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e",
+        "src/newsvendor/diagnostics.py": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd",
+        "src/newsvendor/encoder.py": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35",
+        "src/newsvendor/evaluation.py": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99",
+        "src/newsvendor/heads.py": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878",
+        "src/newsvendor/io.py": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81",
+        "src/newsvendor/native_benchmark.py": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498",
+        "src/newsvendor/native_inputs.py": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b",
+        "src/newsvendor/native_model.py": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec",
+        "src/newsvendor/numbers.py": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54",
+        "src/newsvendor/observations.py": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085",
+        "src/newsvendor/optimizer.py": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a",
+        "src/newsvendor/order_benchmark.py": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1",
+        "src/newsvendor/orders.py": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a",
+        "src/newsvendor/policy.py": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699",
+        "src/newsvendor/providers.py": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f",
+        "src/newsvendor/raw.py": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5",
+        "src/newsvendor/report.py": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855",
+        "src/newsvendor/retail_expansion.py": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97",
+        "src/newsvendor/sequence.py": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb",
+        "src/newsvendor/snapshot.py": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930",
+        "src/newsvendor/structured_batches.py": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79",
+        "src/newsvendor/structured_compare.py": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3",
+        "src/newsvendor/structured_control.py": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368",
+        "src/newsvendor/structured_critic.py": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8",
+        "src/newsvendor/structured_data.py": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3",
+        "src/newsvendor/structured_forecast.py": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6",
+        "src/newsvendor/structured_inputs.py": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891",
+        "src/newsvendor/structured_labels.py": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2",
+        "src/newsvendor/structured_metrics.py": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446",
+        "src/newsvendor/structured_model.py": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0",
+        "src/newsvendor/structured_orders.py": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913",
+        "src/newsvendor/structured_policy.py": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e",
+        "src/newsvendor/structured_procedures.py": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645",
+        "src/newsvendor/structured_progress.py": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c",
+        "src/newsvendor/structured_recovery.py": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7",
+        "src/newsvendor/structured_retail.py": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16",
+        "src/newsvendor/structured_rollout.py": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b",
+        "src/newsvendor/structured_smoke.py": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043",
+        "src/newsvendor/structured_tool_eval.py": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba",
+        "src/newsvendor/structured_tool_heads.py": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d",
+        "src/newsvendor/structured_tools.py": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec",
+        "src/newsvendor/structured_train.py": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f",
+        "src/newsvendor/structured_value.py": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033",
+        "src/newsvendor/suite.py": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e",
+        "src/newsvendor/suite_score.py": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645",
+        "src/newsvendor/train.py": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322",
+        "src/newsvendor/typed.py": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571",
+        "src/newsvendor/workload.py": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "lockHash": "83a912ce8458cdd948f1b387a443549e9959b671443fb4fadcc460d144138304",
+      "python": "3.12.8",
+      "packages": {
+        "torch": "2.14.1+cpu",
+        "transformers": "5.18.0",
+        "numpy": "2.5.3"
+      },
+      "platform": "Linux-6.8.0-49-generic-x86_64-with-glibc2.39",
+      "commit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+      "timestamp": "2026-10-10T02:22:47.362272+00:00"
+    },
+    "cases": 8,
+    "threads": 4,
+    "oldSourceCommit": "2b0b6506d4dd3b92be76639a63ade29e48caacd7",
+    "oldHash": "b6a0c9610e15ce97e9a2458d98f291b59710576be418fbba9cb6e99a4b9d4781",
+    "newHash": "b6a0c9610e15ce97e9a2458d98f291b59710576be418fbba9cb6e99a4b9d4781",
+    "outputsExact": true,
+    "testUsed": false,
+    "preliminaryHistoricalComparison": {
+      "currentThreads": 8,
+      "historicalThreadsRecorded": false,
+      "fullOutputsExact": false,
+      "differences": [
+        {
+          "path": "/7/prediction/actionValues/3/requestCost",
+          "historical": 4.784815767779946,
+          "current": 4.784815236926079,
+          "absoluteDifference": 5.308538675308228e-07
+        }
+      ],
+      "decisionsAndParametersEqual": true,
+      "response": "Preserved preliminary mismatch; repeated both source versions at explicitly matched 4 threads, with exact complete outputs."
+    }
+  },
+  "derivedCache": {
+    "scope": "Intermediate frozen encoder features are re-derivable by the cache phase of scripts/study_span_supervision.py with the registered Train inputs, parent weights, tokenizer revision, batching and source code. Raw targets, parent predictions and all learned head predictions are included in the public archive.",
+    "path": "/dev/shm/newsvendor-span-supervision-v1/features.pt",
+    "bytes": 1241134059,
+    "sha256": "cd9a4b0ab474270f929fd412e4e46645095fc6d66cc023ffea81b74342f0e481",
+    "includedInPublicArchive": false
+  },
+  "artifact": {
+    "path": "docs/evidence/artifacts/span-supervision-records-v1.tar.xz",
+    "bytes": 28282092,
+    "sha256": "50493c937a06328de84f3acc160d111db1e74503e0805a8fbd4335e204811bfa",
+    "verifiedEveryMember": true,
+    "files": {
+      "results/l40s-span-supervision-v1/registered.json": {
+        "bytes": 3197104,
+        "sha256": "affc7fd54190087cc68b6c8f525a34ef87e778afc2acdbf24e1e54f69827a504"
+      },
+      "results/l40s-span-supervision-v1/progress.json": {
+        "bytes": 94,
+        "sha256": "c1b41a2bf60f82e86df202acb3eecbf5d94d503f1314dd6d00a3e1404dc784e9"
+      },
+      "results/l40s-span-supervision-v1/targets.jsonl": {
+        "bytes": 223858857,
+        "sha256": "16a56f1c13f877fd186fc1195b92f39f983d250d029df176b146f64346a8acc4"
+      },
+      "results/l40s-span-supervision-v1/parent-held.jsonl": {
+        "bytes": 1350344,
+        "sha256": "17fcd4eb5fda19e738f0b1efca0f7eb3aad8144e7718f09f4e7fdb1095f311d4"
+      },
+      "results/l40s-span-supervision-v1/batches-42.json": {
+        "bytes": 354387,
+        "sha256": "246718e90d29f23d2cd63d0b8e57c10b10765b23365845bf4bf7ee9812463cea"
+      },
+      "results/l40s-span-supervision-v1/legacy-42.pt": {
+        "bytes": 3152031,
+        "sha256": "753727ea77c901b06d187c9daacaf4d74131b91ea7b0fb81ba12ef159320ab28"
+      },
+      "results/l40s-span-supervision-v1/legacy-42-held.jsonl": {
+        "bytes": 1355143,
+        "sha256": "1ebf00e436ceb50c7eadc119ecb56fd21515fadaff4cf223cf40b0ae1d997b21"
+      },
+      "results/l40s-span-supervision-v1/partial.json": {
+        "bytes": 3209711,
+        "sha256": "3e7f2e2729afea26c410b5041e5832318fe435040e5b84abde5124b82aa40f95"
+      },
+      "results/l40s-span-supervision-v1/corrected-42.pt": {
+        "bytes": 3152097,
+        "sha256": "09f749a1da1a6b6aec2ac9f4199b3d1ac8d7c59623b7aa1e1919f7fc68c96c7e"
+      },
+      "results/l40s-span-supervision-v1/corrected-42-held.jsonl": {
+        "bytes": 1356201,
+        "sha256": "c22bfe445280a67df20f4ab2f88a37daed2dbf97d5ab05d959b53c7850a93656"
+      },
+      "results/l40s-span-supervision-v1/batches-43.json": {
+        "bytes": 354387,
+        "sha256": "e0fdabe6bfdcafbd756cf103fab240468aba3d82d4318149547ca4fe15d331cc"
+      },
+      "results/l40s-span-supervision-v1/legacy-43.pt": {
+        "bytes": 3152031,
+        "sha256": "b11e6477837773385aaf0f7d2bcd591234e7449988b42b52c50ef14139e21737"
+      },
+      "results/l40s-span-supervision-v1/legacy-43-held.jsonl": {
+        "bytes": 1355675,
+        "sha256": "345c8c701b1fde86d71f4acbcdf8c4bf0c993d51d4765de0434e8945aab341d9"
+      },
+      "results/l40s-span-supervision-v1/corrected-43.pt": {
+        "bytes": 3152097,
+        "sha256": "95a4ef6abe3d526c35c81eaf071c8a46e8193562bae8759a7fb1804383a9f55a"
+      },
+      "results/l40s-span-supervision-v1/corrected-43-held.jsonl": {
+        "bytes": 1354775,
+        "sha256": "f78b51aedcee80181e6d7279da1fe2b260b650569a5f3414e44e44536044a20b"
+      },
+      "results/l40s-span-supervision-v1/batches-44.json": {
+        "bytes": 354387,
+        "sha256": "116f0d9eb5a67ff6b127f13c2907a6f336bd85da1636279aceb26af2491f8ab9"
+      },
+      "results/l40s-span-supervision-v1/legacy-44.pt": {
+        "bytes": 3152031,
+        "sha256": "c7b16bb9c76284e47ccdf0e37e6cc980b1bac85575c4bc5cfb9f44dc2981c322"
+      },
+      "results/l40s-span-supervision-v1/legacy-44-held.jsonl": {
+        "bytes": 1353881,
+        "sha256": "9ff6f1328b787e905cf44c773eeab900abec15fa7b3eaef3fa4e13bd6fdea161"
+      },
+      "results/l40s-span-supervision-v1/corrected-44.pt": {
+        "bytes": 3152097,
+        "sha256": "7e678c8c00f79001a740eeb4733268c47d3c7954356f01f1d14056815584d03b"
+      },
+      "results/l40s-span-supervision-v1/corrected-44-held.jsonl": {
+        "bytes": 1353342,
+        "sha256": "fa8228704e867261e494d209784c994ec2d28927e26f178d92631ceae89231b5"
+      },
+      "results/l40s-span-supervision-v1/report.json": {
+        "bytes": 3211156,
+        "sha256": "a5cf7dca99f8f57d146cb4433102828b855604c82e937ec0b69ff53dd625850d"
+      },
+      "results/research-checks/numeric-grounding/cpu-pinned-4.log": {
+        "bytes": 201,
+        "sha256": "cc92af3335c8a85da61f950c47c56aec5a696894af19894311dc7f2fb81f4376"
+      },
+      "results/research-checks/numeric-grounding/legacy_labels.py": {
+        "bytes": 19616,
+        "sha256": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442"
+      },
+      "results/research-checks/numeric-grounding/partial.json": {
+        "bytes": 188539,
+        "sha256": "11cb4a4b01e01b0288291bb05e0baed81bb5ba49c047974dabc9ac1a2b23e92d"
+      },
+      "results/research-checks/numeric-grounding/cpu-current-4.jsonl": {
+        "bytes": 103322,
+        "sha256": "b6a0c9610e15ce97e9a2458d98f291b59710576be418fbba9cb6e99a4b9d4781"
+      },
+      "results/research-checks/numeric-grounding/registered.json": {
+        "bytes": 172191,
+        "sha256": "f6dcc5ef1aa87e46810781fb20c6a4e53c4b3cfaa47ee2c0fb906940084601b4"
+      },
+      "results/research-checks/numeric-grounding/cpu-prediction.log": {
+        "bytes": 173,
+        "sha256": "75bdaf73101a9eb8358917fdd04c4d26818c83c1458a58f34f6a64cfbe22083b"
+      },
+      "results/research-checks/numeric-grounding/previous-smoke.json": {
+        "bytes": 6940,
+        "sha256": "bdd02f6e6c5cf243611cb9105835a99e80318da0b332463eb7eb44b374f56576"
+      },
+      "results/research-checks/numeric-grounding/probe.py": {
+        "bytes": 9005,
+        "sha256": "572d70a9bd66a8d8e9c57cec0deb5b70576d20274f4e1bf91cc34fd6e35a8b63"
+      },
+      "results/research-checks/numeric-grounding/tests.log": {
+        "bytes": 421,
+        "sha256": "089a27030c30683e97fa19a20a494a31932bcdcb917b80854a512a21bbee352c"
+      },
+      "results/research-checks/numeric-grounding/audit.py": {
+        "bytes": 4314,
+        "sha256": "7cc85b2632765be4bd8276dfb6e0be6cf2a5a579619fc9efbb66cba56e7247fd"
+      },
+      "results/research-checks/numeric-grounding/report.json": {
+        "bytes": 188801,
+        "sha256": "1fd528ca6a2fcb9026c11f671ad8d0ad0b1d4b57b7ac78b31e8e328e1b72ec59"
+      },
+      "results/research-checks/numeric-grounding/probe.log": {
+        "bytes": 2386,
+        "sha256": "fc5540b9ba102bf2b50f5bcc9bb3209a9976fb5252a90959ad09bb3fbde466fd"
+      },
+      "results/research-checks/numeric-grounding/preliminary_labels.py": {
+        "bytes": 20256,
+        "sha256": "8b1cd693ca3f8ddcc9515d3621bdeb1ddcd3f1c0cf9dcaccadf6dc49a42d6e50"
+      },
+      "results/research-checks/numeric-grounding/publish.py": {
+        "bytes": 5144,
+        "sha256": "d33162f971322c000d6cbe28d075a0b72aedc7bb29744acb6c9b30c7584f30dd"
+      },
+      "results/research-checks/numeric-grounding/cpu-current-4.log": {
+        "bytes": 171,
+        "sha256": "81b17a29bd824e411e515515836978d0885d43caf5058e0654a1495cc46aeeae"
+      },
+      "results/research-checks/numeric-grounding/study.log": {
+        "bytes": 1394,
+        "sha256": "63a98443f1fdac79ffebf9419c3276ac74f38c774a82fcd6975e3d7483943a12"
+      },
+      "results/research-checks/numeric-grounding/cpu-predictions.jsonl": {
+        "bytes": 103322,
+        "sha256": "562d4f167013f5ea9fec1a8f41e49161bccd8b2f9559327e11da73cd1ff30722"
+      },
+      "results/research-checks/numeric-grounding/progress.json": {
+        "bytes": 77,
+        "sha256": "39cf9854e3401b2ac8dd3cd8a743e86ebfb855747aa6ec7a87fa06ef8848fd6a"
+      },
+      "results/research-checks/numeric-grounding/original.jsonl": {
+        "bytes": 315503,
+        "sha256": "a422e1a7dc28ba33778e94bafc9b312c1f3b17774ff44958e2f8edd8d36f6542"
+      },
+      "results/research-checks/numeric-grounding/pinned-compose.log": {
+        "bytes": 141,
+        "sha256": "66e3e695fe72dcd82228f97e63af04717e22365c00c9c1f1e5f883f1b979a556"
+      },
+      "results/research-checks/numeric-grounding/target-audit.log": {
+        "bytes": 287,
+        "sha256": "a3bc8b3e4c6a4823d5181b5c32bafbcf36e6ea01fa5b1be2ffb6bd56c74c2089"
+      },
+      "results/research-checks/numeric-grounding/final-tests.log": {
+        "bytes": 421,
+        "sha256": "adab6b7cfcd48e8e743a6feed24552040d6c0b2db133f6dccef9b8ea1c00e0c8"
+      },
+      "results/research-checks/numeric-grounding/cpu-equivalence.json": {
+        "bytes": 7519,
+        "sha256": "3ef72f213683fbf0906f256227d29df8e7b72b0494e8b2ae46f8dca9befc9527"
+      },
+      "results/research-checks/numeric-grounding/target-audit-registration.json": {
+        "bytes": 3162812,
+        "sha256": "5b744b2bcb7c041612a5e61823fb28b4f435f024a0c658df7973b69d5d5f0c75"
+      },
+      "results/research-checks/numeric-grounding/expanded.jsonl": {
+        "bytes": 1102713,
+        "sha256": "a40e8e9359b3f6116763b8ce68a4fe3212f1c134b918fb1b93c7fae058c4ce8a"
+      },
+      "results/research-checks/numeric-grounding/target-audit-progress.json": {
+        "bytes": 53,
+        "sha256": "ff6582dce97ac54bc77c0109ca1cf8f87be0286cbce370904f75d3af5172b1eb"
+      },
+      "results/research-checks/numeric-grounding/checks.json": {
+        "bytes": 24643,
+        "sha256": "e8b7093a0fc4ab0b245277865139ec4b49d237bc8e25ab35c45b2b4f1034720d"
+      },
+      "results/research-checks/numeric-grounding/target-audit-cases.jsonl": {
+        "bytes": 136247,
+        "sha256": "d5253e09c271c53939f571ec640636c4f80905ad40e239af1252399755924ec4"
+      },
+      "results/research-checks/numeric-grounding/cpu-pinned-4.jsonl": {
+        "bytes": 103322,
+        "sha256": "b6a0c9610e15ce97e9a2458d98f291b59710576be418fbba9cb6e99a4b9d4781"
+      },
+      "results/research-checks/numeric-grounding/decision.json": {
+        "bytes": 7556,
+        "sha256": "3176e14d6e1420baf536069c609cf0d560c12d3f66c5c382fc09c8ee7f549719"
+      },
+      "results/research-checks/numeric-grounding/target-audit.json": {
+        "bytes": 7336,
+        "sha256": "87d9262b2cc9b740434f419f28296d96cc9fa6afaff703bacdae26b6969543cf"
+      },
+      "results/research-checks/numeric-grounding/audit_study.py": {
+        "bytes": 5042,
+        "sha256": "f6ac977831b233582ece9b15d15bda930544b8aa4524d148510f5c3dcf2b91b9"
+      },
+      "results/research-checks/numeric-grounding/pinned-composition.json": {
+        "bytes": 9949,
+        "sha256": "d9b6ca2e18d22018bbe8d0c6473be3628b6364f63b1d2b9a41458d5d48cfa6b0"
+      },
+      "results/research-checks/numeric-grounding/study-audit.log": {
+        "bytes": 894,
+        "sha256": "612085ace0e3ccbb5045a9764f0fa999465cdf9d419363bbf8bcb46df20224e0"
+      },
+      "results/research-checks/numeric-grounding/study-audit.json": {
+        "bytes": 7738,
+        "sha256": "c4615fc8f510b704ccf9bea4be6c4593f21a003e98c55871929a0c1216bc8976"
+      },
+      "results/research-checks/numeric-grounding/top5-audit.json": {
+        "bytes": 503,
+        "sha256": "137a504d85ce8cf869cfbbe7ad798ebf7f283bddd341199ab91e13b21af08e87"
+      },
+      "results/research-checks/numeric-grounding/target-current.log": {
+        "bytes": 287,
+        "sha256": "0c3ec3592e4393f199090f86845e197a897ec7a7e3cd2e0c640b2ecebe3ee89b"
+      },
+      "results/research-checks/numeric-grounding/target-current/target-audit-registration.json": {
+        "bytes": 3162812,
+        "sha256": "32bc247edf0daab656f82aaece28cf69ac2282cd8886131d21d8758b87a4e5e7"
+      },
+      "results/research-checks/numeric-grounding/target-current/target-audit-progress.json": {
+        "bytes": 52,
+        "sha256": "3d92d6551669b4b0754abffc1b8f8d428af4c65ba6cc9b486109428eefad83e9"
+      },
+      "results/research-checks/numeric-grounding/target-current/target-audit-cases.jsonl": {
+        "bytes": 102322,
+        "sha256": "ce8b8d65fd6ed08205257a18ced8bccf04a963fe943298c26918f0895bb38fb6"
+      },
+      "results/research-checks/numeric-grounding/target-current/target-audit.json": {
+        "bytes": 7335,
+        "sha256": "83509fbbca5ffeacf885de0b992abcbc0aa1a3aac3e2a252743f7aa1fc3f24c5"
+      },
+      "src/newsvendor/structured_critic.py": {
+        "bytes": 12869,
+        "sha256": "45e1841a5acec68cd7cc6a670a971645fed923aa52acf556003395e6afec48b8"
+      },
+      "src/newsvendor/demand.py": {
+        "bytes": 20951,
+        "sha256": "ae60a4cd4834202293d95e9b9e1fd4020b72d7c188383bc791d856ec71dd1f9e"
+      },
+      "src/newsvendor/heads.py": {
+        "bytes": 5971,
+        "sha256": "6e23d0e8278864db46be3335bb3898e00e94b2974249c527cac4224255b2a878"
+      },
+      "src/newsvendor/structured_retail.py": {
+        "bytes": 17052,
+        "sha256": "ada1987abdf86e6c75d8fd2da97d5ff5c901a298ddb0543dde5776fa0e465f16"
+      },
+      "src/newsvendor/evaluation.py": {
+        "bytes": 5126,
+        "sha256": "7440a7a65260f39742eaf7c99f88d6b91bde50e58e9f203e748ddffe936c3e99"
+      },
+      "src/newsvendor/structured_smoke.py": {
+        "bytes": 5392,
+        "sha256": "9164f3e05f953e1f4f44a8cafea97ac87252e87c63797d20af33c426de25c043"
+      },
+      "src/newsvendor/bundle.py": {
+        "bytes": 3673,
+        "sha256": "d3337986f9a3c56b1247f7dddaf74c8433b4cad8cfd9a3616b3a52816d2e5e84"
+      },
+      "src/newsvendor/train.py": {
+        "bytes": 11134,
+        "sha256": "7de01d0c4ecddc2ffe702d9dafb4f79b0f49cac712e4bc1986a96193d41d3322"
+      },
+      "src/newsvendor/structured_orders.py": {
+        "bytes": 5715,
+        "sha256": "1eb6cbc07dfe08a74fedc72828e1af2b39c77483a8d8e469d711cc62bd8dd913"
+      },
+      "src/newsvendor/data.py": {
+        "bytes": 10416,
+        "sha256": "788c777a6599a7f299d1541ea3c5adc7b635c156fa6e438b0b1a111ba3c83d0f"
+      },
+      "src/newsvendor/cli.py": {
+        "bytes": 15150,
+        "sha256": "21a017a0e30d24ebafc05c937265a1ee15f65e485c4781c038f2ee12ea9c81b6"
+      },
+      "src/newsvendor/typed.py": {
+        "bytes": 8009,
+        "sha256": "f583cd24223beb4bd24ceeabc5c0d10c0f647689ed320f52f9a8b3e1f9e98571"
+      },
+      "src/newsvendor/structured_labels.py": {
+        "bytes": 20588,
+        "sha256": "159f50ee9910f82b9960250fdb917ea508000879eed58fe6e94915997cd293f2"
+      },
+      "src/newsvendor/encoder.py": {
+        "bytes": 4055,
+        "sha256": "af87bd8d7a1c99579b2846ee7f32e87e5a2be7510a9bda3832d6aabb88f6ec35"
+      },
+      "src/newsvendor/retail_expansion.py": {
+        "bytes": 2813,
+        "sha256": "34bbd6e7b810c80e8ab3e22b863f6bbf52308d8e2c5fefe1c030cd2923030a97"
+      },
+      "src/newsvendor/structured_train.py": {
+        "bytes": 61079,
+        "sha256": "80384a99a6e8d888a22e6ceb6ff42dea3eb4a15316bed91ec8a856091241797f"
+      },
+      "src/newsvendor/structured_tools.py": {
+        "bytes": 7051,
+        "sha256": "ac841a9c67b78347f87a2508466919ee41f1d7955873105c9862453fcc6942ec"
+      },
+      "src/newsvendor/structured_value.py": {
+        "bytes": 6786,
+        "sha256": "e14a60642179237a35781465e39d3a346eb69622af78112b3ce445bb2f57c033"
+      },
+      "src/newsvendor/native_inputs.py": {
+        "bytes": 8028,
+        "sha256": "ba23dd436d72a5f06891037ba182ae602ddcdce9fdd197bedadaa9ec10500a5b"
+      },
+      "src/newsvendor/structured_control.py": {
+        "bytes": 7481,
+        "sha256": "c7adffe155b88524a8acdde33c4052aadd9e15626e8042dbdb0a868aeb32b368"
+      },
+      "src/newsvendor/structured_forecast.py": {
+        "bytes": 16653,
+        "sha256": "43ff964b094f3d9946c7e210ba3c4651fa49479a03f640cf6ccb7e862b11ecc6"
+      },
+      "src/newsvendor/workload.py": {
+        "bytes": 16683,
+        "sha256": "aab7e806b91c1187ee733c1d527e0e608e9347768b8a9b39691269943fb68880"
+      },
+      "src/newsvendor/snapshot.py": {
+        "bytes": 2810,
+        "sha256": "95e42059fd84ea7a0fe510c67f4c78c617cb65180b765c1e3df794d8e4474930"
+      },
+      "src/newsvendor/structured_model.py": {
+        "bytes": 39252,
+        "sha256": "d3f12cec00a1083ec36bca8ffa7b1f4e778bb3c9782a2095fd3048409a45c8f0"
+      },
+      "src/newsvendor/sequence.py": {
+        "bytes": 21790,
+        "sha256": "e401ec73a169d7f992d4c9b106a084b1c218d002e481e20a84fec49986fbccfb"
+      },
+      "src/newsvendor/structured_metrics.py": {
+        "bytes": 4188,
+        "sha256": "949bed8a590cc7df0d64ed010dc880a4d58fbfee1375cefa1d80728905678446"
+      },
+      "src/newsvendor/orders.py": {
+        "bytes": 13643,
+        "sha256": "668981701d75f178f3c672f3439ac66773d702bfb8f7fecb8f92b1093590b99a"
+      },
+      "src/newsvendor/numbers.py": {
+        "bytes": 4797,
+        "sha256": "54fdc275fbccaa987a66c02622586e57fdf5017dfdc27024e240a46d0cbe3a54"
+      },
+      "src/newsvendor/structured_tool_heads.py": {
+        "bytes": 8041,
+        "sha256": "c0fbeb6347dfadfaa4202c344f0da5023fa4c9ea17dca58c66477aa4b9480a9d"
+      },
+      "src/newsvendor/structured_compare.py": {
+        "bytes": 9580,
+        "sha256": "3272f09acb43f9532a8f6f27ffe0d8a34d7df1008e06c80dec0c940eb552c8a3"
+      },
+      "src/newsvendor/diagnostics.py": {
+        "bytes": 2679,
+        "sha256": "5fc4d3e8cbb4e9944c8a9ef82617a83686b0c2be0945a8fb9b570996dd7971dd"
+      },
+      "src/newsvendor/native_benchmark.py": {
+        "bytes": 15518,
+        "sha256": "bfb70c39c2ef918a59fb6299e46ebb11cda8e0d472e586ed9aa250e201589498"
+      },
+      "src/newsvendor/providers.py": {
+        "bytes": 13597,
+        "sha256": "540d9fe4f0040cfec2df7a7031651fdd842c22d367f357e3ffd3b2d07e5ad91f"
+      },
+      "src/newsvendor/__init__.py": {
+        "bytes": 49,
+        "sha256": "455db805d25e4b74473dca7c7d39eff76c52045834f84dedf1274c67d971e1cc"
+      },
+      "src/newsvendor/structured_rollout.py": {
+        "bytes": 21754,
+        "sha256": "8b8932394b7cee84e99e32e084c620e033cb884debad0318f2ee4250d3f26e1b"
+      },
+      "src/newsvendor/construction.py": {
+        "bytes": 13645,
+        "sha256": "b7ea36fee5410538ed1bead644cdd75be1231fa997bbb39de761e4bb6d12fa87"
+      },
+      "src/newsvendor/structured_data.py": {
+        "bytes": 7434,
+        "sha256": "bd4cf6548e1fc8e49a26810f375ae764e9138487579de73dcbcda9d5e69d53d3"
+      },
+      "src/newsvendor/structured_inputs.py": {
+        "bytes": 28169,
+        "sha256": "82dd1c08dd8bd4704f0379e1be002462c2cc4a4546291831edd28f116f14a891"
+      },
+      "src/newsvendor/optimizer.py": {
+        "bytes": 4579,
+        "sha256": "a8f4748adfa4cf1a8175ebcf702d61cf588372dc6cf38e10ea3b1e9f970aa83a"
+      },
+      "src/newsvendor/structured_progress.py": {
+        "bytes": 17005,
+        "sha256": "ac6e330afc30131754b8185b03e5f7f4dbaface4b4d7327cfbb81cc5d60fa89c"
+      },
+      "src/newsvendor/io.py": {
+        "bytes": 928,
+        "sha256": "e22c0ca90f05fc80bd3fe53e64f35916d78f3f0c501659bf4e96ece75a9ded81"
+      },
+      "src/newsvendor/suite.py": {
+        "bytes": 31029,
+        "sha256": "e4e81c5390c2919ffe7d70853bd6ef559b477a4955c352ece2dd4d754898e93e"
+      },
+      "src/newsvendor/structured_tool_eval.py": {
+        "bytes": 10571,
+        "sha256": "46b8099a231abbb4e86f7ff8ae5c75b2b7a2f1787bd6c05b6995ca0fb3ff98ba"
+      },
+      "src/newsvendor/order_benchmark.py": {
+        "bytes": 15938,
+        "sha256": "58ccf162d54915dca612a47d9e0ba6039d768b29888330e13c42e345802a7ca1"
+      },
+      "src/newsvendor/suite_score.py": {
+        "bytes": 10546,
+        "sha256": "52a9ccb9daf7f6b9004a9463cd9c1557e4dc21435ac331c982dfa11a4ef90645"
+      },
+      "src/newsvendor/structured_batches.py": {
+        "bytes": 1723,
+        "sha256": "7e1cd7c8ecc85138a36164c64caa785a275f68ad7592fece525e63c3ed6d2c79"
+      },
+      "src/newsvendor/structured_procedures.py": {
+        "bytes": 11094,
+        "sha256": "c8c0ff1ef75a050503daa5d9879e4eccd6639351410692bb0b236900cc4fa645"
+      },
+      "src/newsvendor/native_model.py": {
+        "bytes": 20982,
+        "sha256": "f1672a7c28031760d1ed9ba70914e5d059970949f72ef09a8f2ec1c7bf5fcaec"
+      },
+      "src/newsvendor/structured_policy.py": {
+        "bytes": 15667,
+        "sha256": "cd3ebf9ee8be4eba15ae26e1178c21c093e9b5d313fa82e9e0fa52b34c13900e"
+      },
+      "src/newsvendor/raw.py": {
+        "bytes": 19485,
+        "sha256": "6220edca9347bcb392d367a1c54417da5de878b22c304ae00388a49640cd27d5"
+      },
+      "src/newsvendor/benchmark.py": {
+        "bytes": 4624,
+        "sha256": "e824bf5418c09d4fb6a9cf2e4394daa916e9def43ce36ac629372c553d8f0db3"
+      },
+      "src/newsvendor/policy.py": {
+        "bytes": 13349,
+        "sha256": "7ad7fa46b4b5947f565102da584c5810257d6c38efdb746b94fb9900c9ce9699"
+      },
+      "src/newsvendor/observations.py": {
+        "bytes": 13333,
+        "sha256": "cf846cb6562a5a9a7a3baadb2ee0161033f0fdae4379469223a11e12bc8fc085"
+      },
+      "src/newsvendor/report.py": {
+        "bytes": 6124,
+        "sha256": "c4ccd72c810a3fe1cb7b18b1c823a785372650f87bd9f1a7ba53440993853855"
+      },
+      "src/newsvendor/corpus.py": {
+        "bytes": 16405,
+        "sha256": "3ee0a8f05e1c6d297258e9135b431990900ba75862bf96d072dab8464dec2d97"
+      },
+      "src/newsvendor/structured_recovery.py": {
+        "bytes": 1791,
+        "sha256": "beb276999a0ead54d4898cf08749ba3f8fc1c9447710d9788dbe34edd42e99c7"
+      },
+      "scripts/study_span_supervision.py": {
+        "bytes": 13213,
+        "sha256": "48faaacf608816a59aa36fc453a1d76971e0c541b1a46159b02d526b6e7108e9"
+      },
+      "configs/l40s-span-supervision-v1.json": {
+        "bytes": 2689,
+        "sha256": "7fb7d07fd7c219be526fb91a6d481246a10f0c3ea1d153b4b04e75f162f2cf3c"
+      },
+      "tests/test_structured.py": {
+        "bytes": 196877,
+        "sha256": "edd68b15e60dc436bf670afaf6fc9ecd9d1595aaccfed7be3250bf23ea149433"
+      },
+      "results/research-checks/recovery-balance/publish.py": {
+        "bytes": 7651,
+        "sha256": "49ee4424b921a26b45ecc04c97e063ef992cdb457c14c682488c279a909ec114"
+      },
+      ".github/workflows/ci.yml": {
+        "bytes": 2961,
+        "sha256": "2cdd8e1f00b3cb9dfacd3ec04db2751712f72046c4c787d91473353b14e0347f"
+      },
+      "docs/span-supervision.md": {
+        "bytes": 6942,
+        "sha256": "18dbf93b3bf2a9c8abdaef79279327f9f6e20c566e3d32d0845314d34a59b14a"
+      },
+      "docs/model-bundle.md": {
+        "bytes": 7045,
+        "sha256": "6a7a5b4b4afc760f98a9d89fbaa70b5e4f36c548f0855e8417e95baa2d325ca5"
+      },
+      "results/research-checks/recovery-scope/cpu-inputs.jsonl": {
+        "bytes": 127327,
+        "sha256": "ce9e2c73cb4f89153b731fef3a3c4dbcbe708857ec4e3785dc021ae83517d8cb"
+      },
+      "results/research-checks/recovery-scope/cpu-predictions.jsonl": {
+        "bytes": 103322,
+        "sha256": "b6a0c9610e15ce97e9a2458d98f291b59710576be418fbba9cb6e99a4b9d4781"
+      },
+      "results/research-checks/numeric-grounding/derived-cache.json": {
+        "bytes": 528,
+        "sha256": "eda5f8ede93817f35bdb2a2691a2c2d39f0fd2c1e926f23cf31eb63bad174764"
+      }
+    }
+  },
+  "limitations": [
+    "The 1,163-case selection denominator contains only original Train span annotations; it is not the full public benchmark.",
+    "Parent encoder saw these Train source families before; no independent generalization claim.",
+    "All three corrected arms fail the predeclared matched-old-target score gate by one answer. No refit or new Dev evaluation follows.",
+    "Removing invalid labels does not establish an accuracy improvement. Public scalar extraction, demand calibration and protected Test criterion remain unresolved.",
+    "Original annotations, dataset hashes, source groups and scoring rules are unchanged. Unsupported multi-span/count and complex expressions are not removed from full benchmark scores.",
+    "Large intermediate encoder cache is excluded from the public archive; re-running learning requires the registered Train snapshot and parent checkpoint. Inference with the retained public model does not require those Train assets."
+  ]
+}

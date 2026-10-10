@@ -26,7 +26,7 @@ jobs:
           scripts/evaluate_responses.py scripts/reproduce_responses.py
           scripts/study_recovery_replay.py scripts/study_recovery_sampling.py
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
-          scripts/compose_recovery.py
+          scripts/compose_recovery.py scripts/study_span_supervision.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
       - run: >-
           uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
@@ -40,7 +40,7 @@ jobs:
           scripts/evaluate_responses.py scripts/reproduce_responses.py
           scripts/study_recovery_replay.py scripts/study_recovery_sampling.py
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
-          scripts/compose_recovery.py
+          scripts/compose_recovery.py scripts/study_span_supervision.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot

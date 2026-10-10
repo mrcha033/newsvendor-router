@@ -1,0 +1,34 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "c20845ffbb5486430e50c040abb660db62cdd2d0d84464f7b19f2e803793c6e6",
+  "scriptHash": "48faaacf608816a59aa36fc453a1d76971e0c541b1a46159b02d526b6e7108e9",
+  "files": {
+    "results/l40s-research-recovery-v1/base/42/model.pt": "5776ff708338ec6ffd6cb952d6d763e0b66ad51bfe6aa40678a3fcd560c9484e",
+    "results/research-checks/numeric-grounding/legacy_labels.py": "0d6f8b1c133a1eb22d81e0f4c4c392207281b272a9eda6bd0c35d2d12aad9442",
+    "data/processed/core-tatqa-train-v1/inputs.jsonl": "4a4f5af43778172537c5e3cb79da409b996c4ca94b4250618c1917128ffba1f4",
+    "data/processed/core-tatqa-train-v1/labels.jsonl": "0b29e0a69cef25560b4078eaffd68249c77babaa433268f2ea832cf889ee3261",
+    "data/processed/core-tatqa-train-v1/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e",
+    "data/processed/core-tatqa-train-v1/manifest.json": "e88820f16f19414e90b1ab790868fcbc25d56c18c8efbd3aeee26bf6edab2345"
+  },
+  "dataset": "data/processed/core-tatqa-train-v1",
+  "parent": "results/l40s-research-recovery-v1/base/42/model.pt",
+  "parentWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "legacyLabels": "results/research-checks/numeric-grounding/legacy_labels.py",
+  "output": "/dev/shm/newsvendor-span-supervision-v1",
+  "partitionSeed": 7313,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 8,
+  "lr": 0.0001,
+  "batchSize": 32,
+  "cacheBatch": 8,
+  "testUsed": false,
+  "devUsed": false,
+  "scope": "Paired loss-target correction with fixed encoder, fusion, GRU and all other heads. Same initial two span pointers, 8 epochs and exact batches for each of three seeds. Only existing TAT-QA Train span annotations carry pointer loss; full benchmark denominators do not change.",
+  "selection": "Within original Train source families: highest held scalar answerExact, then lower corrected span NLL; include untouched parent as epoch 0. The parent saw these Train families before, so this is not independent-source generalization.",
+  "nextGate": "Require every corrected seed to improve the internal Train answer score over parent and be no worse than its matched legacy arm before refitting. Refit for the selected epoch budget using all Train span rows, then actual sequential Train preservation controls before any fixed original Dev comparison. No Test or frozen retail holdout inference.",
+  "adoption": "Fixed primary seed42; original public Dev answer accuracy must improve with other public task scores preserved, controlled parameter/evidence/state/type retained, and generated/retail economic losses no worse. No adoption on cached Train scores alone."
+}

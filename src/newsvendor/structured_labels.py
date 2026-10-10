@@ -9,7 +9,7 @@ from torch.nn import functional as fn
 
 from .construction import candidates, demand, parameter_record
 from .corpus import KINDS, STATUSES
-from .structured_inputs import DECISIONS, MODES, OPS, SCALES, same_source, span_indices
+from .structured_inputs import DECISIONS, MODES, OPS, SCALES, same_source, span_indices, span_value
 from .structured_model import compute
 from .structured_procedures import visible
 from .structured_tools import role_targets
@@ -18,16 +18,37 @@ from .suite_score import rounded_numeric_exact
 
 
 def occurrences(view, text):
+    """Find expressible whole-answer spans, never substrings of another value."""
     result = []
-    if not str(text).strip():
+    text = str(text).strip()
+    if not text:
         return result
+    pattern = re.escape(text)
+    if text[0].isalnum() or text[0] == "_":
+        pattern = r"(?<!\w)" + pattern
+    if text[-1].isalnum() or text[-1] == "_":
+        pattern += r"(?!\w)"
+    if text[-1].isdigit():
+        pattern += r"(?![.,]\d)"
     for source in view["sources"]:
-        for match in re.finditer(re.escape(str(text).strip()), source["text"], re.I):
+        for match in re.finditer(pattern, source["text"], re.I):
+            if text[0].isdigit() and re.search(
+                r"(?:\d[.,]|(?<!\w)\.)$", source["text"][: match.start()]
+            ):
+                continue
             loc = {k: source[k] for k in ("kind", "id", "row", "column") if k in source}
             loc |= {"start": match.start(), "end": match.end()}
             pair = span_indices(view, loc)
             if pair is not None:
-                result.append(pair)
+                # A merged token may include surrounding sentence punctuation,
+                # but extra digits/letters/signs/units change the annotated value.
+                _, emitted = span_value(view, *pair)
+                overhang = (
+                    source["text"][emitted["start"] : match.start()]
+                    + source["text"][match.end() : emitted["end"]]
+                )
+                if not overhang.strip(" \t\r\n.,;:!?\"'“”‘’"):
+                    result.append(pair)
     return result
 
 

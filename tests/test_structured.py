@@ -187,6 +187,64 @@ def test_scalar_pointer_does_not_treat_required_multiple_answers_as_alternatives
     assert view["inputHash"] == digest(row["input"])
 
 
+@pytest.mark.parametrize(
+    "answer,text,expected",
+    [
+        ("19", "2019 19 119 19.5 0.19 .19 1,019 19,000 19%", ["19", "19"]),
+        ("$1", "$124 $1 $1.25 $1,000", ["$1"]),
+        ("0", "109 30 0 0.5 300 0%", ["0", "0"]),
+        ("tax", "taxable pre_tax TAX tax.", ["TAX", "tax"]),
+        ("A123", "XA123 A1234 A123", ["A123"]),
+        ("1,234.5", "11,234.5 1,234.56 1,234.5", ["1,234.5"]),
+        ("", "19", []),
+    ],
+)
+def test_answer_supervision_rejects_embedded_words_and_numbers(
+    tokenizer, settings, answer, text, expected
+):
+    from newsvendor.structured_labels import occurrences
+
+    view = prepare(
+        payload("value", documents=[{"id": "doc", "title": "report", "text": text}]),
+        tokenizer,
+        settings,
+    )
+    before = view["batch"]["input_ids"].clone()
+    pairs = occurrences(view, answer)
+    assert [span_value(view, *p)[0] for p in pairs] == expected
+    assert torch.equal(before, view["batch"]["input_ids"])
+
+
+def test_answer_supervision_rejects_unexpressible_token_boundary(tokenizer, settings):
+    from tokenizers.pre_tokenizers import WhitespaceSplit
+
+    from newsvendor.structured_labels import occurrences
+
+    tokenizer.backend_tokenizer.pre_tokenizer = WhitespaceSplit()
+    text = "19% 19 18%, 18%"
+    view = prepare(
+        payload("value", documents=[{"id": "doc", "title": "report", "text": text}]),
+        tokenizer,
+        settings,
+    )
+    # These are real merged tokens: units change the answer, sentence punctuation
+    # does not. A literal character match alone cannot decide expressibility.
+    assert [span_value(view, *p)[0] for p in occurrences(view, "19")] == ["19"]
+    assert [span_value(view, *p)[0] for p in occurrences(view, "18%")] == ["18%,", "18%"]
+
+
+def test_bad_substring_does_not_fabricate_an_extraction_or_missing_target(tokenizer, settings):
+    row = {
+        "component": "tatqa",
+        "input": payload("value", documents=[{"id": "doc", "title": "year", "text": "2019"}]),
+    }
+    target = {"action": "answer", "answerType": "span", "answer": ["19"], "scale": ""}
+    view = prepare(row, tokenizer, settings)
+    supervised = suite_targets(view, "tatqa", target)
+    assert supervised["fields"] == [{"scale": 0}]
+    assert view["actions"][supervised["recovery"]]["id"] == "answer"
+
+
 def test_accounting_cell_signs_preserve_evidence_without_negating_footnotes(tokenizer, settings):
     texts = ["(8,186)", "$(793)", "($879)", "$ (1,325)", "adjustments(1)", "—", "$—"]
     value = payload(

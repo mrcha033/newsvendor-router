@@ -32,19 +32,26 @@ CUDA PyTorch 환경에서는 `--device cuda`를 추가하고 사용할 GPU를 `C
 
 ## 관측 실패 보정 모델 조립
 
-[후속 비교](recovery-scope.md)의 고정 후보는 `scoped-v2`, seed 42, epoch 40이다. 기존 bundle의 encoder·모수 구성기·GRU를 보존하고, 공개한 작은 head를 결합한다. 전체 600 MB 가중치를 다시 내려받을 필요는 없다. 위 명령으로 기준 bundle을 준비한 다음 실행한다.
+[후속 비교](recovery-scope.md)의 고정 후보는 `scoped-v2`, seed 42, epoch 40이다. 기존 bundle의 encoder·모수 구성기·GRU를 보존하고, 공개한 작은 head를 결합한다. 전체 600 MB 가중치를 다시 내려받을 필요는 없다. 위 명령으로 기준 bundle을 준비한 다음 실행한다. 조립은 검증 당시의 소스를 요구하므로 해당 커밋을 별도 작업 폴더에 고정한다. 이후 학습 정답 연결 코드가 변경되어도 같은 가중치를 재현하기 위한 절차다.
 
 ```sh
+git worktree add --detach results/released-model/recovery-source \
+  2b0b6506d4dd3b92be76639a63ade29e48caacd7
+
 tar -xJf docs/evidence/artifacts/recovery-scope-records-v1.tar.xz \
+  -C results/released-model/recovery-source \
   --wildcards 'results/l40s-recovery-scoped-v2/*' \
   'results/l40s-recovery-scoped-dev-v1/*'
 
-HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
-  uv run python scripts/compose_recovery.py \
-  --bundle results/released-model/forecast-v1 \
-  --study results/l40s-recovery-scoped-v2 \
-  --dev results/l40s-recovery-scoped-dev-v1 \
-  --output results/released-model/recovery-v1
+(
+  cd results/released-model/recovery-source
+  HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+    uv run python scripts/compose_recovery.py \
+    --bundle ../forecast-v1 \
+    --study results/l40s-recovery-scoped-v2 \
+    --dev results/l40s-recovery-scoped-dev-v1 \
+    --output ../recovery-v1
+)
 
 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
   uv run python scripts/predict_research.py \
