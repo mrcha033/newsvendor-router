@@ -1,0 +1,35 @@
+{
+  "registeredAt": "2026-10-10T01:10:55.076403+00:00",
+  "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+  "scriptHash": "b23f1b58977bf9aa57910db4b242d476018b97d5153205c4122d4d71d46516ae",
+  "files": {
+    "/dev/shm/newsvendor-recovery-scoped-v1/report.json": "1c6c78998ea92042ca4ef9b22a6ff4bb4b243efdfee67221559e5fdda14d36e2",
+    "scripts/study_recovery_scope.py": "0c606f2c28bcaf14fde693094ad81ea151992dd1f88c29bbbdc45623d7e978b4",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "results/research-checks/recovery-balance/sequential.py": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "/dev/shm/newsvendor-recovery-scoped-v1/refit-42.pt": "3e9592772faee8cb62abbe62152a5868ba2f8cfd8865bcdd4d8b3d3f157b3051",
+    "/dev/shm/newsvendor-recovery-scoped-v1/refit-43.pt": "966718765b7f492a932d4e5d113e230df2c4b3b3f45fccde25644c9b686e1cd7",
+    "/dev/shm/newsvendor-recovery-scoped-v1/refit-44.pt": "cc27237a610e9066d9afd3244e39a3296dd72e83106610f14042f6a750da1c4b",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf"
+  },
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "candidate": "/dev/shm/newsvendor-recovery-scoped-v1",
+  "output": "/dev/shm/newsvendor-recovery-scoped-sequential-v1",
+  "samples": 4,
+  "responseSeed": 503,
+  "split": "train",
+  "trainingPerformed": false,
+  "testUsed": false,
+  "primary": "scoped-42",
+  "requiredSeeds": [
+    42,
+    43,
+    44
+  ],
+  "scope": "After all inner gates, evaluate parent, full-refit seeds 42/43/44, and failure-aware checklist on original 514 Train episodes with four common new response draws (seed 503) and extra no-dropout retail. Every trained seed must improve at least one actual benchmark total versus parent, worsen neither generated nor retail totals, parameters/state/evidence, false handoffs or resolved-field requests, and retain no-dropout necessary requests and recovery. Baseline holds only when expected-loss ordering lacks an observed failed mandatory field, cannot hand off or retrieve, and that channel cannot be queried again; otherwise uses the existing checklist. Baseline comparison is required evidence, not assumed weaker.",
+  "additionalBaseline": "The same retained value parent plus the observable failure stopping rule, to distinguish learning from a simple deterministic stop with identical normal decisions. This is diagnostic and cannot replace failed trained seeds.",
+  "gate": "After all inner gates, evaluate parent, full-refit seeds 42/43/44, and failure-aware checklist on original 514 Train episodes with four common new response draws (seed 503) and extra no-dropout retail. Every trained seed must improve at least one actual benchmark total versus parent, worsen neither generated nor retail totals, parameters/state/evidence, false handoffs or resolved-field requests, and retain no-dropout necessary requests and recovery. Baseline holds only when expected-loss ordering lacks an observed failed mandatory field, cannot hand off or retrieve, and that channel cannot be queried again; otherwise uses the existing checklist. Baseline comparison is required evidence, not assumed weaker.",
+  "devGate": "Only if actual Train gates pass: freeze fixed refit/42 and all three seeds, evaluate original generated Dev and 16 shared retail response masks plus public document retention. All seeds must worsen no parent economic total/parameter/state/evidence/safety metric and improve at least one actual total; retain no-dropout required requests/recovery. Compare the failure-aware checklist. No selection of another seed or epoch from Dev. If performance matches the checklist, do not claim an extra benefit of learned values. No Test or frozen 27-source holdout inference."
+}

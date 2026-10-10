@@ -1,6 +1,6 @@
 # 선택 모델의 추론 가중치와 실행
 
-[`research-forecast-v1` 공개 묶음](https://github.com/mrcha033/newsvendor-router/releases/tag/research-forecast-v1)은 현재 선택한 ModernBERT-base, 기능 head, 수요 GRU의 전체 추론 가중치를 포함한다. 원래 checkpoint의 tensor 값을 그대로 보존했으며, 이후 SKU·기간 변형 학습 후보로 교체하지 않았다.
+[`research-forecast-v1` 공개 묶음](https://github.com/mrcha033/newsvendor-router/releases/tag/research-forecast-v1)은 기준 모델의 ModernBERT-base, 기능 head, 수요 GRU 전체 추론 가중치를 포함한다. 원래 checkpoint의 tensor 값을 그대로 보존했다. 최신 관측 실패 보정 모델은 아래처럼 이 공개 가중치에 작은 공개 head를 결합해 만든다.
 
 묶음에는 encoder 설정·토크나이저·파일 hash manifest·관측 입력 예제 8개가 들어 있다. [전용 loader](../src/newsvendor/bundle.py)는 각 파일과 로드된 tensor의 hash를 검증한다. 원래 학습 자료의 로컬 경로나 Hugging Face 접속, 별도 사전학습 가중치 다운로드는 추론에 필요하지 않다. 기존 학습 checkpoint loader의 자료 검증은 유지한다.
 
@@ -30,7 +30,36 @@ HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 
 CUDA PyTorch 환경에서는 `--device cuda`를 추가하고 사용할 GPU를 `CUDA_VISIBLE_DEVICES`로 지정한다. CPU가 기본값이며, 서로 다른 장치의 부동소수점 결과가 동일하다고 보장하지 않는다.
 
-## 검증과 제공 범위
+## 관측 실패 보정 모델 조립
+
+[후속 비교](recovery-scope.md)의 고정 후보는 `scoped-v2`, seed 42, epoch 40이다. 기존 bundle의 encoder·모수 구성기·GRU를 보존하고, 공개한 작은 head를 결합한다. 전체 600 MB 가중치를 다시 내려받을 필요는 없다. 위 명령으로 기준 bundle을 준비한 다음 실행한다.
+
+```sh
+tar -xJf docs/evidence/artifacts/recovery-scope-records-v1.tar.xz \
+  --wildcards 'results/l40s-recovery-scoped-v2/*' \
+  'results/l40s-recovery-scoped-dev-v1/*'
+
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  uv run python scripts/compose_recovery.py \
+  --bundle results/released-model/forecast-v1 \
+  --study results/l40s-recovery-scoped-v2 \
+  --dev results/l40s-recovery-scoped-dev-v1 \
+  --output results/released-model/recovery-v1
+
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  uv run python scripts/predict_research.py \
+  --bundle results/released-model/recovery-v1 \
+  --inputs results/released-model/example-inputs.jsonl \
+  --output results/released-model/recovery-predictions.jsonl
+```
+
+조립 코드는 사전 고정한 seed·epoch, 세 seed의 Dev 기준 통과, 후보·부모·동결 구성기의 tensor hash와 실행 소스 hash를 검증한다. 새 학습이나 Test 평가는 하지 않는다. 조립된 bundle에는 encoder 설정·토크나이저·전체 추론 가중치·출처 manifest가 들어가므로 이후에는 기준 bundle이나 학습 자료 없이 로드한다. 이 경로는 CPU에서도 조립하며, GPU 추론은 CUDA PyTorch 환경과 `--device cuda`를 사용한다.
+
+보정본은 작업용 데이터·checkpoint·네트워크를 차단하고 공개 자료로 조립했다. L40S에서 고정 Dev 경로 720개의 행동·발주량·손실을 재현했으며, 위 CPU 추론 명령도 공개 Train 관측 예제 8개에서 실행했다. 전체 tensor hash는 `e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd`다. [조립·loader·재현 기록](evidence/research-recovery-scope-results.json)
+
+이번 보정의 이점은 통제 Dev에서 관측한 무응답 이후 질문 비용 감소다. 단순 중단 규칙과 행동·발주 결과가 같았으므로 학습 고유의 우위를 입증한 배포로 해석하지 않는다.
+
+## 기준 bundle의 검증과 제공 범위
 
 원래 checkpoint와 공개 묶음을 CPU와 L40S에서 각각 대조해, 8개 사례의 전체 구조화 출력이 장치별로 정확히 일치했다. 별도 CPU 프로세스에서도 빈 작업 폴더·빈 모델 cache·네트워크 차단 조건으로 같은 결과를 확인했다. 전체 tensor hash도 일치한다. 이는 저장·로딩 경로의 재현 검사이며 새로운 성능 평가가 아니다. [manifest·원시 출력·검증 기록](evidence/research-model-bundle.json)
 

@@ -96,14 +96,27 @@ def load(path, device="cpu"):
 def import_core(model, weights, *, reset_value=False):
     """Preserve the core; reinitialize the value head only when explicitly requested."""
     weights = dict(weights)
+    if model.config.get("recoveryResidual") and "heads.value.layers.0.weight" in weights:
+        for key in list(weights):
+            if key.startswith("heads.value."):
+                weights[key.replace("heads.value.", "heads.value.base.", 1)] = weights.pop(key)
+        weights.update(
+            {
+                "heads.value.correction." + key: value
+                for key, value in model.heads["value"].correction.state_dict().items()
+            }
+        )
     if reset_value:
+        weights = {k: v for k, v in weights.items() if not k.startswith("heads.value.")}
         weights.update(
             {"heads.value." + k: v for k, v in model.heads["value"].state_dict().items()}
         )
     if model.config.get("numericState"):
         for name in ("value", "recovery"):
-            key = f"heads.{name}.layers.0.weight"
-            expected = model.heads[name].layers[0].weight
+            scoped = name == "value" and model.config.get("recoveryResidual")
+            head = model.heads[name].base if scoped else model.heads[name]
+            key = f"heads.{name}.{'base.' if scoped else ''}layers.0.weight"
+            expected = head.layers[0].weight
             if weights[key].shape != expected.shape:
                 require(
                     weights[key].shape == (expected.shape[0], 256), "Unexpected action-head shape"

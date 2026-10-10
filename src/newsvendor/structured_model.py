@@ -32,6 +32,15 @@ class Router(nn.Module):
             "Unknown action-head precision",
         )
         require(
+            not config.get("recoveryResidual")
+            or (
+                config.get("numericState")
+                and value_input == "encoded"
+                and config.get("actionPrecision") == "float32"
+            ),
+            "Recovery correction requires encoded/numeric state and FP32 value scores",
+        )
+        require(
             not config.get("contextRerank")
             or (config.get("structuredTools") and config.get("dialogueController")),
             "Contextual reranking requires structured tools and the dialogue controller",
@@ -89,6 +98,10 @@ class Router(nn.Module):
                 "value": Head(value_dim, 128, 2),
             }
         )
+        if config.get("recoveryResidual"):
+            from .structured_recovery import RecoveryHead
+
+            self.heads["value"] = RecoveryHead(self.heads["value"])
         self.pointers = nn.ModuleDict(
             {
                 name: nn.Linear(256, 256, bias=False)
@@ -343,6 +356,10 @@ class Router(nn.Module):
             require(numeric.shape == (action_count, len(STATE_FEATURES)), "Economic state shape")
             actions = torch.cat([actions, numeric], dim=-1)
         value_state = actions
+        if self.config.get("recoveryResidual"):
+            active = view.get("recoveryActive", False)
+            require(type(active) is bool, "Observed recovery flag must be boolean")
+            value_state = torch.cat([actions, actions.new_full((action_count, 1), active)], -1)
         if self.config.get("valueInput", "encoded") != "encoded":
             numeric = torch.tensor(
                 view.get("valueFeatures", [[0.0] * len(VALUE_FEATURES)] * action_count),
@@ -358,7 +375,10 @@ class Router(nn.Module):
         output = {}
         for name, head in self.heads.items():
             on_actions = name in ("value", "recovery")
-            if name == "value" and self.config.get("valueInput", "encoded") != "encoded":
+            if name == "value" and (
+                self.config.get("valueInput", "encoded") != "encoded"
+                or self.config.get("recoveryResidual")
+            ):
                 with torch.autocast(device.type, enabled=False):
                     output[name] = head(value_state)
                 continue

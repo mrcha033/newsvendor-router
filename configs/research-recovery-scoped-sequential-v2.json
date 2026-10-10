@@ -1,0 +1,37 @@
+{
+  "registeredAt": "2026-10-10T01:23:45.479723+00:00",
+  "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+  "scriptHash": "a5b22a3cc26a4bb759de67e6cf4b3cbfa23b811b8d63bc3d282a41ad15cb1e6d",
+  "files": {
+    "/dev/shm/newsvendor-recovery-scoped-v2/report.json": "67d89967c4db1759a95530f753b69eb75ea9653581fd1588dbd1daf6e68c721f",
+    "scripts/study_recovery_scope.py": "0c606f2c28bcaf14fde693094ad81ea151992dd1f88c29bbbdc45623d7e978b4",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "results/research-checks/recovery-balance/sequential.py": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-42.pt": "62710ab6f1402d70dac594155deabe3b8dee6572bd3291a4fada0899ebd8afcb",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-43.pt": "95c3ca12865ee5cc2e5fc04507c7a50f3976a08ee2c384df7b92cecfa52c68e8",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-44.pt": "a387e2df2a63220ff7a792ecaa9621d63d1e878ec25cb342fe168627ce7b13b2",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf",
+    "scripts/study_recovery_selection.py": "5fe4f2309d0d972e4fcb39034e1218381785906e8057add8c4f2ece82aa852eb"
+  },
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "candidate": "/dev/shm/newsvendor-recovery-scoped-v2",
+  "output": "/dev/shm/newsvendor-recovery-scoped-sequential-v2",
+  "samples": 4,
+  "responseSeed": 617,
+  "split": "train",
+  "trainingPerformed": false,
+  "testUsed": false,
+  "primary": "scoped-42",
+  "requiredSeeds": [
+    42,
+    43,
+    44
+  ],
+  "scope": "After all inner gates, evaluate parent, full-refit seeds 42/43/44, and failure-aware checklist on original 514 Train episodes with four common new response draws (seed 617) and extra no-dropout retail. Every trained seed must improve at least one actual benchmark total versus parent, worsen neither generated nor retail totals, parameters/state/evidence, false handoffs or resolved-field requests, and retain no-dropout necessary requests and recovery. Baseline holds only when expected-loss ordering lacks an observed failed mandatory field, cannot hand off or retrieve, and that channel cannot be queried again; otherwise uses the existing checklist. Baseline comparison is required evidence, not assumed weaker.",
+  "additionalBaseline": "The same retained value parent plus the observable failure stopping rule, to distinguish learning from a simple deterministic stop with identical normal decisions. This is diagnostic and cannot replace failed trained seeds.",
+  "gate": "After all inner gates, evaluate parent, full-refit seeds 42/43/44, and failure-aware checklist on original 514 Train episodes with four common new response draws (seed 617) and extra no-dropout retail. Every trained seed must improve at least one actual benchmark total versus parent, worsen neither generated nor retail totals, parameters/state/evidence, false handoffs or resolved-field requests, and retain no-dropout necessary requests and recovery. Baseline holds only when expected-loss ordering lacks an observed failed mandatory field, cannot hand off or retrieve, and that channel cannot be queried again; otherwise uses the existing checklist. Baseline comparison is required evidence, not assumed weaker.",
+  "devGate": "Only if actual Train gates pass: freeze fixed refit/42 and all three seeds, evaluate original generated Dev and 16 shared retail response masks plus public document retention. All seeds must worsen no parent economic total/parameter/state/evidence/safety metric and improve at least one actual total; retain no-dropout required requests/recovery. Compare the failure-aware checklist. No selection of another seed or epoch from Dev. If performance matches the checklist, do not claim an extra benefit of learned values. No Test or frozen 27-source holdout inference.",
+  "priorStudy": "V1 was rejected on actual Train; no Dev/Test used. V2 changes only the prespecified held continuous-loss tie breaker; all final tensors and batch draws match v1."
+}

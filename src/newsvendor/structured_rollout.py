@@ -190,6 +190,10 @@ class ResearchRouter:
             round=sum(h["action"] == "retrieve" for h in value["history"]),
         )
         view["allowReread"] = False
+        if self.config.get("recoveryResidual"):
+            from .structured_recovery import failed_fields
+
+            view["recoveryActive"] = bool(failed_fields(value, state))
         if self.config.get("numericState"):
             from .structured_value import state_features
 

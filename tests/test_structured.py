@@ -4600,3 +4600,57 @@ def test_portable_bundle_rejects_extra_tokenizer_assets(model, tokenizer, settin
     (directory / "encoder/added_tokens.json").write_text('{"changed": 999}')
     with pytest.raises(ValueError, match="Unregistered bundle files"):
         bundle.load_bundle(directory)
+
+
+@pytest.mark.parametrize("batch_fusion", [False, True])
+def test_scoped_recovery_integrates_with_numeric_forward_and_checkpoint(
+    tokenizer, settings, model, batch_fusion, tmp_path
+):
+    from newsvendor.structured_rollout import ResearchRouter
+    from newsvendor.structured_train import import_core
+    from newsvendor.structured_value import constrain
+
+    config = {
+        **settings,
+        "numericState": True,
+        "actionPrecision": "float32",
+        "recoveryResidual": True,
+        "batchFusion": batch_fusion,
+        "exactActionCosts": True,
+    }
+    current = Router(copy.deepcopy(model.encoder), config).eval()
+    import_core(current, model.state_dict())
+    episode = next(e for e in corpus.generate(read("configs/full.json")) if e["split"] == "train")
+    value = copy.deepcopy(episode["input"])
+    value["history"] = []
+    state = reference(value)
+    state["state"]["b"] = "unconfirmed"
+    state["values"].pop("b", None)
+    router = ResearchRouter(current, tokenizer, config)
+    normal = router.view(value, state)
+    value["history"] = [{"action": "b", "answer": "no_response"}]
+    recovery = router.view(value, state)
+    assert normal["recoveryActive"] is False and recovery["recoveryActive"] is True
+    with torch.no_grad():
+        current.heads["value"].correction.layers[-1].bias.fill_(1)
+    results = current([normal, recovery])
+    for view, output in zip((normal, recovery), results, strict=True):
+        assert output["actionState"].shape[-1] == 350
+        assert output["valueState"].shape[-1] == 351
+        cached = constrain(
+            torch.nn.functional.softplus(current.heads["value"](output["valueState"])),
+            view["valueCosts"],
+        )
+        torch.testing.assert_close(output["value"], cached, rtol=0, atol=0)
+        prior = current.heads["value"].base(output["actionState"])
+        raw = current.heads["value"](output["valueState"])
+        torch.testing.assert_close(raw, prior + int(view["recoveryActive"]), rtol=0, atol=0)
+    for name, old in model.state_dict().items():
+        if not name.startswith(("heads.value.", "heads.recovery.")):
+            assert torch.equal(old, current.state_dict()[name])
+    path = tmp_path / "scoped.pt"
+    torch.save(current.state_dict(), path)
+    restored = Router(copy.deepcopy(model.encoder), config).eval()
+    restored.load_state_dict(torch.load(path, weights_only=True))
+    for before, after in zip(results, restored([normal, recovery]), strict=True):
+        assert torch.equal(before["value"], after["value"])

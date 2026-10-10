@@ -1,0 +1,54 @@
+{
+  "registeredAt": "2026-10-10T01:30:16.244666+00:00",
+  "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+  "scriptHash": "7e501ebd7d9197fd150e925161052c090f49b8cad9e890ba139072fd6259b34d",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "candidate": "/dev/shm/newsvendor-recovery-scoped-v2",
+  "trainReport": "/dev/shm/newsvendor-recovery-scoped-sequential-v2/report.json",
+  "output": "/dev/shm/newsvendor-recovery-scoped-dev-v1",
+  "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "cohorts": {
+    "generated": "/dev/shm/newsvendor-response-state-generated-v1",
+    "retail": "/dev/shm/newsvendor-response-state-retail-v1"
+  },
+  "publicDataset": "data/processed/complementary",
+  "reference": "docs/evidence/research-response-state-results.json",
+  "primary": "scoped-42",
+  "requiredSeeds": [
+    42,
+    43,
+    44
+  ],
+  "trainingPerformed": false,
+  "testUsed": false,
+  "newSourceHoldoutUsed": false,
+  "scope": "Only if actual Train gates pass: freeze fixed refit/42 and all three seeds, evaluate original generated Dev and 16 shared retail response masks plus public document retention. All seeds must worsen no parent economic total/parameter/state/evidence/safety metric and improve at least one actual total; retain no-dropout required requests/recovery. Compare the failure-aware checklist. No selection of another seed or epoch from Dev. If performance matches the checklist, do not claim an extra benefit of learned values. No Test or frozen 27-source holdout inference.",
+  "parentsReevaluated": true,
+  "baselines": [
+    "checklist",
+    "failure_rule"
+  ],
+  "noFallback": "V1 remains rejected. Evaluate the fixed v2 full-refit checkpoints only; no mode, seed or epoch selection from Dev. Failure rule cannot rescue failed neural candidates; if matched, do not claim added learned-value benefit.",
+  "files": {
+    "/dev/shm/newsvendor-recovery-scoped-sequential-v2/report.json": "f8917dbdea0ac5716b52fd19f5427ca51d4d0ed34a35f16f75980ca9babcc5d8",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "docs/evidence/research-response-state-results.json": "dbff8f3d2a63fb0adff800132b5971063f1d0c2b783a4ee76d41f483d47ccff7",
+    "/dev/shm/newsvendor-recovery-scoped-v2/report.json": "67d89967c4db1759a95530f753b69eb75ea9653581fd1588dbd1daf6e68c721f",
+    "results/research-checks/recovery-scope/sequential.py": "b23f1b58977bf9aa57910db4b242d476018b97d5153205c4122d4d71d46516ae",
+    "results/research-checks/recovery-balance/sequential.py": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+    "scripts/study_recovery_scope.py": "0c606f2c28bcaf14fde693094ad81ea151992dd1f88c29bbbdc45623d7e978b4",
+    "scripts/study_recovery_selection.py": "5fe4f2309d0d972e4fcb39034e1218381785906e8057add8c4f2ece82aa852eb",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-42.pt": "62710ab6f1402d70dac594155deabe3b8dee6572bd3291a4fada0899ebd8afcb",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-43.pt": "95c3ca12865ee5cc2e5fc04507c7a50f3976a08ee2c384df7b92cecfa52c68e8",
+    "/dev/shm/newsvendor-recovery-scoped-v2/refit-44.pt": "a387e2df2a63220ff7a792ecaa9621d63d1e878ec25cb342fe168627ce7b13b2",
+    "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl": "66bd0d584bfed7fd16cf78920d8224d84c959c6f70319b8050d13ae65710f10b",
+    "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl": "4cd9562a5dbf24c0066764465a816f95f337d266f5556b5c49fa0341c321dc14",
+    "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9",
+    "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl": "400ce91c8fe41b84d74863e264c7346f23c4924bdde9868eac51a7acf4cc433f",
+    "data/processed/complementary/manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "data/processed/complementary/inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "data/processed/complementary/labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "data/processed/complementary/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e"
+  }
+}
