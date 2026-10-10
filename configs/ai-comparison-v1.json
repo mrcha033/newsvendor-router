@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "status": "exploratory-controlled-pilot",
+  "seed": 7315,
+  "inputArchive": "docs/evidence/artifacts/parameter-decoding-records-v2.tar.xz",
+  "archiveSha256": "cab8b2bcfee0be638d0359097bb34ef0afc36d85b89e52c6cb8a8362e7e03d00",
+  "weightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "conditions": ["original", "wrong_sku", "wrong_period", "older_version", "refund_order"],
+  "baseline": {
+    "minHistory": 28,
+    "historyDays": 84,
+    "priorRaw": [-3.0, 0.0, 0.0],
+    "priorWeight": 0.25,
+    "iterations": 60
+  },
+  "questionRule": "Order if valid; otherwise ask each unresolved field at most once, cheapest first with c,p,v,b tie order; hold if exhausted. Same rule in both arms.",
+  "primaryStratum": "manager preference already documented in the initial input",
+  "secondaryStratum": "manager preference not selected; authorization effect kept separate",
+  "outcomes": ["total", "terminalLoss", "requestCost", "interactions", "parameterAccuracy", "evidenceAccuracy", "hold", "falseHandoff", "unnecessaryRequests"],
+  "inference": "Paired factorial contrasts, equal-source estimates and source-deletion sensitivity. Already-used Dev; no confirmatory p-values.",
+  "responseEnvironment": "Existing retail observed response channels, no additional missing-response mask; same case/field reply in all arms.",
+  "testUsed": false,
+  "newSourceHoldoutUsed": false,
+  "humanParticipants": 0
+}

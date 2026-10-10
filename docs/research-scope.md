@@ -7,11 +7,13 @@
 - [수리 모형·가설·회귀·현재 구현과 한계](research.md)
 - [자료·손실·비교군·실행 명세](protocol.md)
 - [기존 Dev의 첫 탐색 회귀와 출처 민감도](decision-effects.md)
+- [비AI 기준선과 AI×질문 2×2 파일럿](ai-comparison.md)
+- [모집 후 사용할 참여자 실험 운영·Word 안내](human-study-guide.md)
 - [선택 모델의 공개 가중치와 추론](model-bundle.md)
 - [최신 모수 구성 수정의 L40S 비교](parameter-decoding.md)
 - [평가 기준](performance-goal.md) · [검증 기록](verification.md)
 - [과거 실험 상세 색인](experiment-history.md)
 
-실제 사람 참여자는 0명이며 현재 매니저는 통제된 응답 환경이다. 기존 Dev 결과는 AI 기능 수정의 탐색적 근거다. 전체 AI 도입·인간 행동·실제 조직 효과의 증거로 확대하지 않는다. 새 2×2 확증 실험은 아직 실행하지 않았다.
+실제 사람 참여자는 0명이며 현재 매니저는 통제된 응답 환경이다. 비AI 기준선을 구현해 Train에서 검증하고, 기존 Dev의 2×2 파일럿을 L40S에서 실행했다. 실제 참여자 실험은 소프트웨어 리허설까지 완료해 모집·운영을 준비했다. 작은 기존 Dev와 생성 실험 과제를 실제 조직 효과의 증거로 확대하지 않는다. 새 자료의 확증 실험은 미실행이다.
 
 이전에 이 파일에 누적했던 전체 기록은 [통합 전 문서 압축](evidence/artifacts/research-documents-before-economics-v1.tar.xz)에 원문 그대로 보존했다. 기존 원시 evidence·가중치·실패한 후보·분할·hash는 유지한다.

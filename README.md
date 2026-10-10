@@ -9,6 +9,8 @@
 | [통합 연구계획](docs/research.md) · [Word 배포본](docs/proposal.docx) | 연구 질문, 수리 모형, 가설, 효과 식별, 현재 근거와 한계 |
 | [실험 명세](docs/protocol.md) | 분석 단위·비교군·손실 정의·자료 분리와 실행 명령 |
 | [첫 탐색 회귀](docs/decision-effects.md) | 기존 공개 Dev의 구성 수정 효과와 출처별 민감도 |
+| [AI×질문 비교 결과](docs/ai-comparison.md) | 비AI 기준선과 고정 AI의 네 조건을 L40S에서 비교 |
+| [참여자 실험 운영](docs/human-study-guide.md) · [Word 안내서](docs/human-study-guide.docx) | 모집문·개인 링크·동의·과제·저장·분석을 갖춘 한국어 실험 |
 | [모델과 추론 실행](docs/model-bundle.md) | 선택 가중치·토크나이저·복원·추론 |
 | [평가·완료 기준](docs/performance-goal.md) · [검증 기록](docs/verification.md) | 무엇을 확인했으며 무엇이 아직 미완료인지 |
 | [실험 이력 색인](docs/experiment-history.md) | 이전 성공·실패·원시 기록·보조 ABCD 실험 |
@@ -23,7 +25,19 @@ L40S의 최근 모수 구성 비교에서는 다른 상품·기간·구버전 �
 
 이번 탐색 분석은 공개 결과 3,960행으로 14개 짝지은 회귀·출처 제외 분석을 실행합니다. 생성 환경에서는 평균 손실이 낮아져도 조건별 60건 중 7·9·10건은 악화됐습니다. 판매의 다른 상품 조건에서 종료 손실 감소는 한 사례에 집중됐습니다. 평균 효과와 이질성을 함께 보고합니다. 현재 자료는 이미 개발에 사용한 Dev이며 실제 사람·조직 효과를 입증하지 않습니다.
 
-정확한 판매 손실은 고유 기간 5개·출처 4개·35조건뿐입니다. 질문은 품절 조건을 포함한 336사례에서 측정합니다. 이미 평가한 Test와 27개 출처 holdout을 새 확증 자료로 재사용하지 않습니다. AI 사용 × 매니저 질문 허용의 새 2×2 실험은 비AI 기준선·표본·검정력 설계가 필요한 다음 단계입니다.
+추가로 비AI 기준선의 Train 검증과 AI 사용 × 매니저 질문 허용의 **2×2 파일럿을 완료**했습니다. 원래 문서에서 질문 허용 시 평균 총손실은 비AI 72.1592, AI 20.9941입니다. 다만 문서 혼입에서 질문을 금지하면 AI가 더 나빴습니다. 주 분석의 정확한 손실은 25조건·고유 기간 5개·출처 4개이며 상태·질문은 240사례입니다. 선호 미선택 층까지 합친 이전 35조건·336사례와 구분합니다. [분모·한계·원시 기록](docs/ai-comparison.md)
+
+**실제 참여자 실험도 실행 준비를 마쳤습니다.** AI 없는 사람과 AI 지원을 받는 사람을 자동 배정하며 연습 2개·본 과제 8개, 개인 링크·재접속·삭제·결과 분석을 제공합니다. 실제 사람 데이터는 아직 없습니다. 이미 평가한 Test와 27개 출처 holdout을 새 확증 자료로 재사용하지 않습니다.
+
+## 참여자 모집 후 바로 실행
+
+고정 과제와 모델 제안이 포함된 실행 패키지에서 다음을 실행합니다. 현재 작업공간에는 `results/human-materials-v2`가 준비돼 있습니다. 처음 시작할 때 연구 문의 연락처를 입력하며 보상·모집 목표는 모집 전에 지정합니다.
+
+```sh
+bash experiments/participant/start.sh
+```
+
+진행자 화면에서 개인별 완성 링크 CSV를 내려받아 한 명에게 한 링크를 전달합니다. 기본은 같은 LAN/VPN·PC 브라우저이며 공개 인터넷 사이트 배포는 포함하지 않습니다. 운영에는 GPU가 필요 없습니다. [모집·운영·분석 안내](docs/human-study-guide.md), [패키지와 검증 hash](docs/evidence/human-experiment-readiness.json)를 참조하세요. 새 clone에는 개인 배포용 과제 ZIP이 없으므로 [자료 재생성 명령](experiments/participant/README.md)을 먼저 따릅니다.
 
 ## 공개 자료만으로 탐색 분석 재현
 
@@ -43,7 +57,8 @@ uv run python scripts/analyze_decisions.py \
 ## 검증
 
 ```sh
-uv run pytest -q
+uv sync --frozen --extra experiment
+uv run --extra experiment pytest -q
 uv run ruff check src tests scripts/analyze_decisions.py
 uv run newsvendor restore-eval
 uv run python scripts/run_research.py \

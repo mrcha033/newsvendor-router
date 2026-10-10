@@ -1,6 +1,6 @@
 # 이전 실험과 원시 근거의 색인
 
-현재 연구 질문·상태는 [통합 연구계획](research.md), 최신 분석은 [decision-effects.md](decision-effects.md)를 기준으로 읽는다. 아래 문서는 각 실험 당시의 설정·성공·실패·원시 측정 기록이다. 문서 안의 ‘현재’와 ‘다음’은 당시 시점을 뜻하며 새 연구의 진행 상태가 아니다.
+현재 연구 질문·상태는 [통합 연구계획](research.md), 최신 기계 비교는 [ai-comparison.md](ai-comparison.md), 참여자 준비는 [human-study-guide.md](human-study-guide.md)를 기준으로 읽는다. 첫 구성 수정 회귀는 [decision-effects.md](decision-effects.md)에 있다. 아래 문서는 각 실험 당시의 설정·성공·실패·원시 측정 기록이다. 문서 안의 ‘현재’와 ‘다음’은 당시 시점을 뜻하며 새 연구의 진행 상태가 아니다.
 
 ## 기록 보존
 
@@ -10,6 +10,8 @@
 
 | 문서 | 당시 기록의 내용 |
 | --- | --- |
+| [ai-comparison](ai-comparison.md) | 규칙·비신경망 수요 기준선과 고정 AI, 질문 허용의 Train/Dev 네 조건 비교 |
+| [human-study-guide](human-study-guide.md) | 한국어 참여자 실험 준비·자동 리허설; 실제 사람의 결과는 아직 없음 |
 | [action-adaptation](action-adaptation.md) | Encoder 변경 뒤 행동 가치 head의 재학습 |
 | [action-precision](action-precision.md) | 행동 가치 학습과 추론의 정밀도 일치 |
 | [constructor-training](constructor-training.md) | 모수 학습과 실제 추출 입력의 일치 |

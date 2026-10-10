@@ -17,6 +17,12 @@ dependencies = [
 [project.scripts]
 newsvendor = "newsvendor.cli:main"
 
+[project.optional-dependencies]
+experiment = [
+    "flask==3.1.2",
+    "waitress==3.0.2",
+]
+
 [dependency-groups]
 dev = ["pytest==9.1.1", "ruff==0.16.10"]
 

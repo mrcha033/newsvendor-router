@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-10",
+  "status": "ready-to-recruit-local-laboratory-pilot",
+  "humanParticipants": 0,
+  "publicInternetDeployment": false,
+  "defaultAccess": "same LAN or VPN, PC browser",
+  "defaultTargetRandomized": 128,
+  "targetInterpretation": "Planning assumption: half-SD effect on participant means; not a measured human variance or validated economic MDE",
+  "kit": {
+    "path": "results/human-experiment-kit-v1.zip",
+    "sha256": "6fd435b40f0d565b8a39c246990610333d15d65f599c6848cf675835491d9f95",
+    "bytes": 444402,
+    "members": 87,
+    "availability": "Operator artifact in shared workspace; not committed with hidden task answers. Fresh-clone material regeneration is documented in experiments/participant/README.md."
+  },
+  "code": {
+    "experiments/participant/README.md": {
+      "sha256": "56a17938753312762ce159c9f1966d0ede3be1623e6ee4b2dd9d3c3623d3d269",
+      "bytes": 3340
+    },
+    "experiments/participant/analyze.py": {
+      "sha256": "078025f4582238f9a2b540265f080fcbac77388cb0d60e35ea3b0a934987976d",
+      "bytes": 14473
+    },
+    "experiments/participant/app.py": {
+      "sha256": "60cb1766ec1f6f99b4d2ebba6c2094e9b44d7e446933c6402ba1f102e9058609",
+      "bytes": 33287
+    },
+    "experiments/participant/prepare.py": {
+      "sha256": "998ea921fb417337dcdfb718eaf143beed842c61d5934e59ab78b1b18bef6b3c",
+      "bytes": 9799
+    },
+    "experiments/participant/protocol.json": {
+      "sha256": "accfb7252f70642ba672b60fac153491891b17769cfdca58ce880b5b66367159",
+      "bytes": 3064
+    },
+    "experiments/participant/rehearse.py": {
+      "sha256": "e5017e83f4745d340dfa34b2cdb13942f9d4de41b766d9211358b2af9910873a",
+      "bytes": 7162
+    },
+    "experiments/participant/run.py": {
+      "sha256": "b21374210292d9c263aaeae1e912a17d7196f8b2935abc64d18425ff57c938b3",
+      "bytes": 3819
+    },
+    "experiments/participant/start.sh": {
+      "sha256": "6941efa4bde80d8968e909a3f55186d9d00d4593276363e8ceeb5a3b574846d8",
+      "bytes": 275
+    },
+    "experiments/participant/web/admin.html": {
+      "sha256": "09f52e6d97696565f373b73442c87e42ad7cd4288b88fc35c6e17c7c610cab08",
+      "bytes": 731
+    },
+    "experiments/participant/web/admin.js": {
+      "sha256": "5c9f75d835645a194da913fd1e97098c280ad6cb7c8b7a37377f05e8a264ec2c",
+      "bytes": 3997
+    },
+    "experiments/participant/web/app.js": {
+      "sha256": "71c6db5e20893327998820389867d93fc0aeb52a0c864f69519f139f77dbc94a",
+      "bytes": 19198
+    },
+    "experiments/participant/web/index.html": {
+      "sha256": "cbec76d736c699198e4c243bda48b769de90aca0873f208d5846ac1d13bb9e75",
+      "bytes": 787
+    },
+    "experiments/participant/web/style.css": {
+      "sha256": "2334e25b3381dabf9a891106cc183c652388d759c00b80be575b2ec41f7b854b",
+      "bytes": 5234
+    }
+  },
+  "materials": {
+    "path": "results/human-materials-v2",
+    "manifest": {
+      "sha256": "46ff6779c8b567d05b9136ddca17a443928122a40c852bf684cbe75299257014",
+      "bytes": 17853
+    },
+    "files": {
+      "advice.json": {
+        "bytes": 94956,
+        "sha256": "35cffb6f09531675f0645e03b37dfe4d0c67ba279064360e4f7ab2a1400275b2"
+      },
+      "tasks.json": {
+        "bytes": 127520,
+        "sha256": "65785ed276faab8c8d87b578bb0b608e958e1f27e7ef08c7198a0ebf0287ea22"
+      },
+      "model-states.json": {
+        "bytes": 2702408,
+        "sha256": "0109048844fcfae2574e0cb38c4d25a5d79d09ff247981651b0b71372bc4cf46"
+      },
+      "environments.json": {
+        "bytes": 22956,
+        "sha256": "bf721f081b3a91e2bf7341feba18952a515ad00e68b9c05a4e2deafd0065ab89"
+      }
+    },
+    "seed": 842719,
+    "tasks": 10,
+    "practiceTasks": 2,
+    "mainTasks": 8,
+    "adviceStates": 100,
+    "weightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+    "prepareScriptHash": "998ea921fb417337dcdfb718eaf143beed842c61d5934e59ab78b1b18bef6b3c",
+    "modelSourceHash": "0eaf617994d67b8114e754f3535dedf498116acf36833981e693bd91a4cb33cb",
+    "sourceLabels": "Generated controlled laboratory materials, separate from protected Test and holdout",
+    "selection": "Fixed seed and conditions before model advice; no case selection by AI accuracy or treatment effect"
+  },
+  "rehearsal": {
+    "humanParticipants": 0,
+    "softwareParticipants": 4,
+    "practiceSubmissions": 8,
+    "mainSubmissions": 32,
+    "totalSubmissions": 40,
+    "arms": [
+      "control",
+      "ai",
+      "ai",
+      "control"
+    ],
+    "pageErrors": [],
+    "refreshResume": true,
+    "managerRequests": 80,
+    "sourceAnswersAbsentFromPayload": true,
+    "exportVerified": true,
+    "personalInvitationURLs": true,
+    "scope": "Browser and data-pipeline rehearsal; not human treatment-effect evidence"
+  },
+  "rehearsalFiles": {
+    "docs/evidence/human-rehearsal-v1/ai-desktop.png": {
+      "sha256": "de6e42e64a9aeeff7cfe2aa22e09816fb53b0a16dc8b98dd199e0d62bd0032fb",
+      "bytes": 189079
+    },
+    "docs/evidence/human-rehearsal-v1/analysis.json": {
+      "sha256": "a28c5eb0562e6371c94033f80577ba5a267836e6136c01146c10176ef9608695",
+      "bytes": 2976
+    },
+    "docs/evidence/human-rehearsal-v1/analysis.md": {
+      "sha256": "5afca52d8a94bf2b470b6af29627bb84c3effbcbc3adef2f001cf916e930b20b",
+      "bytes": 863
+    },
+    "docs/evidence/human-rehearsal-v1/control-desktop.png": {
+      "sha256": "575360f0d1762209cf281b89dd7c5ad2263bc621409ed6b2c3da385b842c09f9",
+      "bytes": 141434
+    },
+    "docs/evidence/human-rehearsal-v1/mobile.png": {
+      "sha256": "3e0433d5b3c1bf20aac94121c1ebc85a555db2e9c8756d557c7bda3b8b45c443",
+      "bytes": 144392
+    },
+    "docs/evidence/human-rehearsal-v1/report.json": {
+      "sha256": "e39554c8de1f812309c0ca8077ff107de700ed198e3812555f1d3ad0f66824a2",
+      "bytes": 462
+    }
+  },
+  "rawRehearsalExport": {
+    "path": "docs/evidence/artifacts/human-rehearsal-v1.zip",
+    "sha256": "ee5bc0e30537b128930ba6d77d286350d55eb191b07474128170cfef9afba1ac",
+    "bytes": 41640
+  },
+  "wordGuide": {
+    "source": "docs/human-study-guide.md",
+    "sourceHash": "33bf9766140fca2f91d858c5ae70d3e32b343bf07be708d8300895b9fabc8dfe",
+    "file": "docs/human-study-guide.docx",
+    "sha256": "134320e2e22973cd729cb94bdb96946218fda314acdf07ed98ef163f84c2e501",
+    "bytes": 17398,
+    "pandocVersion": "3.6.1",
+    "verifiedText": true
+  },
+  "proposal": {
+    "path": "docs/proposal.docx",
+    "sha256": "8dcdd850c1c9bd366b8df14a121ea969c9885eaf7b4db100cc05ac6f323bbb26",
+    "bytes": 21525,
+    "revision": 13,
+    "wordEquations": 8
+  },
+  "tests": {
+    "passed": 407,
+    "log": {
+      "sha256": "525b19b61125b339a8a9cf83dfac1da35ffe519c4afd8e48b69eb5c4ed810772",
+      "bytes": 501
+    }
+  },
+  "limitations": [
+    "Generated fixed laboratory cases",
+    "Frozen AI sometimes overestimates demand; advice is not repaired with oracle labels",
+    "No real participants recruited or evaluated",
+    "Elapsed decision time includes idle time",
+    "Eight tasks are repeated within participants; participant is randomization unit",
+    "No external preregistration or institutional approval claimed"
+  ],
+  "additionalChecks": {
+    "path": "docs/evidence/ai-human-checks.json",
+    "sha256": "4c7f6b9fad0a891b20ed2f18870fe431d77bc538c1360a509d8ec8dc467e50e8"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "scope": "Randomized laboratory tasks, not organizational effectiveness",
+  "demo": true,
+  "randomizedParticipants": 4,
+  "completedParticipants": 4,
+  "participantOutcomes": [
+    {
+      "id": "P0001",
+      "arm": "control",
+      "block": 0,
+      "completedTasks": 8,
+      "complete": true,
+      "lower": 0.07786826000000002,
+      "upper": 0.07786826000000002,
+      "mean": 0.07786826000000002
+    },
+    {
+      "id": "P0002",
+      "arm": "ai",
+      "block": 0,
+      "completedTasks": 8,
+      "complete": true,
+      "lower": 0.07786826000000002,
+      "upper": 0.07786826000000002,
+      "mean": 0.07786826000000002
+    },
+    {
+      "id": "P0003",
+      "arm": "ai",
+      "block": 0,
+      "completedTasks": 8,
+      "complete": true,
+      "lower": 0.07786826000000002,
+      "upper": 0.07786826000000002,
+      "mean": 0.07786826000000002
+    },
+    {
+      "id": "P0004",
+      "arm": "control",
+      "block": 0,
+      "completedTasks": 8,
+      "complete": true,
+      "lower": 0.07786826000000002,
+      "upper": 0.07786826000000002,
+      "mean": 0.07786826000000002
+    }
+  ],
+  "counts": {
+    "control": {
+      "assigned": 2,
+      "complete": 2
+    },
+    "ai": {
+      "assigned": 2,
+      "complete": 2
+    }
+  },
+  "intentToTreatBounds": [
+    0.0,
+    0.0
+  ],
+  "completeCaseDifference": 0.0,
+  "regression": {
+    "formula": "participant_mean_normalized_total ~ AI + assignment_block",
+    "AI": 1.3877787807814457e-17,
+    "HC2StandardError": 1.3877787807814457e-17,
+    "randomizationP": 1.0,
+    "permutations": 10000,
+    "experimentalUnit": "participant",
+    "participants": 4
+  },
+  "testStatus": "SOFTWARE REHEARSAL ONLY: these are not human effectiveness measurements",
+  "protocolHash": "f0aa70ad8a8dbaf060f7c3ed80787444373611a4d25e03691150bd4263af7572",
+  "exportIntegrity": {
+    "events": 237,
+    "submissions": 40,
+    "verified": true
+  },
+  "analysisScriptHash": "078025f4582238f9a2b540265f080fcbac77388cb0d60e35ea3b0a934987976d",
+  "exportHash": "ee5bc0e30537b128930ba6d77d286350d55eb191b07474128170cfef9afba1ac",
+  "secondaryCompleterMeans": {
+    "control": {
+      "realizedOrderLoss": 38.625,
+      "realizedTotal": 46.625,
+      "orderRegret": 23.14730400000001,
+      "questionCost": 8.0,
+      "questionCount": 2.0,
+      "hold": 0.0,
+      "decisionSeconds": 0.15320086479187012,
+      "parameterAccuracy": 0.0,
+      "evidenceAccuracy": 0.0,
+      "confidence": 4.0
+    },
+    "ai": {
+      "realizedOrderLoss": 38.625,
+      "realizedTotal": 46.625,
+      "orderRegret": 23.14730400000001,
+      "questionCost": 8.0,
+      "questionCount": 2.0,
+      "hold": 0.0,
+      "decisionSeconds": 0.18761272728443146,
+      "parameterAccuracy": 1.0,
+      "evidenceAccuracy": 1.0,
+      "confidence": 4.0
+    }
+  },
+  "aiSuggestionDeviation": {
+    "conditionalOn": "AI advice and a submitted order both available; descriptive, not a treatment effect",
+    "tasks": 16,
+    "meanAbsolute": 23.796583774656774
+  }
+}
