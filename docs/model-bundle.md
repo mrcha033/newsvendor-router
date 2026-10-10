@@ -82,3 +82,5 @@ HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 Optimizer 상태와 확장 Train 원본 전체는 이 묶음에 포함하지 않는다. 따라서 기존 학습을 완전히 재개하는 배포나 모든 과거 표의 자동 재평가까지 제공하는 것은 아니다. 공개 snapshot에서 새 모델을 학습하는 경로는 [README](../README.md)에, 공개 작은 GRU와 새 출처 27개로 수요·발주를 재계산하는 경로는 [별도 재현 안내](retail-holdout.md)에 있다.
 
 선택 모델의 통제 Dev 모수·근거 정확도를 실제 조직 문서의 효과로 해석하지 않는다. 공개 문서 추출, 수요 calibration, 기존 생성 Test 목표 미달은 여전히 남아 있다. [현재 연구 범위와 제한](research-scope.md)
+
+계산 숫자의 조합을 함께 선택하는 후속 head는 Dev 개선 기준에 미달해 이 선택 bundle에 포함하지 않았다. 세 후보의 원시 결과와 별도 재현 방법은 [피연산자 선택 비교](operand-selection.md)에 보존한다.

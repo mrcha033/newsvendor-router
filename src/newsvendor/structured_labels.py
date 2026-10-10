@@ -388,6 +388,15 @@ def objective(output, targets, *, no_value=False):
                 fn.cross_entropy(output["rerankJoint"][None], torch.tensor([target], device=device))
             ]
     for i, field in enumerate(targets.get("fields", [])):
+        if "operandJoint" in output and "operand1" in field:
+            from .structured_operands import positive_pairs
+
+            selected = positive_pairs(
+                output["operandPairs"][i], output["operandPairMask"][i], field
+            )
+            if selected.any():
+                loss = -torch.logsumexp(output["operandJoint"][i].log_softmax(-1)[selected], 0)
+                losses.setdefault("operandPair", []).append(loss)
         for name, target in field.items():
             if name == "spans":
                 # Multiple genuine source occurrences are marginal alternatives, not negatives.

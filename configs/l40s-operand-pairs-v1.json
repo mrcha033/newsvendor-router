@@ -1,0 +1,35 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "22f11c9b9922592fe1c4df727eaec332c62094a779f16d70acc5098dbc87777a",
+  "cacheScriptHash": "eea5c8cac88db603b1bffda78e8036cec68c766eba2de44dc6d3c397c1f91150",
+  "files": {
+    "results/l40s-research-recovery-v1/base/42/model.pt": "5776ff708338ec6ffd6cb952d6d763e0b66ad51bfe6aa40678a3fcd560c9484e",
+    "configs/full.json": "54707509fc04433ae04700176350fc8d36d23496064650ba5b664196dbcc54bf",
+    "data/processed/core-tatqa-train-v1/inputs.jsonl": "4a4f5af43778172537c5e3cb79da409b996c4ca94b4250618c1917128ffba1f4",
+    "data/processed/core-tatqa-train-v1/labels.jsonl": "0b29e0a69cef25560b4078eaffd68249c77babaa433268f2ea832cf889ee3261",
+    "data/processed/core-tatqa-train-v1/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e",
+    "data/processed/core-tatqa-train-v1/manifest.json": "e88820f16f19414e90b1ab790868fcbc25d56c18c8efbd3aeee26bf6edab2345"
+  },
+  "parent": "results/l40s-research-recovery-v1/base/42/model.pt",
+  "parentWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "dataset": "data/processed/core-tatqa-train-v1",
+  "researchConfig": "configs/full.json",
+  "cache": "/dev/shm/newsvendor-operand-cache-v1",
+  "cacheBatch": 8,
+  "study": "/dev/shm/newsvendor-operand-study-v1",
+  "partitionSeed": 7313,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 16,
+  "lr": 0.0003,
+  "batchSize": 64,
+  "testUsed": false,
+  "devUsed": false,
+  "scope": "Joint ordered operands over own top-5 candidates vs further fitting of the original independent operand pointers. Same frozen ModernBERT, fusion, remaining heads and demand model. Add all 740 observed states from original generated Train episodes as construction retention examples. Public arithmetic Train cases keep their original scalar scores, including unsupported expressions.",
+  "selection": "Split source families within original Train before loss fitting. Choose each epoch by highest public arithmetic strict answer count among checkpoints that preserve parent research scalar and operand-source counts, then lower own training-family-balanced held NLL; include unchanged parent epoch0. Compare condition mean public counts across seeds; tie favors original pointers. Fixed primary seed42, require all selected-condition seeds to improve parent and preserve research counts before refitting.",
+  "nextGate": "Refit selected condition for the chosen fixed epochs on all these Train cases. Require actual sequential Train parameter/evidence/state/type and generated/retail loss retention before fixed original Dev evaluation. Full public Dev denominator and costs stay unchanged.",
+  "adoption": "Require original public Dev improvement with other public task scores preserved and actual research losses and manager requests no worse. Do not adopt based on cached features or internal Train scores. No protected Test or frozen new-source holdout inference."
+}

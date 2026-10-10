@@ -1,0 +1,28 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "22f11c9b9922592fe1c4df727eaec332c62094a779f16d70acc5098dbc87777a",
+  "cache": "/dev/shm/newsvendor-operand-cache-v1",
+  "partitionSeed": 7313,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 16,
+  "lr": 0.0003,
+  "batchSize": 64,
+  "output": "/dev/shm/newsvendor-operand-study-v1",
+  "cacheReportHash": "3b31e674d585909610a16761c3542ba2a780639f1c2da1dc6a90c1bbfbe4566e",
+  "scriptHash": "a946dc193ce2ba72e6b7059cd3d416a365d046d425d2be4576b74f536137e24f",
+  "cachePlanHash": "0136ddc15a743e4c50c046f31a192667fcec9fac3ad73574427730c8e002cbd3",
+  "testUsed": false,
+  "devUsed": false,
+  "newSourceHoldoutUsed": false,
+  "scope": "Joint ordered operands over own top-5 candidates vs further fitting of the original independent operand pointers. Same frozen ModernBERT, fusion, remaining heads and demand model. Add all 740 observed states from original generated Train episodes as construction retention examples. Public arithmetic Train cases keep their original scalar scores, including unsupported expressions.",
+  "selection": "Split source families within original Train before loss fitting. Choose each epoch by highest public arithmetic strict answer count among checkpoints that preserve parent research scalar and operand-source counts, then lower own training-family-balanced held NLL; include unchanged parent epoch0. Compare condition mean public counts across seeds; tie favors original pointers. Fixed primary seed42, require all selected-condition seeds to improve parent and preserve research counts before refitting.",
+  "nextGate": "Refit selected condition for the chosen fixed epochs on all these Train cases. Require actual sequential Train parameter/evidence/state/type and generated/retail loss retention before fixed original Dev evaluation. Full public Dev denominator and costs stay unchanged.",
+  "adoption": "Require original public Dev improvement with other public task scores preserved and actual research losses and manager requests no worse. Do not adopt based on cached features or internal Train scores. No protected Test or frozen new-source holdout inference.",
+  "conditionSelection": "Only conditions where every seed improves public arithmetic strict answers and preserves parent research scalar and source counts are eligible. Among eligible conditions choose the highest mean public strict count across all seeds; exact tie favors existing independent pointers. Primary seed42 fixed. No eligible condition means no refit.",
+  "retentionScoreScope": "Cached supported scalar targets and existing missing/conflict annotations. A field without either is left unscored rather than fabricated as missing. Actual whole parameter/evidence/state/request/ordering gates are still required after refit.",
+  "lossBalance": "Each training field occurs once per epoch. Weights give equal total contribution to public arithmetic and research fields; both arms use identical examples and permutations."
+}

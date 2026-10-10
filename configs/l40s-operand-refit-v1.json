@@ -1,0 +1,33 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "parent": "results/l40s-research-recovery-v1/base/42/model.pt",
+  "parentWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "lr": 0.0003,
+  "batchSize": 64,
+  "sourceHash": "22f11c9b9922592fe1c4df727eaec332c62094a779f16d70acc5098dbc87777a",
+  "scriptHash": "0bbb3c0d2c7c2fd17848d5b7297b2f58360bc99062b369a31149596cb9503382",
+  "files": {
+    "/dev/shm/newsvendor-operand-study-v1/report.json": "362eac3446b6e591d0609f1557043b735f3943557d1b234b4e311ac8af9e2d5c",
+    "/dev/shm/newsvendor-operand-cache-v1/report.json": "3b31e674d585909610a16761c3542ba2a780639f1c2da1dc6a90c1bbfbe4566e",
+    "scripts/study_operands.py": "a946dc193ce2ba72e6b7059cd3d416a365d046d425d2be4576b74f536137e24f"
+  },
+  "study": "/dev/shm/newsvendor-operand-study-v1",
+  "cache": "/dev/shm/newsvendor-operand-cache-v1",
+  "condition": "joint",
+  "epochs": {
+    "42": 11,
+    "43": 15,
+    "44": 10
+  },
+  "output": "/dev/shm/newsvendor-operand-refit-v1",
+  "primary": 42,
+  "testUsed": false,
+  "devUsed": false,
+  "newSourceHoldoutUsed": false,
+  "selection": "Fixed epochs selected within Train before all-Train refitting. No new epoch/seed selection from refit diagnostics or Dev. Actual sequential Train retention required before the original Dev comparison."
+}

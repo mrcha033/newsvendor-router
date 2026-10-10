@@ -108,6 +108,11 @@ class Router(nn.Module):
                 for name in ("start", "end", "operand1", "operand2", "choice")
             }
         )
+        if config.get("jointOperands"):
+            from .structured_operands import OperandPairs
+
+            with torch.random.fork_rng(devices=[]):
+                self.operand_pairs = OperandPairs()
         if config.get("structuredTools"):
             from .structured_tool_heads import ToolHeads
 
@@ -421,6 +426,14 @@ class Router(nn.Module):
                     fused[2][name][:count] if fused is not None else self.pointers[name](fields)
                 )
                 output[name] = projected @ atoms.T / math.sqrt(256)
+            if hasattr(self, "operand_pairs"):
+                from .structured_operands import proposals
+
+                pairs = proposals(view, fields, atoms, output)
+                output["atomState"] = atoms
+                output["operandJoint"] = self.operand_pairs(pairs)
+                output["operandPairs"] = pairs["pairs"]
+                output["operandPairMask"] = pairs["mask"]
         if view["choices"]:
             choice = queries[count + action_count :][view["choiceQueries"]]
             projected = (
@@ -588,9 +601,15 @@ def extract(view, output):
                 result["source"] = "observed" if result["evidence"] else "schema"
             elif mode == "compute" and view["atoms"]:
                 op = OPS[int(output["relation"][i].argmax())]
-                ids = [int(output["operand1"][i].argmax())]
-                if op != "copy":
-                    ids.append(int(output["operand2"][i].argmax()))
+                if "operandJoint" in output:
+                    chosen = int(output["operandJoint"][i].argmax())
+                    ids = [int(j) for j in output["operandPairs"][i, chosen]]
+                    if op == "copy":
+                        ids = ids[:1]
+                else:
+                    ids = [int(output["operand1"][i].argmax())]
+                    if op != "copy":
+                        ids.append(int(output["operand2"][i].argmax()))
                 atoms = [view["atoms"][j] for j in ids]
                 try:
                     result["value"] = compute(op, [a["value"] for a in atoms])

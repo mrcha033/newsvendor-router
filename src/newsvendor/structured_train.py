@@ -96,6 +96,10 @@ def load(path, device="cpu"):
 def import_core(model, weights, *, reset_value=False):
     """Preserve the core; reinitialize the value head only when explicitly requested."""
     weights = dict(weights)
+    if hasattr(model, "operand_pairs") and not any(k.startswith("operand_pairs.") for k in weights):
+        weights.update(
+            {"operand_pairs." + k: v for k, v in model.operand_pairs.state_dict().items()}
+        )
     if model.config.get("recoveryResidual") and "heads.value.layers.0.weight" in weights:
         for key in list(weights):
             if key.startswith("heads.value."):

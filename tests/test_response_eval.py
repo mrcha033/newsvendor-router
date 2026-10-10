@@ -75,8 +75,9 @@ class Router:
         )
 
 
-def test_question_order_cannot_change_answers_and_exact_expectation_matches_formula():
-    row = episode()
+@pytest.mark.parametrize("split", ["train", "dev"])
+def test_question_order_cannot_change_answers_and_exact_expectation_matches_formula(split):
+    row = dict(episode(), split=split)
     before = digest(row)
     measurements = []
     routes = [Router(row["input"], order) for order in (("v", "b"), ("b", "v"))]
@@ -114,10 +115,10 @@ def test_question_order_cannot_change_answers_and_exact_expectation_matches_form
     assert left["events"] == right["events"]
 
 
-@pytest.mark.parametrize("split", ["train", "test"])
-def test_fixed_response_evaluation_rejects_train_and_test_before_inference(split):
+@pytest.mark.parametrize("split", ["cal", "test"])
+def test_fixed_response_evaluation_rejects_protected_splits_before_inference(split):
     row = dict(episode(), split=split)
-    with pytest.raises(ValueError, match="retail Dev only"):
+    with pytest.raises(ValueError, match="retail Train/Dev only"):
         rollout(row, None, missing_responses=frozenset())
 
 
@@ -130,7 +131,7 @@ def test_response_expectation_rejects_unpaired_or_invalid_conditions():
     with pytest.raises(ValueError, match="fixed and random"):
         rollout(row, None, missing_responses=set(), noise=0.1)
     del row["input"]["task"]["forecast"]
-    with pytest.raises(ValueError, match="retail Dev only"):
+    with pytest.raises(ValueError, match="retail Train/Dev only"):
         rollout(row, None, missing_responses=set())
     rows = [
         {

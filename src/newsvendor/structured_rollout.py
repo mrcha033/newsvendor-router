@@ -298,7 +298,8 @@ def rollout(
     linked = "forecast" in current["task"]
     if missing_responses is not None:
         require(
-            linked and episode["split"] == "dev", "Fixed response conditions accept retail Dev only"
+            linked and episode["split"] in ("train", "dev"),
+            "Fixed response conditions accept retail Train/Dev only",
         )
         require(
             isinstance(missing_responses, (set, frozenset)) and missing_responses <= set(SLOTS),

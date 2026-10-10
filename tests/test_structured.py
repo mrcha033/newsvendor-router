@@ -245,6 +245,93 @@ def test_bad_substring_does_not_fabricate_an_extraction_or_missing_target(tokeni
     assert view["actions"][supervised["recovery"]]["id"] == "answer"
 
 
+@pytest.mark.parametrize("operation", ["subtract", "divide", "copy"])
+def test_joint_operand_zero_correction_preserves_order_and_ties(tokenizer, settings, operation):
+    from newsvendor.structured_inputs import OPS
+    from newsvendor.structured_operands import OperandPairs, positive_pairs, proposals
+
+    view = prepare(
+        payload("value", tables=[{"id": "table", "cells": [["10", "2", "8"], ["3", "4", "5"]]}]),
+        tokenizer,
+        settings,
+    )
+    fields = torch.randn(1, 256, requires_grad=True)
+    atoms = torch.randn(len(view["atoms"]), 256, requires_grad=True)
+    output = {
+        "operand1": torch.tensor([[1.0, 4.0, 4.0, 0.0, -1.0, -2.0]], requires_grad=True),
+        "operand2": torch.tensor([[5.0, 0.0, 2.0, 5.0, -1.0, -2.0]], requires_grad=True),
+        "relation": torch.nn.functional.one_hot(
+            torch.tensor([OPS.index(operation)]), len(OPS)
+        ).float(),
+    }
+    data = proposals(view, fields, atoms, output)
+    head = OperandPairs()
+    scores = head(data)
+    assert int(scores.argmax()) == 0
+    assert data["pairs"][0, 0].tolist() == ([1, 1] if operation == "copy" else [1, 0])
+    assert int(data["mask"].sum()) == (5 if operation == "copy" else 25)
+    before = data["pairs"].clone()
+    assert not positive_pairs(data["pairs"][0], data["mask"][0], {"operand1": [5]}).any()
+    assert torch.equal(before, data["pairs"])
+    # Learned compatibility is differentiable back into encoder representations.
+    torch.nn.init.constant_(head.score.layers[-1].weight, 0.01)
+    head(data)[data["mask"]].sum().backward()
+    assert fields.grad.abs().sum() > 0 and atoms.grad.abs().sum() > 0
+
+
+def test_joint_operand_model_warm_start_and_grounded_calculation(tokenizer, settings, model):
+    from newsvendor.structured_inputs import OPS
+    from newsvendor.structured_model import extract
+    from newsvendor.structured_train import import_core
+
+    joined = Router(copy.deepcopy(model.encoder), {**settings, "jointOperands": True})
+    import_core(joined, model.state_dict())
+    for name, value in model.state_dict().items():
+        assert torch.equal(value, joined.state_dict()[name])
+    with torch.no_grad():
+        for name, selected in [
+            ("mode", MODES.index("compute")),
+            ("relation", OPS.index("subtract")),
+        ]:
+            layer = joined.heads[name].layers[-1]
+            layer.weight.zero_()
+            layer.bias.fill_(-100)
+            layer.bias[selected] = 100
+    view = prepare(
+        payload("value", tables=[{"id": "table", "cells": [["10", "2", "8"]]}]),
+        tokenizer,
+        settings,
+    )
+    output = joined(view)
+    # The selected pair's order, values and source cells must reach the calculator.
+    pair = next(i for i, p in enumerate(output["operandPairs"][0]) if p.int().tolist() == [0, 1])
+    output["operandJoint"][0] = -100
+    output["operandJoint"][0, pair] = 100
+    field = extract(view, output)[0]
+    assert field["value"] == 8
+    assert field["expression"]["operands"] == [view["atoms"][i]["location"] for i in [0, 1]]
+
+
+def test_joint_operand_loss_reaches_pair_head_and_encoder(tokenizer, settings, model):
+    from newsvendor.structured_train import import_core
+
+    joined = Router(copy.deepcopy(model.encoder), {**settings, "jointOperands": True})
+    import_core(joined, model.state_dict())
+    view = prepare(
+        payload("value", documents=[{"id": "doc", "title": "price", "text": "10 2 8"}]),
+        tokenizer,
+        settings,
+    )
+    output = joined(view)
+    pair = output["operandPairs"][0, 0].int().tolist()
+    target = {"fields": [{"operand1": [pair[0]], "operand2": [pair[1]]}]}
+    loss, terms = objective(output, target)
+    assert "operandPair" in terms and torch.isfinite(loss)
+    loss.backward()
+    assert joined.operand_pairs.score.layers[-1].weight.grad.abs().sum() > 0
+    assert joined.encoder.embeddings.tok_embeddings.weight.grad.abs().sum() > 0
+
+
 def test_accounting_cell_signs_preserve_evidence_without_negating_footnotes(tokenizer, settings):
     texts = ["(8,186)", "$(793)", "($879)", "$ (1,325)", "adjustments(1)", "—", "$—"]
     value = payload(

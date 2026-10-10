@@ -1,0 +1,58 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "parent": "results/l40s-research-recovery-v1/base/42/model.pt",
+  "parentWeightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "registeredAt": "2026-10-10T02:58:27.536462+00:00",
+  "sourceHash": "1623779106ccf7168b36a9349b064e969006ae6b4ae6f094f18ceaf8e37000d4",
+  "scriptHash": "f91554562ec838ce80cc4466080d592e97b414a7f32975187630702ec2bea0fa",
+  "files": {
+    "/dev/shm/newsvendor-operand-refit-v1/report.json": "8201562ca23343ceff47859e8d17f51bba9acd784fe794ffefecdcb79f67a84f",
+    "/dev/shm/newsvendor-operand-refit-v1/refit-42.pt": "e676a3c31743a43452bf5ac3ae3297375a5f07833777cdb6d238dc83a2bbc07f",
+    "/dev/shm/newsvendor-operand-refit-v1/refit-43.pt": "5eac46aca4c3d61239ae803419653c526b077bfbdc008da64201234a0a997c2f",
+    "/dev/shm/newsvendor-operand-refit-v1/refit-44.pt": "9812290d40e996185b27bcbcc358247594be56585c608378f2f7bf8628f33257",
+    "results/l40s-research-recovery-v1/base/42/model.pt": "5776ff708338ec6ffd6cb952d6d763e0b66ad51bfe6aa40678a3fcd560c9484e",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "tests/test_response_eval.py": "e281516b35c6a78940afb2f29cd31d877b556dcf068e7ad1bcc7fb1d833eb34c",
+    "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl": "66bd0d584bfed7fd16cf78920d8224d84c959c6f70319b8050d13ae65710f10b",
+    "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl": "4cd9562a5dbf24c0066764465a816f95f337d266f5556b5c49fa0341c321dc14",
+    "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9",
+    "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl": "400ce91c8fe41b84d74863e264c7346f23c4924bdde9868eac51a7acf4cc433f",
+    "data/processed/complementary/manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "data/processed/complementary/inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "data/processed/complementary/labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "data/processed/complementary/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e",
+    "/dev/shm/newsvendor-operand-sequential-v2/report.json": "f68cab590aa8556c8fe03fe8c90c61644a9db8207096a5ac1458730e942472f2"
+  },
+  "refit": "/dev/shm/newsvendor-operand-refit-v1",
+  "split": "dev",
+  "cohorts": [
+    {
+      "name": "generated",
+      "inputs": "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl"
+    },
+    {
+      "name": "retail",
+      "inputs": "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl"
+    }
+  ],
+  "counts": {
+    "generated": 60,
+    "retail": 336
+  },
+  "output": "/dev/shm/newsvendor-operand-dev-v1",
+  "primary": 42,
+  "testUsed": false,
+  "newSourceHoldoutUsed": false,
+  "trainingPerformed": false,
+  "protocol": "Use all 258 original public Dev cases, 60 generated cases and 336 retail cases at all 16 response masks. Every fixed seed must improve strict TAT-QA answer accuracy, preserve other public retention metrics and pass the same sequential research retention gates. No fallback seed, epoch or inference mode selection on Dev. Main seed 42 fixed. Neither protected Test nor the frozen 27-source holdout is evaluated.",
+  "devGate": "Use all 258 original public Dev cases, 60 generated cases and 336 retail cases at all 16 response masks. Every fixed seed must improve strict TAT-QA answer accuracy, preserve other public retention metrics and pass the same sequential research retention gates. No fallback seed, epoch or inference mode selection on Dev. Main seed 42 fixed. Neither protected Test nor the frozen 27-source holdout is evaluated.",
+  "trainReport": "/dev/shm/newsvendor-operand-sequential-v2/report.json",
+  "publicDataset": "data/processed/complementary"
+}
