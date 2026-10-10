@@ -1,0 +1,45 @@
+{
+  "refit": "/dev/shm/newsvendor-recovery-balanced-refit-v1",
+  "output": "/dev/shm/newsvendor-recovery-balanced-dev-v1",
+  "checkpoint": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "scriptHash": "1de3973db9d1966d8a32a72a28f1f439cc0055a610c5d518481d2355e6aae9bc",
+  "files": {
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/report.json": "3ae530767af1b3c1a506f4f4e4d95c59a6d7cd2a72049cfef2b55c93f2b4222b",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "docs/evidence/research-response-state-results.json": "dbff8f3d2a63fb0adff800132b5971063f1d0c2b783a4ee76d41f483d47ccff7",
+    "results/research-checks/recovery-balance/sequential.py": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-42.pt": "7ce134e30a0b8f02b7f1964c0c8bcccc2cc4c53429b6535168b845251d536b7a",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-43.pt": "af95177bdc695d9026b31fa1daabcaaf2c3f56aef098a5175a147ebd31671bcc",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-44.pt": "93248959a547fc31fac3aadaa2e3d067a7d3bce34cd866a7cccf61702791ecd4",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/uniform-42.pt": "9d7d0bccc9743e2c756611bce6b9ed753be6e64831562eaa838e8879f7ff7933",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/uniform-43.pt": "c55be8df644f171dddef922527bc1c157f1557f13c4c06ef5816b40ada91028d",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/uniform-44.pt": "411a1a765337ba3520621a40d8fa621d6cc1862e826af212617375c9997fc7d8",
+    "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl": "66bd0d584bfed7fd16cf78920d8224d84c959c6f70319b8050d13ae65710f10b",
+    "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl": "4cd9562a5dbf24c0066764465a816f95f337d266f5556b5c49fa0341c321dc14",
+    "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9",
+    "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl": "400ce91c8fe41b84d74863e264c7346f23c4924bdde9868eac51a7acf4cc433f",
+    "data/processed/complementary/manifest.json": "b60306832580829de1574e47803b7f6501cc8f16a776e7ad3b8b2dce769be5d1",
+    "data/processed/complementary/inputs.jsonl": "206614c5ca9e67905629ee515a383216f6b89e42bd8f01a5f15bc28c762632b1",
+    "data/processed/complementary/labels.jsonl": "4fa6d904a7d6b0a5b1af2cae2d6d1db27605201ad148ed7132186c48f3aee066",
+    "data/processed/complementary/collection.jsonl": "eeb535b5b6d14df2db4d3c81ba52624d825fcc42c58596e94fadb2b660b68a9e"
+  },
+  "cohorts": {
+    "generated": "/dev/shm/newsvendor-response-state-generated-v1",
+    "retail": "/dev/shm/newsvendor-response-state-retail-v1"
+  },
+  "publicDataset": "data/processed/complementary",
+  "reference": "docs/evidence/research-response-state-results.json",
+  "scope": {
+    "scope": "Frozen full-refit heads, all three seeds. Same original 60 generated Dev cases and 336 retail Dev conditions; evaluate all 16 channel-availability patterns and weight at 0, 0.1 and 0.2. No Test or frozen 27-source use.",
+    "reference": "docs/evidence/research-response-state-results.json",
+    "gates": "Every balanced seed must worsen neither benchmark relative to its uniform refit and the retained parent: generated mean total and retail mean total on complete periods at all three response rates. No more false handoffs or requests for already resolved fields; no lower final parameter/state/evidence accuracy. Under retail no-dropout, retain all required requests, recoveries and handoffs. Public document metrics must not decrease. At least one actual mean total must strictly improve over the retained parent across all seeds; candidate remains fixed seed 42, not a post-hoc best seed.",
+    "interpretation": "Report terminal loss and request costs separately; controlled documents and responses do not establish organizational effectiveness. Retain unchanged model if any required gate fails."
+  },
+  "allHeadsFrozen": true,
+  "testUsed": false,
+  "trainingAllowed": false,
+  "samplingConditionUnchanged": true
+}

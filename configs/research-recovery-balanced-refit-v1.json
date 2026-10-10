@@ -1,0 +1,49 @@
+{
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 40,
+  "batchSize": 64,
+  "lr": 0.001,
+  "rankWeight": 0.25,
+  "mixture": 0.5,
+  "retainedModel": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "retainedModelSha256": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+  "encoded": "/dev/shm/newsvendor-recovery-replay-v1",
+  "numeric": "/dev/shm/newsvendor-recovery-numeric-v1",
+  "balanced": "/dev/shm/newsvendor-recovery-balanced-v1",
+  "sequential": "/dev/shm/newsvendor-recovery-balanced-sequential-r2",
+  "output": "/dev/shm/newsvendor-recovery-balanced-refit-v1",
+  "scriptHash": "31d4c8a8dea29991d7a148bf99cbdcc41c477d3a0fa024d23429ade795050c3c",
+  "files": {
+    "/dev/shm/newsvendor-recovery-balanced-sequential-r2/report.json": "84de9da8cd1f02e9cfaa3a9b4e35e3b74637aa074eb8c50fa86efdbd62c0a551",
+    "/dev/shm/newsvendor-recovery-balanced-v1/report.json": "a72500063d7d8bdc6f48a74a4f13f3e68e82193ff2b1a6e3ca7314a71b86b707",
+    "/dev/shm/newsvendor-recovery-numeric-v1/report.json": "21d5eb77201507c0b5de5bfbf54c4c93ea968ecdfb88533cf54ef5baffa0ff6d",
+    "/dev/shm/newsvendor-recovery-numeric-v1/features.pt": "3a05fb5932d892bbd0bc07639412a618849e85eb58d1c9a0748670db0b0bcf55",
+    "/dev/shm/newsvendor-recovery-replay-v1/targets.jsonl": "7ba5762244eb842f55d020c9c066e78e3967594c139d21fdbec066815e8b2a84",
+    "scripts/study_recovery_sampling.py": "fa8b028025a03b12ac13f6b54cf58401775619368c52e9bb148cf877958e3906",
+    "docs/evidence/research-response-state-results.json": "dbff8f3d2a63fb0adff800132b5971063f1d0c2b783a4ee76d41f483d47ccff7"
+  },
+  "parentWeightsHash": "736836c735ab9e61662ea14371b699139bd60f00d80a7fdfd40e6b7139b6137e",
+  "selectedEpochs": {
+    "uniform-42": 3,
+    "uniform-43": 6,
+    "uniform-44": 11,
+    "balanced-42": 21,
+    "balanced-43": 34,
+    "balanced-44": 25
+  },
+  "scope": "Both conditions refit all 1204 Train states / 85 source families. Same initial weights and 40 epochs x 19 updates x 64 draws, same actual targets and optimizer. Capture fixed epochs from the completed source-held screen; do not reselect from full-Train or Dev scores. Preserve final heads, fixed selected heads, both optimizer states, every batch and epoch loss.",
+  "devPlan": {
+    "scope": "Frozen full-refit heads, all three seeds. Same original 60 generated Dev cases and 336 retail Dev conditions; evaluate all 16 channel-availability patterns and weight at 0, 0.1 and 0.2. No Test or frozen 27-source use.",
+    "reference": "docs/evidence/research-response-state-results.json",
+    "gates": "Every balanced seed must worsen neither benchmark relative to its uniform refit and the retained parent: generated mean total and retail mean total on complete periods at all three response rates. No more false handoffs or requests for already resolved fields; no lower final parameter/state/evidence accuracy. Under retail no-dropout, retain all required requests, recoveries and handoffs. Public document metrics must not decrease. At least one actual mean total must strictly improve over the retained parent across all seeds; candidate remains fixed seed 42, not a post-hoc best seed.",
+    "interpretation": "Report terminal loss and request costs separately; controlled documents and responses do not establish organizational effectiveness. Retain unchanged model if any required gate fails."
+  },
+  "devUsed": false,
+  "testUsed": false
+}

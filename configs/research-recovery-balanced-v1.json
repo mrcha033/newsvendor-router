@@ -1,0 +1,47 @@
+{
+  "encoded": "/dev/shm/newsvendor-recovery-replay-v1",
+  "numeric": "/dev/shm/newsvendor-recovery-numeric-v1",
+  "output": "/dev/shm/newsvendor-recovery-balanced-v1",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "scriptHash": "fa8b028025a03b12ac13f6b54cf58401775619368c52e9bb148cf877958e3906",
+  "files": {
+    "/dev/shm/newsvendor-recovery-replay-v1/report.json": "e5e74b18b227503b603d0f9ad8d379a4869c5a5b10cfb92bb1b375d86c624da4",
+    "/dev/shm/newsvendor-recovery-replay-v1/targets.jsonl": "7ba5762244eb842f55d020c9c066e78e3967594c139d21fdbec066815e8b2a84",
+    "/dev/shm/newsvendor-recovery-numeric-v1/report.json": "21d5eb77201507c0b5de5bfbf54c4c93ea968ecdfb88533cf54ef5baffa0ff6d",
+    "/dev/shm/newsvendor-recovery-numeric-v1/features.pt": "3a05fb5932d892bbd0bc07639412a618849e85eb58d1c9a0748670db0b0bcf55",
+    "scripts/study_recovery_replay.py": "d5cb3a40a99baefa1509114b99ba43254101da39afd4ae4ab169ea6efdf7727c",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "results/research-checks/recovery-balance/diagnostic.json": "f2c09a2f44a7dd9c02da39d5cc23a4f39f0be4ca106dfe9d80a172b5f2dfc5c8",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-42.pt": "3a5b7d37e04dae90670dcf9fed31ea770b7cb666cf1392a677e83f23cf0b5610",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-43.pt": "de4275e05a62aede93c9c0954a2fd2e26e3a20e1e8d1dca20769c70aadc4ca96",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-44.pt": "ec4bef50010ce714700bb08027b4ea7b4266e3e1e72c1e1c743c273f268d238e"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 40,
+  "batchSize": 64,
+  "lr": 0.001,
+  "rankWeight": 0.25,
+  "mixture": 0.5,
+  "scope": "Same 1204 cached observed Train states, 11044 sampled parent-continuation rollouts, 928 fit / 276 held states, frozen encoder and 350->128->2 numeric head. Reuse completed uniform-control runs whose exact inputs, initial weights and update budgets are pinned; do not retrain identical controls.",
+  "sampling": "Half uniform across fitting states; half uniform across benchmark, observed response category, source family, and state. Categories are initial/answered/partial/unanswered from past request answers only, excluding retrieval. No losses, correctness, state labels, hidden environment or held-source data in probabilities.",
+  "hypothesis": "Four retail fitting states have a failed mandatory response and a remaining query (0.431% of uniform samples). Their initial mean gradient opposes the global mean (cosine -0.794), while inherited Tanh activations frequently saturate. Change sampling alone; this experiment does not isolate or claim to fix saturation.",
+  "gates": "All three seeds must improve chosen-action held-Train target loss over their numeric uniform control, worsen neither benchmark and add no expected false handoffs. Keep the identical equal-family/equal-benchmark criterion, with the initial head eligible and earliest strict improvement selected. Only then compare actual sequential Train outcomes with independently sampled responses before any full refit/Dev validation.",
+  "sequentialTrainCheck": {
+    "responseSeed": 211,
+    "samples": 4,
+    "noise": {
+      "retail": 0.1,
+      "generated": 0.0
+    },
+    "requirement": "Compare each inner selected candidate and its corresponding uniform head on the same original Train episodes and common response draws. Require lower equal-benchmark normalized mean loss across all three seeds, neither benchmark worse, and no more false handoffs. Finite controlled Train check, not independent effectiveness."
+  },
+  "devUsed": false,
+  "testUsed": false,
+  "retainedModel": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "retainedModelSha256": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a"
+}

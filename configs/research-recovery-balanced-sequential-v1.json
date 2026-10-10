@@ -1,0 +1,37 @@
+{
+  "encoded": "/dev/shm/newsvendor-recovery-replay-v1",
+  "numeric": "/dev/shm/newsvendor-recovery-numeric-v1",
+  "balanced": "/dev/shm/newsvendor-recovery-balanced-v1",
+  "output": "/dev/shm/newsvendor-recovery-balanced-sequential-r2",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "scriptHash": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+  "files": {
+    "/dev/shm/newsvendor-recovery-replay-v1/report.json": "e5e74b18b227503b603d0f9ad8d379a4869c5a5b10cfb92bb1b375d86c624da4",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf",
+    "/dev/shm/newsvendor-recovery-balanced-v1/report.json": "a72500063d7d8bdc6f48a74a4f13f3e68e82193ff2b1a6e3ca7314a71b86b707",
+    "/dev/shm/newsvendor-recovery-numeric-v1/report.json": "21d5eb77201507c0b5de5bfbf54c4c93ea968ecdfb88533cf54ef5baffa0ff6d",
+    "results/l40s-research-forecast-v1/base/42/model.pt": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-42.pt": "3a5b7d37e04dae90670dcf9fed31ea770b7cb666cf1392a677e83f23cf0b5610",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-43.pt": "de4275e05a62aede93c9c0954a2fd2e26e3a20e1e8d1dca20769c70aadc4ca96",
+    "/dev/shm/newsvendor-recovery-numeric-v1/continuations-44.pt": "ec4bef50010ce714700bb08027b4ea7b4266e3e1e72c1e1c743c273f268d238e",
+    "/dev/shm/newsvendor-recovery-balanced-v1/balanced-42.pt": "40b47b0fe8d79d74b547296ecad2c03a6a0df52a9adda047c4877b6275df9c32",
+    "/dev/shm/newsvendor-recovery-balanced-v1/balanced-43.pt": "24c3e1c849f7500034c6975efe0c2f91a850f35719ba9815bf4596b751fde698",
+    "/dev/shm/newsvendor-recovery-balanced-v1/balanced-44.pt": "2d22959f0a7db6d49f602c998f6bce6a00e105cabd2df10ff0a795a164546a57"
+  },
+  "scope": "Execute the exact sequential Train gate already specified before balanced-head training. The response environment uses the same field-specific random draw across policies, independent of request order. Reuse deterministic constructor/encoder outputs by complete observed view; recompute each new head and verify direct forward parity. No training and no Dev/Test.",
+  "runtimeCorrection": {
+    "previousOutputs": [
+      "/dev/shm/newsvendor-recovery-balanced-sequential-v1",
+      "/dev/shm/newsvendor-recovery-balanced-sequential-r1"
+    ],
+    "reason": "First-view cache serialization needed tensor values and tuple dictionary keys. Both failed before any completed rollout. Typed recursive canonical form passes 12 actual Train views, reordered dictionaries, changed tensor types/shapes/values and tuple-key checks. No weight, case, seed or criterion change.",
+    "previousRegistration": [
+      "results/research-checks/recovery-balance/sequential-failed-registration.json",
+      "results/research-checks/recovery-balance/sequential-r1-failed-registration.json"
+    ],
+    "preflight": "results/research-checks/recovery-balance/cache-key-check.json"
+  }
+}
