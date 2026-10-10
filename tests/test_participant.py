@@ -239,6 +239,8 @@ def test_ending_export_is_separate_from_practice_and_contains_no_secrets(study):
 def test_material_or_protocol_edits_cannot_silently_change_a_live_study(study):
     root, _, _ = study
     config = read(root / "config.json")
+    for path in ("src/newsvendor/optimizer.py", "src/newsvendor/construction.py", "uv.lock"):
+        assert config["codeHashes"][path] == hashlib.sha256(Path(path).read_bytes()).hexdigest()
     config["target"] = 8
     write(root / "config.json", config)
     with pytest.raises(ValueError, match="changed"):

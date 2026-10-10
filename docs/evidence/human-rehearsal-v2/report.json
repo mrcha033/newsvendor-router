@@ -1,0 +1,20 @@
+{
+  "humanParticipants": 0,
+  "softwareParticipants": 4,
+  "practiceSubmissions": 8,
+  "mainSubmissions": 32,
+  "totalSubmissions": 40,
+  "arms": [
+    "control",
+    "ai",
+    "ai",
+    "control"
+  ],
+  "pageErrors": [],
+  "refreshResume": true,
+  "managerRequests": 80,
+  "sourceAnswersAbsentFromPayload": true,
+  "exportVerified": true,
+  "personalInvitationURLs": true,
+  "scope": "Browser and data-pipeline rehearsal; not human treatment-effect evidence"
+}

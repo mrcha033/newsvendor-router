@@ -42,10 +42,16 @@ TRANSLATIONS = [
 
 
 def code_hashes():
-    return {
-        str(p.relative_to(HERE)): hashlib.sha256(p.read_bytes()).hexdigest()
-        for p in sorted(HERE.rglob("*"))
+    root = HERE.parents[1]
+    paths = [
+        p
+        for p in HERE.rglob("*")
         if p.is_file() and p.suffix in (".py", ".js", ".css", ".html", ".json")
+    ]
+    paths += list((root / "src/newsvendor").glob("*.py"))
+    paths += [root / "pyproject.toml", root / "uv.lock"]
+    return {
+        str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(paths)
     }
 
 

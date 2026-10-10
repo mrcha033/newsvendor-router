@@ -7,10 +7,10 @@
   "defaultTargetRandomized": 128,
   "targetInterpretation": "Planning assumption: half-SD effect on participant means; not a measured human variance or validated economic MDE",
   "kit": {
-    "path": "results/human-experiment-kit-v1.zip",
-    "sha256": "6fd435b40f0d565b8a39c246990610333d15d65f599c6848cf675835491d9f95",
-    "bytes": 444402,
-    "members": 87,
+    "path": "results/human-experiment-kit-v2.zip",
+    "sha256": "0a264ef3695a12cda6d011c8f0dfb893f781eccd288ea6abcff76df2ee12c654",
+    "bytes": 449948,
+    "members": 88,
     "availability": "Operator artifact in shared workspace; not committed with hidden task answers. Fresh-clone material regeneration is documented in experiments/participant/README.md."
   },
   "code": {
@@ -23,8 +23,8 @@
       "bytes": 14473
     },
     "experiments/participant/app.py": {
-      "sha256": "60cb1766ec1f6f99b4d2ebba6c2094e9b44d7e446933c6402ba1f102e9058609",
-      "bytes": 33287
+      "sha256": "49befc1d0b5cd9c7ba086a92fdcfb94fb0e0cd2d0ac1ad848ddc3b619f2f8b06",
+      "bytes": 33474
     },
     "experiments/participant/prepare.py": {
       "sha256": "998ea921fb417337dcdfb718eaf143beed842c61d5934e59ab78b1b18bef6b3c",
@@ -123,35 +123,23 @@
     "scope": "Browser and data-pipeline rehearsal; not human treatment-effect evidence"
   },
   "rehearsalFiles": {
-    "docs/evidence/human-rehearsal-v1/ai-desktop.png": {
-      "sha256": "de6e42e64a9aeeff7cfe2aa22e09816fb53b0a16dc8b98dd199e0d62bd0032fb",
-      "bytes": 189079
-    },
-    "docs/evidence/human-rehearsal-v1/analysis.json": {
-      "sha256": "a28c5eb0562e6371c94033f80577ba5a267836e6136c01146c10176ef9608695",
+    "docs/evidence/human-rehearsal-v2/analysis.json": {
+      "sha256": "441bfafa4212f57e52cb79fe8ba5048510515a43e24cafe88fa8a77d86e7248e",
       "bytes": 2976
     },
-    "docs/evidence/human-rehearsal-v1/analysis.md": {
+    "docs/evidence/human-rehearsal-v2/analysis.md": {
       "sha256": "5afca52d8a94bf2b470b6af29627bb84c3effbcbc3adef2f001cf916e930b20b",
       "bytes": 863
     },
-    "docs/evidence/human-rehearsal-v1/control-desktop.png": {
-      "sha256": "575360f0d1762209cf281b89dd7c5ad2263bc621409ed6b2c3da385b842c09f9",
-      "bytes": 141434
-    },
-    "docs/evidence/human-rehearsal-v1/mobile.png": {
-      "sha256": "3e0433d5b3c1bf20aac94121c1ebc85a555db2e9c8756d557c7bda3b8b45c443",
-      "bytes": 144392
-    },
-    "docs/evidence/human-rehearsal-v1/report.json": {
+    "docs/evidence/human-rehearsal-v2/report.json": {
       "sha256": "e39554c8de1f812309c0ca8077ff107de700ed198e3812555f1d3ad0f66824a2",
       "bytes": 462
     }
   },
   "rawRehearsalExport": {
-    "path": "docs/evidence/artifacts/human-rehearsal-v1.zip",
-    "sha256": "ee5bc0e30537b128930ba6d77d286350d55eb191b07474128170cfef9afba1ac",
-    "bytes": 41640
+    "path": "docs/evidence/artifacts/human-rehearsal-v2.zip",
+    "sha256": "973483d2ef1297571f032ffa64d46d876cb5db9e9f12b591c8917550548cafa3",
+    "bytes": 44757
   },
   "wordGuide": {
     "source": "docs/human-study-guide.md",
@@ -161,6 +149,12 @@
     "bytes": 17398,
     "pandocVersion": "3.6.1",
     "verifiedText": true
+  },
+  "runtimeCodeFreeze": "Experiment code, common scoring source, pyproject.toml and uv.lock are all hashed at initialization and checked on restart",
+  "previousKit": {
+    "path": "results/human-experiment-kit-v1.zip",
+    "sha256": "6fd435b40f0d565b8a39c246990610333d15d65f599c6848cf675835491d9f95",
+    "bytes": 444402
   },
   "proposal": {
     "path": "docs/proposal.docx",
@@ -172,7 +166,7 @@
   "tests": {
     "passed": 407,
     "log": {
-      "sha256": "525b19b61125b339a8a9cf83dfac1da35ffe519c4afd8e48b69eb5c4ed810772",
+      "sha256": "675713bedccaf6c9a7441b4a3042b0a5b771c06ace28cd4195204017caf98612",
       "bytes": 501
     }
   },
@@ -185,7 +179,8 @@
     "No external preregistration or institutional approval claimed"
   ],
   "additionalChecks": {
-    "path": "docs/evidence/ai-human-checks.json",
-    "sha256": "4c7f6b9fad0a891b20ed2f18870fe431d77bc538c1360a509d8ec8dc467e50e8"
-  }
+    "path": "docs/evidence/human-freeze-checks.json",
+    "sha256": "8735311bb5a7d061e5aaa5819c356cba76acd7c4757f90edb7cb653069ad232f"
+  },
+  "previousReadinessCommit": "3bef2991fc3ef29da8537f54238e071a3c23d740"
 }
