@@ -2,9 +2,52 @@
   "originalName": "1팀_중간_팀_과제_프로포절.docx",
   "originalSha256": "a3f8084527435cf4c0bb1894aac029e16dd7c2bf289c3dfc4e5c138aa5f24a15",
   "originalBytes": 1169222,
-  "sha256": "0c1c2f5cf68983fc0f97565822a21a7edd9b620291f0a9bc88182687c1e7d11b",
-  "bytes": 1163350,
-  "revision": 10,
-  "updatedAt": "2026-10-07T05:51:54Z",
-  "implementationCommit": "6d3acf33fefe8093eb7436727ce136a8623f4beb"
+  "sha256": "f66e53110e5b8878acf11431b895ac62aa22512875aa069cbfce9fb940a13c29",
+  "bytes": 19979,
+  "revision": 12,
+  "updatedAt": "2026-10-10",
+  "canonicalSource": "docs/research.md",
+  "canonicalSourceSha256": "0f2cdd0ec21b4e3dab0971987e4b1d2bbbcd141d6b79e263a1bc5c0fb17260d8",
+  "exportScript": "scripts/export_proposal.py",
+  "exportScriptSha256": "a138304aa10b003facd5fd2440084bb586c32e3ff612a9c66055bcc214f0c849",
+  "pandocVersion": "3.6.1",
+  "wordEquations": 7,
+  "previousDocuments": {
+    "sourceCommit": "3dba348bd4742e82d8211a5db0adcbbe50831396",
+    "reason": "Preserve exact documents before consolidation around mathematical modeling and regression",
+    "path": "docs/evidence/artifacts/research-documents-before-economics-v1.tar.xz",
+    "sha256": "0d2fecce209263c186aad9cb2ec2989657a002e0f6f15d109283455dabdd0506",
+    "bytes": 1069160,
+    "files": {
+      "README.md": {
+        "sha256": "3955c5d95295038e1aa2ec5587c3597ea419bd5c9d142d0816822bf087ccb6ee",
+        "bytes": 23419
+      },
+      "docs/research-scope.md": {
+        "sha256": "59a23c5c9f0025577dbd5a8352752a8cac5ecf2bf9f36b391832be898912de6a",
+        "bytes": 57228
+      },
+      "docs/protocol.md": {
+        "sha256": "c0136cf64d42a160b2ef03898731244d2ef29eac449c76ba2b4f295a0fa215f8",
+        "bytes": 24648
+      },
+      "docs/performance-goal.md": {
+        "sha256": "6ebd1f7a56891b9ab6abc6fb79f59c4bd1d97d40fa0e594850363519ef347c54",
+        "bytes": 80605
+      },
+      "docs/verification.md": {
+        "sha256": "13beb3e67b35eb249f89b578abb08accc1ace956d5d35f52de7f4ce77f93e8c6",
+        "bytes": 8568
+      },
+      "docs/proposal.docx": {
+        "sha256": "0c1c2f5cf68983fc0f97565822a21a7edd9b620291f0a9bc88182687c1e7d11b",
+        "bytes": 1163350
+      },
+      "docs/source.json": {
+        "sha256": "654df5071e4c436ccecdbeab03573a28b3dfa084891dc114f786750dbc79b4fb",
+        "bytes": 408
+      }
+    }
+  },
+  "measurementBaseCommit": "3dba348bd4742e82d8211a5db0adcbbe50831396"
 }

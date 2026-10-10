@@ -28,7 +28,7 @@ jobs:
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
           scripts/compose_recovery.py scripts/study_span_supervision.py
           scripts/cache_operands.py scripts/study_operands.py scripts/refit_operands.py scripts/evaluate_operands.py
-          scripts/evaluate_parameters.py
+          scripts/evaluate_parameters.py scripts/analyze_decisions.py scripts/export_proposal.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
           docs/evidence/scripts/reproduce-operands.py
           docs/evidence/scripts/reproduce-parameters.py
@@ -46,11 +46,16 @@ jobs:
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
           scripts/compose_recovery.py scripts/study_span_supervision.py
           scripts/cache_operands.py scripts/study_operands.py scripts/refit_operands.py scripts/evaluate_operands.py
-          scripts/evaluate_parameters.py
+          scripts/evaluate_parameters.py scripts/analyze_decisions.py scripts/export_proposal.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
           docs/evidence/scripts/reproduce-operands.py
           docs/evidence/scripts/reproduce-parameters.py
       - run: uv run pytest -q
+      - name: Analyze the published paired Dev measurements
+        run: >-
+          uv run python scripts/analyze_decisions.py
+          --config configs/research-economics-v1.json
+          --output results/ci-decision-effects
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval
       - name: Check research inputs and source-family separation

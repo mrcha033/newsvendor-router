@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "status": "exploratory-existing-dev",
+  "createdAt": "2026-10-10",
+  "objective": "Paired decoder-modification effects and source-deletion sensitivity, not AI adoption",
+  "sourceCommit": "3dba348bd4742e82d8211a5db0adcbbe50831396",
+  "split": "dev",
+  "newModelInference": false,
+  "trainingPerformed": false,
+  "testUsed": false,
+  "conditions": [
+    "original",
+    "wrong_sku",
+    "wrong_period",
+    "older_version",
+    "refund_order"
+  ],
+  "methods": [
+    "parent",
+    "scoped"
+  ],
+  "responseCondition": "no additional missing-response mask",
+  "counts": {
+    "generated": 60,
+    "retail": 336
+  },
+  "metrics": {
+    "retail": [
+      "total",
+      "terminal",
+      "requestCost",
+      "unnecessaryRequests",
+      "necessaryRequests",
+      "neededRecovered",
+      "parameterAccuracy",
+      "falseHandoff"
+    ],
+    "generated": [
+      "total",
+      "terminal",
+      "requestCost",
+      "interactions",
+      "falseHandoff"
+    ]
+  },
+  "missingOutcomeRule": "Exclude both paired exact-loss outcomes only when both are unavailable; retain all other metrics",
+  "regression": "scoped_minus_parent ~ 1 + document_condition (reference original)",
+  "postTreatmentControls": [],
+  "inference": "No p values or confidence intervals. Equal-source weighting and leave-one-source-out ranges are descriptive.",
+  "files": {
+    "docs/evidence/research-parameter-decoding-results.json": "d4fdc91838834f270004447eee33df67ce74e770b371ed3673568914d35bcbfa",
+    "docs/evidence/artifacts/parameter-decoding-records-v2.tar.xz": "cab8b2bcfee0be638d0359097bb34ef0afc36d85b89e52c6cb8a8362e7e03d00",
+    "docs/evidence/artifacts/parameter-decoding-dev-raw-v2.tar.xz": "10ba88f4837cbc63c2625c563051da7846bc11907e48fe32a2c9805b1db5aaf9"
+  }
+}

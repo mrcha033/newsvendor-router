@@ -1,139 +1,55 @@
-# Newsvendor Decision Router
+# AI와 발주 의사결정의 경제적 효과
 
-문서와 판매 이력에서 **발주 모수와 근거를 구성하고, 부족한 값은 매니저에게 질문하는 작은 모델**의 연구 저장소입니다. 연구 모형의 원안은 [프로포절](docs/proposal.docx)에 보존합니다.
+문서와 판매 이력에서 발주 모수를 구성하고, 부족한 정보를 매니저에게 요청하는 Newsvendor 연구입니다. **AI의 정보처리·질문이 어떤 조건에서 의사결정 손실을 줄이는지 수리 모형과 통제 실험·회귀분석으로 설명**하는 데 중심을 둡니다.
 
-2026-10-09 주 연구를 **ModernBERT + 작은 수요 GRU + 모수·근거·상태 head + 소수의 정보 요청 행동**으로 집중했습니다. 문서와 판매 이력에서 Newsvendor 입력을 구성하고, 부족한 모수를 매니저에게 물어 갱신한 뒤 공통 optimizer로 발주량을 계산합니다. 주 실행은 `scripts/run_research.py`이며 범용 ABCD 도구·업무 절차 모듈은 포함하지 않습니다. 최신 결과·평가 분모·남은 과제는 [연구 범위와 검증 기록](docs/research-scope.md)을 기준으로 읽습니다. 범용 도구 확장·ABCD 결과는 [보조 실험 이력](docs/structured-history.md)에 보존합니다.
+## 읽는 순서
 
-## 주 모델과 현재 검증
-
-모델은 문서에서 경제 모수 `c/p/v/b`와 근거를 구성하고, 판매 이력에서 수요분포 `F`를 추정합니다. 필요한 값이 없거나 충돌하거나 매니저의 선택이 필요하면 해당 항목을 질문합니다. 응답으로 상태를 갱신한 뒤 공통 optimizer가 발주량을 계산합니다. 문장 생성은 요구하지 않습니다.
-
-| 구성 | 역할 |
+| 문서 | 역할 |
 | --- | --- |
-| 학습 가능한 ModernBERT | 원문 토큰·표 cell에서 값과 적용 조건 추출 |
-| 모수·근거·유형·상태 head | 사실·추정·선호를 구분하고 누락·충돌 및 출처 보존 |
-| 2층 GRU, hidden 128 | 판매·품절·달력 이력에서 1일/7일 수요분포의 종류·모수 추정 |
-| 정보 요청 head | 추가 근거 조회, 모수별 매니저 질문, 계산 진행 또는 보류 |
-| 계산기·optimizer | 선택된 식을 실행하고 실제 전달된 `F/c/p/v/b`로 발주량 계산 |
+| [통합 연구계획](docs/research.md) · [Word 배포본](docs/proposal.docx) | 연구 질문, 수리 모형, 가설, 효과 식별, 현재 근거와 한계 |
+| [실험 명세](docs/protocol.md) | 분석 단위·비교군·손실 정의·자료 분리와 실행 명령 |
+| [첫 탐색 회귀](docs/decision-effects.md) | 기존 공개 Dev의 구성 수정 효과와 출처별 민감도 |
+| [모델과 추론 실행](docs/model-bundle.md) | 선택 가중치·토크나이저·복원·추론 |
+| [평가·완료 기준](docs/performance-goal.md) · [검증 기록](docs/verification.md) | 무엇을 확인했으며 무엇이 아직 미완료인지 |
+| [실험 이력 색인](docs/experiment-history.md) | 이전 성공·실패·원시 기록·보조 ABCD 실험 |
 
-행동 가치 head는 같은 구성기에서 단순 질문 정책 및 가치 학습을 제거한 `no_value`와 비교합니다. 판매 이력에 연결한 통제 Dev에서는 경제 가치 학습의 추가 이점이 확인되지 않았습니다. 범용 업무 절차·도구 후보 재평가·ABCD controller는 주 경로에 포함하지 않습니다.
+2026-10-10 문서를 통합했습니다. 이전 문서 일곱 개의 원본 바이트는 [보존 압축](docs/evidence/artifacts/research-documents-before-economics-v1.tar.xz)과 [파일 hash](docs/evidence/research-document-archive.json)에 남깁니다. 과거 가중치·측정·분할을 덮어쓰지 않습니다.
 
-현재 선택 가중치는 공개 `forecast-v1`에 관측한 무응답·부분 응답 뒤에만 적용하는 작은 보정 head를 결합한 `recovery-v1`입니다. 해당 보정 비교에서는 세 seed 모두 평상시의 판단과 모수·근거를 보존했습니다. 생성 Dev 손실은 **147.6813**으로 같고, 판매 응답 누락 10%·20%의 총손실은 **71.9563 → 71.8147**, **118.1415 → 117.8583**으로 줄었습니다. 감소분은 질문 비용이며 발주 종료 손실은 같습니다. **단순 중단 규칙도 행동·결과가 모두 같아 새 가치 학습의 추가 이점은 입증하지 못했습니다.** 이전 학습 시점 선택 실패도 보존합니다. [구조·전체 비교·공개 재현](docs/recovery-scope.md)
+## 현재 상태
 
-현재 권장 추론은 같은 `recovery-v1` 가중치에 **`--parameter-decoding scoped`**를 적용합니다. 관측한 문서의 상품·기간·버전을 확인해 거부된 식을 다시 선택하고, 현재 계약 사이의 충돌을 보존합니다. L40S의 세 혼입 조건에서 초기 모수 정확도는 **56.50~57.58% → 84.72~85.29%**, 근거 정확도는 **42.25~43.67% → 79.72~80.47%**로 높아졌습니다. 판매의 불필요한 질문은 **454~475건 → 189~190건**, 정확한 총손실은 **56.2571~125.1469 → 29.8206~30.0565**로 줄었고 원래 조건의 행동·손실은 유지했습니다. 이는 가중치를 바꾼 학습 결과가 아니라 관측 근거를 처리하는 추론 수정입니다. 손실은 완전 관측 5개 기간의 35조건, 질문은 336사례의 결과이며 생성 문서에서 검증했습니다. 첫 유효 후보를 고른 대조군도 결과가 같았습니다. [수정 내용·전체 Dev 비교·실패 기록·재현](docs/parameter-decoding.md)
+선택한 실험 모델은 **ModernBERT-base + 2층 수요 GRU + 모수·근거·상태·정보 요청 head**입니다. 공개 `recovery-v1` 가중치와 `--parameter-decoding scoped` 추론 경로를 사용합니다. 실제로 구성한 `F/c/p/v/b`를 공통 optimizer에 전달하며 자연어 생성은 필요하지 않습니다.
 
-수요 GRU 선택 당시에는 문서·행동 가중치를 고정하고 **수요 GRU만 교체**했습니다. Train 출처 안에서 모수 학습 횟수를 선택한 뒤 세 seed를 비교했고, 사전 후보 seed 42가 채택 기준을 통과했습니다. 같은 통제 Dev의 평균 총손실은 **44.3274 → 24.3925**, 최종 모수·근거 정확도는 100%, 불필요한 질문·잘못된 발주 진행은 0건입니다. `no_value`·고정 질문도 24.3925로 같아 가치 head의 추가 이점은 없습니다. 정확한 총손실은 고유 기간 **5개 × 7개 조건**에 한정하며 Test로 선택하지 않았습니다. [수요 학습 수정과 세 seed 결과](docs/demand-selection.md) · [동일 구성기의 실제 발주 비교](docs/evidence/research-forecast-results.json)
+L40S의 최근 모수 구성 비교에서는 다른 상품·기간·구버전 문서가 섞였을 때 정확도·질문·발주 손실이 개선됐고 원래 조건은 유지됐습니다. 이는 고정 가중치의 추론 수정 효과이며 AI 도입 전체의 효과는 아닙니다. [전체 비교와 재현](docs/parameter-decoding.md)
 
-이후 모델을 고정하고 기존 모든 분할과 매장·상품이 겹치지 않는 **새 출처 27개**에서 별도로 평가했습니다. 같은 새 자료의 정확한 총손실은 이전 GRU **83.1514**, 새 GRU **69.0309**였습니다. 완전 관측 30개 기간·16개 출처에서의 차이 95% 구간은 **[−31.60, +3.54]**로, 평균 감소만으로 확실한 개선을 단정하지 않습니다. 주간 CRPS·관측 NLL은 개선됐지만 품절 기간 손실 하한은 높아졌고, 모수·근거 100%와 질문·회복은 같았습니다. 이 자료로 재학습하거나 모델을 교체하지 않았습니다. [새 출처 검증·전체 결과·공개 자료 재현](docs/retail-holdout.md)
+이번 탐색 분석은 공개 결과 3,960행으로 14개 짝지은 회귀·출처 제외 분석을 실행합니다. 생성 환경에서는 평균 손실이 낮아져도 조건별 60건 중 7·9·10건은 악화됐습니다. 판매의 다른 상품 조건에서 종료 손실 감소는 한 사례에 집중됐습니다. 평균 효과와 이질성을 함께 보고합니다. 현재 자료는 이미 개발에 사용한 Dev이며 실제 사람·조직 효과를 입증하지 않습니다.
 
-동일 head·자료·학습 횟수를 사용한 L40S base/large 비교는 종료됐습니다. 전체 크기는 151.85M/397.68M이며, 통제 Dev의 최종 모수·근거 정확도는 모두 100%, 완전 관측 기간의 평균 총손실은 모두 44.3274였습니다. 불필요한 질문은 base 3건, large 0건이었습니다. 정확한 손실은 **5개 고유 판매 기간 × 7개 통제 조건**에 한정하며, 문서와 매니저 응답의 통제 생성 조건을 실제 조직 효과로 해석하지 않습니다. 공개 문서 숫자 추출과 수요분포 품질에는 개선이 남아 있습니다. [비교 요약·원시 파일 hash와 지연·메모리](docs/evidence/research-paired-results.json)
+정확한 판매 손실은 고유 기간 5개·출처 4개·35조건뿐입니다. 질문은 품절 조건을 포함한 336사례에서 측정합니다. 이미 평가한 Test와 27개 출처 holdout을 새 확증 자료로 재사용하지 않습니다. AI 사용 × 매니저 질문 허용의 새 2×2 실험은 비AI 기준선·표본·검정력 설계가 필요한 다음 단계입니다.
 
-확장 문서 Train을 사용한 후속 base 학습도 완료됐습니다. 같은 TAT-QA Dev의 엄격 정답은 **0/48 → 11/48**이지만, ContractNLI 상태 정확도는 **65.28% → 62.50%**로 낮아졌습니다. [후속 문서 학습 결과](docs/evidence/research-documents-expanded-results.json)
+## 공개 자료만으로 탐색 분석 재현
 
-첫 확장 수요 학습에서는 seed 42·43·44의 주간 NLL·CRPS가 모두 악화해 당시 기존 GRU를 유지했습니다. 이 부정적인 결과도 후속 개선과 함께 보존합니다. [첫 확장 수요 비교](docs/evidence/research-demand-expanded-results.json) · [원래 생성 Dev 결과](docs/evidence/research-generated-dev-results.json)
-
-원래 생성 Train과 실제 매니저 응답 상태를 복구한 다음 학습에서는 TAT-QA 엄격 정답이 **16/48**, 생성 Dev 평균 총손실이 **147.6813**이었습니다. 생성 Dev 60건·12개 family의 결과이며 보호된 Test 목표 달성으로 해석하지 않습니다. 새 가치 학습 후보는 채택되지 않아 구성기 재학습 이후의 개선으로 기록합니다. [재학습 결과](docs/evidence/research-replay-results.json) 같은 구성기의 `no_value`와 고정 질문 정책은 생성 Dev에서 181.6758이었습니다. [정책 비교](docs/evidence/research-replay-no-value-results.json)
-
-GRU 교체 전 replay-v1을 고정한 **생성 Test 120건의 총손실은 243.6274**로 목표 240.35 미만에 미달했습니다. `no_value`와 고정 질문은 263.2379였습니다. 판매 이력에 연결한 Test 504사례의 모수·근거는 100%, 불필요한 질문·잘못된 발주 진행은 0건이지만, 정확한 손실 비교는 고유 기간 9개에 한정됩니다. 이 측정을 새 통합 모델의 Test 결과로 표시하지 않습니다. [기존 모델의 고정 Test 결과와 제한](docs/evidence/research-core-test-results.json)
-
-후속 Train 감사에서 행동 head의 텍스트 입력이 잘리면서 현재 모수 일부가 전달되지 않는 결함을 확인했습니다. 수치 상태를 직접 전달하는 선택 경로와, 작은 수치 차이 및 학습·추론 계산을 보존하는 FP32 행동 head를 추가했습니다. 실제 L40S의 수치 검증은 통과했으나 동일 예산 정책 비교에서는 추가 Dev 개선이 없어 기존 선택 모델을 유지합니다. [입력 수정](docs/policy-state.md) · [정밀도 수정과 세 조건 비교](docs/action-precision.md)
-
-학습 표적도 점검했습니다. 추가 응답 잡음을 기본 평가와 맞추는 조건과, 행동별 8회 실제 응답 경로의 평균 손실을 학습하는 조건을 L40S에서 비교했습니다. 두 조건 모두 추가 Dev 개선이 없어 기존 모델을 유지합니다. Train 응답 seed·원시 손실·후보별 결과와 제한은 [응답 표본과 가치 학습](docs/response-supervision.md)에 정리했습니다.
-
-매니저 응답 누락의 정책 비교에서는 질문 순서에 따라 응답 난수가 바뀌는 문제를 제거했습니다. 현재 선택 모델을 고정하고 네 항목의 응답 유무 16개 조합을 모두 실행하면 가치 정책·`no_value`·고정 질문의 기대 총손실이 같았습니다. 누락률 0·10·20%에서 각각 **24.3925·71.9563·118.1415**이며 추가 가치 학습의 이점은 확인되지 않았습니다. [비교 방식·한계·공개 가중치 재현](docs/response-evaluation.md)
-
-이후 실제 무응답·부분 응답을 모수 상태에 반영하도록 수정했습니다. 같은 가중치의 판매 Dev에서 누락률 10%·20%의 상태 정확도는 97.86%·95.71%에서 100%가 됐고, 발주량·행동·총손실은 그대로였습니다. 관측 기록을 반영한 결과이며 신경망 원출력의 정확도 향상은 아닙니다. [수정 전후 검증과 재현](docs/response-state.md)
-
-후속 Train 비교에서는 실제 방문 상태를 928→1,204개로 늘리고 숫자 상태 입력도 함께 점검했습니다. 동일 학습량의 3개 seed 비교에서 추가 개선을 확인하지 못해 선택 가중치를 유지합니다. Dev·Test를 다시 사용하지 않았습니다. [후속 상태 학습과 남은 오판](docs/recovery-replay.md)
-
-응답 종류별 학습 빈도를 보정한 비교는 Train 순차 손실을 낮췄지만, 전체 Train 재학습 뒤 Dev에서는 개선을 유지하지 못했습니다. 세 후보의 생성 손실은 모두 148.3549로 기존 147.6813보다 높아 채택하지 않았습니다. 같은 Train 실패 상태에서도 보류 판단이 4/6→0/6으로 사라진 과정을 기록했습니다. [표집 비교·전체 재학습·실제 Dev 결과](docs/recovery-sampling.md)
-
-숫자 상태로 기존 행동 점수를 보정한 후속 실험은 판매 응답 누락 비용을 일부 줄였지만, 평상시 부족 비용 질문을 생략해 생성 손실이 147.6813→148.3549로 늘었습니다. 계산 정밀도만 바꾼 대조에서는 행동이 같았습니다. 모든 후보를 기각하고 기존 모델을 유지합니다. 앞선 학습·선택 기준 실패와 별도 탐색적 Dev 등록도 함께 공개합니다. [재학습 안정성·작은 보정 head·전체 경로](docs/recovery-stability.md)
-
-최신 수정에서는 새 추출 경로에도 문서 버전·충돌 검사를 적용해 구버전 금액의 잘못된 승인을 차단했습니다. 또한 encoder 변경 뒤 필요한 질문을 놓친 후보에서 가치 head를 다시 학습하자 판매 Dev의 질문 누락 20건이 0건으로 회복됐습니다. 생성 손실과 공개 문서 성능의 채택 기준은 충족하지 못해 기존 가중치를 유지합니다. [근거 승인 수정](docs/source-validity.md) · [행동 head 재학습 결과](docs/action-adaptation.md)
-
-공개 Train 출력의 보존 손실을 추가한 후속 실험도 완료했습니다. 원래 모수 Dev의 원시 상태 오류는 12→5개로 줄었지만 TAT-QA 정답은 16/48→11/48로 하락했습니다. 생성 총손실의 소폭 감소도 요청 비용 감소와 종료 손실 증가가 함께 생긴 결과여서 전체 모델을 교체하지 않았습니다. [학습·전체 결과·자료 범위](docs/language-retention.md)
-
-확장 공개 Train 전체를 복원한 비교도 L40S에서 완료했습니다. 모수 상태 오류는 5개였지만 TAT-QA 15/48, ContractNLI 35/72로 기존 선택 모델을 보존하지 못했고 생성 총손실도 147.6813→148.3549로 늘어 채택하지 않았습니다. 같은 구성 모수와 같은 가치 head에서도 encoder 갱신 후 질문이 생략되는 사례를 확인했습니다. [자료 노출·모든 후보·행동 변화의 대조](docs/replay-coverage.md)
-
-후속 Train 감사에서 `19`를 `2019`의 일부에 연결해 정답으로 학습시키는 span 경계 결함을 수정했습니다. 전체 span Train 5,678건 중 128건의 잘못되거나 안전하게 표현할 수 없는 정답 연결을 제거했습니다. L40S의 같은 초기값·학습량 비교에서는 수정 후 포인터의 추가 정확도 이점을 확인하지 못해 선택 가중치는 유지합니다. 여섯 조건의 준비·학습·내부 평가는 213.21초였고 Dev·Test는 사용하지 않았습니다. [수정 내용·전체 비교·원시 기록](docs/span-supervision.md)
-
-후속으로 두 계산 숫자의 조합을 함께 평가하는 54,657 파라미터 head를 L40S에서 비교했습니다. Train 내부 정답은 454/1,087에서 493·497·495건으로 늘었지만, 전체 Train 재학습 뒤 원래 Dev는 기존 16/48 대비 15·16·16/48로 개선되지 않았습니다. 세 후보 모두 발주·질문 결과를 보존했으나 공개 정답 개선 기준에 미달해 가중치를 채택하지 않습니다. Test는 사용하지 않았습니다. [구조·전체 비교·원시 기록과 재현](docs/operand-selection.md)
-
-현재 구성한 수치 상태만으로 행동 가치를 계산하는 경로를 추가하고, 문서 표현을 함께 쓰는 조건과 L40S에서 세 seed씩 비교했습니다. 상태 전용은 같은 상태에서 encoder 표현 변화의 영향을 제거하고 한 단계 지연을 약 62→36 ms로 줄였지만, 생성 손실은 148.3549로 기존보다 높았습니다. 문서 표현을 함께 쓰는 조건도 두 seed에서만 개선돼, 세 seed 공통 채택 기준에 따라 기존 모델을 유지합니다. 판매 질문·회복과 공개 문서 출력은 보존됐습니다. [입력 경로·전체 비교·지연 측정의 범위](docs/state-value.md)
-
-분포 선택 head가 평균 손실 차이를 학습하는 조건도 같은 GRU에서 세 seed로 비교했습니다. 7일 관측 NLL은 모두 개선됐지만 부족 비용이 큰 조건의 발주 손실은 모두 늘어 채택하지 않았습니다. 고정 표현을 재사용한 여섯 조건의 특징 구성·학습·평가는 72.28초였으며 Test는 사용하지 않았습니다. [선택 목적함수·발주 손실·원시 기록](docs/demand-selector.md)
-
-이후 기존 Train 출처 537개를 유지하며 실제 판매 이력을 **542 → 1,045개**로 늘려 같은 GRU를 세 seed로 학습했습니다. 완전 관측 7일 CRPS는 모두 개선됐지만, 사전 후보 seed 42의 품절 날짜 관측 점수가 악화해 기존 모델을 유지합니다. 학습·평가는 특성 준비 이후 27.05분이었고, 원래 입력·정답·평가 출처를 보존했습니다. [전체 비교·실제 갱신 수·복원 가능한 데이터와 checkpoint](docs/retail-train-expansion.md)
-
-날짜별 수요 배분을 Train 출처 안에서 추정하되 고정 20회 학습한 비교에서는 세 seed 모두 완전 관측 7일 CRPS·발주 손실이 개선됐습니다. 그러나 일별 CRPS와 품절을 포함한 관측 NLL이 악화해 그 후보는 채택하지 않았습니다. 이후 Train 출처별 학습 곡선에서 과적합을 확인하고, 위의 학습 횟수 선택을 적용했습니다. [배분 가정 점검과 이전 세 seed 결과](docs/demand-concentration.md)
-
-## 새 clone에서 실행
-
-현재 선택 모델은 [공개 기준 bundle](https://github.com/mrcha033/newsvendor-router/releases/tag/research-forecast-v1)과 저장소의 작은 보정 head를 결합해 실행합니다. encoder·head·GRU·토크나이저가 함께 들어가며 원래 학습 자료 없이 CPU 또는 CUDA로 실행합니다. 공개 파일만으로 조립·추론을 검증했습니다. [다운로드·조립·hash 검증·추론 명령](docs/model-bundle.md)
-
-Python 3.12와 uv를 사용합니다. 아래 경로는 저장소에 포함된 자료와 고정 revision의 공개 ModernBERT로 **새 수요 GRU부터 학습**합니다. 이전 로컬 checkpoint는 필요하지 않습니다. 기존 실험의 가중치를 복원하는 명령은 아니므로 과거 표의 수치와 동일하다고 보장하지 않습니다.
+Python 3.12·CPU PyTorch를 사용하며 GPU나 모델 가중치가 필요하지 않습니다.
 
 ```sh
-git clone https://github.com/mrcha033/newsvendor-router.git
-cd newsvendor-router
 uv sync --frozen
-uv run newsvendor restore-eval
-
-# 모델 다운로드 없이 입력·출처 분리 검사
-uv run python scripts/run_research.py \
-  --config configs/research-from-scratch.json \
-  --stage check --output results/research-data-check
+uv run python scripts/analyze_decisions.py \
+  --config configs/research-economics-v1.json \
+  --output results/decision-effects-reproduction
 ```
 
-학습은 사용할 L40S의 UUID를 `NEWSVENDOR_GPU_UUID`에 지정한 뒤 실행합니다. Linux의 `uv sync`는 CPU PyTorch 환경입니다. 아래 `--no-project` 명령은 script에 고정된 CUDA PyTorch 환경을 사용합니다.
+입력 archive·원시 행·분할·출처 hash와 짝지은 사례를 검사합니다. 출력 디렉터리가 이미 있으면 중단해 이전 결과를 보존합니다. 분석은 모델을 학습하거나 새 Test 추론을 하지 않습니다. [분석 자료·회귀식·실행 결과](docs/decision-effects.md)
 
-```sh
-export CUDA_VISIBLE_DEVICES="$NEWSVENDOR_GPU_UUID"
-export CUBLAS_WORKSPACE_CONFIG=:4096:8
+모델의 별도 추론은 [공개 bundle 안내](docs/model-bundle.md), 기존 L40S 학습 재현은 [실험 명세](docs/protocol.md)를 따릅니다. 기존 cold-start 설정이 현재 선택 가중치를 자동 재현한다고 주장하지 않습니다.
 
-# 1. 판매 Train에서 GRU·분포 모수를 학습하고 Train 내부 cross-fitting으로 종류 선택 학습
-uv run --no-project scripts/train_demand.py \
-  --config configs/research-from-scratch.json --device cuda
-
-# 2. 고정 revision의 ModernBERT를 불러와 encoder·모수 구성기·요청 정책 학습
-uv run --no-project scripts/run_research.py \
-  --config configs/research-from-scratch.json --stage train
-```
-
-[`research-from-scratch.json`](configs/research-from-scratch.json)은 원본 snapshot의 문서·판매 Train과 원래 생성 Train을 사용합니다. Dev로 선택하며 Test는 학습·모델 선택에 사용하지 않습니다. `results/research-from-scratch/demand/model.pt`에 GRU가, `results/research-from-scratch/base/42/model.pt`에 전체 모델이 저장됩니다. 두 단계는 기존 실행을 덮어쓰지 않습니다. 공개 snapshot에서 GRU 학습과 전체 모델 연결·encoder 갱신까지 확인했습니다. [재현 경로 검증](docs/evidence/research-reproduction-checks.json) CPU에서 GRU만 학습하려면 `uv run python scripts/train_demand.py --device cpu`를 사용할 수 있습니다.
-
-위 cold-start 기본 설정은 품절일이 있는 주간 합계를 하한으로 취급합니다. 이 점수는 날짜별로 검열된 관측의 정확한 likelihood가 아닐 수 있으며 편향을 보이는 수치 예제를 확인했습니다. 최신 선택 모델의 확장 자료·날짜별 관측 likelihood 실험과는 구분합니다. [관측 모형 수치 검사](docs/evidence/research-aggregate-censoring-check.json)
-
-날짜별 정확 관측과 품절을 구분한 최초 likelihood 후보는 수치 검증을 통과했지만 세 seed의 비교에서 채택 조건에 미달했습니다. 배분 농도 추정과 학습 횟수 선택까지 적용한 최신 설정은 [별도 실험 설정](configs/l40s-demand-selection-v2.json)에 보존합니다. 이 확장 자료 실험도 Test로 선택하지 않았습니다. [최초 관측 모형과 비교 결과](docs/demand-observations.md)
-
-## 공개 자료와 재현 범위
-
-| 항목 | 저장소 제공 범위 |
-| --- | --- |
-| 원본 상보적 과제·주문 과제 | [압축 snapshot](cases/evaluation.tar.xz), [파일 hash·revision·라이선스](cases/evaluation.json); `restore-eval`로 복원 |
-| 원래 통제 시나리오 | [생성 설정](configs/full.json)과 [생성 코드](src/newsvendor/corpus.py); 600건, 출처 family 120개 |
-| 선택한 ModernBERT 통합 모델 | [전체 추론 가중치·토크나이저·설정·파일 hash와 실행 명령](docs/model-bundle.md). Optimizer와 확장 Train 전체는 미포함 |
-| 선택한 수요 GRU와 반복 실험 | [세 seed의 실제 가중치·모든 내부 검증 손실·Dev 예측](docs/evidence/research-selection-results.json)을 압축 artifact로 제공 |
-| 새 출처 27개의 고정 평가 | [입력·분리된 결과 주석·모든 예측과 순차 경로](docs/evidence/research-retail-holdout-results.json) 공개. 전체 ModernBERT 없이 작은 GRU의 예측을 [L40S에서 정확히 재현](docs/retail-holdout.md#공개-artifact만으로-수요-예측-재계산)했으며 CPU 수치 차이도 기록 |
-| 확장 문서·판매 자료 | [문서 확장 기록](docs/evidence/research-document-expansion.json), [판매 확장 기록](docs/evidence/research-retail-expansion.json), [분할 검사](docs/evidence/research-expansion-audit.json). 기본 snapshot에는 미포함 |
-| 실험 요약과 검증 | [연구 범위](docs/research-scope.md), [추적되는 evidence JSON](docs/evidence/). JSON 안의 `results/` 경로는 로컬 원시 파일의 위치와 hash이며 다운로드 링크가 아님 |
-| 과거 native-v3 | [CPU 가중치와 원시 결과](models/native/), [이전 실행 안내](docs/native-history.md). 현재 ModernBERT의 가중치가 아님 |
-
-새 학습은 공개 snapshot으로 시작할 수 있고, 선택한 ModernBERT 전체 가중치로 별도 추론도 실행할 수 있습니다. **확장 Train 원본·optimizer를 포함한 과거 학습의 완전 재현과 모든 과거 표의 자동 재평가는 아직 제공하지 못합니다.** 주 결과의 작은 표본과 생성된 문서 조건도 한계로 남깁니다. 공개 snapshot과 기존 작업 자료는 retail 요청 문구·manifest가 달라 기존 학습 checkpoint loader의 신원 검사에서 거부되며, 판매 관측·정답·분할이 같다는 [대조 기록](docs/evidence/research-snapshot-audit.json)을 남겼습니다. 별도 추론 묶음은 학습 자료를 요구하지 않습니다. 같은 head의 base/large 비교는 과거 고정 실험 기록이며, 새 코드로 실행한 수치로 덮어쓰지 않습니다.
-
-## 검증과 이전 실험
+## 검증
 
 ```sh
 uv run pytest -q
-uv run ruff check src tests
-uv run newsvendor check-suite
-uv run newsvendor check-orders
+uv run ruff check src tests scripts/analyze_decisions.py
+uv run newsvendor restore-eval
+uv run python scripts/run_research.py \
+  --config configs/research-from-scratch.json \
+  --stage check --output results/research-data-check
 uv run newsvendor smoke --config configs/full.json
 ```
 
-CI는 테스트·Ruff·snapshot 복원과 출처 검사·주 연구 입력 검사·수치 smoke를 실행합니다. GPU 학습과 성능 검증은 CI에 포함하지 않습니다. [CI 설정](.github/workflows/ci.yml)
-
-이전 ABCD 90% 목표와 실패 결과는 [구조화 모델 실험 이력](docs/structured-history.md)에, MiniLM·Qwen·native-v3의 실행 방법과 수치는 [과거 실험 안내](docs/native-history.md)에 보존합니다. 기존 생성 Test의 총손실 240.35 기준은 원래 분할과 손실 정의에만 적용하며 retail 손실과 직접 비교하지 않습니다.
-
-[데이터·모델 출처](docs/sources.md) · [연구 범위와 최신 측정](docs/research-scope.md) · [기존 실험 명세](docs/protocol.md)
+[CI](.github/workflows/ci.yml)는 코드·테스트·출처 분리·수치 smoke를 검사합니다. GPU 성능 실험은 CI에 포함되지 않습니다. [공개 자료·모델의 출처](docs/sources.md), [이전 MiniLM·Qwen·native-v3 실행](docs/native-history.md)은 별도 보존합니다.
