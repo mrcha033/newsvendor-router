@@ -25,6 +25,7 @@ jobs:
           scripts/predict_research.py scripts/study_selector.py scripts/expand_retail_train.py
           scripts/evaluate_responses.py scripts/reproduce_responses.py
           scripts/study_recovery_replay.py scripts/study_recovery_sampling.py
+          scripts/study_recovery_residual.py docs/evidence/scripts/reproduce-recovery-residual.py
       - run: >-
           uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
           scripts/check_observations.py scripts/study_demand.py
@@ -36,6 +37,7 @@ jobs:
           scripts/predict_research.py scripts/study_selector.py scripts/expand_retail_train.py
           scripts/evaluate_responses.py scripts/reproduce_responses.py
           scripts/study_recovery_replay.py scripts/study_recovery_sampling.py
+          scripts/study_recovery_residual.py docs/evidence/scripts/reproduce-recovery-residual.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval

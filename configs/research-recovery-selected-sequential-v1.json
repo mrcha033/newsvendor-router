@@ -1,0 +1,30 @@
+{
+  "registeredAt": "2026-10-10T00:29:26.386276+00:00",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "candidate": "/dev/shm/newsvendor-recovery-residual-v1",
+  "samples": 4,
+  "responseSeed": 389,
+  "output": "/dev/shm/newsvendor-recovery-selected-sequential-v1",
+  "scriptHash": "15692c390d598974531341a54cb74f60c8a0926db8301b0780365d3b07f31d91",
+  "files": {
+    "/dev/shm/newsvendor-recovery-residual-v1/report.json": "98a30c4e3d9d67cfe71466117c1cdc1ab95306c14d65c2104d64ae83067625de",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf",
+    "results/research-checks/recovery-balance/sequential.py": "de260ab29f1d497da4ae85844011c7dbe93a7c63e1bfe1c4fc92446c5e8f5784",
+    "scripts/study_recovery_residual.py": "a246b9943b90d79e634faab4931f520821db8ad90b8775b1d54071503b96badb",
+    "/dev/shm/newsvendor-recovery-residual-v1/inner-42.pt": "c2ef7abefec9b8a1760629ed4b2633224c63733617ea38b436e5eee40de362a1",
+    "/dev/shm/newsvendor-recovery-residual-v1/inner-43.pt": "a4dab32ac575fabd525c8eb4062adb3181f97530a3dd4ab2f15bf48e914035fb",
+    "/dev/shm/newsvendor-recovery-residual-v1/inner-44.pt": "590d05892aa9d2df575d08579c8073c48b6f9bedc60e3b96ac89cbc9c5907c66",
+    "/dev/shm/newsvendor-recovery-residual-v1/refit-42.pt": "b6b110808aac37167d95fdecf7c23df367e60e385fd371136f1081d3aba1b358",
+    "/dev/shm/newsvendor-recovery-residual-v1/refit-43.pt": "ab0a583e134886e764e02eb01051563f7e3851b05d512b1468dcc9be332c2585",
+    "/dev/shm/newsvendor-recovery-residual-v1/refit-44.pt": "96968bca067c165fc068b1fef65bb78d017abb7595b26e346d6264989b87b0af"
+  },
+  "scope": "A new checkpoint-selection comparison after the prior full-refit stability failure. Evaluate all three original held-selected residual checkpoints (epochs 12, 13, 13) unchanged, their three corresponding full refits, and the retained parent. No new fitting, alternative epoch or seed selection. The prior registered full-refit candidate remains rejected.",
+  "sources": "Original 514 Train episodes / 85 families: 360 generated, 154 retail. Four fresh shared channel-response draws per episode (retail dropout 0.1, generated original response model); one additional retail-only no-dropout draw for required-question/recovery checks. Seven policies x 2210 paths = 15470.",
+  "gate": "Each selected checkpoint must worsen neither generated nor retail total versus retained parent and its same-seed full refit, have no more false handoffs or resolved-field/unnecessary requests, and preserve no-dropout retail necessary requests, recovery and handoff rates. At least one actual total must improve over retained parent for every seed. Seed 42 remains the candidate. All three must pass before original Dev evaluation.",
+  "devGate": "If Train gates pass, use the same fixed checkpoints on original 60 generated Dev and 336 retail Dev conditions with all 16 shared response patterns weighted at 0, 0.1, 0.2. All three must worsen neither benchmark relative to retained parent and same-seed refit, retain final parameter/state/type/evidence accuracy, no additional false handoffs/unnecessary requests, retain no-dropout necessary requests/recoveries/handoffs and public document metrics. Require at least one actual total improvement over parent for every seed. No Test/frozen 27-source evaluation.",
+  "testUsed": false,
+  "devUsed": false,
+  "trainingPerformed": false
+}

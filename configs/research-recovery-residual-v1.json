@@ -1,0 +1,43 @@
+{
+  "registeredAt": "2026-10-10T00:20:38.093594+00:00",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "sourceHash": "2eb14b9a20bd053d308ce7f6225c635964d8e12460f9a38d8e741cfb75106ff0",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 40,
+  "batchSize": 64,
+  "lr": 0.001,
+  "rankWeight": 0.25,
+  "retainedModel": "results/l40s-research-forecast-v1/base/42/model.pt",
+  "retainedModelSha256": "e2fb23ee44b7a6c7158b111d122280d41f3626027f33323ff98f0fddc765904a",
+  "parentWeightsHash": "736836c735ab9e61662ea14371b699139bd60f00d80a7fdfd40e6b7139b6137e",
+  "encoded": "/dev/shm/newsvendor-recovery-replay-v1",
+  "numeric": "/dev/shm/newsvendor-recovery-numeric-v1",
+  "control": "/dev/shm/newsvendor-recovery-balanced-v1",
+  "fullControl": "/dev/shm/newsvendor-recovery-balanced-refit-v1",
+  "output": "/dev/shm/newsvendor-recovery-residual-v1",
+  "scriptHash": "a246b9943b90d79e634faab4931f520821db8ad90b8775b1d54071503b96badb",
+  "files": {
+    "/dev/shm/newsvendor-recovery-balanced-v1/report.json": "a72500063d7d8bdc6f48a74a4f13f3e68e82193ff2b1a6e3ca7314a71b86b707",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/report.json": "3ae530767af1b3c1a506f4f4e4d95c59a6d7cd2a72049cfef2b55c93f2b4222b",
+    "/dev/shm/newsvendor-recovery-numeric-v1/features.pt": "3a05fb5932d892bbd0bc07639412a618849e85eb58d1c9a0748670db0b0bcf55",
+    "/dev/shm/newsvendor-recovery-replay-v1/targets.jsonl": "7ba5762244eb842f55d020c9c066e78e3967594c139d21fdbec066815e8b2a84",
+    "/dev/shm/newsvendor-recovery-stability-trace-v1/report.json": "2a09921765cef76af24112c3a3166d0c264d4e3f404521472c88db2d7a9efd4a",
+    "/dev/shm/newsvendor-recovery-balanced-v1/batches-42.json": "27e334f4769e008780ac330a0282ff5193247b7efce22f7bf1e731db751d2689",
+    "/dev/shm/newsvendor-recovery-balanced-v1/batches-43.json": "b4fe778568a29055d530b87de4d852c1d53f4a00bc7f85df96a372439ff78a59",
+    "/dev/shm/newsvendor-recovery-balanced-v1/batches-44.json": "e84d9bac2c6833bd981b82c6628ed57e2ee642e51bc99e2b5d5f92ea3ca8b56c",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-42-batches.json": "bc622fa444d6cc5760cfee383eb829a6615cd2261175fef408fb1278d96d7d8e",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-43-batches.json": "1c06ab5e60d0999beb70390d0d20d6a4f1ab71b8acd1f53b497b72e9050bf59d",
+    "/dev/shm/newsvendor-recovery-balanced-refit-v1/balanced-44-batches.json": "5f648667eb4991171b74174126cf671f1162258f50d6942cbc1793320a700b36"
+  },
+  "scope": "Preserve the frozen parent value function and learn a zero-initialized 94-to-128-to-2 numeric residual in logit space. Compare to the registered joint numeric/encoded head using identical cached states, return targets, observed-response sampling draws, optimizer settings and update counts. The design changes both the numeric route and which parameters are trainable; it is not a single-factor proof that Tanh saturation caused failure.",
+  "innerGate": "Same 68 fitting / 17 held Train families. Select the earliest strict best held family-balanced target loss within 40 epochs, then require every seed to improve on its prior balanced control with neither benchmark nor false handoffs worse. Parent encoder previously saw these Train sources; this is not independent generalization.",
+  "refitGate": "If every inner gate passes, start from the same parent plus the same seeded zero correction and refit all 1204 Train states at each fixed inner-selected epoch; preserve all 40 epochs and final weights. Reuse exact saved full-refit batch draws. On the former inner-held Train states require neither benchmark target loss nor false handoffs to worsen relative to the selected inner candidate. No epoch reselection from refit or Dev.",
+  "nextStage": "Only if inner and refit gates pass, compare actual full-refit policies on the original 514 Train episodes and four new shared response draws. All three seeds must worsen neither benchmark relative to both retained parent and matched full-refit control, have no more false handoffs or requests for resolved fields, and retain no-dropout required retail requests and recoveries. At least one actual total must improve over the retained parent in every seed. Seed 42 remains the candidate; do not choose a best seed.",
+  "devGate": "Only after sequential Train gates pass: freeze candidates and evaluate original 60 generated Dev and 336 retail Dev conditions with all 16 shared channel-availability patterns weighted at 0, 0.1, 0.2. Compare with retained parent and full-refit control; every seed must worsen neither benchmark total, final parameter/state/evidence accuracy, false handoffs, unnecessary requests, and public document metrics. Preserve retail no-dropout necessary requests and recoveries. At least one actual total must strictly improve over parent for every seed. No Test or frozen 27-source inference.",
+  "testUsed": false,
+  "devUsed": false
+}
