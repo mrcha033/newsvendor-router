@@ -8475,6 +8475,21 @@
       ".venv/bin/ruff format --check src tests scripts/run_research.py scripts/train_demand.py scripts/check_observations.py scripts/study_demand.py scripts/compare_observations.py scripts/evaluate_core.py scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py scripts/reproduce_retail_forecast.py scripts/study_parameter_state.py scripts/evaluate_parameter_state.py scripts/prepare_parameter_contrasts.py scripts/evaluate_parameter_contrasts.py scripts/predict_research.py scripts/study_selector.py scripts/expand_retail_train.py scripts/evaluate_responses.py scripts/reproduce_responses.py scripts/study_recovery_replay.py scripts/study_recovery_sampling.py scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py scripts/compose_recovery.py docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py": "108 files already formatted"
     },
     "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+    "tests": "334 passed in 37.49s",
+    "sourceAudits": 5,
+    "numericalSmoke": 30,
+    "diffCheck": "passed",
+    "localDocumentLinks": 140,
+    "testInferencePerformed": false,
+    "trainDevRawPathsAudited": 59136,
+    "postCiCorrection": true
+  },
+  "checksBeforeCiCorrection": {
+    "lint": {
+      ".venv/bin/ruff check src tests scripts/run_research.py scripts/train_demand.py scripts/check_observations.py scripts/study_demand.py scripts/compare_observations.py scripts/evaluate_core.py scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py scripts/reproduce_retail_forecast.py scripts/study_parameter_state.py scripts/evaluate_parameter_state.py scripts/prepare_parameter_contrasts.py scripts/evaluate_parameter_contrasts.py scripts/predict_research.py scripts/study_selector.py scripts/expand_retail_train.py scripts/evaluate_responses.py scripts/reproduce_responses.py scripts/study_recovery_replay.py scripts/study_recovery_sampling.py scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py scripts/compose_recovery.py docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py": "All checks passed!",
+      ".venv/bin/ruff format --check src tests scripts/run_research.py scripts/train_demand.py scripts/check_observations.py scripts/study_demand.py scripts/compare_observations.py scripts/evaluate_core.py scripts/prepare_retail_holdout.py scripts/evaluate_retail_holdout.py scripts/reproduce_retail_forecast.py scripts/study_parameter_state.py scripts/evaluate_parameter_state.py scripts/prepare_parameter_contrasts.py scripts/evaluate_parameter_contrasts.py scripts/predict_research.py scripts/study_selector.py scripts/expand_retail_train.py scripts/evaluate_responses.py scripts/reproduce_responses.py scripts/study_recovery_replay.py scripts/study_recovery_sampling.py scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py scripts/compose_recovery.py docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py": "108 files already formatted"
+    },
+    "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
     "tests": "334 passed in 37.66s",
     "sourceAudits": 5,
     "numericalSmoke": 30,
@@ -8482,5 +8497,73 @@
     "localDocumentLinks": 139,
     "testInferencePerformed": false,
     "trainDevRawPathsAudited": 59136
+  },
+  "ciCorrection": {
+    "failedRun": "https://github.com/mrcha033/newsvendor-router/actions/runs/38014861488",
+    "failedParameterizedCases": 2,
+    "passedBeforeCorrection": 332,
+    "largestAbsoluteDifference": 1.1920928955078125e-07,
+    "cause": "The test passed a contiguous 350-column state to the prior, while RecoveryHead uses a strided slice of the 351-column state. CPU GEMM rounding differed for equivalent values with different strides.",
+    "change": "Assert both inputs have exactly equal values, then compare the prior with the same sliced input layout used by the head. Keep rtol=atol=0 for the preserved/corrected scores.",
+    "oldTestHash": "a1ff2b23c4025d13fffba3a188231b101fba9ccc52a8c9cb7afcaab244b4955f",
+    "newTestHash": "dde262b1cfd6627237ca68279048a5c9b9831105fe17647963547ce5d300f7ea",
+    "runtimeSourceUnchanged": true,
+    "modelWeightsUnchanged": true,
+    "sourceHash": "f91b72fd96c4f2b2ffde82270c72879f4cd64cf32c197fa50fe587cb44d92829",
+    "tests": 334,
+    "sourceAudits": 5,
+    "numericalSmoke": 30,
+    "artifact": {
+      "path": "docs/evidence/artifacts/recovery-scope-ci-fix-v1.tar.xz",
+      "bytes": 47168,
+      "sha256": "5dc72bca18fe15946f81dfac5aead4cb3b5cfa6a883a83fcf2f4a89296fd351b",
+      "verifiedEveryMember": true,
+      "files": {
+        "results/research-checks/recovery-scope/ci-fix/failed-run.log": {
+          "bytes": 16923,
+          "sha256": "5b15bce72d9b3829c6ed9c877e0c2352ed647e5d485465c79ce8da9ca330b549"
+        },
+        "results/research-checks/recovery-scope/ci-fix/test-fix.patch": {
+          "bytes": 1002,
+          "sha256": "147637566a2c4f5457d2bb5deedf602a9f915f81ea6d14a3a690f1e35790dd90"
+        },
+        "results/research-checks/recovery-scope/ci-fix/targeted.log": {
+          "bytes": 114,
+          "sha256": "0e42900f9816399ad2a13c06bdcd2c1d0df7638a46462a0c13194f38c8097027"
+        },
+        "results/research-checks/recovery-scope/ci-fix/previous-smoke.json": {
+          "bytes": 6940,
+          "sha256": "e286aeca15d83c0cdc2ed8c35b2388bdd55441ce2d24ab621fc227b69ce63102"
+        },
+        "results/research-checks/recovery-scope/ci-fix/checks.py": {
+          "bytes": 950,
+          "sha256": "e0cd909870eeb13cd930de973a0533d753025077aed7c9684351bd91aaf126a6"
+        },
+        "results/research-checks/recovery-scope/ci-fix/tests.log": {
+          "bytes": 421,
+          "sha256": "b06b1550bc6fd843139990ff78d89d5b04d4d15912e57117116809230f1057c4"
+        },
+        "results/research-checks/recovery-scope/ci-fix/lint.json": {
+          "bytes": 1859,
+          "sha256": "1e87c056bbc894029c34d079494b0b13239df41699cce8bfd67ed29c2c694921"
+        },
+        "results/research-checks/recovery-scope/ci-fix/publish.py": {
+          "bytes": 3544,
+          "sha256": "0048fdded06af6b1bd3af9496190cc5660caf8fbf6b1ccd4376c104733bd6c10"
+        },
+        "results/research-checks/recovery-scope/ci-fix/checks.json": {
+          "bytes": 24643,
+          "sha256": "73a1757a99c81e2ab8149f9bc3fe673ea029b53648d3239cafcb481f49614b44"
+        },
+        "results/research-checks/recovery-scope/ci-fix/checks.log": {
+          "bytes": 107,
+          "sha256": "2511b8db1060ada97461aa529c518c279a196104a39ab254b125cbb56d270b7d"
+        },
+        "tests/test_structured.py": {
+          "bytes": 194579,
+          "sha256": "dde262b1cfd6627237ca68279048a5c9b9831105fe17647963547ce5d300f7ea"
+        }
+      }
+    }
   }
 }

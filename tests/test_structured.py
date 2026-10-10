@@ -4642,7 +4642,11 @@ def test_scoped_recovery_integrates_with_numeric_forward_and_checkpoint(
             view["valueCosts"],
         )
         torch.testing.assert_close(output["value"], cached, rtol=0, atol=0)
-        prior = current.heads["value"].base(output["actionState"])
+        # Match the sliced input's strides as well as its values: CPU GEMM may
+        # round differently for a contiguous copy of the same numeric state.
+        prior_input = output["valueState"][:, :-1]
+        torch.testing.assert_close(prior_input, output["actionState"], rtol=0, atol=0)
+        prior = current.heads["value"].base(prior_input)
         raw = current.heads["value"](output["valueState"])
         torch.testing.assert_close(raw, prior + int(view["recoveryActive"]), rtol=0, atol=0)
     for name, old in model.state_dict().items():

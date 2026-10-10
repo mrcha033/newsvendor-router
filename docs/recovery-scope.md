@@ -69,6 +69,8 @@ L40S의 기록된 시간은 v1 head 학습 212.01초, 선택만 수정한 v2 학
 
 [전체 결과·학습/특성 감사·손실 분해](evidence/research-recovery-scope-results.json) · [모든 후보·optimizer·batch·실행 소스](evidence/artifacts/recovery-scope-records-v1.tar.xz) · [Train/Dev 원시 경로](evidence/artifacts/recovery-scope-rollouts-v1.tar.xz)
 
+첫 CI에서는 같은 보존 검사의 두 옵션이 CPU에서 실패했다. 기대값이 실제 head와 다른 메모리 배치의 입력을 사용해 약 `1e-7`의 반올림 차이가 난 경우였다. 입력 값의 동일성을 확인하고 같은 배치로 기대값을 계산하도록 수정했으며, 허용 오차 0의 검사는 유지했다. 모델 코드·가중치는 그대로이고 테스트 334개·출처 검사·수치 smoke를 다시 통과했다. [실패 로그·수정·재검증](evidence/artifacts/recovery-scope-ci-fix-v1.tar.xz)
+
 ## 공개 파일로 재현
 
 [기준 bundle 다운로드와 보정 모델 조립](model-bundle.md)을 먼저 실행한다. 조립된 모델의 전체 tensor hash는 `e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd`이며 전체 크기는 151,884,856 파라미터다. 이전 tensor와 0으로 늘린 행동 입력 열을 보존하므로 전체 증가량 36,482개와 새로 학습한 12,418개를 구분한다. 기존 `forecast-v1` bundle은 그대로 보존한다.
