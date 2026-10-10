@@ -1,0 +1,57 @@
+{
+  "registeredAt": "2026-10-10T04:44:43.878952+00:00",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "bundle": "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model",
+  "weightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "contrasts": "results/parameter-contrasts-v2/manifest.json",
+  "cohorts": {
+    "train": {
+      "inputs": "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl",
+      "counts": {
+        "generated": 360,
+        "retail": 154
+      }
+    },
+    "dev": {
+      "inputs": "/dev/shm/newsvendor-parameter-decoding-v1/prepared/dev-inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-parameter-decoding-v1/prepared/dev-environment.jsonl",
+      "counts": {
+        "generated": 60,
+        "retail": 336
+      }
+    }
+  },
+  "sourceHash": "4d938b420fe1531e0c5cb12aff504eb5a27c12172e616cfe635c08e7d84e02fe",
+  "scriptHash": "e09efba102ddb78a31601e43f220595db991def6e71808a18eeb2d9584c90b00",
+  "files": {
+    "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model/manifest.json": "f38b8e0ee1c70c7a85debeab282e372829a213d5bc0fed795c9c7230438446db",
+    "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model/model.pt": "d6815914a80756fe3b7229621ca9b7b04fdbe139e87be9104c1ecb4b90b784f5",
+    "results/parameter-contrasts-v2/manifest.json": "75e94b0f07cdeeecfb3cc48f566e3566bf56d931e03bc06512cf4c49c5372f2c",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "scripts/evaluate_operands.py": "f91554562ec838ce80cc4466080d592e97b414a7f32975187630702ec2bea0fa",
+    "scripts/prepare_parameter_contrasts.py": "b3f6553dc8d9f1002d63f4e6ec77a415b5faaf85e74aca49fe0ea9e23df45ac4",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf",
+    "/dev/shm/newsvendor-parameter-decoding-v1/prepared/dev-inputs.jsonl": "39beefce3585efba276e8870ffc12bfddb2002c813d8f006a748139c553c566d",
+    "/dev/shm/newsvendor-parameter-decoding-v1/prepared/dev-environment.jsonl": "8eb92649c8473c06eb887f708dcd963bc996e180612c357750df03c41059d07a",
+    "results/parameter-contrasts-v2/fit.jsonl": "fd9c7b4cb4e127234a86b254750c83fb5276edb5c145bcdd9ad367b9c261756c",
+    "results/parameter-contrasts-v2/held.jsonl": "d0413045ec37e38061d70080db40093c426d69462590249aaa4625760b3c879f",
+    "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl": "66bd0d584bfed7fd16cf78920d8224d84c959c6f70319b8050d13ae65710f10b",
+    "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl": "4cd9562a5dbf24c0066764465a816f95f337d266f5556b5c49fa0341c321dc14",
+    "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9",
+    "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl": "400ce91c8fe41b84d74863e264c7346f23c4924bdde9868eac51a7acf4cc433f"
+  },
+  "seed": 7315,
+  "output": "/dev/shm/newsvendor-parameter-decoding-v1",
+  "testUsed": false,
+  "newSourceHoldoutUsed": false,
+  "trainingPerformed": false,
+  "primary": "scoped",
+  "ablation": "first",
+  "protocol": "Fixed decoder change, no weight updates or new head. Preserve existing accepted expressions and missing/conflict/type decisions; only retry rejected compute selections from observed, tokenized, current, compatible supported sources. Use original learned operation and operand scores. Compare identical recovery-v1 weights and unchanged GRU/value head. Separate unconstrained raw predictions from decoded/final values. Fit/held are existing Train augmentation partitions, not independent source generalization.",
+  "diagnosis": "All 6051 fit and 1259 held Train contrasts, all three decoders. Require held parameter/evidence accuracy improvement, no additional wrong accepted values, no state degradation before sequential evaluation.",
+  "sequentialTrain": "Original Train 360 generated +154 complete-period retail conditions. Enumerate all16 per-field retail response masks. Four observed-only document transformations at one fixed input-hash-selected initial episode per family. No hidden labels enter transformed docs. Keep all failures and require original research gates and each challenge gate.",
+  "dev": "Freeze decoder/code before original60 generated+336retail Dev. Original cases enumerate16 response masks; document challenges run all cases at baseline manager conditions. No switching to first ablation on Dev. Report initial/final parameter/evidence/type/state, necessary/unnecessary requests, needed recovery, actual q/terminal/request/total costs. Censored losses remain lower bounds, exact retail35conditions/5periods. Public model weights and public prediction code are unchanged; TAT-QA is not an optimization target in this study.",
+  "adoption": "Require all original sequential retention gates and challenge nonregression gates, with improved held Train construction. Never treat generated document conditions as evidence on real organization work. If any Dev gate fails, retain independent decoding and publish failure."
+}

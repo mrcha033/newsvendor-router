@@ -237,7 +237,7 @@ def copy_responses(value, record):
 def resolved_fields(record, forecast):
     """Keep raw head outputs, while publishing the values actually accepted for ordering."""
     raw = copy.deepcopy(record["fields"])
-    record["rawFields"] = raw
+    record["rawFields"] = copy.deepcopy(record.get("unconstrainedFields", raw))
     fields = []
     for field in raw:
         slot = field["name"]

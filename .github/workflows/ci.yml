@@ -28,8 +28,10 @@ jobs:
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
           scripts/compose_recovery.py scripts/study_span_supervision.py
           scripts/cache_operands.py scripts/study_operands.py scripts/refit_operands.py scripts/evaluate_operands.py
+          scripts/evaluate_parameters.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
           docs/evidence/scripts/reproduce-operands.py
+          docs/evidence/scripts/reproduce-parameters.py
       - run: >-
           uv run ruff format --check src tests scripts/run_research.py scripts/train_demand.py
           scripts/check_observations.py scripts/study_demand.py
@@ -44,8 +46,10 @@ jobs:
           scripts/study_recovery_residual.py scripts/study_recovery_scope.py scripts/study_recovery_selection.py
           scripts/compose_recovery.py scripts/study_span_supervision.py
           scripts/cache_operands.py scripts/study_operands.py scripts/refit_operands.py scripts/evaluate_operands.py
+          scripts/evaluate_parameters.py
           docs/evidence/scripts/reproduce-recovery-residual.py docs/evidence/scripts/reproduce-recovery-scope.py
           docs/evidence/scripts/reproduce-operands.py
+          docs/evidence/scripts/reproduce-parameters.py
       - run: uv run pytest -q
       - name: Restore and audit the pinned evaluation snapshot
         run: uv run newsvendor restore-eval

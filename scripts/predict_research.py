@@ -21,19 +21,32 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--threads", type=int, default=8)
+    parser.add_argument(
+        "--parameter-decoding",
+        choices=("independent", "scoped"),
+        help="Optional observed-source constraint for rejected parameter selections",
+    )
     args = parser.parse_args()
     require(not Path(args.output).exists(), "Preserve existing predictions")
     require(args.threads > 0, "Threads must be positive")
     torch.set_num_threads(args.threads)
     model, tokenizer, config, manifest = load_bundle(args.bundle, args.device)
-    router = ResearchRouter(model, tokenizer, config["encoder"], config["noValue"])
+    runtime = dict(config["encoder"])
+    if args.parameter_decoding is not None:
+        runtime["parameterDecoding"] = args.parameter_decoding
+    router = ResearchRouter(model, tokenizer, runtime, config["noValue"])
     results = []
     for index, row in enumerate(lines(args.inputs)):
         value = row["input"]
         results.append(
             {
                 "id": row.get("id", str(index)),
-                "inputHash": digest(research_input(value, config["encoder"])),
+                "inputHash": digest(research_input(value, runtime)),
+                **(
+                    {"parameterDecoding": args.parameter_decoding}
+                    if args.parameter_decoding
+                    else {}
+                ),
                 "prediction": router.decision(value),
             }
         )

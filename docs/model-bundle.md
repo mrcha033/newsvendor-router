@@ -66,6 +66,21 @@ HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 
 이번 보정의 이점은 통제 Dev에서 관측한 무응답 이후 질문 비용 감소다. 단순 중단 규칙과 행동·발주 결과가 같았으므로 학습 고유의 우위를 입증한 배포로 해석하지 않는다.
 
+## 현재 권장하는 모수 선택 경로
+
+위와 같이 조립한 `recovery-v1`에 다음 옵션을 적용한다. 가중치는 같고, 실제 관측한 근거의 상품·기간·버전과 충돌을 확인하는 추론 수정이다. 과거 결과를 재현할 때는 옵션을 생략한다.
+
+```sh
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  uv run python scripts/predict_research.py \
+  --bundle results/released-model/recovery-v1 \
+  --inputs results/released-model/example-inputs.jsonl \
+  --output results/released-model/scoped-predictions.jsonl \
+  --parameter-decoding scoped
+```
+
+CUDA PyTorch 환경에서는 `--device cuda`를 추가한다. L40S에서 문서 혼입 조건의 모수·근거·질문·발주 손실을 비교했으며 원래 조건은 유지했다. 일반 문서 전체의 추출이나 새 가중치 학습을 검증한 결과는 아니다. [전체 비교와 독립 재현](parameter-decoding.md)
+
 ## 기준 bundle의 검증과 제공 범위
 
 원래 checkpoint와 공개 묶음을 CPU와 L40S에서 각각 대조해, 8개 사례의 전체 구조화 출력이 장치별로 정확히 일치했다. 별도 CPU 프로세스에서도 빈 작업 폴더·빈 모델 cache·네트워크 차단 조건으로 같은 결과를 확인했다. 전체 tensor hash도 일치한다. 이는 저장·로딩 경로의 재현 검사이며 새로운 성능 평가가 아니다. [manifest·원시 출력·검증 기록](evidence/research-model-bundle.json)

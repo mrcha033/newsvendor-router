@@ -1,0 +1,69 @@
+{
+  "registeredAt": "2026-10-10T05:11:20.636506+00:00",
+  "gpu": "GPU-674d64b8-4bdf-7006-1791-5dc7f7245409",
+  "bundle": "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model",
+  "weightsHash": "e01f07f8ab6325411975733303a277c95d5c914170fd833d18c452ab4bd105dd",
+  "contrasts": "results/parameter-contrasts-v2/manifest.json",
+  "cohorts": {
+    "train": {
+      "inputs": "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl",
+      "counts": {
+        "generated": 360,
+        "retail": 154
+      }
+    },
+    "dev": {
+      "inputs": "/dev/shm/newsvendor-parameter-decoding-v2/prepared/dev-inputs.jsonl",
+      "environment": "/dev/shm/newsvendor-parameter-decoding-v2/prepared/dev-environment.jsonl",
+      "counts": {
+        "generated": 60,
+        "retail": 336
+      }
+    }
+  },
+  "sourceHash": "9ca466ccb6ad6bbf2fddf7fb754d56e274a620f93d0d02cc08896cc6a8ca3ae3",
+  "scriptHash": "34bb685d3ace8e2c84cdec397a96c796e19d96abb7f6a213ab46a2e505c1f626",
+  "files": {
+    "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model/manifest.json": "f38b8e0ee1c70c7a85debeab282e372829a213d5bc0fed795c9c7230438446db",
+    "/dev/shm/newsvendor-recovery-scope-restored-v1/composed-model/model.pt": "d6815914a80756fe3b7229621ca9b7b04fdbe139e87be9104c1ecb4b90b784f5",
+    "results/parameter-contrasts-v2/manifest.json": "75e94b0f07cdeeecfb3cc48f566e3566bf56d931e03bc06512cf4c49c5372f2c",
+    "scripts/evaluate_responses.py": "33a78bf63a3f782088af769e094f07b09b6bc7b0d137be596ba78cd3e3e71eee",
+    "scripts/evaluate_operands.py": "f91554562ec838ce80cc4466080d592e97b414a7f32975187630702ec2bea0fa",
+    "scripts/prepare_parameter_contrasts.py": "b3f6553dc8d9f1002d63f4e6ec77a415b5faaf85e74aca49fe0ea9e23df45ac4",
+    "/dev/shm/newsvendor-recovery-replay-v1/initial-inputs.jsonl": "1b54c94dac7eeb21b02ae68770163b2ddce22df3f2b072c1ef856350f6078e24",
+    "/dev/shm/newsvendor-recovery-replay-v1/environment.jsonl": "b0a5a3637bc0b7cc4bbdd0e977bd3fd2ccbbf4b1766356d50d09b0e4c4467faf",
+    "results/parameter-contrasts-v2/fit.jsonl": "fd9c7b4cb4e127234a86b254750c83fb5276edb5c145bcdd9ad367b9c261756c",
+    "results/parameter-contrasts-v2/held.jsonl": "d0413045ec37e38061d70080db40093c426d69462590249aaa4625760b3c879f",
+    "/dev/shm/newsvendor-response-state-generated-v1/inputs.jsonl": "66bd0d584bfed7fd16cf78920d8224d84c959c6f70319b8050d13ae65710f10b",
+    "/dev/shm/newsvendor-response-state-generated-v1/environment.jsonl": "4cd9562a5dbf24c0066764465a816f95f337d266f5556b5c49fa0341c321dc14",
+    "/dev/shm/newsvendor-response-state-retail-v1/inputs.jsonl": "a362c2103017ddfa1bdb49cf54b841c3a525d63a2d11765eaf5de236c3c8c0f9",
+    "/dev/shm/newsvendor-response-state-retail-v1/environment.jsonl": "400ce91c8fe41b84d74863e264c7346f23c4924bdde9868eac51a7acf4cc433f",
+    "/dev/shm/newsvendor-parameter-decoding-v2/prepared/dev-inputs.jsonl": "39beefce3585efba276e8870ffc12bfddb2002c813d8f006a748139c553c566d",
+    "/dev/shm/newsvendor-parameter-decoding-v2/prepared/dev-environment.jsonl": "8eb92649c8473c06eb887f708dcd963bc996e180612c357750df03c41059d07a",
+    "/dev/shm/newsvendor-parameter-decoding-v1/train/report.json": "d76ed267e6cf734b8861f8cdc4ce85d4de90499ba129a3b608b90d2252fa5262",
+    "results/research-checks/parameter-decoding/v1-stopped.json": "c235e9c8045146be4dafcfc670e181fd53e8601f02ebe7faf33a321a2abb496a"
+  },
+  "seed": 7315,
+  "output": "/dev/shm/newsvendor-parameter-decoding-v2",
+  "testUsed": false,
+  "newSourceHoldoutUsed": false,
+  "trainingPerformed": false,
+  "primary": "scoped",
+  "ablation": "first",
+  "protocol": "Same frozen recovery-v1 weights. v2 also retains conflicts among current, encoded, compatible observed expressions even when no scalar was selected. Existing accepted expressions remain unchanged; a missing manager reply never resolves source conflict. Keep raw neural fields. No labels/reference scorer in construction.",
+  "diagnosis": "Repeat all 1259 held Train contrasts on L40S; source families have not changed. The completed v1 6051-case fit diagnosis remains a separate result, not relabeled as v2. Require held construction improvement without wrong accepted values or state regression.",
+  "sequentialTrain": "Original Train 360 generated +154 complete-period retail conditions. Enumerate all16 per-field retail response masks. Four observed-only document transformations at one fixed input-hash-selected initial episode per family. No hidden labels enter transformed docs. Keep all failures and require original research gates and each challenge gate.",
+  "dev": "Freeze decoder/code before original60 generated+336retail Dev. Original cases enumerate16 response masks; document challenges run all cases at baseline manager conditions. No switching to first ablation on Dev. Report initial/final parameter/evidence/type/state, necessary/unnecessary requests, needed recovery, actual q/terminal/request/total costs. Censored losses remain lower bounds, exact retail35conditions/5periods. Public model weights and public prediction code are unchanged; TAT-QA is not an optimization target in this study.",
+  "adoption": "All original gates plus per-document-condition generated false-handoff and unnecessary-request nonregression, retail recovery/false-handoff/questions/final parameters, and actual losses. v1 was not adopted because its challenge gate omitted generated false handoffs. Partial original-Dev inference was interrupted after a Train-only audit; no Dev outcomes were inspected to choose this correction. If any v2 gate fails, retain independent decoding.",
+  "diagnosticPartitions": [
+    "held"
+  ],
+  "precedingAttempt": {
+    "registration": "configs/research-parameter-decoding-v1.json",
+    "stopRecord": "results/research-checks/parameter-decoding/v1-stopped.json",
+    "trainReport": "/dev/shm/newsvendor-parameter-decoding-v1/train/report.json",
+    "devComplete": false,
+    "reason": "Observed conflicts missed without a selected scalar; new generated false handoffs in Train challenge rollouts."
+  }
+}

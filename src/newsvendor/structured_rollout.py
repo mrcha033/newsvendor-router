@@ -43,6 +43,10 @@ class ResearchRouter:
         self.model, self.tokenizer, self.config = model, tokenizer, config
         self.no_value = no_value
         self.cache = None
+        require(
+            config.get("parameterDecoding", "independent") in ("independent", "scoped", "first"),
+            "Unknown parameter decoder",
+        )
 
     def cache_states(self, enabled=True):
         self.cache = {} if enabled else None
@@ -77,9 +81,17 @@ class ResearchRouter:
             actions=[{"id": "hold", "text": TEXT["hold"]}],
             round=sum(h["action"] == "retrieve" for h in value["history"]),
         )
-        predicted = extract(view, self.model(view))
+        output = self.model(view)
+        predicted = extract(view, output)
         record = {k: {} for k in ("values", "links", "state", "types", "expressions")}
         record["errors"] = []
+        if self.config.get("parameterDecoding", "independent") != "independent":
+            from .structured_decode import decode_parameters
+
+            record["unconstrainedFields"] = copy.deepcopy(predicted)
+            predicted, record["parameterDecoding"] = decode_parameters(
+                value, view, output, predicted, self.config["parameterDecoding"]
+            )
         record["fields"] = predicted
         for field in predicted:
             slot = field["name"]
